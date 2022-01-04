@@ -49,11 +49,15 @@ class User extends Authenticatable
         return $this->belongsToMany(Kecamatan::class, 'kecamatan_user', 'midwife_user_id', 'kecamatan_id');
     }
 
+    // order untuk Bidan
+    // schedules
     public function schedules(): HasMany
     {
         return $this->hasMany(Order::class, 'midwife_user_id');
     }
 
+    // order untuk Client
+    // reservations
     public function reservations(): HasMany
     {
         return $this->hasMany(Order::class, 'client_user_id');
