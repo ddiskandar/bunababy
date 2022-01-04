@@ -20,7 +20,7 @@ class CreatePaymentsTable extends Migration
             $table->string('attachment')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamp('verified_at')->nullable();
-            $table->unsignedBigInteger('verified_by_id')->nullable();
+            $table->unsignedBigInteger('verified_by_id')->constrained('users')->nullable();
             $table->timestamps();
         });
     }
