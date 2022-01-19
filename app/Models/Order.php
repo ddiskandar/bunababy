@@ -24,8 +24,7 @@ class Order extends Model
         'total_duration' => 'integer',
         'total_transport' => 'integer',
         'total_fee_apd' => 'integer',
-        'start_date' => 'datetime',
-        'end_date' => 'datetime',
+        'date' => 'date',
         'status' => 'integer',
     ];
 
@@ -51,27 +50,27 @@ class Order extends Model
 
     public function scopeInClient($query)
     {
-        $query->where('place', Order::PLACE_CLIENT);
+        $query->where('place', self::PLACE_CLIENT);
     }
 
     public function scopeInClinic($query)
     {
-        $query->where('place', Order::PLACE_CLINIC);
+        $query->where('place', self::PLACE_CLINIC);
     }
 
     public function scopeUnpaid($query)
     {
-        $query->where('status', Order::STATUS_UNPAID);
+        $query->where('status', self::STATUS_UNPAID);
     }
 
     public function scopeLocked($query)
     {
-        $query->where('status', Order::STATUS_LOCKED);
+        $query->where('status', self::STATUS_LOCKED);
     }
 
     public function scopefinished($query)
     {
-        $query->where('status', Order::STATUS_FINISHED);
+        $query->where('status', self::STATUS_FINISHED);
     }
 
     public function payments(): HasMany

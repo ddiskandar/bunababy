@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PlaygroundController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,5 +53,7 @@ Route::get('/treatments', function () {
 Route::get('/setting', function () {
     return view('admin.setting');
 })->middleware(['auth'])->name('setting');
+
+Route::get('/playground', [PlaygroundController::class, 'index']);
 
 require __DIR__.'/auth.php';

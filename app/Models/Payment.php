@@ -32,17 +32,17 @@ class Payment extends Model
 
     public function scopeVerified($query)
     {
-        $query->where('status', Payment::STATUS_VERIFIED);
+        $query->where('status', self::STATUS_VERIFIED);
     }
 
     public function scopeUnVerified($query)
     {
-        $query->where('status', Payment::STATUS_UNVERIFIED);
+        $query->where('status', self::STATUS_UNVERIFIED);
     }
 
     public function scopeRejected($query)
     {
-        $query->where('status', Payment::STATUS_REJECTED);
+        $query->where('status', self::STATUS_REJECTED);
     }
 
 }
