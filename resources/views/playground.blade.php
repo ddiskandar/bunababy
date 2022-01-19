@@ -2,9 +2,9 @@
 
 <div class="grid grid-cols-7 gap-6 p-12">
     @foreach ($data as $day)
-        @if ($day['date']->gt(now()))
+        @if ($day['date']->greaterThan(now()))
             <div
-                @if ($day['date']->isSameMonth(now()))
+                @if ($day['date']->isSameMonth(\Carbon\Carbon::parse($selectedMonth)))
                     class="flex flex-col items-center justify-center text-gray-700"
                 @else
                     class="flex flex-col items-center justify-center text-gray-300"
@@ -14,7 +14,7 @@
                     {{ $day['date']->isoFormat('DD') }}
                 </div>
 
-                @if ($day['date']->gt(now()))
+                @if ($day['date']->greaterThan(now()))
                     <div
                         @if ($day['status'] == 'penuh')
                             class="w-3 h-3 bg-red-400 border-2 border-white rounded-full"

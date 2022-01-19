@@ -14,39 +14,27 @@ class PlaygroundController extends Controller
 {
     public function index()
     {
+        $selectedMonth = now()->format('Y-M');
+        $selectedMonth = Carbon::parse($selectedMonth)->addMonth()->format('Y-M');
+        // $selectedMonth = Carbon::parse($selectedMonth)->subMonth()->format('Y-M');
 
-        $period = today()->startOfMonth()->startOfWeek()->DaysUntil(today()->endOfMonth()->endOfWeek());
+        $period = Carbon::parse($selectedMonth)->startOfMonth()->startOfWeek()->DaysUntil(Carbon::parse($selectedMonth)->endOfMonth()->endOfWeek());
 
         $slots = Slot::all();
         $orders = Order::all();
-
         $data = collect();
 
         foreach ($period as $date) {
-
-            $new = collect(
-                [
-                    'date' => $date,
-                ]
-            );
-
+            $new = collect(['date' => $date]);
             foreach($orders as $order) {
-
                 if ( $order->date->format('m-d') === $date->format('m-d') ) {
-
                     foreach($slots as $slot){
-                        if ( (Carbon::parse($slot->time)->between(Carbon::parse($order->start_time), Carbon::parse($order->end_time)))  ) {
+                        if ( Carbon::parse($slot->time)->between(Carbon::parse($order->start_time), Carbon::parse($order->end_time)) ) {
                             $new->put($slot->time, 'booked');
-                        } else {
-                            $new->put($slot->time, 'empty');
-                        }
+                        } else { $new->put($slot->time, 'empty'); }
                     }
-
                 }
-
             }
-
-            // dd($new);
 
             $new->put(
                 'status',
@@ -57,11 +45,11 @@ class PlaygroundController extends Controller
                     : 'tersedia'));
 
             $data->push($new);
-
         }
 
         return view('playground', [
-            'data' => $data
+            'data' => $data,
+            'selectedMonth' => $selectedMonth,
         ]);
     }
 }
