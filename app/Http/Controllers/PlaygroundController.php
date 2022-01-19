@@ -16,6 +16,7 @@ class PlaygroundController extends Controller
     {
         $selectedMonth = now()->format('Y-M');
         $selectedMonth = Carbon::parse($selectedMonth)->addMonth()->format('Y-M');
+        $selectedMonth = Carbon::parse($selectedMonth)->addMonth()->format('Y-M');
         // $selectedMonth = Carbon::parse($selectedMonth)->subMonth()->format('Y-M');
 
         $period = Carbon::parse($selectedMonth)->startOfMonth()->startOfWeek()->DaysUntil(Carbon::parse($selectedMonth)->endOfMonth()->endOfWeek());

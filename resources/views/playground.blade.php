@@ -1,6 +1,19 @@
 <x-guest-layout>
 
-<div class="grid grid-cols-7 gap-6 p-12">
+<div class="p-4">
+
+<div class="mb-4 text-2xl font-semibold">
+    {{ \Carbon\Carbon::parse($selectedMonth)->isoFormat('MMMM YYYY') }}
+</div>
+
+<div class="grid grid-cols-7 gap-6">
+    <div class="text-sm font-semibold text-gray-500">Senin</div>
+    <div class="text-sm font-semibold text-gray-500">Selasa</div>
+    <div class="text-sm font-semibold text-gray-500">Rabu</div>
+    <div class="text-sm font-semibold text-gray-500">Kamis</div>
+    <div class="text-sm font-semibold text-gray-500">Jum'at</div>
+    <div class="text-sm font-semibold text-gray-500">Sabtu</div>
+    <div class="text-sm font-semibold text-gray-500">Minggu</div>
     @foreach ($data as $day)
         @if ($day['date']->greaterThan(now()))
             <div
@@ -38,6 +51,7 @@
         @endif
 
     @endforeach
+</div>
 </div>
 
 </x-guest-layout>
