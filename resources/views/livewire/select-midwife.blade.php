@@ -1,4 +1,7 @@
 <div class="p-4">
+    <div>
+        {{ $midwife->name }}
+    </div>
 
     <div class="flex items-center justify-between py-4">
         <div wire:click="prevMonth">
@@ -21,7 +24,7 @@
         <div class="text-sm font-semibold text-center text-gray-500">Sab</div>
         <div class="text-sm font-semibold text-center text-gray-500">Min</div>
         @foreach ($data as $day)
-            @if (\Carbon\Carbon::parse($day['date'])->greaterThan(now()))
+            @if (\Carbon\Carbon::parse($day['date'])->gte(today()))
                 <div
                     @if (\Carbon\Carbon::parse($day['date'])->isSameMonth(\Carbon\Carbon::parse($selectedMonth)))
                         class="flex flex-col items-center justify-center text-gray-700"
@@ -33,7 +36,7 @@
                         {{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}
                     </div>
 
-                    @if (\Carbon\Carbon::parse($day['date'])->greaterThan(now()))
+                    @if (\Carbon\Carbon::parse($day['date'])->gte(today()))
                         <div
                             @if ($day['status'] == 'penuh')
                                 class="w-3 h-3 bg-red-400 border-2 border-white rounded-full"

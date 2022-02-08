@@ -11,7 +11,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
         <!-- Alpine.js, if you would like to use Tailkit’s JS based components -->
         {{-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
@@ -19,6 +19,7 @@
         <!-- Alpine.js -->
          <script defer src="{{ mix('js/app.js') }}"></script>
 
+         @livewireStyles
     </head>
     <body class="font-sans antialiased">
         <!-- Page Container -->
@@ -39,9 +40,9 @@
             <!-- END Page Header -->
 
             <!-- Page Content -->
-            <main id="page-content" class="flex flex-auto flex-col max-w-full pt-16">
+            <main id="page-content" class="flex flex-col flex-auto max-w-full pt-16">
                 <!-- Page Section -->
-                <div class="max-w-10xl mx-auto p-4 lg:p-8 w-full">
+                <div class="w-full p-4 mx-auto max-w-10xl lg:p-8">
                     {{ $slot }}
                 </div>
                 <!-- END Page Section -->
@@ -54,5 +55,6 @@
 
         </div>
         <!-- END Page Container -->
+        @livewireScripts
     </body>
 </html>
