@@ -16,20 +16,22 @@
         <div class="flex items-center justify-center sm:justify-end">
 
             <div class="mt-3 text-center sm:mt-0 sm:text-right sm:w-48">
-                <select class="block w-full px-3 py-2 border border-gray-200 rounded focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+                <select class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
                     <option selected="selected">Semua Kategory</option>
-                  <option>Mommy Happy</option>
-                  <option>Bunababy Package</option>
-                  <option>Baby Happy</option>
+                    <option>Mommy Happy</option>
+                    <option>Bunababy Package</option>
+                    <option>Baby Happy</option>
                 </select>
             </div>
+
             <div class="mt-3 ml-4 text-center sm:mt-0 sm:text-right sm:w-48">
-                <select class="block w-full px-3 py-2 border border-gray-200 rounded focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+                <select class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
                     <option selected="selected">Semua Status</option>
-                  <option>Aktif</option>
-                  <option>Tidak Aktif</option>
+                    <option>Aktif</option>
+                    <option>Tidak Aktif</option>
                 </select>
             </div>
+
         </div>
       </div>
       <div class="w-full p-5 border-b border-gray-100 lg:p-6 grow">

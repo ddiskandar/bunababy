@@ -15,8 +15,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return vieww('welcome');
+    return view('home');
 });
+
+Route::get('/order', function () {
+    return view('client.order');
+})->name('client.order');
+
+
+
+
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
