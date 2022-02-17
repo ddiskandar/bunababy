@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PlaygroundController;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,8 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    session(['hello' => 'world']);
     return view('home');
-});
+})->name('home');
 
 Route::get('/order', function () {
     return view('client.order');

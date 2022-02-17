@@ -56,27 +56,37 @@
                             class="flex flex-col items-center justify-center text-gray-300"
                         @endif
                     >
-                        <div class="">
-                            {{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}
-                        </div>
-
                         @if (\Carbon\Carbon::parse($day['date'])->gte(today()))
+
+                            @if ($day['status'] == 'penuh')
+                                <div class=" cursor-not-allowed ">
+                                    {{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}
+                                </div>
+                                <div class="w-3 h-3 bg-red-400 border-2 border-white rounded-full"></div>
+
+                            @elseif($day['status'] == 'tersedia')
                             <div
-                                @if ($day['status'] == 'penuh')
-                                    class="w-3 h-3 bg-red-400 border-2 border-white rounded-full"
-                                @elseif($day['status'] == 'tersedia')
-                                    class="w-3 h-3 bg-blue-400 border-2 border-white rounded-full"
-                                @else
-                                    class="w-3 h-3 bg-green-400 border-2 border-white rounded-full"
-                                @endif
-                            >
+                                wire:click="selectDate({!! \Carbon\Carbon::parse($day['date'])->isoFormat('DD') !!}, {!! \Carbon\Carbon::parse($day['date'])->isoFormat('MM') !!}, {!! \Carbon\Carbon::parse($day['date'])->isoFormat('YYYY') !!})"
+                                class="cursor-pointer">
+                                {{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}
                             </div>
+                            <div class="w-3 h-3 bg-blue-400 border-2 border-white rounded-full"></div>
+
+                            @else
+                                <div
+                                    wire:click="selectDate({!! \Carbon\Carbon::parse($day['date'])->isoFormat('DD') !!}, {!! \Carbon\Carbon::parse($day['date'])->isoFormat('MM') !!}, {!! \Carbon\Carbon::parse($day['date'])->isoFormat('YYYY') !!})"
+                                    class="cursor-pointer">
+                                    {{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}
+                                </div>
+                                <div class="w-3 h-3 bg-green-400 border-2 border-white rounded-full"></div>
+                            @endif
+
                         @endif
 
                     </div>
                 @else
                 <div class="flex flex-col items-center justify-center text-gray-300">
-                    <div class="">
+                    <div class=" cursor-not-allowed ">
                         {{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}
                     </div>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Kabupaten;
 use App\Models\Order;
 use Livewire\Component;
 

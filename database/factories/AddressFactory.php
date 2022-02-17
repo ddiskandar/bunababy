@@ -22,7 +22,7 @@ class AddressFactory extends Factory
             'rt' => $this->faker->numberBetween(1, 12),
             'rw' => $this->faker->numberBetween(1, 12),
             'desa' => $this->faker->city(),
-            'kecamatan_id' => Kecamatan::factory(),
+            'kecamatan_id' => rand(1,79),
         ];
     }
 }

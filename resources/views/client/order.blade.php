@@ -8,22 +8,11 @@
 
 <div class="container gap-12 px-4 py-6 mx-auto sm:px-12 md:flex">
     <div class="basis-1/3 ">
-        <div class="p-4 border border-pink-200 rounded">
-            <!-- Select Box -->
-            <div class="space-y-1">
-                <label class="text-sm font-semibold text-pink-600 " for="tk-inputs-default-select">Lokasi Anda</label>
-                <select class="block w-full px-3 py-2 border border-none rounded " id="tk-inputs-default-select">
-                    <option>Vue.js</option>
-                    <option>React</option>
-                    <option>Angular</option>
-                    <option>Svelte</option>
-                    <option>Ember.js</option>
-                    <option>Meteor</option>
-                </select>
-            </div>
-            <!-- END Select Box -->
+        <div class="p-8 border border-pink-200 rounded">
+            <div class="text-sm font-semibold text-pink-600 ">Lokasi Anda</div>
+            @livewire('select-location')
         </div>
-        <div class="p-4 mt-4 border border-pink-200 rounded">
+        <div class="p-8 mt-4 border border-pink-200 rounded">
             <!-- Radios Stacked -->
             <div class="space-y-2">
                 <div class="text-sm font-semibold text-pink-600 ">Tempat Treatment</div>
@@ -32,14 +21,14 @@
                         <input type="radio" class="w-4 h-4 text-pink-500 border border-gray-200 focus:border-pink-500 focus:ring focus:ring-pink-500 focus:ring-opacity-50" name="tk-form-elements-radios-stacked" />
                         <div class="ml-4">
                             <span class="font-semibold">Homecare</span>
-                            <div class="text-xs">Dirumah sesuai alamat lokasi</div>
+                            <div class="text-sm">Di rumah sesuai alamat lokasi</div>
                         </div>
                     </label>
                     <label class="flex items-center">
                         <input type="radio" class="w-4 h-4 text-pink-500 border border-gray-200 focus:border-pink-500 focus:ring focus:ring-pink-500 focus:ring-opacity-50" name="tk-form-elements-radios-stacked" />
                         <div class="ml-4">
                             <span class="font-semibold">Onsite</span>
-                            <div class="text-xs">Klinik bunababy</div>
+                            <div class="text-sm">Di Klinik bunababy</div>
                         </div>
                     </label>
                 </div>
@@ -57,7 +46,7 @@
     </div>
 </div>
 
-<div class="fixed bottom-0 left-0 right-0 flex justify-around py-3 z-100 bg-slate-50/90 backdrop-blur-sm">
+<div class="fixed bottom-0 left-0 right-0 flex justify-around py-3 z-80 bg-slate-50/90 backdrop-blur-sm">
     <div class="flex flex-col items-center text-gray-400 hover:text-gray-600">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />

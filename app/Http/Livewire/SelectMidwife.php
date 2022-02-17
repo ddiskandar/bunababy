@@ -27,6 +27,12 @@ class SelectMidwife extends Component
         $this->selectedMonth = Carbon::parse($this->selectedMonth)->addMonth()->format('Y-M');
     }
 
+    public function selectDate($d, $m, $y) {
+        $date = Carbon::create($y, $m, $d);
+        session()->put('selectedDate', $date);
+        return to_route('home');
+    }
+
     public function render()
     {
         $period = Carbon::parse($this->selectedMonth)->startOfMonth()->startOfWeek()->DaysUntil(Carbon::parse($this->selectedMonth)->endOfMonth()->endOfWeek());

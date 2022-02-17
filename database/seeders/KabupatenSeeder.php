@@ -15,10 +15,10 @@ class KabupatenSeeder extends Seeder
     public function run()
     {
         DB::table('kabupatens')->insert([
+            ['name' => 'Kota Cimahi'],
             ['name' => 'Kota Bandung'],
             ['name' => 'Kabupaten Bandung'],
             ['name' => 'Kabupaten Bandung Barat'],
-            ['name' => 'Cimahi'],
         ]);
     }
 }
