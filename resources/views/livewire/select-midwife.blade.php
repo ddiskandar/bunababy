@@ -1,6 +1,6 @@
 <div
     x-data="{ expanded: false }""
-    class="p-4 border border-pink-200 rounded"
+    class="p-4 border border-bunababy-50 rounded"
 >
     <div class="flex items-center justify-between ">
         <div>
@@ -9,7 +9,7 @@
         </div>
         <div
             x-on:click="expanded = ! expanded"
-            class="flex items-center px-4 py-1 text-xs text-pink-600 border border-pink-600 rounded-full cursor-pointer">
+            class="flex items-center px-4 py-1 text-xs text-bunababy-100 border border-bunababy-100 rounded-full cursor-pointer">
             <span>Pilih Jadwal</span>
             <div class="ml-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
@@ -27,7 +27,7 @@
         x-transition:leave-start="opacity-100 transform scale-y-100 translate-y-0"
         x-transition:leave-end="opacity-0 transform scale-y-0 -translate-y-1/2"
     >
-        <div class="flex items-center justify-between py-6 mt-4 border-t border-pink-200">
+        <div class="flex items-center justify-between py-6 mt-4 border-t border-bunababy-50">
             <div wire:click="prevMonth">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
             </div>

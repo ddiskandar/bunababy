@@ -14,6 +14,15 @@ module.exports = {
             fontFamily: {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                'bunababy-50': '#FCE7F3',
+                'bunababy-100': '#FE70C5',
+                'bunababy-200': '#FE0E9C',
+                'bunababy-300': '#D7A4DF',
+                'bunababy-400': '#B95CC7',
+                'bunababy-500': '#D9969D',
+                'bunababy-600': '#A5586A',
+            },
             maxWidth: {
                 '8xl': '90rem',
                 '9xl': '105rem',
