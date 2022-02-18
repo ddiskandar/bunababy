@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PlaygroundController;
+use App\Models\Slot;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 
@@ -21,8 +22,18 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/order', function () {
-    return view('client.order');
+    return view('client.order.jadwal');
 })->name('client.order');
+
+Route::get('/order/2', function () {
+
+    if( session()->missing('midwifeId') OR session()->missing('kecamatanId') OR session()->missing('selectedDate') ) {
+        return back();
+    }
+
+    return view('client.order.waktu');
+
+})->name('client.order.2');
 
 
 
