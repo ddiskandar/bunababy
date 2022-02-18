@@ -98,7 +98,7 @@
             </div>
 
             <div class="py-6">
-                <div class="w-full py-2 text-center text-white rounded-full bg-bunababy-200">
+                <div class="w-full py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50">
                     Lanjut ke Data Pemesan
                 </div>
             </div>
