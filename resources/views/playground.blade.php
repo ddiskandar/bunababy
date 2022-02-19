@@ -1,5 +1,5 @@
-<x-guest-layout>
+<x-client-layout>
 
-    @livewire('select-midwife', ['midwifeId' => 2])
+    @livewire('select-midwife', ['midwife_user_id' => 2])
 
-</x-guest-layout>
+</x-client-layout>

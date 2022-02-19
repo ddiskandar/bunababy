@@ -13,6 +13,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans],
+                handwriting: ['Cookie', ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 'bunababy-50': '#FCE7F3',

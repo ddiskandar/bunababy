@@ -1,6 +1,6 @@
 <div
     x-data="{ expanded: false }""
-    class="p-4 border border-bunababy-50 rounded"
+    class="p-4 border rounded border-bunababy-50"
 >
     <div class="flex items-center justify-between ">
         <div>
@@ -9,7 +9,7 @@
         </div>
         <div
             x-on:click="expanded = ! expanded"
-            class="flex items-center px-4 py-1 text-xs text-bunababy-100 border border-bunababy-100 rounded-full cursor-pointer">
+            class="flex items-center px-4 py-1 text-xs border rounded-full cursor-pointer text-bunababy-100 border-bunababy-100">
             <span>Pilih Jadwal</span>
             <div class="ml-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
@@ -27,14 +27,14 @@
         x-transition:leave-start="opacity-100 transform scale-y-100 translate-y-0"
         x-transition:leave-end="opacity-0 transform scale-y-0 -translate-y-1/2"
     >
-        <div class="flex items-center justify-between py-6 mt-4 border-t border-bunababy-50">
-            <div wire:click="prevMonth">
+        <div class="flex items-center justify-between py-8 mt-4 border-t border-bunababy-50">
+            <div wire:click="prevMonth" class="cursor-pointer ">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
             </div>
             <div class="font-semibold">
                 {{ \Carbon\Carbon::parse($selectedMonth)->isoFormat('MMMM YYYY') }}
             </div>
-            <div wire:click="nextMonth">
+            <div wire:click="nextMonth" class="cursor-pointer ">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
             </div>
         </div>
@@ -59,26 +59,26 @@
                         @if (\Carbon\Carbon::parse($day['date'])->gte(today()))
 
                             @if ($day['status'] == 'penuh')
-                                <div class=" cursor-not-allowed ">
+                                <div class="p-4 cursor-not-allowed">
                                     {{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}
                                 </div>
                                 <div class="w-3 h-3 bg-red-400 border-2 border-white rounded-full"></div>
 
                             @elseif($day['status'] == 'tersedia')
-                            <div
-                                wire:click="selectDate({!! \Carbon\Carbon::parse($day['date'])->isoFormat('DD') !!}, {!! \Carbon\Carbon::parse($day['date'])->isoFormat('MM') !!}, {!! \Carbon\Carbon::parse($day['date'])->isoFormat('YYYY') !!})"
-                                class="cursor-pointer">
-                                {{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}
-                            </div>
-                            <div class="w-3 h-3 bg-blue-400 border-2 border-white rounded-full"></div>
+                                <div
+                                    wire:click="selectDate({!! \Carbon\Carbon::parse($day['date'])->isoFormat('DD') !!}, {!! \Carbon\Carbon::parse($day['date'])->isoFormat('MM') !!}, {!! \Carbon\Carbon::parse($day['date'])->isoFormat('YYYY') !!})"
+                                    class="flex flex-col items-center p-4 rounded cursor-pointer hover:bg-bunababy-50">
+                                    {{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}
+                                    <div class="w-3 h-3 bg-blue-400 border-2 border-white rounded-full"></div>
+                                </div>
 
                             @else
                                 <div
                                     wire:click="selectDate({!! \Carbon\Carbon::parse($day['date'])->isoFormat('DD') !!}, {!! \Carbon\Carbon::parse($day['date'])->isoFormat('MM') !!}, {!! \Carbon\Carbon::parse($day['date'])->isoFormat('YYYY') !!})"
-                                    class="cursor-pointer">
-                                    {{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}
+                                    class="flex flex-col items-center p-4 rounded cursor-pointer hover:bg-bunababy-50">
+                                    <span>{{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}</span>
+                                    <div class="w-3 h-3 bg-green-400 border-2 border-white rounded-full"></div>
                                 </div>
-                                <div class="w-3 h-3 bg-green-400 border-2 border-white rounded-full"></div>
                             @endif
 
                         @endif
@@ -86,7 +86,7 @@
                     </div>
                 @else
                 <div class="flex flex-col items-center justify-center text-gray-300">
-                    <div class=" cursor-not-allowed ">
+                    <div class="p-4 cursor-not-allowed">
                         {{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}
                     </div>
 
