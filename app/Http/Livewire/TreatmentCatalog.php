@@ -10,11 +10,9 @@ class TreatmentCatalog extends Component
 {
     public function add(Treatment $treatment) {
 
-        session()->put('order.date', today());
-
         session()->push('order.treatments',[
             'treatment_id' => $treatment->id,
-            'family_id' => 1,
+            'family_name' => 'pulan',
         ]);
 
     }
