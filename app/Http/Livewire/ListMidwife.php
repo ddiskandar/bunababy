@@ -14,16 +14,20 @@ class ListMidwife extends Component
     public $midwives;
 
     public function mount() {
-        $this->kecamatan = Kecamatan::query()
-            ->where('id', session('kecamatan_id'))
-            ->select('id', 'name')
-            ->with(['midwives:id'])
-            ->first();
 
-        $this->midwives = User::query()
-            ->where('role', 'midwife')
-            ->whereNotIn('id', $this->kecamatan->midwives->pluck('id'))
-            ->get();
+        if (session()->has('kecamatan_id')) {
+
+            $this->kecamatan = Kecamatan::query()
+                ->where('id', session('kecamatan_id'))
+                ->select('id', 'name')
+                ->with(['midwives:id'])
+                ->first();
+
+            $this->midwives = User::query()
+                ->where('role', 'midwife')
+                ->whereNotIn('id', $this->kecamatan->midwives->pluck('id'))
+                ->get();
+        }
 
     }
 
