@@ -26,7 +26,7 @@ class Kecamatan extends Model
         return $this->hasMany(Address::class);
     }
 
-    public function midwifes(): BelongsToMany
+    public function midwives(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'kecamatan_user', 'kecamatan_id', 'midwife_user_id');
     }

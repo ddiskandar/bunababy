@@ -4,7 +4,7 @@
 >
     <div class="flex items-center justify-between ">
         <div>
-            <img src="https://source.unsplash.com/mEZ3PoFGs_k/64x64" alt="User Avatar" class="inline-block w-10 h-10 rounded-full" />
+            <img src="/images/default.jpg" alt="User Avatar" class="inline-block w-10 h-10 rounded-full" />
             <span class="ml-4 text-xl font-semibold">{{ $midwife->name }}</span>
         </div>
         <div
@@ -20,6 +20,7 @@
     <div
         {{-- :class="expanded ? '' : 'invisible'" --}}
         x-show="expanded"
+        x-cloak
         x-transition:enter="transition ease-in-out duration-500"
         x-transition:enter-start="opacity-0 transform scale-y-0 -translate-y-1/2"
         x-transition:enter-end="opacity-100 transform scale-y-100 translate-y-0"

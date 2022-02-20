@@ -3,7 +3,7 @@
     <button
         type="button"
         class="flex items-center justify-between w-full py-4 "
-        x-on:click="open = ! open"
+        x-on:click="open = ! open; $nextTick(() => $refs.input.focus());"
     >
         <div class="flex items-center ">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-bunababy-200" viewBox="0 0 20 20" fill="currentColor">
@@ -38,6 +38,7 @@
     <div
         class="fixed inset-x-0 bottom-0 flex flex-col w-full max-w-md mx-auto overflow-hidden bg-white rounded-t shadow-sm sm:rounded sm:static"
         x-show="open"
+        x-trap="open"
         @click.outside="open = false"
         x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="transform opacity-0 scale-125"
@@ -64,7 +65,8 @@
         <div>
             <input
             wire:model="search"
-            class="block w-full px-3 py-2 leading-6 border border-gray-200 focus:border-gray-300 focus:outline-0 focus:ring-0 "
+            x-ref="input"
+            class="block w-full px-3 py-2 text-sm leading-6 border border-slate-200 focus:border-slate-200 focus:outline-0 focus:ring-0 "
             type="text"
             id="tk-form-elements-name"
             placeholder="Cari berdasarkan nama kecamatan" />

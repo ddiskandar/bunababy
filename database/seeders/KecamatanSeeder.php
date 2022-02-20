@@ -98,6 +98,8 @@ class KecamatanSeeder extends Seeder
             ['kabupaten_id' => 4, 'name' => 'Saguling'],
             ['kabupaten_id' => 4, 'name' => 'Sindangkerta'],
 
+            ['kabupaten_id' => 2, 'name' => 'Bandung Wetan'],
+
         ]);
     }
 }

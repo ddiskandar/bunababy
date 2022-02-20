@@ -19,7 +19,9 @@ class SelectLocation extends Component
     public function setLocation($kecamatan_id) {
         $this->kecamatan = DB::table('kecamatans')->where('id', $kecamatan_id )->value('name');
         session()->put('kecamatan_id', $kecamatan_id);
-        $this->emit('kecamatanIdChanged');
+
+        $this->emit('kecamatanChanged');
+        return redirect()->route('client.order');
     }
 
     public function render()
