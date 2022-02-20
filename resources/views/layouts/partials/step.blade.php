@@ -53,8 +53,8 @@
                 <span class="hidden ml-2 font-medium md:block">Waktu dan Treatment</span>
             </div>
             @else
-            <div class="inline-flex items-center text-sm text-bunababy-300">
-                <div class="flex items-center w-6 h-6 mx-auto border rounded-full border-bunababy-300">
+            <div class="inline-flex items-center text-sm text-bunababy-300/70">
+                <div class="flex items-center w-6 h-6 mx-auto border rounded-full border-bunababy-300/70">
                     <span class="w-full text-center ">
                     2
                     </span>
@@ -75,8 +75,8 @@
                 <span class="ml-2 font-medium">Data Pemesan</span>
             </div>
             @else
-            <div class="inline-flex items-center text-sm text-bunababy-300">
-                <div class="flex items-center w-6 h-6 mx-auto border rounded-full border-bunababy-300">
+            <div class="inline-flex items-center text-sm text-bunababy-300/70">
+                <div class="flex items-center w-6 h-6 mx-auto border rounded-full border-bunababy-300/70">
                     <span class="w-full text-center ">
                     3
                     </span>

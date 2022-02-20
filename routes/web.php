@@ -26,7 +26,11 @@ Route::get('/order', function () {
 
 Route::get('/order/2', function () {
 
-    if( session()->missing('order.midwife_user_id') OR session()->missing('order.kecamatan_id') OR session()->missing('order.date') ) {
+    if( session()->missing('order.midwife_user_id')
+        OR session()->missing('order.place')
+        OR session()->missing('order.kecamatan_id')
+        OR session()->missing('order.date')
+    ) {
         return redirect()->route('client.order');
     }
 
@@ -36,7 +40,12 @@ Route::get('/order/2', function () {
 
 Route::get('/order/3', function () {
 
-    if( session()->missing('order.midwife_user_id') OR session()->missing('order.kecamatan_id') OR session()->missing('order.date') ) {
+    if( session()->missing('order.midwife_user_id')
+        OR session()->missing('order.place')
+        OR session()->missing('order.kecamatan_id')
+        OR session()->missing('order.date')
+        OR session()->missing('order.start_time_id')
+    ) {
         return redirect()->route('client.order');
     }
 

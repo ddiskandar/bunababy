@@ -10,8 +10,17 @@ use Livewire\Component;
 
 class SelectTime extends Component
 {
+    protected $listeners = ['treatmentAdded'];
+
+    public function treatmentAdded()
+    {
+        $this->render();
+    }
+
     public function selectTime(Slot $slot)
     {
+        session()->put('order.start_time', $slot->time);
+
         session()->put('order.start_time_id', $slot->id);
 
         $this->emit('timeChanged');

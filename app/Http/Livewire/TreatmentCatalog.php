@@ -10,6 +10,8 @@ class TreatmentCatalog extends Component
 {
     public function add(Treatment $treatment) {
 
+        session()->increment('order.addMinutes', $treatment->duration);
+
         $id = time();
 
         session()->push('order.families', [
@@ -22,6 +24,8 @@ class TreatmentCatalog extends Component
             'treatment_id' => $treatment->id,
             'family_id' => $id,
         ]);
+
+        $this->emit('treatmentAdded');
 
     }
 

@@ -10,6 +10,11 @@ class OrderSummary extends Component
 {
     protected $listeners = ['timeChanged'];
 
+    public function mount()
+    {
+        // session()->put('order.addMinutes', 40);
+    }
+
     public function timeChanged()
     {
         $this->render();
@@ -17,15 +22,19 @@ class OrderSummary extends Component
 
     public function render()
     {
+        $addMinutes = session('order.addMinutes') ?? 40;
+
+        $data['kecamatan'] = DB::table('kecamatans')->where('id', session('order.kecamatan_id'))->value('name');
+        $data['bidan'] = \App\Models\User::where('id', session('order.midwife_user_id'))->value('name');
+        $data['date'] = session('order.date')->isoFormat('dddd, D MMMM G');
+        $data['start_time'] = DB::table('slots')->where('id', session('order.start_time_id'))->value('time');
+        $data['end_time'] = Carbon::parse($data['start_time'])->addMinutes($addMinutes)->toTimeString();
 
         $start_time = \App\Models\Slot::where('id', session('order.start_time_id'))->value('time');
         $time = Carbon::parse($start_time);
 
         return view('livewire.order-summary', [
-            'nama_kecamatan' => DB::table('kecamatans')->where('id', session('order.kecamatan_id'))->value('name'),
-            'nama_bidan' => \App\Models\User::where('id', session('order.midwife_user_id'))->value('name'),
-            // 'start_time' => $start_time->time,
-            // 'end_time' => \Carbon\Carbon::createFromFormat('H:i:s',$start_time->time)->addMinutes(45),
+            'data' => $data,
         ]);
     }
 }

@@ -18,15 +18,19 @@
                         @php
                             $isSelected = $slot['id'] == session('order.start_time_id');
                             $isAvailable = '';
+                            $inRange = \Carbon\Carbon::parse($slot['time'])->isBetween(\Carbon\Carbon::parse(session('order.start_time')), \Carbon\Carbon::parse(session('order.start_time'))->addMinutes(session('order.addMinutes')));
                         @endphp
+
+                        {{-- @dd(\Carbon\Carbon::parse(session('order.start_time'))) --}}
 
                         @if ($slot['status'] == 'empty')
                         <button
                             wire:click="selectTime({{ $slot['id'] }})"
                             @class([
                                 'inline-flex items-center justify-center w-16  text-xs font-semibold leading-5 border rounded-full ',
-                                'border-slate-200' => ! $isSelected,
-                                'border-bunababy-200 bg-bunababy-50 text-bunababy-200' => $isSelected,
+                                'border-slate-200 ' => ! $isSelected,
+                                'border-transparent bg-bunababy-50 text-bunababy-200' => $isSelected,
+                                'ring-2 ring-offset-1 ring-bunababy-100/50' => $inRange,
                             ])
                             >
                             <span
@@ -71,6 +75,7 @@
                         @php
                             $isSelected = $slot['id'] == session('order.start_time_id');
                             $isAvailable = '';
+                            $inRange = \Carbon\Carbon::parse($slot['time'])->isBetween(\Carbon\Carbon::parse(session('order.start_time')), \Carbon\Carbon::parse(session('order.start_time'))->addMinutes(session('order.addMinutes')));
                         @endphp
 
                         @if ($slot['status'] == 'empty')
@@ -79,7 +84,8 @@
                             @class([
                                 'inline-flex items-center justify-center w-16  text-xs font-semibold leading-5 border rounded-full ',
                                 'border-slate-200' => ! $isSelected,
-                                'border-bunababy-200 bg-bunababy-50 text-bunababy-200' => $isSelected,
+                                'border-transparent bg-bunababy-50 text-bunababy-200' => $isSelected,
+                                'ring-2 ring-offset-1 ring-bunababy-100/50' => $inRange,
                             ])
                             >
                             <span

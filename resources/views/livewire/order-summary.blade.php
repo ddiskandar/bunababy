@@ -12,7 +12,7 @@
                 <x-title>Bidan Anda</x-title>
                 <div class="flex items-center">
                     <img src="/images/default.jpg" alt="User Avatar" class="inline-block w-10 h-10 rounded-full" />
-                    <div class="ml-2 font-semibold">{{ $nama_bidan }}</div>
+                    <div class="ml-2 font-semibold">{{ $data['bidan'] }}</div>
                 </div>
             </div>
 
@@ -22,7 +22,7 @@
                     <input type="radio" class="w-4 h-4 border border-bunababy-50 text-bunababy-200 focus:border-bunababy-200 focus:ring focus:ring-bunababy-200 focus:ring-opacity-50" name="tk-form-elements-radios-stacked" checked />
                     <div class="ml-4">
                         <span class="font-semibold">Homecare</span>
-                        <div class="text-sm">{{ $nama_kecamatan }}</div>
+                        <div class="text-sm">{{ $data['kecamatan'] }}</div>
                     </div>
                 </label>
             </div>
@@ -30,8 +30,10 @@
             <div class="py-4">
                 <x-title>Tanggal dan Waktu</x-title>
                 <div class="">
-                    <div class="font-semibold">{{ session('order.date')->isoFormat('dddd, D MMMM G') }}</div>
-                    <div class="text-sm"></div>
+                    <div class="font-semibold">{{ $data['date'] }}</div>
+                    @if ($data['start_time'])
+                        <div class="text-sm">{{ $data['start_time'] }} - {{ $data['end_time'] }} WIB</div>
+                    @endif
                 </div>
             </div>
 
