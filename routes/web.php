@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    session(['hello' => 'world']);
     return view('home');
 })->name('home');
 
@@ -27,8 +26,8 @@ Route::get('/order', function () {
 
 Route::get('/order/2', function () {
 
-    if( session()->missing('midwife_user_id') OR session()->missing('kecamatan_id') OR session()->missing('selected_date') ) {
-        return back();
+    if( session()->missing('order.midwife_user_id') OR session()->missing('order.kecamatan_id') OR session()->missing('order.date') ) {
+        return redirect()->route('client.order');
     }
 
     return view('client.order.waktu');

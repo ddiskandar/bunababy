@@ -11,8 +11,8 @@
             <div class="py-4">
                 <x-title>Bidan Anda</x-title>
                 <div class="flex items-center">
-                    <img src="https://source.unsplash.com/mEZ3PoFGs_k/64x64" alt="User Avatar" class="inline-block w-10 h-10 rounded-full" />
-                    <div class="ml-2">{{ $nama_bidan }}</div>
+                    <img src="/images/default.jpg" alt="User Avatar" class="inline-block w-10 h-10 rounded-full" />
+                    <div class="ml-2 font-semibold">{{ $nama_bidan }}</div>
                 </div>
             </div>
 
@@ -30,7 +30,7 @@
             <div class="py-4">
                 <x-title>Tanggal dan Waktu</x-title>
                 <div class="">
-                    <div class="font-semibold">{{ session('selectedDate')->isoFormat('dddd, D MMMM G') }}</div>
+                    <div class="font-semibold">{{ session('order.date')->isoFormat('dddd, D MMMM G') }}</div>
                     <div class="text-sm"></div>
                 </div>
             </div>

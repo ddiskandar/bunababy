@@ -9,11 +9,11 @@ class SelectPlace extends Component
     public $place;
 
     public function mount() {
-        $this->place = session('place_id') ?? '';
+        $this->place = session('order.place') ?? '';
     }
 
     public function updatedPlace() {
-        session()->put('place_id', $this->place);
+        session()->put('order.place', $this->place);
     }
 
     public function render()

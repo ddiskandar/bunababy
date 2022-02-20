@@ -1,5 +1,5 @@
 <div>
-    @if (session()->has('kecamatan_id'))
+    @if (session()->has('order.kecamatan_id'))
         <div class="mb-4 font-semibold lg:text-lg">Cari Jadwal Bidan untuk {{ $kecamatan->name }}</div>
         <div class="space-y-4">
             @foreach ($kecamatan->midwives as $midwife)

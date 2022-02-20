@@ -16,7 +16,7 @@
                     @if(true)
 
                         @php
-                            $isSelected = $slot['id'] == session('start_time_id');
+                            $isSelected = $slot['id'] == session('order.start_time_id');
                             $isAvailable = '';
                         @endphp
 
@@ -69,7 +69,7 @@
                     @if(true)
 
                         @php
-                            $isSelected = $slot['id'] == session('start_time_id');
+                            $isSelected = $slot['id'] == session('order.start_time_id');
                             $isAvailable = '';
                         @endphp
 

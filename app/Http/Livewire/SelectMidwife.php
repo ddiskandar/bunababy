@@ -38,8 +38,12 @@ class SelectMidwife extends Component
     public function selectDate($d, $m, $y) {
         $date = Carbon::create($y, $m, $d);
 
-        session()->put('selected_date', $date);
-        session()->put('midwife_user_id', $this->midwife->id);
+        session()->put('order.date', $date);
+        session()->put('order.midwife_user_id', $this->midwife->id);
+
+        if(session()->missing('order.place')) {
+            return back();
+        }
 
         return to_route('client.order.2');
     }

@@ -17,159 +17,152 @@ class TreatmentSeeder extends Seeder
         DB::table('treatments')->insert([
             [
                 'category_id' => 1,
-                'name' => 'Baby Spa',
+                'name' => 'Persiapan Persalinan',
+                'desc' => 'Private pembahasan materi persiapan persalinan, teknik pernafasan, dan tips persalinan nyaman, mendapatkan modul',
+                'price' => 200000,
+                'duration' => 120,
+            ],
+            [
+                'category_id' => 1,
+                'name' => 'Kelas Laktasi',
+                'desc' => 'Private pembahasan materi laktasi dan manajemen ASI, mendapatkan modul',
+                'price' => 200000,
+                'duration' => 120,
+            ],
+            [
+                'category_id' => 1,
+                'name' => 'New Born Care',
+                'price' => 200000,
+                'duration' => 120,
+                'desc' => 'Private pembahasan materi perawatan bayi baru lahir, simulasi peawatan bayi sehari-hari, dan teknik menggendong bayi',
+            ],
+            [
+                'category_id' => 1,
+                'name' => 'Tumbuh Kembang Anak',
                 'price' => 150000,
-                'duration' => 60,
-                'desc' => 'Baby swim, baby massage, baby gym'
-            ],
-            [
-                'category_id' => 1,
-                'name' => 'Baby Package',
-                'price' => 95000,
-                'duration' => 60,
-                'desc' => 'Baby massage, baby gym, baby brain gym'
-            ],
-            [
-                'category_id' => 1,
-                'name' => 'Happy Pregnancy',
-                'price' => 135000,
-                'duration' => 60,
-                'desc' => 'Pijat Hamil, periksa hamil, totok wajah'
-            ],
-            [
-                'category_id' => 1,
-                'name' => 'Happy Mommy',
-                'price' => 135000,
-                'duration' => 60,
-                'desc' => 'Pijat nifas, periksa nifas, totok wajah'
+                'duration' => 120,
+                'desc' => 'Private pembahasa materi tumbuh kembang anak sesuai dengan usia anak, cara stimulasi di rumah, dan simulasi praktek'
             ],
 
             [
                 'category_id' => 2,
-                'name' => 'Pijat Bayi Sehat',
-                'price' => 75000,
-                'duration' => 60,
-                'desc' => '',
+                'name' => 'Baby SPA',
+                'price' => 160000,
+                'duration' => 90,
+                'desc' => 'Pijat bayi, baby gym (senam bayi) dan baby swim (berenan)',
             ],
             [
                 'category_id' => 2,
-                'name' => 'Pijat Balita Sehat',
-                'price' => 75000,
-                'duration' => 60,
-                'desc' => '',
-            ],
-            [
-                'category_id' => 2,
-                'name' => 'Baby Package',
-                'price' => 95000,
-                'duration' => 60,
-                'desc' => 'baby massage, baby gym and brain gym'
-            ],
-            [
-                'category_id' => 2,
-                'name' => 'Pijat Pediatric',
-                'price' => 90000,
-                'duration' => 60,
-                'desc' => 'batuk pilek/diare/stimulasi jalan/stimulasi tumbuh gigi/konstipasi nafsu makan'
-            ],
-            [
-                'category_id' => 2,
-                'name' => 'Mandi Ceria',
-                'price' => 35000,
-                'duration' => 60,
-                'desc' => '',
-            ],
-            [
-                'category_id' => 2,
-                'name' => 'Tumbuh Kembang Anak',
-                'price' => 25000,
-                'duration' => 60,
-                'desc' => '',
+                'name' => 'Cukur Bayi',
+                'price' => 60000,
+                'duration' => 30,
+                'desc' => 'Cukur bayi (usia 0-12 bulan)',
             ],
             [
                 'category_id' => 2,
                 'name' => 'Tindik',
-                'price' => 50000,
-                'duration' => 60,
-                'desc' => '',
+                'price' => 60000,
+                'duration' => 15,
+                'desc' => 'Tindik dengan teknik steril manual langsung dengan anting plenis (tidak termasuk antingnya)'
             ],
             [
                 'category_id' => 2,
-                'name' => 'Cukur Rambut',
-                'price' => 55000,
+                'name' => 'Tumbuh Kembang Anak',
+                'price' => 35000,
+                'duration' => 30,
+                'desc' => 'Pemeriksaan tumbuh kembang anak sesuai usianya dengan pedoman khusus'
+            ],
+            [
+                'category_id' => 2,
+                'name' => 'Mandi Ceria',
+                'price' => 30000,
+                'duration' => 30,
+                'desc' => 'Memandikanbayi dan edukasi cara memandikan bayi untu orangtua',
+            ],
+            [
+                'category_id' => 2,
+                'name' => 'Pijat Bayi Sehat',
+                'price' => 90000,
                 'duration' => 60,
-                'desc' => '',
+                'desc' => 'Pijat bayi (usia 0-12 bulan) seluruh tubuh dengan aromaterapi',
+            ],
+            [
+                'category_id' => 2,
+                'name' => 'Pijat Balita',
+                'price' => 90000,
+                'duration' => 60,
+                'desc' => 'Pijat bayi (usia 13-60 bulan) seluruh tubuh dengan aromaterapi',
+            ],
+            [
+                'category_id' => 2,
+                'name' => 'Baby Package',
+                'price' => 105000,
+                'duration' => 60,
+                'desc' => 'Pijat bayi seluruh tubuh, brain gym untuk kecerasan otak dan baby gym untuk melatih motorik bayi',
+            ],
+            [
+                'category_id' => 2,
+                'name' => 'Pijat Pediatrik',
+                'price' => 100000,
+                'duration' => 60,
+                'desc' => 'Pijat seluruh tubuh serta penekanan di titik pediatrik sesuai kondisi bayi. Pilihan : Pediatrk nafsu makan, kembung, batuk, pilek, diare, konstipasi, demam, imun booster',
+            ],
+            [
+                'category_id' => 2,
+                'name' => 'Pijat Stimulasi Anak',
+                'price' => 110000,
+                'duration' => 60,
+                'desc' => 'Pijat seluruh tubuh, cek tumbuh kembang anak, stimulasi motorik, Pilihan : stimulasi tengkurap, duduk, merangkak, jalan (usia 0-24 bulan)',
             ],
 
             [
                 'category_id' => 3,
-                'name' => 'Pijat Hamil + Periksa Hamil',
-                'price' => 110000,
+                'name' => 'Prenatal Gentle Yoga',
+                'price' => 120000,
                 'duration' => 60,
-                'desc' => '',
-            ],
-            [
-                'category_id' => 3,
-                'name' => 'Pijat Nifas + Periksa Nifas',
-                'price' => 110000,
-                'duration' => 60,
-                'desc' => '',
-            ],
-            [
-                'category_id' => 3,
-                'name' => 'Terapi Bendungan ASI',
-                'price' => 70000,
-                'duration' => 30,
-                'desc' => '',
+                'desc' => 'Private class yoga khusus ibu hamil dan periksa hamil'
             ],
             [
                 'category_id' => 3,
                 'name' => 'Paket Laktasi',
                 'price' => 85000,
                 'duration' => 60,
-                'desc' => 'Breastcare + Pijat Laktasi'
+                'desc' => 'Breastcare, pijat punggung titik oksitosin, dan konsultasi ASI'
             ],
             [
                 'category_id' => 3,
-                'name' => 'Pijat Oksitosin',
-                'price' => 75000,
+                'name' => 'Pijat Gelombang Cinta',
+                'price' => 85000,
                 'duration' => 60,
-                'desc' => 'Termasuk pemeriksa kehamilan'
+                'desc' => 'Pijat untuk menstimulasi kontraksi alami bumil (min 37 minggu), periksa hamil, afirmasi untuk persalinan lancar',
             ],
             [
                 'category_id' => 3,
-                'name' => 'Private Prenatal Gentle Yoga',
-                'price' => 110000,
-                'duration' => 60,
-                'desc' => '',
+                'name' => 'Totok Bersinar',
+                'price' => 60000,
+                'duration' => 30,
+                'desc' => 'Cleansing, pijat wajah, totok wajah, masker coklat'
             ],
             [
                 'category_id' => 3,
-                'name' => 'Totok Wajah',
-                'price' => 30000,
-                'duration' => 60,
-                'desc' => 'Breastcare + Pijat Laktasi'
+                'name' => 'Happy Pregnancy',
+                'price' => 150000,
+                'duration' => 90,
+                'desc' => 'Pijat ibu hamil (mulai usia 20 minggu) seluruh tubuh, kecuali beberapa titik kontraindikasi bumil, periksa ibu hamil, dan totok wajah',
             ],
             [
                 'category_id' => 3,
-                'name' => 'Konsultasi Mantap KB',
-                'price' => 30000,
-                'duration' => 60,
-                'desc' => '',
+                'name' => 'Happy Mommy',
+                'price' => 150000,
+                'duration' => 90,
+                'desc' => 'Pijat ibu nifas (0-42 hari nifas) seluruh tubuh, periksa nifas sesuai keadaan pasien, dan totok wajah',
             ],
             [
                 'category_id' => 3,
-                'name' => 'Konsultasi Pra Nikah',
-                'price' => 50000,
-                'duration' => 60,
-                'desc' => '',
-            ],
-            [
-                'category_id' => 3,
-                'name' => 'Pijat Rintik Hujan (RDT)',
-                'price' => 400000,
-                'duration' => 60,
-                'desc' => 'free totok wajah',
+                'name' => 'Pijat Rintik Hujan',
+                'price' => 450000,
+                'duration' => 120,
+                'desc' => 'Pijat premium dengan teknik khusus dan menggunakan full paket oil young living dengan sensasi hangat di tubuh. Untuk semua usia dewasa khusus perempuan, berfungsi untuk detoksifikasi tubuh, meningkatkan daya tahan tubuh, mengurangi ketegangan badan dan rileksasi pikiran. Free totok wajah',
             ],
         ]);
     }

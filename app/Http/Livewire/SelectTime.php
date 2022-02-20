@@ -12,7 +12,7 @@ class SelectTime extends Component
 {
     public function selectTime(Slot $slot)
     {
-        session(['start_time_id' => $slot->id]);
+        session()->put('order.start_time_id', $slot->id);
 
         $this->emit('timeChanged');
     }

@@ -8,139 +8,44 @@
 
     <div class="w-full mx-auto bg-white border rounded border-bunababy-50" x-data="{selected:1}">
         <ul class="shadow-box">
-            <li class="relative border-b border-bunababy-50">
-                <button type="button" class="w-full px-6 py-4 text-left" @click="selected !== 1 ? selected = 1 : selected = null">
-                    <div class="flex items-center justify-between">
-                        <span class="font-semibold text-bunababy-200">Bunababy Class</span>
-                        <span :class=" selected == 1 ? 'rotate-45' : ''" class="transition-all duration-700">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-bunababy-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 4v16m8-8H4" />
-                            </svg>
-                        </span>
+            @foreach ($categories as $category)
+                <li class="relative border-b border-bunababy-50">
+                    <button type="button" class="w-full px-6 py-4 text-left" @click="selected !== {{ $loop->iteration }} ? selected = {{ $loop->iteration }} : selected = null">
+                        <div class="flex items-center justify-between">
+                            <span class="font-semibold text-bunababy-200">{{ $category->name }}</span>
+                            <span :class=" selected == {{ $loop->iteration }} ? 'rotate-45' : ''" class="transition-all duration-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-bunababy-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 4v16m8-8H4" />
+                                </svg>
+                            </span>
+                        </div>
+                    </button>
+
+                    <div class="relative overflow-hidden transition-all duration-700 max-h-0" style="" x-ref="container{{ $loop->iteration }}" x-bind:style="selected == {{ $loop->iteration }} ? 'max-height: ' + $refs.container{{ $loop->iteration }}.scrollHeight + 'px' : ''">
+                        <div class="px-6 pb-6">
+                            <ul class="grid gap-4 xl:grid-cols-2">
+                                @foreach ($category->treatments as $treatment)
+                                <li class="p-6 border rounded border-slate-200">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <div class="font-semibold ">{{ $treatment->name }}</div>
+                                        <div class="text-xs">{{ $treatment->duration }} menit</div>
+                                    </div>
+                                    <div class="text-slate-400 text-sm">{{ $treatment->desc }}</div>
+                                    <div class="flex items-center justify-between mt-4">
+                                        <div class="font-semibold">Rp{{ number_format($treatment->price, 0 , ',' , '.') }}</div>
+                                        <button
+                                            wire:click="add({{ $treatment->id }})"
+                                            class="px-4 py-1 text-xs text-white rounded-full bg-bunababy-200"
+                                        >Tambah</button>
+                                    </div>
+                                </li>
+                                @endforeach
+
+                            </ul>
+                        </div>
                     </div>
-                </button>
-
-                <div class="relative overflow-hidden transition-all duration-700 max-h-0" style="" x-ref="container1" x-bind:style="selected == 1 ? 'max-height: ' + $refs.container1.scrollHeight + 'px' : ''">
-                    <div class="px-6 pb-6">
-                        <ul class="grid gap-4 xl:grid-cols-2">
-                            <li class="p-6 text-sm border rounded border-slate-200">
-                                <div class="font-semibold">Baby Spa</div>
-                                <div class="text-slate-400">Baby Swim, Baby Massage, Baby Gym</div>
-                                <div class="flex items-center justify-between mt-4">
-                                    <div class="font-semibold">Rp150.000</div>
-                                    <div class="px-4 py-1 text-xs text-white rounded-full bg-bunababy-200">Tambah</div>
-                                </div>
-                            </li>
-                            <li class="p-6 text-sm border rounded border-slate-200">
-                                <div class="font-semibold">Baby Spa</div>
-                                <div class="text-slate-400">Baby Swim, Baby Massage, Baby Gym</div>
-                                <div class="flex items-center justify-between mt-4">
-                                    <div class="font-semibold">Rp150.000</div>
-                                    <div class="px-4 py-1 text-xs border rounded-full border-bunababy-200 text-bunababy-200">Tambah</div>
-                                </div>
-                            </li>
-                            <li class="p-6 text-sm border rounded border-slate-200">
-                                <div class="font-semibold">Baby Spa</div>
-                                <div class="text-slate-400">Baby Swim, Baby Massage, Baby Gym</div>
-                                <div class="flex items-center justify-between mt-4">
-                                    <div class="font-semibold">Rp150.000</div>
-                                    <div class="px-4 py-1 text-xs border rounded-full border-bunababy-200 text-bunababy-200">Tambah</div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
-
-
-            <li class="relative border-b border-bunababy-50">
-                <button type="button" class="w-full px-6 py-4 text-left" @click="selected !== 2 ? selected = 2 : selected = null">
-                    <div class="flex items-center justify-between">
-                        <span class="font-semibold text-bunababy-200">Baby Treatment</span>
-                        <span :class=" selected == 2 ? 'rotate-45' : ''" class="transition-all duration-700">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-bunababy-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 4v16m8-8H4" />
-                            </svg>
-                        </span>
-                    </div>
-                </button>
-
-                <div class="relative overflow-hidden transition-all duration-700 max-h-0" style="" x-ref="container2" x-bind:style="selected == 2 ? 'max-height: ' + $refs.container2.scrollHeight + 'px' : ''">
-                    <div class="px-6 pb-6">
-                        <ul class="grid gap-4 xl:grid-cols-2">
-                            <li class="p-6 text-sm border rounded border-slate-200">
-                                <div class="font-semibold">Baby Spa</div>
-                                <div class="text-slate-400">Baby Swim, Baby Massage, Baby Gym</div>
-                                <div class="flex items-center justify-between mt-4">
-                                    <div class="font-semibold">Rp150.000</div>
-                                    <div class="px-4 py-1 text-xs text-white rounded-full bg-bunababy-200">Tambah</div>
-                                </div>
-                            </li>
-                            <li class="p-6 text-sm border rounded border-slate-200">
-                                <div class="font-semibold">Baby Spa</div>
-                                <div class="text-slate-400">Baby Swim, Baby Massage, Baby Gym</div>
-                                <div class="flex items-center justify-between mt-4">
-                                    <div class="font-semibold">Rp150.000</div>
-                                    <div class="px-4 py-1 text-xs border rounded-full border-bunababy-200 text-bunababy-200">Tambah</div>
-                                </div>
-                            </li>
-                            <li class="p-6 text-sm border rounded border-slate-200">
-                                <div class="font-semibold">Baby Spa</div>
-                                <div class="text-slate-400">Baby Swim, Baby Massage, Baby Gym</div>
-                                <div class="flex items-center justify-between mt-4">
-                                    <div class="font-semibold">Rp150.000</div>
-                                    <div class="px-4 py-1 text-xs border rounded-full border-bunababy-200 text-bunababy-200">Tambah</div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
-
-
-            <li class="relative border-b border-bunababy-50">
-                <button type="button" class="w-full px-6 py-4 text-left" @click="selected !== 3 ? selected = 3 : selected = null">
-                    <div class="flex items-center justify-between">
-                        <span class="font-semibold text-bunababy-200">Buna Treatment</span>
-                        <span :class=" selected == 3 ? 'rotate-45' : ''" class="transition-all duration-700">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-bunababy-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 4v16m8-8H4" />
-                            </svg>
-                        </span>
-                    </div>
-                </button>
-
-                <div class="relative overflow-hidden transition-all duration-700 max-h-0" style="" x-ref="container3" x-bind:style="selected == 3 ? 'max-height: ' + $refs.container3.scrollHeight + 'px' : ''">
-                    <div class="px-6 pb-6">
-                        <ul class="grid gap-4 xl:grid-cols-2">
-                            <li class="p-6 text-sm border rounded border-slate-200">
-                                <div class="font-semibold">Baby Spa</div>
-                                <div class="text-slate-400">Baby Swim, Baby Massage, Baby Gym</div>
-                                <div class="flex items-center justify-between mt-4">
-                                    <div class="font-semibold">Rp150.000</div>
-                                    <div class="px-4 py-1 text-xs text-white rounded-full bg-bunababy-200">Tambah</div>
-                                </div>
-                            </li>
-                            <li class="p-6 text-sm border rounded border-slate-200">
-                                <div class="font-semibold">Baby Spa</div>
-                                <div class="text-slate-400">Baby Swim, Baby Massage, Baby Gym</div>
-                                <div class="flex items-center justify-between mt-4">
-                                    <div class="font-semibold">Rp150.000</div>
-                                    <div class="px-4 py-1 text-xs border rounded-full border-bunababy-200 text-bunababy-200">Tambah</div>
-                                </div>
-                            </li>
-                            <li class="p-6 text-sm border rounded border-slate-200">
-                                <div class="font-semibold">Baby Spa</div>
-                                <div class="text-slate-400">Baby Swim, Baby Massage, Baby Gym</div>
-                                <div class="flex items-center justify-between mt-4">
-                                    <div class="font-semibold">Rp150.000</div>
-                                    <div class="px-4 py-1 text-xs border rounded-full border-bunababy-200 text-bunababy-200">Tambah</div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
+                </li>
+            @endforeach
         </ul>
     </div>
 </div>

@@ -15,10 +15,10 @@ class ListMidwife extends Component
 
     public function mount() {
 
-        if (session()->has('kecamatan_id')) {
+        if (session()->has('order.kecamatan_id')) {
 
             $this->kecamatan = Kecamatan::query()
-                ->where('id', session('kecamatan_id'))
+                ->where('id', session('order.kecamatan_id'))
                 ->select('id', 'name')
                 ->with(['midwives:id'])
                 ->first();
