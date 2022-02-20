@@ -15,7 +15,7 @@
                 </div>
                 <span class="inline-flex items-center px-4 py-1 ml-6 font-semibold leading-5 border rounded-full bg-bunababy-50 border-bunababy-200/50">
                     <span class="w-2 h-2 mr-2 rounded-full bg-bunababy-200"></span>
-                    <span class="text-bunababy-200">{{ session('order.date')->isoFormat('dddd, D MMMM G') }}</span>
+                    <span class="text-sm text-bunababy-200 ">{{ session('order.date')->isoFormat('dddd, D MMMM G') }}</span>
                 </span>
 
             </div>

@@ -3,13 +3,11 @@
         <div>
             <div class="hidden text-lg font-semibold lg:block text-bunababy-400">Bunababy<span class="text-bunababy-200">Care</span></div>
             <div class="lg:hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-bunababy-400" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
-                  </svg>
+                <span class="text-2xl font-bold text-bunababy-200">B</span>
             </div>
         </div>
 
-        <div class="inline-flex items-center w-2/3 lg:w-1/2 ">
+        <div class="inline-flex items-center w-10/12 lg:w-1/2 ">
 
             @if (request()->is('order'))
             <div class="inline-flex items-center text-sm text-bunababy-400">
@@ -41,7 +39,7 @@
                     2
                     </span>
                 </div>
-                <span class="ml-2 font-medium">Waktu dan Treatment</span>
+                <span class="ml-2 font-medium">Waktu & Treatment</span>
             </div>
             @elseif (request()->is('order/3'))
             <div class="inline-flex items-center text-sm text-bunababy-400">
@@ -50,7 +48,7 @@
                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                     </svg>
                 </div>
-                <span class="hidden ml-2 font-medium md:block">Waktu dan Treatment</span>
+                <span class="hidden ml-2 font-medium md:block">Waktu & Treatment</span>
             </div>
             @else
             <div class="inline-flex items-center text-sm text-bunababy-300/70">
@@ -59,7 +57,7 @@
                     2
                     </span>
                 </div>
-                <span class="hidden ml-2 font-medium md:block">Waktu dan Treatment</span>
+                <span class="hidden ml-2 font-medium md:block">Waktu & Treatment</span>
             </div>
             @endif
 

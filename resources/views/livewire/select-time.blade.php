@@ -27,7 +27,7 @@
                         <button
                             wire:click="selectTime({{ $slot['id'] }})"
                             @class([
-                                'inline-flex items-center justify-center w-16  text-xs font-semibold leading-5 border rounded-full ',
+                                'inline-flex items-center justify-center w-14  text-xs font-semibold leading-5 border rounded-full ',
                                 'border-slate-200 ' => ! $isSelected,
                                 'border-transparent bg-bunababy-50 text-bunababy-200' => $isSelected,
                                 'ring-2 ring-offset-1 ring-bunababy-100/50' => $inRange,
@@ -35,7 +35,7 @@
                             >
                             <span
                                 @class([
-                                    'w-2 h-2 mr-2 rounded-full ',
+                                    'w-2 h-2 mr-1 rounded-full ',
                                     'bg-green-600' => ! $isSelected,
                                     'bg-bunababy-200' => $isSelected,
                                 ])
@@ -45,8 +45,8 @@
 
                         @else
 
-                        <button class="inline-flex items-center justify-center w-16 text-xs font-semibold leading-5 text-red-200 border border-red-200 rounded-full cursor-not-allowed bg-red-50" >
-                            <span class="w-2 h-2 mr-2 bg-red-300 rounded-full" ></span>
+                        <button class="inline-flex items-center justify-center text-xs font-semibold leading-5 text-red-200 border border-red-200 rounded-full cursor-not-allowed w-14 bg-red-50" >
+                            <span class="w-2 h-2 mr-1 bg-red-300 rounded-full" ></span>
                             <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>
                         </button>
 
@@ -54,8 +54,8 @@
 
                     @else
 
-                    <button class="inline-flex items-center justify-center w-16 text-xs font-semibold leading-5 border rounded-full cursor-not-allowed text-slate-200 border-slate-200 bg-slate-50" >
-                        <span class="w-2 h-2 mr-2 rounded-full bg-slate-300" ></span>
+                    <button class="inline-flex items-center justify-center text-xs font-semibold leading-5 border rounded-full cursor-not-allowed w-14 text-slate-200 border-slate-200 bg-slate-50" >
+                        <span class="w-2 h-2 mr-1 rounded-full bg-slate-300" ></span>
                         <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>
                     </button>
 
@@ -82,7 +82,7 @@
                         <button
                             wire:click="selectTime({{ $slot['id'] }})"
                             @class([
-                                'inline-flex items-center justify-center w-16  text-xs font-semibold leading-5 border rounded-full ',
+                                'inline-flex items-center justify-center w-14  text-xs font-semibold leading-5 border rounded-full ',
                                 'border-slate-200' => ! $isSelected,
                                 'border-transparent bg-bunababy-50 text-bunababy-200' => $isSelected,
                                 'ring-2 ring-offset-1 ring-bunababy-100/50' => $inRange,
@@ -90,7 +90,7 @@
                             >
                             <span
                                 @class([
-                                    'w-2 h-2 mr-2 rounded-full ',
+                                    'w-2 h-2 mr-1 rounded-full ',
                                     'bg-green-600' => ! $isSelected,
                                     'bg-bunababy-200' => $isSelected,
                                 ])
@@ -100,8 +100,8 @@
 
                         @else
 
-                        <button class="inline-flex items-center justify-center w-16 text-xs font-semibold leading-5 text-red-200 border border-red-200 rounded-full cursor-not-allowed bg-red-50" >
-                            <span class="w-2 h-2 mr-2 bg-red-300 rounded-full" ></span>
+                        <button class="inline-flex items-center justify-center text-xs font-semibold leading-5 text-red-200 border border-red-200 rounded-full cursor-not-allowed w-14 bg-red-50" >
+                            <span class="w-2 h-2 mr-1 bg-red-300 rounded-full" ></span>
                             <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>
                         </button>
 
@@ -109,8 +109,8 @@
 
                     @else
 
-                    <button class="inline-flex items-center justify-center w-16 text-xs font-semibold leading-5 border rounded-full cursor-not-allowed text-slate-200 border-slate-200 bg-slate-50" >
-                        <span class="w-2 h-2 mr-2 rounded-full bg-slate-300" ></span>
+                    <button class="inline-flex items-center justify-center text-xs font-semibold leading-5 border rounded-full cursor-not-allowed w-14 text-slate-200 border-slate-200 bg-slate-50" >
+                        <span class="w-2 h-2 mr-1 rounded-full bg-slate-300" ></span>
                         <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>
                     </button>
 
