@@ -10,6 +10,10 @@ class TreatmentCatalog extends Component
 {
     public function add(Treatment $treatment) {
 
+        if(session()->missing('order.addMinutes')) {
+            session()->put('order.addMinutes', 40);
+        }
+
         session()->increment('order.addMinutes', $treatment->duration);
 
         $id = time();

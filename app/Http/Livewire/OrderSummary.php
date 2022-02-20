@@ -8,14 +8,19 @@ use Livewire\Component;
 
 class OrderSummary extends Component
 {
-    protected $listeners = ['timeChanged'];
+    protected $listeners = ['timeChanged', 'treatmentAdded'];
 
     public function mount()
     {
-        // session()->put('order.addMinutes', 40);
+
     }
 
     public function timeChanged()
+    {
+        $this->render();
+    }
+
+    public function treatmentAdded()
     {
         $this->render();
     }

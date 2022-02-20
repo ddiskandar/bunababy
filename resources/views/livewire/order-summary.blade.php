@@ -21,8 +21,13 @@
                 <label class="flex items-center">
                     <input type="radio" class="w-4 h-4 border border-bunababy-50 text-bunababy-200 focus:border-bunababy-200 focus:ring focus:ring-bunababy-200 focus:ring-opacity-50" name="tk-form-elements-radios-stacked" checked />
                     <div class="ml-4">
-                        <span class="font-semibold">Homecare</span>
-                        <div class="text-sm">{{ $data['kecamatan'] }}</div>
+                        @if (session('place') == 1)
+                            <span class="font-semibold">Homecare</span>
+                            <div class="text-sm">{{ $data['kecamatan'] }}</div>
+                        @else
+                            <span class="font-semibold">Onsite</span>
+                            <div class="text-sm">Di Klinik bunababy</div>
+                        @endif
                     </div>
                 </label>
             </div>
