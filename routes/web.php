@@ -27,7 +27,7 @@ Route::get('/order', function () {
 
 Route::get('/order/2', function () {
 
-    if( session()->missing('midwifeId') OR session()->missing('kecamatanId') OR session()->missing('selectedDate') ) {
+    if( session()->missing('midwife_user_id') OR session()->missing('kecamatan_id') OR session()->missing('selected_date') ) {
         return back();
     }
 

@@ -13,12 +13,12 @@ class SelectLocation extends Component
     public $kecamatan;
 
     public function mount() {
-        $this->kecamatan = DB::table('kecamatans')->where('id', session('kecamatanId') )->value('name') ?? 'Pilih salah satu';
+        $this->kecamatan = DB::table('kecamatans')->where('id', session('kecamatan_id') )->value('name') ?? 'Pilih salah satu';
     }
 
-    public function setLocation($kecamatanId) {
-        $this->kecamatan = DB::table('kecamatans')->where('id', $kecamatanId )->value('name');
-        session()->put('kecamatanId', $kecamatanId);
+    public function setLocation($kecamatan_id) {
+        $this->kecamatan = DB::table('kecamatans')->where('id', $kecamatan_id )->value('name');
+        session()->put('kecamatan_id', $kecamatan_id);
         $this->emit('kecamatanIdChanged');
     }
 

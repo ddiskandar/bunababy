@@ -1,8 +1,8 @@
 <x-client-layout>
 
-<div class="container gap-12 px-4 py-6 mx-auto sm:px-12 lg:flex">
+<div class="container gap-12 px-4 py-4 mx-auto md:py-10 sm:px-12 lg:flex">
 
-    <div class="flex-1 mt-4 space-y-4 md:mt-0">
+    <div class="flex-1 space-y-4 md:mt-0">
         <x-panel>
             <div class="py-4">
                 <div class="flex items-center mb-2 text-bunababy-400">

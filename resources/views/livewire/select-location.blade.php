@@ -21,6 +21,7 @@
     <!-- Modal Backdrop -->
     <div
     x-show="open"
+    x-cloak
     x-transition:enter="transition ease-out duration-200"
     x-transition:enter-start="transform opacity-0"
     x-transition:enter-end="transform opacity-100"
@@ -37,7 +38,6 @@
     <div
         class="fixed inset-x-0 bottom-0 flex flex-col w-full max-w-md mx-auto overflow-hidden bg-white rounded-t shadow-sm sm:rounded sm:static"
         x-show="open"
-        x-cloak
         @click.outside="open = false"
         x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="transform opacity-0 scale-125"

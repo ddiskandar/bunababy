@@ -37,10 +37,16 @@ class SelectTime extends Component
                 } else { $new->put($order->id, 'empty'); }
             }
             $new->put('status', ($new->contains('booked')) ? 'booked' : 'empty');
+            $new->put('slot', Carbon::parse($slot->time)->gte(Carbon::parse('12:00:00')) ? 'siang' : 'pagi');
 
             $data->push($new);
         }
-        // dd($data);
+        $data = $data->groupBy(function ($slot) {
+            if ($slot['slot'] == 'pagi') {
+                return 'pagi';
+            }
+            return 'siang';
+        });
 
         return view('livewire.select-time', [
             'slots' => $slots,

@@ -1,4 +1,4 @@
-<div class="py-4 z-90 md:py-8 bg-bunababy-50 ">
+<div class="sticky top-0 py-4 bg-white border-b z-90 md:py-6 border-bunababy-50 ">
     <div class="container flex items-center justify-between px-4 mx-auto sm:px-12">
         <div>
             <div class="hidden text-lg font-semibold lg:block text-bunababy-400">Bunababy<span class="text-bunababy-200">Care</span></div>
@@ -41,5 +41,10 @@
             </div>
 
         </div>
+    </div>
+</div>
+<div class="py-6 md:py-12 bg-bunababy-50">
+    <div class="container px-4 mx-auto sm:px-12">
+        <h1 class="text-xl font-semibold text-center md:text-left md:text-2xl text-bunababy-400">Online Booking</h1>
     </div>
 </div>
