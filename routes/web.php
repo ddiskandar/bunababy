@@ -34,6 +34,16 @@ Route::get('/order/2', function () {
 
 })->name('client.order.2');
 
+Route::get('/order/3', function () {
+
+    if( session()->missing('order.midwife_user_id') OR session()->missing('order.kecamatan_id') OR session()->missing('order.date') ) {
+        return redirect()->route('client.order');
+    }
+
+    return view('client.order.waktu');
+
+})->name('client.order.3');
+
 
 
 
