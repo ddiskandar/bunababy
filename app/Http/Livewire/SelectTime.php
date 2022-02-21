@@ -29,8 +29,8 @@ class SelectTime extends Component
     public function render()
     {
         $orders = Order::query()
-            ->where('date', session('selectedDate'))
-            ->where('midwife_user_id', session('midwife_user_id'))
+            ->where('date', session('order.date'))
+            ->where('midwife_user_id', session('order.midwife_user_id'))
             ->select('id', 'start_time', 'end_time')
             ->get();
 

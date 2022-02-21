@@ -21,7 +21,7 @@
                 <label class="flex items-center">
                     <input type="radio" class="w-4 h-4 border border-bunababy-50 text-bunababy-200 focus:border-bunababy-200 focus:ring focus:ring-bunababy-200 focus:ring-opacity-50" name="tk-form-elements-radios-stacked" checked />
                     <div class="ml-4">
-                        @if (session('place') == 1)
+                        @if (session('order.place') == 1)
                             <span class="font-semibold">Homecare</span>
                             <div class="text-sm">{{ $data['kecamatan'] }}</div>
                         @else
@@ -56,7 +56,7 @@
                     </li>
                     <li class="py-4 text-sm">
                         <div class="font-semibold">Transportasi</div>
-                        <div class="text-slate-400">Cimahi ke Cibeunying Kaler</div>
+                        <div class="text-slate-400">Klinik ke Cibeunying Kaler</div>
                         <div class="flex justify-between py-2">
                             <div>1 x Rp30.000</div>
                             <div class="font-semibold">Rp30.000</div>

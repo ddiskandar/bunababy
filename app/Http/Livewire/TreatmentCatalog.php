@@ -8,7 +8,14 @@ use Livewire\Component;
 
 class TreatmentCatalog extends Component
 {
-    public function add(Treatment $treatment) {
+    public $family_id;
+
+    public function mount()
+    {
+        $this->family_id = time();
+    }
+
+    public function addTreatment(Treatment $treatment) {
 
         if(session()->missing('order.addMinutes')) {
             session()->put('order.addMinutes', 40);
@@ -16,28 +23,30 @@ class TreatmentCatalog extends Component
 
         session()->increment('order.addMinutes', $treatment->duration);
 
-        $id = time();
-
-        session()->push('order.families', [
-            'id' => $id,
-            'name' => 'pulan',
-            'type'=> 'buna',
-        ]);
-
         session()->push('order.treatments', [
             'treatment_id' => $treatment->id,
-            'family_id' => $id,
+            'family_id' => $this->family_id,
         ]);
 
         $this->emit('treatmentAdded');
 
     }
 
+    public function addFamily()
+    {
+        session()->push('order.families', [
+            'id' => $this->family_id,
+            'name' => 'pulan',
+            'type'=> 'buna',
+        ]);
+    }
+
     public function render()
     {
         $categories = Category::query()
-            ->with('treatments')
-            ->get();
+            ->with('treatments', function($query){
+                $query->whereHidden(false);
+            })->get();
 
         return view('livewire.treatment-catalog', [
             'categories' => $categories,

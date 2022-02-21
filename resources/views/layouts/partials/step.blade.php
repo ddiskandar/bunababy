@@ -1,9 +1,11 @@
 <div class="sticky top-0 py-4 bg-white border-b z-90 md:py-6 border-bunababy-50 ">
     <div class="container flex items-center justify-between px-4 mx-auto sm:px-12">
         <div>
-            <div class="hidden text-lg font-semibold lg:block text-bunababy-400">Bunababy<span class="text-bunababy-200">Care</span></div>
+            <div class="hidden text-lg font-semibold lg:block text-bunababy-400">
+                <img src="/images/logo.svg" alt="Logo">
+            </div>
             <div class="lg:hidden">
-                <span class="text-2xl font-bold text-bunababy-200">B</span>
+                <img src="/images/logo2.svg" alt="Logo">
             </div>
         </div>
 

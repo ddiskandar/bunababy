@@ -1327,8 +1327,8 @@ select {
 .w-48 {
   width: 12rem;
 }
-.w-2\/3 {
-  width: 66.666667%;
+.w-10\/12 {
+  width: 83.333333%;
 }
 .w-16 {
   width: 4rem;
@@ -1341,9 +1341,6 @@ select {
 }
 .w-32 {
   width: 8rem;
-}
-.w-10\/12 {
-  width: 83.333333%;
 }
 .w-14 {
   width: 3.5rem;
@@ -1553,9 +1550,6 @@ select {
 }
 .gap-2 {
   gap: 0.5rem;
-}
-.gap-1 {
-  gap: 0.25rem;
 }
 .space-x-4 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
@@ -1912,9 +1906,6 @@ select {
 .bg-clip-padding {
   background-clip: padding-box;
 }
-.fill-bunababy-400 {
-  fill: #B95CC7;
-}
 .fill-current {
   fill: currentColor;
 }
@@ -2019,10 +2010,6 @@ select {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
 }
-.px-8 {
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
 .pt-8 {
   padding-top: 2rem;
 }
@@ -2108,13 +2095,13 @@ select {
   font-size: 1.25rem;
   line-height: 1.75rem;
 }
-.text-base {
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
+}
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 .text-3xl {
   font-size: 1.875rem;
@@ -2940,10 +2927,6 @@ select {
     justify-content: space-between;
   }
 
-  .sm\:gap-2 {
-    gap: 0.5rem;
-  }
-
   .sm\:space-y-0 > :not([hidden]) ~ :not([hidden]) {
     --tw-space-y-reverse: 0;
     margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
@@ -3039,6 +3022,10 @@ select {
 
   .md\:w-80 {
     width: 20rem;
+  }
+
+  .md\:w-20 {
+    width: 5rem;
   }
 
   .md\:flex-initial {

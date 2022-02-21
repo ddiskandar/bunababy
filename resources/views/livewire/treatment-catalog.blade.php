@@ -30,11 +30,11 @@
                                         <div class="font-semibold ">{{ $treatment->name }}</div>
                                         <div class="text-xs">{{ $treatment->duration }} menit</div>
                                     </div>
-                                    <div class="text-slate-400 text-sm">{{ $treatment->desc }}</div>
+                                    <div class="text-sm text-slate-400">{{ $treatment->desc }}</div>
                                     <div class="flex items-center justify-between mt-4">
                                         <div class="font-semibold">Rp{{ number_format($treatment->price, 0 , ',' , '.') }}</div>
                                         <button
-                                            wire:click="add({{ $treatment->id }})"
+                                            wire:click="addTreatment({{ $treatment->id }})"
                                             class="px-4 py-1 text-xs text-white rounded-full bg-bunababy-200"
                                         >Tambah</button>
                                     </div>
