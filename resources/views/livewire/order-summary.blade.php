@@ -54,8 +54,8 @@
                                 @endforeach
                             </div>
                             <div class="flex justify-between py-2">
-                                <div>{{ $treatment->count() }} x Rp{{ number_format($treatment[0]['treatment_price'], 0 , ',' , '.') }}</div>
-                                <div class="font-semibold">Rp{{ number_format($treatment->sum('treatment_price'), 0 , ',' , '.') }}</div>
+                                <div>{{ $treatment->count() }} x {{ rupiah($treatment[0]['treatment_price']) }}</div>
+                                <div class="font-semibold">{{ rupiah($treatment->sum('treatment_price')) }}</div>
                             </div>
                             <button class="text-red-500">Hapus</button>
                         </li>
@@ -79,7 +79,7 @@
 
             <div class="flex items-center justify-between py-6 text-lg font-semibold">
                 <div>Total Pembayaran</div>
-                <div>Rp{{ $treatments->collapse()->sum('treatment_price') }}</div>
+                <div>{{ rupiah($treatments->collapse()->sum('treatment_price')) }}</div>
             </div>
 
             <div class="py-6">

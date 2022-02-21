@@ -80,10 +80,10 @@
                       Treatments
                     </td>
                     <td class="p-3 text-right">
-                        Rp{{ number_format($order->total_price, 0 , ',' , '.') }}
+                        {{ rupiah($order->total_price) }}
                     </td>
                     <td class="p-3 font-medium text-right md:table-cell">
-                        Rp{{ number_format($order->grand_total(), 0 , ',' , '.') }}
+                        {{ rupiah($order->grand_total()) }}
                     </td>
                   </tr>
                 @endforeach
