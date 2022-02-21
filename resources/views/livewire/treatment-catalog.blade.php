@@ -32,7 +32,7 @@
                                     </div>
                                     <div class="text-sm text-slate-400">{{ $treatment->desc }}</div>
                                     <div class="flex items-center justify-between mt-4">
-                                        <div class="font-semibold">Rp{{ number_format($treatment->price, 0 , ',' , '.') }}</div>
+                                        <div class="font-semibold">{{ rupiah($treatment->price) }}</div>
                                         <div>
                                             {{-- @dd(Arr::exists(Arr::flatten(session('order.treatments')), $treatment->id)) --}}
                                             <span></span>
