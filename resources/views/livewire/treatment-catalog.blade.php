@@ -34,8 +34,9 @@
                                     <div class="flex items-center justify-between mt-4">
                                         <div class="font-semibold">{{ rupiah($treatment->price) }}</div>
                                         <div>
-                                            {{-- @dd(Arr::exists(Arr::flatten(session('order.treatments')), $treatment->id)) --}}
-                                            <span></span>
+                                            @if(Arr::exists(Arr::flatten(session('order.treatments')), $treatment->id))
+                                                <span>{{ collect(session('order.treatments'))->where('treatment_id', $treatment->id)->count() }}</span>
+                                            @endif
                                             <button
                                                 wire:click="addTreatment({{ $treatment->id }})"
                                                 class="px-4 py-1 text-xs text-white rounded-full bg-bunababy-200"

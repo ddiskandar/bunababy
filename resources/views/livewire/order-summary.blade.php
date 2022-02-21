@@ -37,7 +37,7 @@
                 <div class="">
                     <div class="font-semibold">{{ $data['date'] }}</div>
                     @if ($data['start_time'])
-                        <div class="text-sm">{{ Str::substr($data['start_time'], 0, 5 )  }} - {{ Str::substr($data['end_time'], 0, 5 )  }} WIB</div>
+                        <div class="text-sm">{{ Str::substr($data['start_time'], 0, 5 )  }} - {{ Str::substr($data['end_time'], 0, 5 )  }} WIB ( {{ session('order.addMinutes') }} menit )</div>
                     @endif
                 </div>
             </div>
