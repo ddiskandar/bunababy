@@ -1,4 +1,4 @@
-<div class="sticky top-24">
+<div class="sticky top-28 ">
     <div class="inline-flex items-center mb-4 text-bunababy-400">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
@@ -37,7 +37,7 @@
                 <div class="">
                     <div class="font-semibold">{{ $data['date'] }}</div>
                     @if ($data['start_time'])
-                        <div class="text-sm">{{ $data['start_time'] }} - {{ $data['end_time'] }} WIB</div>
+                        <div class="text-sm">{{ Str::substr($data['start_time'], 0, 5 )  }} - {{ Str::substr($data['end_time'], 0, 5 )  }} WIB</div>
                     @endif
                 </div>
             </div>
@@ -45,15 +45,27 @@
             <div class="py-4">
                 <x-title>Treatment</x-title>
                 <ul class="-mt-4 divide-y divide-bunababy-50">
+                    @forelse ($treatments as $key => $treatment)
+                        <li class="py-4 text-sm">
+                            <div class="font-semibold">{{ $key }}</div>
+                            <div class="text-slate-400 truncate ">
+                                @foreach ($treatment as $pemesan)
+                                    <span>{{ $pemesan['family_name'] }}</span>
+                                @endforeach
+                            </div>
+                            <div class="flex justify-between py-2">
+                                <div>{{ $treatment->count() }} x Rp{{ number_format($treatment[0]['treatment_price'], 0 , ',' , '.') }}</div>
+                                <div class="font-semibold">Rp{{ number_format($treatment->sum('treatment_price'), 0 , ',' , '.') }}</div>
+                            </div>
+                            <button class="text-red-500">Hapus</button>
+                        </li>
+                    @empty
                     <li class="py-4 text-sm">
-                        <div class="font-semibold">Baby Spa</div>
-                        <div class="text-slate-400">Baby Swim, Baby Massage, Baby Gym</div>
-                        <div class="flex justify-between py-2">
-                            <div>1 x Rp150.000</div>
-                            <div class="font-semibold">Rp150.000</div>
-                        </div>
-                        <button class="text-red-500">Hapus</button>
+                        <div class="font-semibold">Kosong</div>
                     </li>
+                    @endforelse
+
+
                     <li class="py-4 text-sm">
                         <div class="font-semibold">Transportasi</div>
                         <div class="text-slate-400">Klinik ke Cibeunying Kaler</div>
@@ -67,7 +79,7 @@
 
             <div class="flex items-center justify-between py-6 text-lg font-semibold">
                 <div>Total Pembayaran</div>
-                <div>Rp190.000</div>
+                <div>Rp{{ $treatments->collapse()->sum('treatment_price') }}</div>
             </div>
 
             <div class="py-6">

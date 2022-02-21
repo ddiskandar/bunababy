@@ -33,10 +33,14 @@
                                     <div class="text-sm text-slate-400">{{ $treatment->desc }}</div>
                                     <div class="flex items-center justify-between mt-4">
                                         <div class="font-semibold">Rp{{ number_format($treatment->price, 0 , ',' , '.') }}</div>
-                                        <button
-                                            wire:click="addTreatment({{ $treatment->id }})"
-                                            class="px-4 py-1 text-xs text-white rounded-full bg-bunababy-200"
-                                        >Tambah</button>
+                                        <div>
+                                            {{-- @dd(Arr::exists(Arr::flatten(session('order.treatments')), $treatment->id)) --}}
+                                            <span></span>
+                                            <button
+                                                wire:click="addTreatment({{ $treatment->id }})"
+                                                class="px-4 py-1 text-xs text-white rounded-full bg-bunababy-200"
+                                            >Tambah</button>
+                                        </div>
                                     </div>
                                 </li>
                                 @endforeach

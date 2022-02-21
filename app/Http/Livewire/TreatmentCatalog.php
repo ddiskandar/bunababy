@@ -25,7 +25,11 @@ class TreatmentCatalog extends Component
 
         session()->push('order.treatments', [
             'treatment_id' => $treatment->id,
+            'treatment_name' => $treatment->name,
+            'treatment_desc' => $treatment->desc,
+            'treatment_price' => $treatment->price,
             'family_id' => $this->family_id,
+            'family_name' => 'indra',
         ]);
 
         $this->emit('treatmentAdded');
@@ -47,6 +51,8 @@ class TreatmentCatalog extends Component
             ->with('treatments', function($query){
                 $query->whereHidden(false);
             })->get();
+
+        $data = collect();
 
         return view('livewire.treatment-catalog', [
             'categories' => $categories,

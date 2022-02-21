@@ -27,19 +27,28 @@ class OrderSummary extends Component
 
     public function render()
     {
-        $addMinutes = session('order.addMinutes') ?? 40;
+        $treatments = collect(session('order.treatments')) ?? [];
+
+        $treatments = $treatments->mapToGroups(function($item, $key) {
+            return [$item['treatment_name'] => [
+                'family_name' => $item['family_name'],
+                'treatment_name' => $item['treatment_name'],
+                'treatment_desc' => $item['treatment_desc'],
+                'treatment_price' => $item['treatment_price'],
+            ]];
+        });
+
+        // dd($treatments);
 
         $data['kecamatan'] = DB::table('kecamatans')->where('id', session('order.kecamatan_id'))->value('name');
         $data['bidan'] = \App\Models\User::where('id', session('order.midwife_user_id'))->value('name');
         $data['date'] = session('order.date')->isoFormat('dddd, D MMMM G');
         $data['start_time'] = DB::table('slots')->where('id', session('order.start_time_id'))->value('time');
-        $data['end_time'] = Carbon::parse($data['start_time'])->addMinutes($addMinutes)->toTimeString();
-
-        $start_time = \App\Models\Slot::where('id', session('order.start_time_id'))->value('time');
-        $time = Carbon::parse($start_time);
+        $data['end_time'] = Carbon::parse($data['start_time'])->addMinutes(session('order.addMinutes'))->toTimeString();
 
         return view('livewire.order-summary', [
             'data' => $data,
+            'treatments' => $treatments,
         ]);
     }
 }
