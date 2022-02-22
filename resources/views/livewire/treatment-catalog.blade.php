@@ -34,7 +34,7 @@
                                     <div class="text-sm text-slate-400">{{ $treatment->desc }}</div>
                                     <div class="font-semibold py-2">{{ rupiah($treatment->price) }}</div>
 
-                                    @if(session()->has('order.treatments'))
+                                    @if(session()->has('order'))
 
                                         @php
                                             $pemesans = collect(session('order.treatments'))->where('treatment_id', $treatment->id);
@@ -71,10 +71,12 @@
                                         <button
                                                 wire:click="addTreatment({{ $treatment->id }})"
                                                 class="px-4 py-1 text-xs text-white rounded-full bg-bunababy-200"
-                                            >Tambah</button>
+                                            >Tambah
+                                        </button>
                                         @endif
 
                                     </div>
+
                                     @endif
                                 </li>
                                 @endforeach
