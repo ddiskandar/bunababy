@@ -36,6 +36,12 @@ class TreatmentCatalog extends Component
 
     }
 
+    public function deleteTreatment($index)
+    {
+        session()->pull('order.treatment.' . $index );
+        $this->emit('treatmentDeleted');
+    }
+
     public function addFamily()
     {
         session()->push('order.families', [

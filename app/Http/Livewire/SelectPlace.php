@@ -9,7 +9,10 @@ class SelectPlace extends Component
     public $place;
 
     public function mount() {
-        $this->place = session('order.place') ?? '';
+        if (session()->missing('order.place')) {
+            session()->put('order.place', 1);
+        }
+        $this->place = session('order.place') ;
     }
 
     public function updatedPlace() {
