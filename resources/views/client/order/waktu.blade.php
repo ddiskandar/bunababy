@@ -26,7 +26,7 @@
         </x-panel>
 
         <div class="py-4">
-            @livewire('treatment-catalog')
+            @livewire('manage-treatment')
         </div>
 
     </div>

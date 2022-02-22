@@ -1,4 +1,4 @@
-<div class="sticky top-0 py-4 bg-white border-b z-90 md:py-6 border-bunababy-50 ">
+<div class="sticky top-0 py-4 bg-white border-b z-20 md:py-6 border-bunababy-50 ">
     <div class="container flex items-center justify-between px-4 mx-auto sm:px-12">
         <div>
             <div class="hidden text-lg font-semibold lg:block text-bunababy-400">

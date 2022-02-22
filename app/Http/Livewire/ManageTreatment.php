@@ -6,13 +6,25 @@ use App\Models\Category;
 use App\Models\Treatment;
 use Livewire\Component;
 
-class TreatmentCatalog extends Component
+class ManageTreatment extends Component
 {
+    public $showAddTreatmentModal = false;
+
     public $family_id;
+
+    public Treatment $currentTreatment;
 
     public function mount()
     {
+        $this->currentTreatment = new Treatment();
+
         $this->family_id = time();
+    }
+
+    public function confirmAddTreatment(Treatment $treatment)
+    {
+        $this->currentTreatment = $treatment;
+        $this->showAddTreatmentModal = true;
     }
 
     public function addTreatment(Treatment $treatment) {
@@ -60,7 +72,7 @@ class TreatmentCatalog extends Component
 
         $data = collect();
 
-        return view('livewire.treatment-catalog', [
+        return view('livewire.manage-treatment', [
             'categories' => $categories,
         ]);
     }
