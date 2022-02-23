@@ -9,7 +9,7 @@
         <!-- Header -->
         <header id="page-header" class="flex items-center flex-none py-10 bg-white">
           <div class="container flex flex-col px-4 mx-auto space-y-6 text-center md:flex-row md:items-center md:justify-between md:space-y-0 xl:max-w-7xl lg:px-8">
-            <div>
+            <div class="flex justify-center">
               <img src="/images/logo.svg" alt="Logo">
             </div>
             <div class="flex flex-col space-y-6 text-center md:flex-row md:items-center md:justify-between md:space-y-0 md:space-x-10">
@@ -79,12 +79,12 @@
       </div>
       <!-- END Hero -->
 
-       <!-- Features Section: Modern With Icons Left -->
+    <!-- Features Section: Modern With Icons Left -->
     <div class="bg-white">
         <div class="space-y-16 container xl:max-w-7xl mx-auto px-4 py-16 lg:px-8 lg:py-32">
           <!-- Heading -->
           <div class="text-center">
-            <div class="text-sm uppercase font-bold tracking-wider mb-1 text-pink-700">
+            <div class="text-sm uppercase font-bold tracking-wider mb-1 text-indigo-700">
               Improve your design
             </div>
             <h2 class="text-3xl md:text-4xl font-extrabold mb-4">
@@ -100,8 +100,8 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12">
             <div class="sm:flex sm:space-x-10 py-5">
               <div class="flex-none group inline-flex items-center justify-center w-12 h-12 ml-3 mb-8 sm:mb-0 sm:mt-5 relative">
-                <div class="absolute inset-0 rounded-xl -m-3 transform -rotate-6 bg-pink-300 transition ease-out duration-150 group-hover:rotate-6 group-hover:scale-110"></div>
-                <div class="absolute inset-0 rounded-xl -m-3 transform rotate-2 bg-pink-800 bg-opacity-75 shadow-inner transition ease-out duration-150 group-hover:-rotate-3 group-hover:scale-110"></div>
+                <div class="absolute inset-0 rounded-xl -m-3 transform -rotate-6 bg-indigo-300 transition ease-out duration-150 group-hover:rotate-6 group-hover:scale-110"></div>
+                <div class="absolute inset-0 rounded-xl -m-3 transform rotate-2 bg-indigo-800 bg-opacity-75 shadow-inner transition ease-out duration-150 group-hover:-rotate-3 group-hover:scale-110"></div>
                 <svg stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="text-white relative transform transition ease-out duration-150 opacity-90 group-hover:scale-125 group-hover:opacity-100 hi-outline hi-code inline-block w-10 h-10"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
               </div>
               <div>
@@ -115,8 +115,8 @@
             </div>
             <div class="sm:flex sm:space-x-10 py-5">
               <div class="flex-none group inline-flex items-center justify-center w-12 h-12 ml-3 mb-8 sm:mb-0 sm:mt-5 relative">
-                <div class="absolute inset-0 rounded-xl -m-3 transform -rotate-6 bg-pink-300 transition ease-out duration-150 group-hover:rotate-6 group-hover:scale-110"></div>
-                <div class="absolute inset-0 rounded-xl -m-3 transform rotate-2 bg-pink-800 bg-opacity-75 shadow-inner transition ease-out duration-150 group-hover:-rotate-3 group-hover:scale-110"></div>
+                <div class="absolute inset-0 rounded-xl -m-3 transform -rotate-6 bg-indigo-300 transition ease-out duration-150 group-hover:rotate-6 group-hover:scale-110"></div>
+                <div class="absolute inset-0 rounded-xl -m-3 transform rotate-2 bg-indigo-800 bg-opacity-75 shadow-inner transition ease-out duration-150 group-hover:-rotate-3 group-hover:scale-110"></div>
                 <svg stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="text-white relative transform transition ease-out duration-150 opacity-90 group-hover:scale-125 group-hover:opacity-100 hi-outline hi-device-mobile inline-block w-10 h-10"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
               </div>
               <div>
@@ -130,8 +130,8 @@
             </div>
             <div class="sm:flex sm:space-x-10 py-5">
               <div class="flex-none group inline-flex items-center justify-center w-12 h-12 ml-3 mb-8 sm:mb-0 sm:mt-5 relative">
-                <div class="absolute inset-0 rounded-xl -m-3 transform -rotate-6 bg-pink-300 transition ease-out duration-150 group-hover:rotate-6 group-hover:scale-110"></div>
-                <div class="absolute inset-0 rounded-xl -m-3 transform rotate-2 bg-pink-800 bg-opacity-75 shadow-inner transition ease-out duration-150 group-hover:-rotate-3 group-hover:scale-110"></div>
+                <div class="absolute inset-0 rounded-xl -m-3 transform -rotate-6 bg-indigo-300 transition ease-out duration-150 group-hover:rotate-6 group-hover:scale-110"></div>
+                <div class="absolute inset-0 rounded-xl -m-3 transform rotate-2 bg-indigo-800 bg-opacity-75 shadow-inner transition ease-out duration-150 group-hover:-rotate-3 group-hover:scale-110"></div>
                 <span class="font-semibold text-xl text-white relative transform transition ease-out duration-150 opacity-90 group-hover:scale-125 group-hover:opacity-100">JS</span>
               </div>
               <div>
@@ -145,8 +145,8 @@
             </div>
             <div class="sm:flex sm:space-x-10 py-5">
               <div class="flex-none group inline-flex items-center justify-center w-12 h-12 ml-3 mb-8 sm:mb-0 sm:mt-5 relative">
-                <div class="absolute inset-0 rounded-xl -m-3 transform -rotate-6 bg-pink-300 transition ease-out duration-150 group-hover:rotate-6 group-hover:scale-110"></div>
-                <div class="absolute inset-0 rounded-xl -m-3 transform rotate-2 bg-pink-800 bg-opacity-75 shadow-inner transition ease-out duration-150 group-hover:-rotate-3 group-hover:scale-110"></div>
+                <div class="absolute inset-0 rounded-xl -m-3 transform -rotate-6 bg-indigo-300 transition ease-out duration-150 group-hover:rotate-6 group-hover:scale-110"></div>
+                <div class="absolute inset-0 rounded-xl -m-3 transform rotate-2 bg-indigo-800 bg-opacity-75 shadow-inner transition ease-out duration-150 group-hover:-rotate-3 group-hover:scale-110"></div>
                 <svg stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="text-white relative transform transition ease-out duration-150 opacity-90 group-hover:scale-125 group-hover:opacity-100 hi-outline hi-cog inline-block w-10 h-10"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
               </div>
               <div>
@@ -161,7 +161,20 @@
           </div>
           <!-- END Features -->
 
-      <!-- Pricing Section: Alternate -->
+          <!-- Link -->
+          <div class="text-center">
+            <a href="javascript:void(0)" class="inline-flex justify-center items-center space-x-2 border font-semibold focus:outline-none px-3 py-2 leading-6 rounded border-gray-300 bg-white text-gray-800 shadow-sm hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-white active:border-white active:shadow-none">
+              <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="transform -rotate-45 opacity-50 hi-solid hi-arrow-right inline-block w-5 h-5"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+              <span>Live Preview</span>
+            </a>
+          </div>
+          <!-- END Link -->
+        </div>
+      </div>
+      <!-- END Features Section: Modern With Icons Left -->
+
+
+    <!-- Pricing Section: Alternate -->
     <div class="bg-gray-100">
         <div class="container xl:max-w-7xl mx-auto px-4 py-16 lg:px-8 lg:py-32">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-0 lg:py-6 xl:mx-32">

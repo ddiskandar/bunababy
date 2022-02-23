@@ -27,12 +27,9 @@
 
                                 @foreach ($category->treatments as $treatment)
                                 <li class="p-6 border rounded border-slate-200">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <div class="font-semibold ">{{ $treatment->name }}</div>
-                                        <div class="text-xs">{{ $treatment->duration }} menit</div>
-                                    </div>
+                                    <div class="font-semibold text-xl leading-loose">{{ $treatment->name }}</div>
                                     <div class="text-sm text-slate-400">{{ $treatment->desc }}</div>
-                                    <div class="font-semibold py-2">{{ rupiah($treatment->price) }}</div>
+                                    <div class="py-2 text-slate-400 text-sm"><span class="text-slate-600 font-medium">{{ rupiah($treatment->price) }}</span> • <span class="text-slate-600 font-medium">{{ $treatment->duration }} menit</span></div>
 
                                     @if(session()->has('order'))
 
@@ -94,7 +91,7 @@
         x-data="{ open: @entangle('showAddTreatmentModal') }"
         x-show="open"
         style="display: none !important;"
-        class="fixed z-30 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true"
+        class="fixed z-30 inset-0 overflow-y-auto " aria-labelledby="modal-title" role="dialog" aria-modal="true"
     >
         <div
             x-show = "open"
@@ -119,76 +116,87 @@
 
             <div
                 x-show="open"
-                x-trap="open"
+                x-trap.noscroll="open"
                 x-transition:enter="ease-out duration-300"
                 x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
                 x-transition:leave="ease-in duration-200"
                 x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
                 x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                class="inline-block align-bottom relative  text-left transform transition-all sm:mb-8 sm:align-middle sm:max-w-lg sm:w-full"
             >
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div class="sm:flex sm:items-start">
-                    <div class="text-center sm:text-left">
-                        <h3 class="leading-6 font-semibold" id="modal-title">{{ $currentTreatment->name }}</h3>
-                        <div class="mt-2">
-                            <p class="text-sm text-gray-500">{{ $currentTreatment->desc }}</p>
-                        </div>
-                        <div>{{ rupiah($currentTreatment->price) }} </div>
+                <div
+                    x-on:click="open = false"
+                    class="bg-white p-2 rounded-full absolute -top-12 right-0 z-30">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-bunababy-200 rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 4v16m8-8H4" />
+                    </svg>
+                </div>
 
-                        <div class="mt-4">
-                            <h3 class="font-semibold py-2">Pilih Profil Pasien</h3>
-                            <nav class="border border-gray-200 rounded bg-white divide-y divide-gray-200 overflow-hidden">
-                                <a class="p-4 flex justify-between items-center text-gray-700 hover:text-gray-700 hover:bg-gray-50 active:bg-white" href="javascript:void(0)">
-                                <div class="flex items-center space-x-4">
-                                    <img src="https://source.unsplash.com/iFgRcqHznqg/160x160" alt="User Avatar" class="inline-block w-10 h-10 rounded-full">
-                                    <div class="text-left">
-                                    <p class="font-semibold text-sm">
-                                        Thomas Reynolds
-                                    </p>
-                                    <p class="font-medium text-sm text-gray-500">
-                                        Diri sendiri
-                                    </p>
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 overflow-hidden rounded-lg shadow-xl">
+                    <div class="sm:flex sm:items-start">
+                        <div class="">
+                            <div class="flex justify-between items-center">
+                                <x-title>Tambah treatment</x-title>
+                            </div>
+                            <div class="p-4 border rounded bg-bunababy-50/10  border-bunababy-50" >
+                            <div>
+                                <h3 class="leading-6 text-xl font-semibold" id="modal-title">{{ $currentTreatment->name }}</h3>
+                                <div class="mt-2">
+                                    <p class="text-sm text-gray-500">{{ $currentTreatment->desc }}</p>
+                                </div>
+                                <div class="py-2 text-slate-400 text-sm"><span class="text-slate-600 font-medium">{{ rupiah($currentTreatment->price) }}</span> • <span class="text-slate-600 font-medium">{{ $currentTreatment->duration }} menit</span></div>
+                            </div>
+                            </div>
+
+                            <div class="mt-4 w-full">
+                                <x-title>Pilih Profil</x-title>
+                                @if (!session()->has('order.family'))
+                                    <nav class="border border-gray-200 rounded bg-white divide-y divide-gray-200 overflow-hidden">
+                                        <a class="p-4 flex justify-between items-center text-gray-700 hover:text-gray-700 hover:bg-bunababy-50/20 active:bg-white" href="javascript:void(0)">
+                                        <div class="flex items-center space-x-4">
+                                            <img src="https://source.unsplash.com/iFgRcqHznqg/160x160" alt="User Avatar" class="inline-block w-10 h-10 rounded-full">
+                                            <div class="text-left">
+                                            <p class="font-semibold text-sm">
+                                                Thomas Reynolds
+                                            </p>
+                                            <p class="font-medium text-sm text-gray-500">
+                                                Diri sendiri
+                                            </p>
+                                            </div>
+                                        </div>
+                                        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="opacity-50 hi-solid hi-chevron-right inline-block w-5 h-5"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                        </a>
+                                    </nav>
+                                @else
+                                <div>
+                                    <div class="flex items-center">
+                                        <div>Tambah Profil Keluarga</div>
                                     </div>
                                 </div>
-                                <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="opacity-50 hi-solid hi-chevron-right inline-block w-5 h-5"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                                </a>
-                                <a class="p-4 flex justify-between items-center text-gray-700 hover:text-gray-700 hover:bg-gray-50 active:bg-white" href="javascript:void(0)">
-                                <div class="flex items-center space-x-4">
-                                    <img src="https://source.unsplash.com/8PMvB4VyVXA/160x160" alt="User Avatar" class="inline-block w-10 h-10 rounded-full">
-                                    <div class="text-left">
-                                    <p class="font-semibold text-sm">
-                                        Chad Hale
-                                    </p>
-                                    <p class="font-medium text-sm text-gray-500">
-                                        Anak
-                                    </p>
-                                    </div>
+                                @endif
+                                <div class="text-sm text-slate-400 py-4">
+                                    Belum ada di daftar? <a class="text-bunababy-200 font-semibold">Tambah profil keluarga</a>
                                 </div>
-                                <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="opacity-50 hi-solid hi-chevron-right inline-block w-5 h-5"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                                </a>
-
-                            </nav>
+                            </div>
                         </div>
                     </div>
                 </div>
-                </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                {{-- <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <button
                     type="button"
-                    class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-bunababy-200 text-base font-medium text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-bunababy-200 sm:ml-3 sm:w-auto sm:text-sm"
+                    class="w-full inline-flex justify-center rounded-full border border-transparent shadow-sm px-6 py-2 bg-bunababy-200 text-base font-medium text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-bunababy-200 sm:ml-3 sm:w-auto sm:text-sm"
                 >
-                    Tambah
+                    Tambah Treatment
                 </button>
                 <button
                     x-on:click="open = false"
                     type="button"
-                    class="mt-3 w-full inline-flex justify-center rounded-md  px-4 py-2 font-medium text-gray-700 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    class="mt-3 w-full inline-flex justify-center rounded-md  px-4 py-2 font-medium text-slate-400 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                 >
                     Batal
                 </button>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
