@@ -22,9 +22,8 @@
         </nav>
         <div
             x-show = "! add"
-            x-on:click="add = true"
             class="text-sm text-slate-400 py-4">
-            Belum ada di daftar? <button class="text-bunababy-200 font-semibold">Tambah profil keluarga</button>
+            Belum ada di daftar? <button x-on:click="add = true" class="text-bunababy-200 font-semibold">Tambah profil keluarga</button>
         </div>
     @else
     <div
