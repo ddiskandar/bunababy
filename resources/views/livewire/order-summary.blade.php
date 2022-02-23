@@ -61,7 +61,7 @@
                         </li>
                     @empty
                     <li class="py-4 text-sm">
-                        <div class="font-semibold">Kosong</div>
+                        <div class="font-semibold">Belum dipilih</div>
                     </li>
                     @endforelse
 
@@ -79,14 +79,16 @@
 
             <div class="flex items-center justify-between py-6 text-lg font-semibold">
                 <div>Total Pembayaran</div>
-                <div>{{ rupiah($treatments->collapse()->sum('treatment_price')) }}</div>
+                <div>{{ rupiah( array_sum([$treatments->collapse()->sum('treatment_price'), 30000]) ) }}</div>
             </div>
 
+            @if (session()->has('order.treatments'))
             <div class="py-6">
                 <button class="w-full py-4 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50">
                     Lanjut ke Data Pemesan
                 </button>
             </div>
+            @endif
         </x-panel>
     </div>
 </div>

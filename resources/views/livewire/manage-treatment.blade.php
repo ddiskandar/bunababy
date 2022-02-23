@@ -1,4 +1,6 @@
 <div>
+    @if (session()->has('order.start_time_id'))
+
     <div class="inline-flex items-center mb-4 text-bunababy-400">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
             <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
@@ -39,10 +41,13 @@
 
                                     <div class="flex items-start justify-between mt-2">
                                         <div>
-                                                @forelse ($pemesans as $pemesan)
+                                                @forelse ($pemesans as $key => $pemesan)
                                                 <div class="font-semibold inline-flex px-4 py-1 leading-4 items-center space-x-1 text-xs rounded-full text-bunababy-200 bg-bunababy-50">
                                                     <span>{{ $pemesan['family_name'] }}</span>
-                                                    <button type="button" class="focus:outline-none text-pink-600 hover:text-pink-400 focus:ring focus:ring-pink-500 focus:ring-opacity-50 active:text-pink-600">
+                                                    <button
+                                                        wire:click="deleteTreatment({{ $key }})"
+                                                        type="button"
+                                                        class="focus:outline-none text-pink-600 hover:text-pink-400 focus:ring focus:ring-pink-500 focus:ring-opacity-50 active:text-pink-600">
                                                       <svg class="hi-solid hi-x inline-block w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                                                     </button>
                                                   </div>
@@ -56,7 +61,7 @@
                                         <div class="flex items-center">
                                             <span class="mr-2">{{ $pemesans->count() }}</span>
                                             <button
-                                                    wire:click="addTreatment({{ $treatment->id }})"
+                                                    wire:click="confirmAddTreatment({{ $treatment->id }})"
                                                     class=""
                                                 >
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 stroke-bunababy-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -135,7 +140,7 @@
 
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 overflow-hidden rounded-lg shadow-xl">
                     <div class="sm:flex sm:items-start">
-                        <div class="">
+                        <div class="w-full">
                             <div class="flex justify-between items-center">
                                 <x-title>Tambah treatment</x-title>
                             </div>
@@ -174,5 +179,7 @@
             </div>
         </div>
     </div>
+
+    @endif
 
 </div>

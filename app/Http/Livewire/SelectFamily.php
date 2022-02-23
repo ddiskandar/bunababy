@@ -11,6 +11,10 @@ class SelectFamily extends Component
 
     public $showAddFamily = false;
 
+    protected $rules = [
+        'name' => 'min:2|max:32'
+    ];
+
     public function mount()
     {
 
@@ -18,17 +22,25 @@ class SelectFamily extends Component
 
     public function addFamily()
     {
+        $this->validate();
+
         session()->push('order.family', [
+            'id' => time(),
             'name' => $this->name,
-            'type' => $this->type,
+            'type' => ! session('order.family') ? 'Diri Sendiri' : $this->type,
         ]);
         $this->name = '';
         $this->showAddFamily = false;
     }
 
+    public function selectFamily($familyId)
+    {
+        $this->emit('familySelected', $familyId);
+    }
+
     public function render()
     {
-        $families = collect(session('order.family') ?? []);
+        $families = collect(session('order.family') ?? [] );
 
         return view('livewire.select-family', [
             'families' => $families,

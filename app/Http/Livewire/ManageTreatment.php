@@ -14,11 +14,34 @@ class ManageTreatment extends Component
 
     public Treatment $currentTreatment;
 
+    protected $listeners = [
+        'familySelected',
+        'timeChanged',
+        'treatmentDeleted',
+    ];
+
     public function mount()
     {
         $this->currentTreatment = new Treatment();
 
         $this->family_id = time();
+    }
+
+    public function familySelected($familyId)
+    {
+        $this->showAddTreatmentModal = false;
+        $this->family_id = $familyId;
+        $this->addTreatment($this->currentTreatment);
+    }
+
+    public function timeChanged()
+    {
+        $this->render();
+    }
+
+    public function treatmentDeleted()
+    {
+        $this->render();
     }
 
     public function confirmAddTreatment(Treatment $treatment)
@@ -35,13 +58,15 @@ class ManageTreatment extends Component
 
         session()->increment('order.addMinutes', $treatment->duration);
 
+        $family = collect(session('order.family'))->where('id',$this->family_id)->first();
+
         session()->push('order.treatments', [
             'treatment_id' => $treatment->id,
             'treatment_name' => $treatment->name,
             'treatment_desc' => $treatment->desc,
             'treatment_price' => $treatment->price,
             'family_id' => $this->family_id,
-            'family_name' => 'indra',
+            'family_name' => $family['name'],
         ]);
 
         $this->emit('treatmentAdded');
@@ -50,7 +75,8 @@ class ManageTreatment extends Component
 
     public function deleteTreatment($index)
     {
-        session()->pull('order.treatment.' . $index );
+        session()->forget('order.treatments.' . $index );
+
         $this->emit('treatmentDeleted');
     }
 

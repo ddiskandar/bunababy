@@ -29,6 +29,7 @@
             @livewire('manage-treatment')
         </div>
 
+
     </div>
     <div class="mt-6 lg:w-96 lg:flex-initial lg:mt-0">
         @livewire('order-summary')

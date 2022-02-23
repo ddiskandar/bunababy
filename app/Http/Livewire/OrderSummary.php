@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class OrderSummary extends Component
 {
-    protected $listeners = ['timeChanged', 'treatmentAdded'];
+    protected $listeners = ['timeChanged', 'treatmentAdded', 'treatmentDeleted'];
 
     public function mount()
     {
@@ -21,6 +21,11 @@ class OrderSummary extends Component
     }
 
     public function treatmentAdded()
+    {
+        $this->render();
+    }
+
+    public function treatmentDeleted()
     {
         $this->render();
     }

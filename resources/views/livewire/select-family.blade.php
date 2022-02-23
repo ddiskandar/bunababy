@@ -2,7 +2,9 @@
     @if (session()->has('order.family'))
         <nav class="border border-gray-200 rounded bg-white divide-y divide-gray-200 overflow-hidden">
             @foreach ($families as $family)
-                <a class="p-4 flex justify-between items-center text-gray-700 hover:text-gray-700 hover:bg-bunababy-50/20 active:bg-white" href="javascript:void(0)">
+                <button
+                    wire:click="selectFamily({{ $family['id'] }})"
+                    class="p-4 flex w-full justify-between items-center text-gray-700 hover:text-gray-700 hover:bg-bunababy-50/20 active:bg-white" >
                     <div class="flex items-center space-x-4">
                         <img src="https://source.unsplash.com/iFgRcqHznqg/160x160" alt="User Avatar" class="inline-block w-10 h-10 rounded-full">
                         <div class="text-left">
@@ -15,7 +17,7 @@
                         </div>
                     </div>
                     <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="opacity-50 hi-solid hi-chevron-right inline-block w-5 h-5"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                </a>
+                </button>
             @endforeach
         </nav>
         <div
@@ -40,6 +42,7 @@
 
     <div
         x-show="add"
+        x-on:click.outside="add = false"
         class="md:flex items-center md:space-x-2 justify-between py-4">
         <div class="w-full">
             <label for="price" class="block text-sm font-medium sr-only text-gray-700">Nama</label>
@@ -59,7 +62,7 @@
                         id="currency"
                         name="currency"
                         class="focus:ring-bunababy-100 focus:border-bunababy-100 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 text-sm rounded-md">
-                        <option value="Anak">Anak</option>
+                        <option value="Anak" selected>Anak</option>
                         <option value="Pasangan">Pasangan</option>
                         <option value="Orang tua">Orang tua</option>
                         <option value="Saudara Kandung">Saudara Kandung</option>
