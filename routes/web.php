@@ -45,11 +45,12 @@ Route::get('/order/3', function () {
         OR session()->missing('order.kecamatan_id')
         OR session()->missing('order.date')
         OR session()->missing('order.start_time_id')
+        OR session()->missing('order.treatments')
     ) {
         return redirect()->route('client.order');
     }
 
-    return view('client.order.waktu');
+    return view('client.order.pemesan');
 
 })->name('client.order.3');
 

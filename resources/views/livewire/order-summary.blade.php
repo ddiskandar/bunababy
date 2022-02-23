@@ -88,9 +88,9 @@
 
             @if (session()->has('order.treatments'))
             <div class="py-6">
-                <button class="w-full py-4 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50">
+                <a href="/order/3" class="w-full block py-4 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50">
                     Lanjut ke Data Pemesan
-                </button>
+                </a>
             </div>
             @endif
         </x-panel>
