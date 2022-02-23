@@ -23,6 +23,7 @@ class SelectFamily extends Component
             'type' => $this->type,
         ]);
         $this->name = '';
+        $this->showAddFamily = false;
     }
 
     public function render()
