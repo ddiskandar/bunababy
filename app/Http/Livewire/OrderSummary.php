@@ -30,6 +30,18 @@ class OrderSummary extends Component
         $this->render();
     }
 
+    public function deleteTreatments($id)
+    {
+        $treatments = collect(session('order.treatments'))->where('treatment_id', $id);
+
+        foreach ($treatments as $key => $treatment) {
+            session()->forget('order.treatments.' . $key );
+            session()->decrement('order.addMinutes', $treatment['treatment_duration']);
+        }
+
+        $this->emit('treatmentDeleted');
+    }
+
     public function render()
     {
         $treatments = collect(session('order.treatments')) ?? [];
@@ -37,9 +49,11 @@ class OrderSummary extends Component
         $treatments = $treatments->mapToGroups(function($item, $key) {
             return [$item['treatment_name'] => [
                 'family_name' => $item['family_name'],
+                'treatment_id' => $item['treatment_id'],
                 'treatment_name' => $item['treatment_name'],
                 'treatment_desc' => $item['treatment_desc'],
                 'treatment_price' => $item['treatment_price'],
+                'treatment_duration' => $item['treatment_duration'],
             ]];
         });
 

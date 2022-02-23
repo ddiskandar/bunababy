@@ -65,6 +65,7 @@ class ManageTreatment extends Component
             'treatment_name' => $treatment->name,
             'treatment_desc' => $treatment->desc,
             'treatment_price' => $treatment->price,
+            'treatment_duration' => $treatment->duration,
             'family_id' => $this->family_id,
             'family_name' => $family['name'],
         ]);
@@ -73,9 +74,10 @@ class ManageTreatment extends Component
 
     }
 
-    public function deleteTreatment($index)
+    public function deleteTreatment($index, Treatment $treatment)
     {
         session()->forget('order.treatments.' . $index );
+        session()->decrement('order.addMinutes', $treatment->duration);
 
         $this->emit('treatmentDeleted');
     }

@@ -57,7 +57,11 @@
                                 <div>{{ $treatment->count() }} x {{ rupiah($treatment[0]['treatment_price']) }}</div>
                                 <div class="font-semibold">{{ rupiah($treatment->sum('treatment_price')) }}</div>
                             </div>
-                            <button class="text-red-500">Hapus</button>
+                            <button
+                                wire:click="deleteTreatments({{ $treatment[0]['treatment_id'] }})"
+                                class="text-red-500">
+                                Hapus
+                            </button>
                         </li>
                     @empty
                     <li class="py-4 text-sm">

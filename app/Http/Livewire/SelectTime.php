@@ -10,9 +10,14 @@ use Livewire\Component;
 
 class SelectTime extends Component
 {
-    protected $listeners = ['treatmentAdded'];
+    protected $listeners = ['treatmentAdded', 'treatmentDeleted'];
 
     public function treatmentAdded()
+    {
+        $this->render();
+    }
+
+    public function treatmentDeleted()
     {
         $this->render();
     }

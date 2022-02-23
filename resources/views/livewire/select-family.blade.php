@@ -36,7 +36,7 @@
             </svg>
         </div>
         <div class="font-semibold leading-loose">Tambah Pofil </div>
-        <div class="text-sm text-slate-400">Belum ada profil yang tersimpan</div>
+        <div class="text-sm text-slate-400">Belum ada yang tersimpan, tambahkan profil anda</div>
     </div>
     @endif
 
