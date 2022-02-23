@@ -125,13 +125,13 @@
                 x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 class="inline-block align-bottom relative  text-left transform transition-all sm:mb-8 sm:align-middle sm:max-w-lg sm:w-full"
             >
-                <div
+                <button
                     x-on:click="open = false"
-                    class="bg-white p-2 rounded-full absolute -top-12 right-0 z-30">
+                    class="bg-white p-2 rounded-full absolute -top-12 right-2 z-30">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-bunababy-200 rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 4v16m8-8H4" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
-                </div>
+                </button>
 
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 overflow-hidden rounded-lg shadow-xl">
                     <div class="sm:flex sm:items-start">
@@ -151,33 +151,7 @@
 
                             <div class="mt-4 w-full">
                                 <x-title>Pilih Profil</x-title>
-                                @if (!session()->has('order.family'))
-                                    <nav class="border border-gray-200 rounded bg-white divide-y divide-gray-200 overflow-hidden">
-                                        <a class="p-4 flex justify-between items-center text-gray-700 hover:text-gray-700 hover:bg-bunababy-50/20 active:bg-white" href="javascript:void(0)">
-                                        <div class="flex items-center space-x-4">
-                                            <img src="https://source.unsplash.com/iFgRcqHznqg/160x160" alt="User Avatar" class="inline-block w-10 h-10 rounded-full">
-                                            <div class="text-left">
-                                            <p class="font-semibold text-sm">
-                                                Thomas Reynolds
-                                            </p>
-                                            <p class="font-medium text-sm text-gray-500">
-                                                Diri sendiri
-                                            </p>
-                                            </div>
-                                        </div>
-                                        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="opacity-50 hi-solid hi-chevron-right inline-block w-5 h-5"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                                        </a>
-                                    </nav>
-                                @else
-                                <div>
-                                    <div class="flex items-center">
-                                        <div>Tambah Profil Keluarga</div>
-                                    </div>
-                                </div>
-                                @endif
-                                <div class="text-sm text-slate-400 py-4">
-                                    Belum ada di daftar? <a class="text-bunababy-200 font-semibold">Tambah profil keluarga</a>
-                                </div>
+                                @livewire('select-family')
                             </div>
                         </div>
                     </div>
