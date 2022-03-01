@@ -19,6 +19,7 @@ class SelectLocation extends Component
 
         if(Auth::check()){
             $kecamatan_id = Auth::user()->addresses->where('is_main', true)->first()->kecamatan_id;
+            session()->put('order.kecamatan_id', $kecamatan_id);
         }
 
         $this->kecamatan = DB::table('kecamatans')->where('id', session('order.kecamatan_id') ?? $kecamatan_id )->value('name') ?? 'Pilih salah satu';

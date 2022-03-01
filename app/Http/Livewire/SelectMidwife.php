@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Order;
 use App\Models\Slot;
 use App\Models\User;
 use Carbon\Carbon;
@@ -12,6 +13,7 @@ class SelectMidwife extends Component
     public $selectedMonth;
     public $slots;
     public $midwife;
+    public $schedules;
 
     public function mount($midwife_user_id) {
         $this->selectedMonth = now()->format('Y-M');
@@ -19,8 +21,11 @@ class SelectMidwife extends Component
         $this->midwife = User::query()
             ->where('id', $midwife_user_id)
             ->select('id', 'name', 'email')
-            ->with('schedules:id,place,midwife_user_id,date,start_time,end_time,status')
+            // ->with('schedules:id,place,midwife_user_id,date,start_time,end_time,status')
             ->first();
+        $this->schedules = Order::query()
+            ->where('status', Order::STATUS_LOCKED)
+            ->where('midwife_user_id', $midwife_user_id)->get();
     }
 
     public function prevMonth() {
@@ -59,7 +64,7 @@ class SelectMidwife extends Component
 
         foreach ($period as $date) {
             $new = collect(['date' => $date]);
-            foreach($this->midwife->schedules as $order) {
+            foreach($this->schedules as $order) {
                 if ( $order->date->format('m-d') === $date->format('m-d') ) {
                     foreach($this->slots as $slot){
                         if ( Carbon::parse($slot->time)->between(Carbon::parse($order->start_time), Carbon::parse($order->end_time)) ) {

@@ -62,7 +62,15 @@ class OrderSummary extends Component
             'status' => Order::STATUS_LOCKED,
         ]);
 
-        // $order->treatments->attach();
+        foreach ( collect(session('order.treatments')) as $treatment ) {
+            $order->treatments()->attach(
+                $treatment['treatment_id'],
+                [
+                    'family_id' => 1646111026
+                ]
+            );
+        }
+
         session()->forget('order');
 
         return redirect()->route('home');

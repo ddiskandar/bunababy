@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class SelectFamily extends Component
@@ -17,6 +18,10 @@ class SelectFamily extends Component
 
     public function mount()
     {
+
+        if(Auth::check()){
+            session()->put('order.families', Auth::user()->families);
+        }
 
     }
 
