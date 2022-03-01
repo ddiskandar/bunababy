@@ -20,6 +20,7 @@ class CreateFamiliesTable extends Migration
             $table->string('name');
             $table->date('birth_date')->nullable();
             $table->integer('age')->nullable();
+            $table->string('type');
             $table->timestamps();
         });
     }

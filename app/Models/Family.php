@@ -9,6 +9,8 @@ class Family extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     protected $casts = [
         'birt_date' => 'date'
     ];

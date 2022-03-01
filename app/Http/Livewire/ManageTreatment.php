@@ -58,7 +58,7 @@ class ManageTreatment extends Component
 
         session()->increment('order.addMinutes', $treatment->duration);
 
-        $family = collect(session('order.family'))->where('id',$this->family_id)->first();
+        $family = collect(session('order.families'))->where('id',$this->family_id)->first();
 
         session()->push('order.treatments', [
             'treatment_id' => $treatment->id,

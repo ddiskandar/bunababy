@@ -19,7 +19,7 @@ class SelectMidwife extends Component
         $this->midwife = User::query()
             ->where('id', $midwife_user_id)
             ->select('id', 'name', 'email')
-            ->with('schedules')
+            ->with('schedules:id,place,midwife_user_id,date,start_time,end_time,status')
             ->first();
     }
 

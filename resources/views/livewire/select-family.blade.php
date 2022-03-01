@@ -1,12 +1,12 @@
 <div x-data="{ add : @entangle('showAddFamily') }">
-    @if (session()->has('order.family'))
+    @if (session()->has('order.families'))
         <nav class="border border-gray-200 rounded bg-white divide-y divide-gray-200 overflow-hidden">
             @foreach ($families as $family)
                 <button
                     wire:click="selectFamily({{ $family['id'] }})"
                     class="p-4 flex w-full justify-between items-center text-gray-700 hover:text-gray-700 hover:bg-bunababy-50/20 active:bg-white" >
                     <div class="flex items-center space-x-4">
-                        <img src="https://source.unsplash.com/iFgRcqHznqg/160x160" alt="User Avatar" class="inline-block w-10 h-10 rounded-full">
+                        <img class="w-12 h-12 rounded-full object-cover" src="https://ui-avatars.com/api/?name={{ urlencode($family['name']) }}&color=7F9CF5&background=EBF4FF" alt="{{ $family['name'] }}" >
                         <div class="text-left">
                         <p class="font-semibold text-sm">
                             {{ $family['name'] }}
@@ -41,7 +41,9 @@
 
     <div
         x-show="add"
+        @if (session()->has('order.families'))
         x-on:click.outside="add = false"
+        @endif
         class="md:flex items-center md:space-x-2 justify-between py-4">
         <div class="w-full">
             <label for="price" class="block text-sm font-medium sr-only text-gray-700">Nama</label>
@@ -53,7 +55,7 @@
                 id="price"
                 class="focus:ring-bunababy-100 focus:border-bunababy-100 block w-full  pr-12 text-sm border-gray-300 rounded-md"
                 placeholder="Nama">
-            @if (session()->has('order.family'))
+            @if (session()->has('order.families'))
                 <div class="absolute inset-y-0 right-0 flex items-center">
                     <label for="currency" class="sr-only">Hubungan Keluarga</label>
                     <select

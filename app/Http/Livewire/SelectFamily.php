@@ -24,10 +24,11 @@ class SelectFamily extends Component
     {
         $this->validate();
 
-        session()->push('order.family', [
+        session()->push('order.families', [
             'id' => time(),
             'name' => $this->name,
-            'type' => ! session('order.family') ? 'Diri Sendiri' : $this->type,
+            'birthdate' => '',
+            'type' => ! session('order.families') ? 'Diri Sendiri' : $this->type,
         ]);
         $this->name = '';
         $this->showAddFamily = false;
@@ -40,7 +41,7 @@ class SelectFamily extends Component
 
     public function render()
     {
-        $families = collect(session('order.family') ?? [] );
+        $families = collect(session('order.families') ?? [] );
 
         return view('livewire.select-family', [
             'families' => $families,

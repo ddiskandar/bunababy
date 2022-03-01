@@ -1,5 +1,5 @@
 <div class="sticky top-28 ">
-    <div class="inline-flex items-center mb-4 text-bunababy-400">
+    <div class="inline-flex lg:hidden items-center mb-4 text-bunababy-400">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
         </svg>
@@ -57,11 +57,14 @@
                                 <div>{{ $treatment->count() }} x {{ rupiah($treatment[0]['treatment_price']) }}</div>
                                 <div class="font-semibold">{{ rupiah($treatment->sum('treatment_price')) }}</div>
                             </div>
+                            @if (request()->is('order/2'))
                             <button
                                 wire:click="deleteTreatments({{ $treatment[0]['treatment_id'] }})"
                                 class="text-red-500">
                                 Hapus
                             </button>
+                            @endif
+
                         </li>
                     @empty
                     <li class="py-4 text-sm">
@@ -71,10 +74,8 @@
 
 
                     <li class="py-4 text-sm">
-                        <div class="font-semibold">Transportasi</div>
-                        <div class="text-slate-400">Klinik ke Cibeunying Kaler</div>
                         <div class="flex justify-between py-2">
-                            <div>1 x Rp30.000</div>
+                            <div class="font-semibold">Transport</div>
                             <div class="font-semibold">Rp30.000</div>
                         </div>
                     </li>

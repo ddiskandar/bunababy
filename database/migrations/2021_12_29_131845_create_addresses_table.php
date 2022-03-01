@@ -16,15 +16,15 @@ class CreateAddressesTable extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_user_id')->constrained('users')->onDelete('cascade');
+            $table->string('label');
             $table->string('address');
-            $table->string('phone');
             $table->string('rt')->nullable();
             $table->string('rw')->nullable();
             $table->string('desa')->nullable();
             $table->foreignId('kecamatan_id')->constrained();
             $table->text('note')->nullable();
             $table->text('share_location')->nullable();
-            $table->string('ig')->nullable();
+            $table->boolean('is_main')->default(false);
             $table->timestamps();
         });
     }
