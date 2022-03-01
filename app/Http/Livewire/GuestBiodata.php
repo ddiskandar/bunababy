@@ -122,7 +122,7 @@ class GuestBiodata extends Component
 
             $this->state = [];
 
-            return redirect()->back();
+            return redirect('order/3');
         });
     }
 

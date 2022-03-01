@@ -87,15 +87,8 @@
                 <div>{{ rupiah($data['total_price']) }}</div>
             </div>
 
-            @if (session()->has('order.treatments') AND request()->is('order/2'))
-            <div class="py-6">
-                <a href="/order/3" class="w-full block py-4 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50">
-                    Lanjut ke Data Pemesan
-                </a>
-            </div>
-            @endif
-
             @if (request()->is('order/3'))
+
             <div class="py-6">
                 <button
                     wire:click="confirm"
@@ -103,6 +96,15 @@
                     Konfirmasi
                 </button>
             </div>
+
+            @else
+
+            <div class="py-6">
+                <a href="/order/3" class="w-full block py-4 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50">
+                    Lanjut ke Data Pemesan
+                </a>
+            </div>
+
             @endif
 
         </x-panel>

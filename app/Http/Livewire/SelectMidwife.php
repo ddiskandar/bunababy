@@ -64,6 +64,8 @@ class SelectMidwife extends Component
                     foreach($this->slots as $slot){
                         if ( Carbon::parse($slot->time)->between(Carbon::parse($order->start_time), Carbon::parse($order->end_time)) ) {
                             $new->put($slot->time, 'booked');
+                        } elseif ($new->has($slot->time)) {
+                            //
                         } else { $new->put($slot->time, 'empty'); }
                     }
                 }
