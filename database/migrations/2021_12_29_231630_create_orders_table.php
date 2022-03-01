@@ -22,7 +22,6 @@ class CreateOrdersTable extends Migration
             $table->integer('total_price');
             $table->integer('total_duration');
             $table->integer('total_transport');
-            $table->integer('total_fee_apd')->nullable();
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');

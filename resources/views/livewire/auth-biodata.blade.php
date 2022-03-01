@@ -5,16 +5,17 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
             </svg>
             <div class="ml-2 text-sm font-semibold">
-                Data Lengkap Pemesan
+                Data Pemesan
             </div>
         </div>
         <div class="ml-8 grid grid-cols-6 gap-6">
             <!-- Nama Lengkap -->
             <div class="col-span-6">
-                <x-label for="name" :value="__('Nama Lengkap')" />
-                <div>{{ auth()->user()->name }}</div>
+                <div class="font-semibold">{{ auth()->user()->name }}</div>
+                <div>{{ auth()->user()->email }}</div>
                 <div>{{ auth()->user()->phone }}</div>
-                <div>{{ $fullAddress }}</div>
+                <div>{{ auth()->user()->ig }}</div>
+                <div class="text-slate-600">{{ $fullAddress }}</div>
             </div>
         </div>
 

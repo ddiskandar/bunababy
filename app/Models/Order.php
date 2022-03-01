@@ -12,6 +12,8 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     const PLACE_CLIENT = 1;
     const PLACE_CLINIC = 2;
 

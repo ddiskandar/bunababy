@@ -3,13 +3,13 @@
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
         </svg>
-        <span class="ml-2 text-lg font-semibold">Order Summary</span>
+        <span class="ml-2 text-lg font-semibold">Ringkasan</span>
     </div>
 
     <div class="rounded shadow-xl shadow-bunababy-100/20">
         <x-panel>
             <div class="py-4">
-                <x-title>Bidan Anda</x-title>
+                <x-title>Bidan </x-title>
                 <div class="flex items-center">
                     <img src="/images/default.jpg" alt="User Avatar" class="inline-block w-10 h-10 rounded-full" />
                     <div class="ml-2 font-semibold">{{ $data['bidan'] }}</div>
@@ -76,7 +76,7 @@
                     <li class="py-4 text-sm">
                         <div class="flex justify-between py-2">
                             <div class="font-semibold">Transport</div>
-                            <div class="font-semibold">Rp30.000</div>
+                            <div class="font-semibold">{{ rupiah($data['total_transport']) }}</div>
                         </div>
                     </li>
                 </ul>
@@ -84,16 +84,27 @@
 
             <div class="flex items-center justify-between py-6 text-lg font-semibold">
                 <div>Total Pembayaran</div>
-                <div>{{ rupiah( array_sum([$treatments->collapse()->sum('treatment_price'), 30000]) ) }}</div>
+                <div>{{ rupiah($data['total_price']) }}</div>
             </div>
 
-            @if (session()->has('order.treatments'))
+            @if (session()->has('order.treatments') AND request()->is('order/2'))
             <div class="py-6">
                 <a href="/order/3" class="w-full block py-4 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50">
                     Lanjut ke Data Pemesan
                 </a>
             </div>
             @endif
+
+            @if (request()->is('order/3'))
+            <div class="py-6">
+                <button
+                    wire:click="confirm"
+                    class="w-full block py-4 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50">
+                    Konfirmasi
+                </button>
+            </div>
+            @endif
+
         </x-panel>
     </div>
 </div>
