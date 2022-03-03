@@ -31,6 +31,8 @@
             @endif
 
             {{ $slot }}
+
+            <div class="mb-24"></div>
         </div>
         @livewireScripts
     </body>

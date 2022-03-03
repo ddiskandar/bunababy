@@ -48,6 +48,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getPhotoAttribute($value)
+    {
+        return asset($value ?: '/images/default.png');
+    }
+
     public function isMidwife()
     {
         return $this->role === 'midwife';
@@ -86,6 +91,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class, 'client_user_id');
     }
+
+    public function latestReservation()
+{
+    return $this->hasOne(Order::class, 'client_user_id')->latestOfMany();
+}
 
     public function addresses(): HasMany
     {

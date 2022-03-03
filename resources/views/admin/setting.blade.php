@@ -21,6 +21,6 @@
       <div class="py-32 text-lg text-center text-gray-500 border-2 border-gray-300 border-dashed rounded-lg bg-gray-50">Content</div>
     </div>
     <!-- END Card Body -->
-  </div>
-  <!-- END Card -->
+</div>
+<!-- END Card -->
 </x-app-layout>

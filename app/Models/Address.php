@@ -21,4 +21,9 @@ class Address extends Model
     {
         return $this->belongsTo(Kecamatan::class);
     }
+
+    public function getFullAddressAttribute()
+    {
+        return $this->address . " Rt. " . $this->rt . " Rw. " . $this->rw . " Desa/Kel. " . $this->desa . " Kec. " . $this->kecamatan->name . " " . $this->kecamatan->kabupaten->name;
+    }
 }
