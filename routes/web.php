@@ -1,101 +1,29 @@
 <?php
 
-use App\Http\Controllers\PlaygroundController;
-use App\Models\Slot;
-use Illuminate\Support\Facades\Cookie;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::view('/', 'home')->name('home');
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/order', [OrderController::class, 'index'])->name('order.index');
+Route::get('/order/2', [OrderController::class, 'time'])->name('client.order.2');
+Route::get('/order/3', [OrderController::class, 'client'])->name('client.order.3');
 
-Route::get('/order', function () {
-    return view('client.order.jadwal');
-})->name('client.order');
+Route::middleware(['auth'])->group(function () {
 
-Route::get('/order/2', function () {
+    Route::get('/me', [HomeController::class, 'show'])->name('home');
 
-    if( session()->missing('order.midwife_user_id')
-        OR session()->missing('order.place')
-        OR session()->missing('order.kecamatan_id')
-        OR session()->missing('order.date')
-    ) {
-        return redirect()->route('client.order');
-    }
-
-    return view('client.order.waktu');
-
-})->name('client.order.2');
-
-Route::get('/order/3', function () {
-
-    if( session()->missing('order.midwife_user_id')
-        OR session()->missing('order.place')
-        OR session()->missing('order.kecamatan_id')
-        OR session()->missing('order.date')
-        OR session()->missing('order.start_time_id')
-        OR session()->missing('order.treatments.0')
-    ) {
-        return redirect()->back();
-    }
-
-    return view('client.order.pemesan');
-
-})->name('client.order.3');
-
-
-
-Route::get('/home', function () {
-    return view('client.home');
-})->middleware(['auth'])->name('home');
-
-Route::get('/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-Route::get('/calendar', function () {
-    return view('admin.calendar');
-})->middleware(['auth'])->name('calendar');
-
-Route::get('/orders', function () {
-    return view('admin.orders');
-})->middleware(['auth'])->name('orders');
-
-Route::get('/payments', function () {
-    return view('admin.payments');
-})->middleware(['auth'])->name('payments');
-
-Route::get('/notifications', function () {
-    return view('admin.notifications');
-})->middleware(['auth'])->name('notifications');
-
-Route::get('/clients', function () {
-    return view('admin.clients');
-})->middleware(['auth'])->name('clients');
-
-Route::get('/midwives', function () {
-    return view('admin.midwives');
-})->middleware(['auth'])->name('midwives');
-
-Route::get('/treatments', function () {
-    return view('admin.treatments');
-})->middleware(['auth'])->name('treatments');
-
-Route::get('/setting', function () {
-    return view('admin.setting');
-})->middleware(['auth'])->name('setting');
-
-Route::get('/playground', [PlaygroundController::class, 'index']);
+    Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
+    Route::view('/calendar', 'admin.calendar')->name('calendar');
+    Route::view('/orders', 'admin.orders')->name('orders');
+    Route::view('/payments', 'admin.payments')->name('payments');
+    Route::view('/notifications', 'admin.notifications')->name('notifications');
+    Route::view('/clients', 'admin.clients')->name('clients');
+    Route::view('/midwives', 'admin.midwives')->name('midwives');
+    Route::view('/treatments', 'admin.treatments')->name('treatments');
+    Route::get('/setting', [SettingController::class, 'show'])->name('setting');
+});
 
 require __DIR__.'/auth.php';

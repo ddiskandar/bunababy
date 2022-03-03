@@ -48,6 +48,26 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function isMidwife()
+    {
+        return $this->role === 'midwife';
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isClient()
+    {
+        return $this->role === 'client';
+    }
+
+    public function isOwner()
+    {
+        return $this->role === 'owner';
+    }
+
     public function kecamatans(): BelongsToMany
     {
         return $this->belongsToMany(Kecamatan::class, 'kecamatan_user', 'midwife_user_id', 'kecamatan_id');
