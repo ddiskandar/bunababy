@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
     Route::view('/midwives', 'admin.midwives')->name('midwives');
     Route::view('/treatments', 'admin.treatments')->name('treatments');
     Route::get('/setting', [SettingController::class, 'show'])->name('setting');
+
 });
 
 require __DIR__.'/auth.php';
