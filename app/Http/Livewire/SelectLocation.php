@@ -17,7 +17,7 @@ class SelectLocation extends Component
 
         $kecamatan_id = '';
 
-        if(Auth::check()){
+        if(Auth::check() && Auth::user()->role == 'client'){
             $kecamatan_id = Auth::user()->addresses->where('is_main', true)->first()->kecamatan_id;
             session()->put('order.kecamatan_id', $kecamatan_id);
         }

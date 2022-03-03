@@ -56,7 +56,9 @@ Route::get('/order/3', function () {
 
 
 
-
+Route::get('/home', function () {
+    return view('client.home');
+})->middleware(['auth'])->name('home');
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
