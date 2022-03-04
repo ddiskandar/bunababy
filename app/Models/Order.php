@@ -101,9 +101,14 @@ class Order extends Model
         return $this->payments_verified() >= $this->grand_total() * 50/100;
     }
 
+    public function dp_amount()
+    {
+        return $this->grand_total() / 2;
+    }
+
     public function place()
     {
-        return $this->place === self::PLACE_CLIENT ? 'Rumah' : 'Klinik';
+        return $this->place === self::PLACE_CLIENT ? 'Homecare' : 'Onsite';
     }
 
     public function status()

@@ -2,10 +2,10 @@
     <div class="container flex items-center justify-between px-4 mx-auto sm:px-12">
         <div>
             <div class="hidden text-lg font-semibold lg:block text-bunababy-400">
-                <img src="/images/logo.svg" alt="Logo">
+                <a href="/"><img src="/images/logo.svg" alt="Logo"></a>
             </div>
             <div class="lg:hidden">
-                <img src="/images/logo2.svg" alt="Logo">
+                <a href="/"><img src="/images/logo2.svg" alt="Logo"></a>
             </div>
         </div>
 

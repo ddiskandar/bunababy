@@ -10,7 +10,7 @@
         </a>
     </li>
     <li >
-        <a href="{{ route('order.index') }}"
+        <a href="{{ route('order.step-1') }}"
             class="flex flex-col cursor-pointer items-center text-gray-400 hover:text-gray-600">
             <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 5.75C4.75 5.19772 5.19772 4.75 5.75 4.75H9.25C9.80228 4.75 10.25 5.19772 10.25 5.75V9.25C10.25 9.80228 9.80228 10.25 9.25 10.25H5.75C5.19772 10.25 4.75 9.80228 4.75 9.25V5.75Z"></path>

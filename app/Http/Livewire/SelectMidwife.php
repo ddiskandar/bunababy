@@ -50,7 +50,7 @@ class SelectMidwife extends Component
             return back();
         }
 
-        return to_route('client.order.2');
+        return to_route('order.step-2');
     }
 
     public function render()

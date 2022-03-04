@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -37,5 +38,12 @@ class OrderController extends Controller
         }
 
         return view('client.order.pemesan');
+    }
+
+    public function show(Order $order)
+    {
+        return view('client.order.show', [
+            'order' => $order,
+        ]);
     }
 }

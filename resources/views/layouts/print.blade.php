@@ -13,27 +13,19 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
-        <!-- Alpine Plugins -->
-        <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
+        <style type="text/css" media="print">
+            @media print {
+              body {-webkit-print-color-adjust: exact;}
+            }
+            </style>
 
         <!-- Scripts -->
-        <script src="{{ mix('js/app.js') }}" defer></script>
+        {{-- <script src="{{ mix('js/app.js') }}" defer></script> --}}
 
-        @livewireStyles
     </head>
     <body>
         <div class="font-sans antialiased text-gray-900">
-
-            @if (request()->is('order/step*'))
-                @include('layouts.partials.step')
-            @else
-                @include('layouts.partials.menubar')
-            @endif
-
             {{ $slot }}
-
-            <div class="mb-24"></div>
         </div>
-        @livewireScripts
     </body>
 </html>

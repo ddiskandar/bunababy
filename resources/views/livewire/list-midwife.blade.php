@@ -12,7 +12,7 @@
                 <div class="p-4 border rounded border-slate-100">
                     <div class="">
                         <div class="flex items-center">
-                            <img src="/images/default.jpg" alt="User Avatar" class="inline-block grayscale w-10 h-10 rounded-full" />
+                            <img src="{{ $midwife->photo }}" alt="User Avatar" class="inline-block grayscale w-10 h-10 rounded-full" />
                             <div class="ml-4 ">
                                 <div class="text-xl text-slate-400 font-semibold">{{ $midwife->name }}</div>
                                 <div class="text-xs text-slate-400">Wilayah anda bukan jangkauan bidan ini</div>
