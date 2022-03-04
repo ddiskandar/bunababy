@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home')->name('home');
 
-Route::get('/order', [OrderController::class, 'index'])->name('order.step-1');
+Route::get('/order/step-1', [OrderController::class, 'index'])->name('order.step-1');
 Route::get('/order/step-2', [OrderController::class, 'time'])->name('order.step-2');
 Route::get('/order/step-3', [OrderController::class, 'client'])->name('order.step-3');
 Route::get('/order/{order}/invoice', PdfInvoiceController::class)->name('order.invoice');

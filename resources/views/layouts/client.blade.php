@@ -24,7 +24,7 @@
     <body>
         <div class="font-sans antialiased text-gray-900">
 
-            @if (request()->is('order/step*'))
+            @if (request()->is('order/step-*'))
                 @include('layouts.partials.step')
             @else
                 @include('layouts.partials.menubar')

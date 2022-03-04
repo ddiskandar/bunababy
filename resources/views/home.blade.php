@@ -61,7 +61,7 @@
                 Focus on building your amazing service and we will do the rest. We grew more than 10,000 online businesses.
               </h3>
               <div class="flex flex-col justify-center pt-10 pb-16 space-y-2 sm:flex-row sm:items-center lg:justify-start sm:space-y-0 sm:space-x-2">
-                <a href="/order" class="inline-flex items-center justify-center px-6 py-4 space-x-2 font-semibold leading-6 text-white bg-pink-700 border border-pink-700 rounded focus:outline-none hover:text-white hover:bg-pink-800 hover:border-pink-800 focus:ring focus:ring-pink-500 focus:ring-opacity-50 active:bg-pink-700 active:border-pink-700">
+                <a href="{{ route('order.step-1') }}" class="inline-flex items-center justify-center px-6 py-4 space-x-2 font-semibold leading-6 text-white bg-pink-700 border border-pink-700 rounded focus:outline-none hover:text-white hover:bg-pink-800 hover:border-pink-800 focus:ring focus:ring-pink-500 focus:ring-opacity-50 active:bg-pink-700 active:border-pink-700">
                   <span>Pesan Sekarang</span>
                   <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 opacity-50 hi-solid hi-arrow-right"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                 </a>

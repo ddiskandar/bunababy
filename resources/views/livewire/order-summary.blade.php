@@ -11,7 +11,7 @@
             <div class="py-4">
                 <x-title>Bidan </x-title>
                 <div class="flex items-center">
-                    <img src="/images/default.jpg" alt="User Avatar" class="inline-block w-10 h-10 rounded-full" />
+                    <img src="/images/default.png" alt="User Avatar" class="inline-block w-10 h-10 rounded-full" />
                     <div class="ml-2 font-semibold">{{ $data['bidan'] }}</div>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                 <div>{{ rupiah($data['total_price']) }}</div>
             </div>
 
-            @if (request()->is('order/3'))
+            @if (request()->is('order/step-3'))
 
             <div class="py-6">
                 <button
@@ -100,7 +100,7 @@
             @else
 
             <div class="py-6">
-                <a href="/order/3" class="w-full block py-4 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50">
+                <a href="{{ route('order.step-3') }}" class="w-full block py-4 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50">
                     Lanjut ke Data Pemesan
                 </a>
             </div>
