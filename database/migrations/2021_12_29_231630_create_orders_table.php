@@ -19,14 +19,15 @@ class CreateOrdersTable extends Migration
             $table->foreignId('client_user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('midwife_user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('address_id')->constrained();
-            $table->integer('total_price');
             $table->integer('total_duration');
             $table->integer('total_transport');
+            $table->integer('additional');
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');
             $table->string('screening')->nullable();
             $table->tinyInteger('status')->default(1);
+            $table->timestamp('finished_at')->nullable();
             $table->timestamps();
         });
     }

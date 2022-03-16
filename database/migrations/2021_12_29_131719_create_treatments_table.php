@@ -21,6 +21,7 @@ class CreateTreatmentsTable extends Migration
             $table->integer('price'); // unchecked
             $table->integer('duration'); // unchecked
             $table->text('desc')->nullable();
+            $table->integer('order');
             $table->boolean('hidden')->default(false);
             $table->timestamps();
         });

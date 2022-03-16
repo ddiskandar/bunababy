@@ -18,6 +18,7 @@ class CreateCategoriesTable extends Migration
             $table->string('name');
             $table->string('image')->nullable();
             $table->text('desc')->nullable();
+            $table->integer('order');
         });
     }
 

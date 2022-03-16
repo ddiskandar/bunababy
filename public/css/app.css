@@ -1027,38 +1027,8 @@ select {
 .top-6 {
   top: 1.5rem;
 }
-.right-6 {
-  right: 1.5rem;
-}
-.top-2 {
-  top: 0.5rem;
-}
-.top-4 {
-  top: 1rem;
-}
-.-right-4 {
-  right: -1rem;
-}
-.-right-12 {
-  right: -3rem;
-}
-.top-8 {
-  top: 2rem;
-}
-.-right-8 {
-  right: -2rem;
-}
-.-right-2 {
-  right: -0.5rem;
-}
 .-right-16 {
   right: -4rem;
-}
-.top-3 {
-  top: 0.75rem;
-}
-.top-5 {
-  top: 1.25rem;
 }
 .z-0 {
   z-index: 0;
@@ -1555,14 +1525,6 @@ select {
 }
 .-rotate-45 {
   --tw-rotate: -45deg;
-  transform: var(--tw-transform);
-}
-.rotate-12 {
-  --tw-rotate: 12deg;
-  transform: var(--tw-transform);
-}
-.rotate-\[30deg\] {
-  --tw-rotate: 30deg;
   transform: var(--tw-transform);
 }
 .rotate-\[35deg\] {
@@ -2187,18 +2149,6 @@ select {
 .py-0 {
   padding-top: 0px;
   padding-bottom: 0px;
-}
-.px-8 {
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
-.px-16 {
-  padding-left: 4rem;
-  padding-right: 4rem;
-}
-.px-24 {
-  padding-left: 6rem;
-  padding-right: 6rem;
 }
 .px-28 {
   padding-left: 7rem;
@@ -3236,14 +3186,6 @@ select {
 }
 
 @media print {
-
-  .print\:fixed {
-    position: fixed;
-  }
-
-  .print\:absolute {
-    position: absolute;
-  }
 
   .print\:block {
     display: block;
