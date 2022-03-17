@@ -24,14 +24,14 @@
                 </li>
             @empty
                 <li
-                    class="py-6 flex flex-col items-center">
+                    class="flex flex-col items-center py-6">
                     <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 stroke-bunababy-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-bunababy-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
                         </svg>
                     </div>
                     <div class="font-semibold leading-loose">Upload Bukti Transfer </div>
-                    <div class="text-sm text-slate-400 text-center">Belum ada yang diupload, tambahkan bukti upload</div>
+                    <div class="text-sm text-center text-slate-400">Belum ada yang diupload, tambahkan bukti upload</div>
                 </li>
             @endforelse
         </ul>
@@ -123,8 +123,6 @@
                                         class="block w-full py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
                                     >Upload Bukti</button>
                                 </div>
-
-
 
                             </div>
                         </div>
