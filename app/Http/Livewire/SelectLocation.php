@@ -26,11 +26,13 @@ class SelectLocation extends Component
     }
 
     public function setLocation($kecamatan_id) {
-        $this->kecamatan = DB::table('kecamatans')->where('id', $kecamatan_id )->value('name');
+        $kecamatan = DB::table('kecamatans')->where('id', $kecamatan_id )->first();
+        $this->kecamatan = $kecamatan->name;
 
         session()->put('order.kecamatan_id', $kecamatan_id);
+        session()->put('order.kecamatan_distance', $kecamatan->distance);
 
-        return redirect()->route('client.order');
+        return redirect()->route('order.step-1');
     }
 
     public function render()

@@ -46,6 +46,15 @@ class OrderSummary extends Component
         $this->orderNow();
     }
 
+    public function getNoReg()
+    {
+        $alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+        $phone = auth()->user()->phone;
+        $i = rand(1,26);
+        $j = rand(1,26);
+        return $alphabet[$i] . $alphabet[$j] . $phone;
+    }
+
     public function orderNow()
     {
         $order = Order::create([
@@ -60,14 +69,13 @@ class OrderSummary extends Component
             'start_time' => $this->start_time(),
             'end_time' => $this->end_time(),
             'status' => Order::STATUS_LOCKED,
+            'invoice' => 'INV/' . session('order.date')->isoFormat('YYYYMMDD') . '/BBC/' . rand(111111, 999999),
+            'no_reg' => $this->getNoReg(),
         ]);
 
         foreach ( collect(session('order.treatments')) as $treatment ) {
             $order->treatments()->attach(
-                $treatment['treatment_id'],
-                [
-                    'family_id' => 1646111026
-                ]
+                $treatment['treatment_id']
             );
         }
 
@@ -79,12 +87,16 @@ class OrderSummary extends Component
 
     public function total_price()
     {
-        return array_sum([$this->treatments->collapse()->sum('treatment_price'), $this->total_transport()] );
+        return $this->treatments->collapse()->sum('treatment_price');
     }
 
     public function total_transport()
     {
-        return 30000 + ( 2 * 5000 );
+        if(session('order.kecamatan_distance') < 4) {
+            return 40000;
+        } else {
+            return 40000 + ((session('order.kecamatan_distance') - 4) * 5000);
+        }
     }
 
     public function total_duration()

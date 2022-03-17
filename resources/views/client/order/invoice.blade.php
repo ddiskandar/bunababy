@@ -114,9 +114,6 @@
                             <p class="font-semibold">
                                 {{ $treatment->name }}
                             </p>
-                            <p class="text-gray-500">
-                                -
-                            </p>
                         </td>
                         <td class="py-1 text-center">
                             1
@@ -151,7 +148,7 @@
                             Total Tagihan
                         </td>
                         <td class="py-2 font-semibold text-right border-y border-bunababy-50">
-                            {{ rupiah($order->total_price) }}
+                            {{ rupiah($order->grand_total()) }}
                         </td>
                     </tr>
                     </tbody>
@@ -189,21 +186,19 @@
 
                     <!-- Table Body -->
                     <tbody>
-                    @forelse ($order->payments as $payment)
+                    @forelse ($order->verifiedPayments as $payment)
                     <tr class="border-b border-gray-100">
                         <td class="py-3">
-                            <p class="font-semibold mb-1">
-                                -
-                            </p>
+                            {{ $payment->created_at}}
                         </td>
                         <td class="py-2 text-center">
                             -
                         </td>
                         <td class="py-2 text-right">
-                            -
+                            {{ $order->no_reg }}
                         </td>
                         <td class="py-2 text-right">
-                            -
+                            {{ rupiah($payment->value) }}
                         </td>
                     </tr>
                     @empty
@@ -220,7 +215,7 @@
                         Sisa Pembayaran
                         </td>
                         <td class="py-2 font-semibold text-right bg-gray-50">
-                        {{ rupiah($order->total_price) }}
+                        {{ rupiah($order->remaining_payment()) }}
                         </td>
                     </tr>
                     </tbody>

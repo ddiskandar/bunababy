@@ -19,7 +19,7 @@ class OrderController extends Controller
             OR session()->missing('order.kecamatan_id')
             OR session()->missing('order.date')
         ) {
-            return redirect()->route('client.order');
+            return redirect()->route('order.step-1');
         }
 
         return view('client.order.waktu');

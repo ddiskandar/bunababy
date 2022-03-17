@@ -17,7 +17,7 @@ class CreateOrderTreatmentTable extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
             $table->foreignId('treatment_id')->constrained()->onDelete('cascade');
-            $table->foreignId('family_id')->constrained()->onDelete('cascade');
+            // $table->foreignId('family_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -15,9 +15,9 @@ class CategorySeeder extends Seeder
     public function run()
     {
         DB::table('categories')->insert([
-            ['name' => 'Bunababy Class'],
-            ['name' => 'Baby Treatment'],
-            ['name' => 'Buna Treatment'],
+            ['name' => 'Baby Treatment', 'order' => 1],
+            ['name' => 'Buna Treatment', 'order' => 2],
+            ['name' => 'Bunababy Class', 'order' => 3],
         ]);
     }
 }

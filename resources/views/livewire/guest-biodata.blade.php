@@ -8,7 +8,7 @@
                 Data Lengkap Pemesan
             </div>
         </div>
-        <div class="ml-8 grid grid-cols-6 gap-6">
+        <div class="grid grid-cols-6 gap-6 ml-8">
 
             @foreach ($state['families'] as $index => $family)
                 <!-- Nama Lengkap -->
@@ -89,10 +89,10 @@
             <div class="col-span-6 lg:col-span-3">
                 <x-label for="kab" :value="__('Nomor WhatsApp')" />
                 <div class="relative">
-                    <div class="absolute inset-y-0 left-0 w-10 my-px ml-2 flex items-center justify-center pointer-events-none rounded-l text-gray-500">
+                    <div class="absolute inset-y-0 left-0 flex items-center justify-center w-10 my-px ml-2 text-gray-500 rounded-l pointer-events-none">
                         +62
                       </div>
-                    <x-input wire:model.lazy="state.phone" id="kab" class="block pl-12 w-full mt-1" type="text" name="kab" />
+                    <x-input wire:model.lazy="state.phone" id="kab" class="block w-full pl-12 mt-1" type="text" name="kab" />
                 </div>
                 <x-input-error for="state.phone" class="mt-2" />
             </div>
@@ -110,14 +110,14 @@
 
     <div  class="py-6">
         <div class="flex items-center mb-2 text-bunababy-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             <div class="ml-2 text-sm font-semibold">
                 Akun Login
             </div>
         </div>
-        <div class="ml-8 grid grid-cols-6 gap-6">
+        <div class="grid grid-cols-6 gap-6 ml-8">
             <!-- Alamat Email -->
             <div class="col-span-6 xl:col-span-4">
                 <x-label for="name" :value="__('Alamat Email')" />
@@ -139,7 +139,7 @@
                 <x-input-error for="state.password_confirmation" class="mt-2" />
             </div>
             <div class="col-span-6 xl:col-span-2">
-                <button wire:click="save" class="w-full block py-3 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50">
+                <button wire:click="save" class="block w-full py-3 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50">
                     Buat Akun
                 </button>
             </div>

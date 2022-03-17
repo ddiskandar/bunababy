@@ -30,7 +30,7 @@
                         <div class="font-bold">{{ rupiah($reservation->total_price) }}</div>
                     </div>
                     <div class="mt-6 md:mt-0">
-                        <a href="{{ route('order.show', $reservation->id) }}" class="py-1 px-6 border hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 text-sm text-bunababy-200 rounded-full">Bayar DP</a>
+                        <a href="{{ route('order.show', $reservation->no_reg) }}" class="py-1 px-6 border hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 text-sm text-bunababy-200 rounded-full">Bayar DP</a>
                     </div>
                 </div>
             </div>

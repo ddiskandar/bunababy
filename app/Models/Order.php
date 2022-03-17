@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,7 +26,7 @@ class Order extends Model
         'total_price' => 'integer',
         'total_duration' => 'integer',
         'total_transport' => 'integer',
-        'total_fee_apd' => 'integer',
+        'additional' => 'integer',
         'date' => 'date',
         'status' => 'integer',
     ];
@@ -49,7 +48,7 @@ class Order extends Model
 
     public function treatments(): BelongsToMany
     {
-        return $this->belongsToMany(Treatment::class)->withPivot('family_id');
+        return $this->belongsToMany(Treatment::class);
     }
 
     public function scopeInClient($query)
@@ -82,9 +81,14 @@ class Order extends Model
         return $this->hasMany(Payment::class);
     }
 
-    protected function getTotalPriceAttribute()
+    public function pendingPayments(): HasMany
     {
-        return  $this->treatments()->sum('price');
+        return $this->hasMany(Payment::class)->where('status', Payment::STATUS_UNVERIFIED);
+    }
+
+    public function verifiedPayments(): HasMany
+    {
+        return $this->hasMany(Payment::class)->where('status', Payment::STATUS_VERIFIED);
     }
 
     public function grand_total()
@@ -119,7 +123,17 @@ class Order extends Model
 
     public function status()
     {
-        return $this->status === self::STATUS_FINISHED ? 'Selesai' : ( self::STATUS_LOCKED ? 'Unpaid' : 'Pending');
+        return $this->status === self::STATUS_FINISHED
+            ? 'Selesai'
+            : ( $this->status === self::STATUS_LOCKED
+                ? 'Unpaid'
+                : 'Pending'
+            );
+    }
+
+    public function remaining_payment()
+    {
+        return $this->grand_total() - $this->verifiedPayments->pluck('value')->sum();
     }
 
 }

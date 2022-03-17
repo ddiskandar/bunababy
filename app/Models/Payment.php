@@ -10,6 +10,8 @@ class Payment extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     const STATUS_UNVERIFIED = 1;
     const STATUS_VERIFIED = 2;
     const STATUS_REJECTED = 3;
@@ -43,6 +45,16 @@ class Payment extends Model
     public function scopeRejected($query)
     {
         $query->where('status', self::STATUS_REJECTED);
+    }
+
+    public function status()
+    {
+        return $this->status === self::STATUS_VERIFIED
+            ? 'Verified'
+            : ( $this->status === self::STATUS_UNVERIFIED
+                ? 'Menunggu'
+                : 'Ditolak'
+            );
     }
 
 }

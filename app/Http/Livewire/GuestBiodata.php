@@ -36,7 +36,7 @@ class GuestBiodata extends Component
     }
 
     protected $rules = [
-        'state.families.*.name' => 'required|min:2:max:64',
+        'state.families.*.name' => 'required|min:2|max:64',
         'state.families.*.birthdate' => 'required',
         'state.address' => 'required|string|min:4|max:124',
         'state.rt' => 'required|min:1|max:99',
@@ -122,7 +122,7 @@ class GuestBiodata extends Component
 
             $this->state = [];
 
-            return redirect('order/3');
+            return redirect()->route('order.step-3');
         });
     }
 

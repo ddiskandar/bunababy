@@ -15,13 +15,16 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('no_reg');
+            $table->string('invoice');
             $table->tinyInteger('place')->default(1);
             $table->foreignId('client_user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('midwife_user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('address_id')->constrained();
+            $table->integer('total_price');
             $table->integer('total_duration');
             $table->integer('total_transport');
-            $table->integer('additional');
+            $table->integer('additional')->nullable();
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');

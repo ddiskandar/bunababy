@@ -6,7 +6,7 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class PdfInvoiceController extends Controller
+class InvoiceController extends Controller
 {
     /**
      * Handle the incoming request.
