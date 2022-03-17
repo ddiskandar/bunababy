@@ -26,6 +26,8 @@
 
             @if (request()->is('order/step-*'))
                 @include('layouts.partials.step')
+            @elseif (request()->is('profile/*'))
+                {{-- TODO --}}
             @else
                 @include('layouts.partials.menubar')
             @endif

@@ -6,6 +6,11 @@ use App\Http\Controllers\OptionController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Livewire\Client\ChangePassword;
+use App\Http\Livewire\Client\ClientHistory;
+use App\Http\Livewire\Client\EditClientProfile;
+use App\Http\Livewire\Client\ManageAddresses;
+use App\Http\Livewire\Client\ManageFamilies;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home')->name('home');
@@ -22,7 +27,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/me', [HomeController::class, 'show'])->name('home');
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/edit', EditClientProfile::class)->name('profile.edit');
+    Route::get('/history', ClientHistory::class)->name('history');
+    Route::get('/addresses', ManageAddresses::class)->name('addresses');
+    Route::get('/families', ManageFamilies::class)->name('families');
+    Route::get('/change-password', ChangePassword::class)->name('change-password');
 
     Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
     Route::view('/calendar', 'admin.calendar')->name('calendar');
