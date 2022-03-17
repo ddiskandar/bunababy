@@ -6,11 +6,15 @@
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
             </svg>
         </a>
-        <h1 class="flex-1 md:text-center">Riwayat Reservasi</h1>
+        <h1 class="flex-1 md:text-center font-semibold">Riwayat Reservasi</h1>
     </div>
 
-    <div class="max-w-xl px-4 py-6 mx-auto ">
-
+    <div class="container px-6 md:px-0 py-6 mx-auto ">
+        <div class="">
+            <button class="py-1 text-sm font-semibold px-6 border hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 text-bunababy-200 rounded-full">
+                Semua
+            </button>
+        </div>
     </div>
 
         <!-- Banner (bottom bubble) -->

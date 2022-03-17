@@ -6,7 +6,7 @@
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
             </svg>
         </a>
-        <h1 class="flex-1 md:text-center">Edit Profil</h1>
+        <h1 class="flex-1 md:text-center font-semibold">Edit Profil</h1>
         <button
             wire:click="save"
             class="text-bunababy-100"
@@ -43,7 +43,7 @@
             x-transition:leave-start="opacity-100 transform translate-x-0"
             x-transition:leave-end="opacity-0 transform translate-x-8"
             style="display: none !important"
-            class="fixed inset-x-0 w-72 mx-auto bottom-0 right-0 z-60 flex justify-between items-center rounded-full my-4 py-2 px-8 shadow-lg bg-bunababy-200">
+            class="fixed inset-x-0 w-72 mx-auto bottom-0 right-0 z-60 flex justify-between items-center rounded-full mb-24 py-2 px-8 shadow-lg bg-bunababy-200">
             <div class="inline-flex items-center text-pink-100 text-sm">
                 <p>
                     Data berhasil diperbaharui

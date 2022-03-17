@@ -10,7 +10,27 @@
     </div>
 
     <div class="max-w-xl px-4 py-6 mx-auto ">
+        <ul>
+            @forelse ( auth()->user()->addresses as $address)
+            <li class="p-6 border max-w-lg border-bunababy-50 rounded shadow-lg shadow-bunababy-50">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
+                    <div class="order-2 md:order-1 mt-4 md:mt-0 ">
+                        <div class="font-semibold text-lg">{{ $address->label }}</div>
+                    </div>
+                    <div class="order-1 md:order-2">
+                        <div class=" inline-flex px-6 py-1 leading-4 text-xs rounded-full text-orange-700 bg-orange-200">Alamat Utama</div>
+                    </div>
+                </div>
+                <div>
+                    {{ $address->full_address }}
+                </div>
 
+            </li>
+            @empty
+
+            @endforelse
+
+        </ul>
     </div>
 
         <!-- Banner (bottom bubble) -->
