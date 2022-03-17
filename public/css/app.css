@@ -1267,6 +1267,9 @@ select {
 .mr-1 {
   margin-right: 0.25rem;
 }
+.mr-6 {
+  margin-right: 1.5rem;
+}
 .block {
   display: block;
 }
@@ -1407,6 +1410,9 @@ select {
 }
 .w-1 {
   width: 0.25rem;
+}
+.w-24 {
+  width: 6rem;
 }
 .min-w-full {
   min-width: 100%;

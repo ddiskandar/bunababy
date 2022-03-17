@@ -41,8 +41,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8 py-3 print:grid-cols-2">
                 <div class="">
                     <div class="flex items-center py-1">
-                        <h3 class="font-semibold text-xl">
-                            Invoice #000159
+                        <h3 class="font-semibold text-sm">
+                            Invoice {{ $order->invoice }}
                         </h3>
                         <div class="font-semibold print:hidden ml-2 inline-flex px-4 py-1 leading-4  rounded-full text-orange-700 bg-orange-200">
                             {{ $order->status() }}

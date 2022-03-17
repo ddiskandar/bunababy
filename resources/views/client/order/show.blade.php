@@ -47,26 +47,33 @@
                         <ul class="divide-y divide-bunababy-50">
                             @foreach ($order->treatments as $treatment)
                                 <li class="py-2 text-sm flex justify-between">
-                                    <div class="font-semibold">{{ $treatment->name }}</div>
+                                    <div class="">{{ $treatment->name }}</div>
                                     <div class="truncate text-slate-400 ">
                                     </div>
                                     <div class="flex justify-between ">
-                                        <div class="font-semibold">{{ rupiah($treatment->price) }}</div>
+                                        <div class="">{{ rupiah($treatment->price) }}</div>
                                     </div>
                                 </li>
                             @endforeach
 
-                            <li class="py-2 text-sm">
+                            <li class="py-2 text-sm font-semibold">
                                 <div class="flex justify-between py-2">
-                                    <div class="font-semibold">Transport</div>
-                                    <div class="font-semibold">{{ rupiah($order->total_transport) }}</div>
+                                    <div class="">Subtotal</div>
+                                    <div class="">{{ rupiah($order->total_price) }}</div>
                                 </div>
                             </li>
 
-                            <li class="py-2 text-sm">
+                            <li class="py-2 text-sm ">
                                 <div class="flex justify-between py-2">
-                                    <div class="font-semibold">Total Pembayaran</div>
-                                    <div class="font-semibold">{{ rupiah($order->grand_total()) }}</div>
+                                    <div class="">Transport</div>
+                                    <div class="">{{ rupiah($order->total_transport) }}</div>
+                                </div>
+                            </li>
+
+                            <li class="py-2 text-sm font-semibold">
+                                <div class="flex justify-between py-2">
+                                    <div class="">Total Pembayaran</div>
+                                    <div class="">{{ rupiah($order->grand_total()) }}</div>
                                 </div>
                             </li>
 
@@ -167,7 +174,7 @@
                 </div>
 
                 <div class="py-6">
-                    <a href="{{ route('order.invoice', $order->id) }}" target="_blank"
+                    <a href="{{ route('order.invoice', $order->no_reg) }}" target="_blank"
                         class="block w-full py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
                         >Download Invoice</a>
                 </div>

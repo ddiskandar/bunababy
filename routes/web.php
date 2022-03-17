@@ -13,7 +13,7 @@ Route::view('/', 'home')->name('home');
 Route::get('/order/step-1', [OrderController::class, 'index'])->name('order.step-1');
 Route::get('/order/step-2', [OrderController::class, 'time'])->name('order.step-2');
 Route::get('/order/step-3', [OrderController::class, 'client'])->name('order.step-3');
-Route::get('/order/{order}/invoice', InvoiceController::class)->name('order.invoice');
+Route::get('/order/{order:no_reg}/invoice', InvoiceController::class)->name('order.invoice');
 
 Route::get('/order/{order:no_reg}', [OrderController::class, 'show'])->name('order.show');
 
