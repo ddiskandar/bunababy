@@ -48,11 +48,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function getPhotoAttribute($value)
-    {
-        return asset($value ?: '/images/default.png');
-    }
-
     public function isMidwife()
     {
         return $this->role === 'midwife';
@@ -105,6 +100,22 @@ class User extends Authenticatable
     public function families(): HasMany
     {
         return $this->hasMany(Family::class, 'client_user_id');
+    }
+
+    public function getProfilePhotoUrlAttribute()
+    {
+        return $this->photo
+                    ? $this->photo
+                    : $this->defaultProfilePhotoUrl();
+    }
+
+    protected function defaultProfilePhotoUrl()
+    {
+        $name = trim(collect(explode(' ', $this->name))->map(function ($segment) {
+            return mb_substr($segment, 0, 1);
+        })->join(' '));
+
+        return 'https://ui-avatars.com/api/?name='.urlencode($name).'&color=7F9CF5&background=EBF4FF';
     }
 
 }

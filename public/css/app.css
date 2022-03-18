@@ -2118,8 +2118,17 @@ select {
 .to-pink-100 {
   --tw-gradient-to: #fce7f3;
 }
+.bg-cover {
+  background-size: cover;
+}
 .bg-clip-padding {
   background-clip: padding-box;
+}
+.bg-center {
+  background-position: center;
+}
+.bg-no-repeat {
+  background-repeat: no-repeat;
 }
 .fill-current {
   fill: currentColor;
@@ -3220,6 +3229,11 @@ select {
   --tw-ring-color: rgb(100 116 139 / var(--tw-ring-opacity));
 }
 
+.focus\:ring-blue-200:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(191 219 254 / var(--tw-ring-opacity));
+}
+
 .focus\:ring-opacity-25:focus {
   --tw-ring-opacity: 0.25;
 }
@@ -3330,6 +3344,11 @@ select {
 .active\:text-red-600:active {
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity));
+}
+
+.active\:text-gray-800:active {
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity));
 }
 
 .active\:opacity-75:active {
@@ -3459,6 +3478,10 @@ select {
 }
 
 @media (min-width: 640px) {
+
+  .sm\:col-span-4 {
+    grid-column: span 4 / span 4;
+  }
 
   .sm\:-my-px {
     margin-top: -1px;
