@@ -1,14 +1,18 @@
 <x-client-layout>
+    <div class="py-4 px-4 md:px-6 flex items-center justify-between sticky shadow shadow-bunababy-50">
+        <a href="{{ url()->previous() }}">
+            <svg class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
+            </svg>
+        </a>
+        <h1 class="flex-1 md:text-center font-semibold">Detail Treatment</h1>
+    </div>
 
-    <div class="container gap-8 px-4 py-4 mx-auto md:py-10 sm:px-12 flex-col lg:flex-row flex">
-
+    <div class="container gap-8 px-4 py-6 mx-auto sm:px-12 flex-col lg:flex-row flex">
         <div class="flex-1 order-2 lg:order-1 space-y-6 md:mt-0">
             <x-panel>
                 <div>
-                    <h2 class="text-lg font-semibold ">
-                        Detail Order
-                    </h2>
-
                     <div class="py-4 md:flex">
                         <div class="flex-1">
                             <x-title>Tanggal dan Waktu</x-title>
@@ -157,9 +161,14 @@
                             <div class="font-semibold">{{ $order->no_reg }}</div>
                             {{-- <p class="text-xs">Harap inputkan ID Transaksi di nomor referensi atau pesan pada proses transfer.</p> --}}
                         </div>
-                        <div class="inline-flex px-4 py-1 ml-2 text-xs leading-4 text-orange-600 bg-orange-200 rounded-full">
-                            {{ $order->status() }}
-                        </div>
+                        <div @class([
+                                'inline-flex px-6 py-1 leading-4 text-xs rounded-full',
+                                'text-orange-700 bg-orange-200' => $order->status == '1',
+                                'text-green-700 bg-green-200' => $order->status == '2',
+                                'text-blue-700 bg-blue-200' => $order->status == '3',
+                            ])
+                        >{{ $order->status() }}</div>
+
                     </div>
 
                     <x-title>Minimal Pembayaran DP</x-title>

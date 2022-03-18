@@ -41,6 +41,11 @@ class Order extends Model
         return $this->hasOne(User::class, 'id', 'midwife_user_id');
     }
 
+    public function testimonial(): HasOne
+    {
+        return $this->hasOne(Testimonial::class);
+    }
+
     public function address(): BelongsTo
     {
         return $this->belongsTo(Address::class);
@@ -126,7 +131,7 @@ class Order extends Model
         return $this->status === self::STATUS_FINISHED
             ? 'Selesai'
             : ( $this->status === self::STATUS_LOCKED
-                ? 'Unpaid'
+                ? 'Aktif'
                 : 'Pending'
             );
     }
