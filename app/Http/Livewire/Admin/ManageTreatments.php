@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Category;
 use App\Models\Treatment;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -39,6 +40,20 @@ class ManageTreatments extends Component
         'state.active' => 'required',
     ];
 
+    protected $messages = [
+        //
+    ];
+
+    protected $validationAttributes = [
+        'state.name' => 'nama',
+        'state.desc' => 'deskripsi',
+        'state.price' => 'harga',
+        'state.duration' => 'durasi',
+        'state.order' => 'urutan',
+        'state.category_id' => 'kategori',
+        'state.active' => 'status aktif',
+    ];
+
     public function updatingPerPage()
     {
         $this->resetPage();
@@ -59,10 +74,16 @@ class ManageTreatments extends Component
         $this->resetPage();
     }
 
+    public function updatedStateCategoryId()
+    {
+        $this->state['order'] = Treatment::where('category_id', $this->state['category_id'])->max('order') + 1;
+    }
+
     public function showAddNewTreatmentDialog()
     {
         $this->showDialog = true;
         $this->state = [];
+        $this->state['active'] = true;
     }
 
     public function ShowEditTreatmentDialog( Treatment $treatment)
@@ -77,7 +98,7 @@ class ManageTreatments extends Component
 
         Treatment::updateOrCreate(
             [
-                'id' => $this->state['id'] ?? time(),
+                'id' => $this->state['id'] ?? Treatment::max('id') + 1,
             ],
             [
                 'category_id' => $this->state['category_id'],
