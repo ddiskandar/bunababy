@@ -11,7 +11,7 @@
             <div class="py-4">
                 <x-title>Bidan </x-title>
                 <div class="flex items-center">
-                    <img src="/images/default.png" alt="User Avatar" class="inline-block w-10 h-10 rounded-full" />
+                    <img src="{{ $data['bidan_photo'] }}" alt="User Avatar" class="inline-block w-10 h-10 rounded-full" />
                     <div class="ml-2 font-semibold">{{ $data['bidan'] }}</div>
                 </div>
             </div>
@@ -84,7 +84,7 @@
 
             <div class="flex items-center justify-between py-6 text-lg font-semibold">
                 <div>Total Pembayaran</div>
-                <div>{{ rupiah($data['total_price']) }}</div>
+                <div>{{ rupiah($data['grand_total']) }}</div>
             </div>
 
             @if (request()->is('order/step-3'))

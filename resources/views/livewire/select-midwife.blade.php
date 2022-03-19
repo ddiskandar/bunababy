@@ -4,7 +4,7 @@
 >
     <div class="flex items-center justify-between ">
         <div>
-            <img src="{{ $midwife->photo }}" alt="User Avatar" class="inline-block w-10 h-10 rounded-full" />
+            <img src="{{ $midwife->profile_photo_url }}" alt="User Avatar" class="inline-block w-10 h-10 rounded-full" />
             <span class="ml-2 text-xl font-semibold">{{ $midwife->name }}</span>
         </div>
         <button

@@ -131,11 +131,13 @@ class OrderSummary extends Component
 
         $data['kecamatan'] = DB::table('kecamatans')->where('id', session('order.kecamatan_id'))->value('name');
         $data['bidan'] = \App\Models\User::where('id', session('order.midwife_user_id'))->value('name');
+        $data['bidan_photo'] = \App\Models\User::where('id', session('order.midwife_user_id'))->first()->profile_photo_url;
         $data['date'] = session('order.date')->isoFormat('dddd, D MMMM G');
         $data['start_time'] = $this->start_time();
         $data['end_time'] = $this->end_time();
         $data['total_price'] = $this->total_price();
         $data['total_transport'] = $this->total_transport();
+        $data['grand_total'] = $this->total_transport() + $this->total_price();
 
         return view('livewire.order-summary', [
             'data' => $data,

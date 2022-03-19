@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
     Route::view('/calendar', 'admin.calendar')->name('calendar');
     Route::view('/orders', 'admin.orders')->name('orders');
     Route::view('/payments', 'admin.payments')->name('payments');
+    Route::view('/testimonials', 'admin.testimonials')->name('testimonials');
     Route::view('/notifications', 'admin.notifications')->name('notifications');
     Route::view('/clients', 'admin.clients')->name('clients');
     Route::view('/midwives', 'admin.midwives')->name('midwives');
