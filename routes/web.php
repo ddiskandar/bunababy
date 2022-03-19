@@ -13,18 +13,20 @@ use App\Http\Livewire\Client\ManageAddresses;
 use App\Http\Livewire\Client\ManageFamilies;
 use Illuminate\Support\Facades\Route;
 
+// Home
 Route::view('/', 'home')->name('home');
 
+// make an order
 Route::get('/order/step-1', [OrderController::class, 'index'])->name('order.step-1');
 Route::get('/order/step-2', [OrderController::class, 'time'])->name('order.step-2');
 Route::get('/order/step-3', [OrderController::class, 'client'])->name('order.step-3');
 Route::get('/order/{order:no_reg}/invoice', InvoiceController::class)->name('order.invoice');
-
 Route::get('/order/{order:no_reg}', [OrderController::class, 'show'])->name('order.show');
 
 
 Route::middleware(['auth'])->group(function () {
 
+    // Client
     Route::get('/me', [HomeController::class, 'show'])->name('home');
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
     Route::get('/profile/edit', EditClientProfile::class)->name('profile.edit');
@@ -33,16 +35,21 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/families', ManageFamilies::class)->name('families');
     Route::get('/change-password', ChangePassword::class)->name('change-password');
 
+    // Admin
     Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
-    Route::view('/calendar', 'admin.calendar')->name('calendar');
-    Route::view('/orders', 'admin.orders')->name('orders');
-    Route::view('/payments', 'admin.payments')->name('payments');
-    Route::view('/testimonials', 'admin.testimonials')->name('testimonials');
-    Route::view('/notifications', 'admin.notifications')->name('notifications');
-    Route::view('/clients', 'admin.clients')->name('clients');
-    Route::view('/midwives', 'admin.midwives')->name('midwives');
-    Route::view('/treatments', 'admin.treatments')->name('treatments');
-    Route::get('/setting', [OptionController::class, 'show'])->name('setting');
+    Route::prefix('admin')->name('admin')->group(function(){
+
+        Route::view('/calendar', 'admin.calendar')->name('.calendar');
+        Route::view('/orders', 'admin.orders')->name('.orders');
+        Route::view('/payments', 'admin.payments')->name('.payments');
+        Route::view('/testimonials', 'admin.testimonials')->name('.testimonials');
+        Route::view('/notifications', 'admin.notifications')->name('.notifications');
+        Route::view('/clients', 'admin.clients')->name('.clients');
+        Route::view('/midwives', 'admin.midwives')->name('.midwives');
+        Route::view('/treatments', 'admin.treatments')->name('.treatments');
+        Route::get('/setting', [OptionController::class, 'show'])->name('.setting');
+
+    });
 
 });
 

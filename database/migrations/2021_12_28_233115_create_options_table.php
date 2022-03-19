@@ -21,7 +21,6 @@ class CreateOptionsTable extends Migration
             $table->string('ig');
             $table->string('wa_admin');
             $table->string('wa_owner');
-            $table->boolean('apd')->default(true);
             $table->string('account');
             $table->string('account_name');
             $table->timestamps();
