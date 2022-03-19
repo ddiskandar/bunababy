@@ -11,9 +11,12 @@ class Treatment extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     protected $casts = [
         'price' => 'integer',
         'duration' => 'integer',
+        'hidden' => 'boolean',
     ];
 
     public function orders(): BelongsToMany

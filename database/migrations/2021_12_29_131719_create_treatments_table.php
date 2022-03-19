@@ -22,7 +22,7 @@ class CreateTreatmentsTable extends Migration
             $table->integer('duration'); // unchecked
             $table->text('desc')->nullable();
             $table->integer('order');
-            $table->boolean('hidden')->default(false);
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }
