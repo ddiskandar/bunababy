@@ -6,6 +6,7 @@ use App\Http\Controllers\OptionController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Livewire\Admin\ManageCategories;
 use App\Http\Livewire\Admin\ManageTreatments;
 use App\Http\Livewire\Client\ChangePassword;
 use App\Http\Livewire\Client\ClientHistory;
@@ -48,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
         Route::view('/clients', 'admin.clients')->name('.clients');
         Route::view('/midwives', 'admin.midwives')->name('.midwives');
         Route::get('/treatments', ManageTreatments::class)->name('.treatments');
+        Route::get('/treatments/categories', ManageCategories::class)->name('.categories');
         Route::view('/setting', 'admin.setting')->name('.setting');
 
     });

@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->nullable();
             $table->text('photo')->nullable();
             $table->string('ig')->nullable();
+            $table->boolean('active')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });

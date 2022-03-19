@@ -21,7 +21,6 @@ class OptionSeeder extends Seeder
             'ig' => '/bunababy.care',
             'wa_admin' => '085624028940',
             'wa_owner' => '085624343181',
-            'apd' => true,
             'account' => '1485963254',
             'account_name' => 'Febrianti Nur Azizah',
         ]);
