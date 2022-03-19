@@ -14,6 +14,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const CLIENT    = 1;
+    const MIDWIFE   = 2;
+    const ADMIN     = 3;
+    const OWNER     = 4;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -50,22 +55,22 @@ class User extends Authenticatable
 
     public function isMidwife()
     {
-        return $this->role === 'midwife';
+        return $this->type === self::MIDWIFE;
     }
 
     public function isAdmin()
     {
-        return $this->role === 'admin';
+        return $this->type === self::ADMIN;
     }
 
     public function isClient()
     {
-        return $this->role === 'client';
+        return $this->type === self::CLIENT;
     }
 
     public function isOwner()
     {
-        return $this->role === 'owner';
+        return $this->type === self::OWNER;
     }
 
     public function kecamatans(): BelongsToMany
