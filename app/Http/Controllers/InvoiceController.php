@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
-use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class InvoiceController extends Controller
 {
