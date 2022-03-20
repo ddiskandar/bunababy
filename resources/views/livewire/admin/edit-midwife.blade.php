@@ -7,7 +7,7 @@
             <span>Profil Bidan</span>
         </h3>
         <p class="mb-5 text-sm text-gray-500">
-            Your account’s vital info. Only your username and photo will be publicly visible.
+            Informasi bidan digunakan pada aplikasi
         </p>
         </div>
         <!-- END User Profile Info -->
@@ -17,30 +17,80 @@
         <!-- Card Body: User Profile -->
         <div class="w-full p-5 lg:p-6 grow">
             <form onsubmit="return false;" enctype="multipart/form-data" class="space-y-6">
-            <div class="space-y-1">
-                <label class="font-medium">Photo</label>
-                <div class="space-y-4 sm:flex sm:items-center sm:space-x-4 sm:space-y-0">
-                <div class="inline-flex items-center justify-center w-16 h-16 text-gray-300 bg-gray-100 rounded-full">
-                    <svg class="inline-block w-8 h-8 hi-solid hi-user" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
+            <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
+                <!-- Profile Photo File Input -->
+                <input type="file" class="hidden"
+                            wire:model="photo"
+                            x-ref="photo"
+                            x-on:change="
+                                    photoName = $refs.photo.files[0].name;
+                                    const reader = new FileReader();
+                                    reader.onload = (e) => {
+                                        photoPreview = e.target.result;
+                                    };
+                                    reader.readAsDataURL($refs.photo.files[0]);
+                            " />
+
+                <x-label for="photo" value="{{ __('Photo') }}" />
+
+                <!-- Current Profile Photo -->
+                <div class="mt-2" x-show="! photoPreview">
+                    <img src="{{ $midwife->profile_photo_url }}" alt="{{ $midwife->name }}" class="object-cover w-20 h-20 rounded-full">
                 </div>
-                <label class="block">
-                    <span class="sr-only">Choose profile photo</span>
-                    <input class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100" type="file" id="photo" name="photo">
-                </label>
+
+                <!-- New Profile Photo Preview -->
+                <div class="mt-2" x-show="photoPreview" style="display: none;">
+                    <span class="block w-20 h-20 bg-center bg-no-repeat bg-cover rounded-full"
+                            x-bind:style="'background-image: url(\'' + photoPreview + '\');'">
+                    </span>
                 </div>
-            </div>
-            <div class="space-y-1">
-                <label for="name" class="font-medium">Name</label>
-                <input wire:model="state.name" class="block w-full px-3 py-2 leading-6 border border-gray-200 rounded focus:border-pink-500 focus:ring focus:ring-pink-500 focus:ring-opacity-50" type="text" id="name" name="name" placeholder="John Doe">
-            </div>
-            <div class="space-y-1">
-                <label for="email" class="font-medium">Email</label>
-                <input wire:model="state.email" class="block w-full px-3 py-2 leading-6 border border-gray-200 rounded focus:border-pink-500 focus:ring focus:ring-pink-500 focus:ring-opacity-50" type="email" id="email" name="email" placeholder="john.doe@example.com">
+
+                <x-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
+                    {{ __('Select A New Photo') }}
+                </x-secondary-button>
+
+                {{-- @if ($this->user->profile_photo_path)
+                    <x-secondary-button type="button" class="mt-2" wire:click="deleteProfilePhoto">
+                        {{ __('Remove Photo') }}
+                    </x-secondary-button>
+                @endif --}}
+
+                <x-input-error for="photo" class="mt-2" />
             </div>
 
-            <button type="submit" class="inline-flex items-center justify-center px-3 py-2 space-x-2 text-sm font-semibold leading-5 text-white bg-pink-700 border border-pink-700 rounded focus:outline-none hover:text-white hover:bg-pink-800 hover:border-pink-800 focus:ring focus:ring-pink-500 focus:ring-opacity-50 active:bg-pink-700 active:border-pink-700">
-                Update Profile
-            </button>
+            <div class="space-y-1">
+                <x-label class="" for="state.name">Nama bidan</x-label>
+                <x-input wire:model.lazy="state.name" class="w-full" type="text" id="state.name" />
+                <x-input-error for="state.name" class="mt-2" />
+            </div>
+            <div class="space-y-1">
+                <x-label class="" for="state.email">Alamat Email</x-label>
+                <x-input wire:model.lazy="state.email" class="w-full" type="email" id="state.email" />
+                <x-input-error for="state.email" class="mt-2" />
+            </div>
+            <div class="space-y-1">
+                <x-label class="" for="state.phone">Nomor WA</x-label>
+                <x-input wire:model.lazy="state.phone" class="w-full" type="text" id="state.phone" />
+                <x-input-error for="state.phone" class="mt-2" />
+            </div>
+            <div class="space-y-1">
+                <div class="inline-flex items-center ml-2">
+                    <div class="flex items-center h-5 ">
+                        <input wire:model.lazy="state.active" id="active" name="active" type="checkbox" class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                    </div>
+                    <div class="ml-2 ">
+                        <x-label class="" for="state.active">Aktif</x-label>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center">
+                <div class="">
+                    <x-button wire:click="save">Simpan</x-button>
+                </div>
+                <x-action-message class="ml-3" on="saved">
+                    {{ __('Berhasil disimpan') }}
+                </x-action-message>
+            </div>
             </form>
         </div>
         <!-- Card Body: User Profile -->
@@ -68,7 +118,7 @@
             <div class="space-y-1">
                 <x-label class="" >Wilayah</x-label>
                 <div class="flex flex-wrap gap-2 py-2">
-                    @foreach ($kecamatans as $kecamatan)
+                    @forelse ($kecamatans as $kecamatan)
                         <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 rounded-full text-bunababy-200 bg-bunababy-50">
                             <span>{{ $kecamatan->name }}</span>
                             <button
@@ -78,7 +128,9 @@
                             <svg class="inline-block w-4 h-4 hi-solid hi-x" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                             </button>
                         </div>
-                    @endforeach
+                    @empty
+                        <div>Belum ada wilayah yang dipilih</div>
+                    @endforelse
                 </div>
             </div>
 
@@ -94,11 +146,7 @@
             </div>
 
             <div class="py-4">
-                <button
-                    wire:click="addWilayah"
-                    type="button"
-                    class="block px-6 py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
-                >Tambah</button>
+                <x-button wire:click="addWilayah">Tambah Wilayah</x-button>
             </div>
 
         </div>
@@ -107,4 +155,5 @@
         <!-- Card: User Profile -->
     </div>
     <!-- END User Profile -->
+
 </div>

@@ -54,7 +54,10 @@
                 <table class="min-w-full text-sm align-middle">
                 <thead>
                     <tr class="bg-slate-50">
-                        <th class="p-3 pl-6 text-sm font-semibold tracking-wider text-left text-gray-700 uppercase">
+                        <th class="p-3 text-sm font-semibold tracking-wider text-center text-gray-700 uppercase">
+                            Photo
+                        </th>
+                        <th class="p-3 text-sm font-semibold tracking-wider text-left text-gray-700 uppercase">
                             Nama
                         </th>
                         <th class="p-3 text-sm font-semibold tracking-wider text-left text-gray-700 uppercase md:table-cell">
@@ -72,10 +75,13 @@
                             'bg-slate-50' => $loop->even,
                             'text-slate-400' => ! $midwife->active,
                         ])>
-                            <td class="p-3 pl-6 align-top">
+                            <td class="p-3 text-center ">
+                                <img src="{{ $midwife->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
+                              </td>
+                            <td class="p-3">
                                 <p class="font-semibold">{{ $midwife->name }}</p>
                             </td>
-                            <td class="w-2/3 p-3 align-top md:table-cell">
+                            <td class="w-2/3 p-3 md:table-cell">
                                 <div class="flex flex-wrap gap-2">
                                     @forelse ($midwife->kecamatans as $kecamatan)
                                         <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 rounded-full text-slate-600 bg-slate-200">
@@ -86,7 +92,7 @@
                                     @endforelse
                                 </div>
                             </td>
-                            <td class="p-3 text-center align-top">
+                            <td class="p-3 text-center ">
                                 <div class="flex justify-center space-x-2">
                                     <a href="{{ route('admin.midwives.edit', $midwife->id) }}" class="text-slate-400 hover:text-bunababy-200">
                                         <svg width="24" height="24" fill="none" viewBox="0 0 24 24">

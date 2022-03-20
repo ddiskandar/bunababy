@@ -1274,6 +1274,9 @@ select {
 .mr-1 {
   margin-right: 0.25rem;
 }
+.mr-3 {
+  margin-right: 0.75rem;
+}
 .block {
   display: block;
 }
@@ -2103,6 +2106,10 @@ select {
 .bg-red-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(254 226 226 / var(--tw-bg-opacity));
+}
+.bg-bunababy-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 112 197 / var(--tw-bg-opacity));
 }
 .bg-opacity-75 {
   --tw-bg-opacity: 0.75;
@@ -3366,6 +3373,11 @@ select {
 .active\:bg-gray-900:active {
   --tw-bg-opacity: 1;
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+}
+
+.active\:bg-bunababy-200:active {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 14 156 / var(--tw-bg-opacity));
 }
 
 .active\:text-gray-700:active {

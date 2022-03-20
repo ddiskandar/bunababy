@@ -10,7 +10,7 @@ x-transition:leave="transition ease-in duration-150"
 x-transition:leave-start="opacity-100 transform translate-x-0"
 x-transition:leave-end="opacity-0 transform translate-x-8"
 style="display: none !important"
-class="fixed inset-x-0 bottom-0 right-0 flex items-center justify-between px-8 py-2 mx-auto mb-6 rounded-full shadow-lg w-72 z-60 bg-bunababy-200"
+class="fixed inset-x-0 bottom-0 right-0 flex items-center justify-between px-8 py-2 mx-auto mb-8 rounded-full shadow-lg w-72 z-60 bg-bunababy-200"
 >
 <div class="inline-flex items-center text-sm text-pink-100">
     <p>

@@ -31,7 +31,8 @@ class User extends Authenticatable
         'role',
         'phone',
         'photo',
-        'ig'
+        'ig',
+        'active'
     ];
 
     /**
@@ -110,7 +111,7 @@ class User extends Authenticatable
     public function getProfilePhotoUrlAttribute()
     {
         return $this->photo
-                    ? $this->photo
+                    ? asset('storage/' . $this->photo)
                     : $this->defaultProfilePhotoUrl();
     }
 

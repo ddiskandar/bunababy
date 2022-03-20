@@ -7,6 +7,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\MidwifeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Livewire\Admin\AddMidwife;
 use App\Http\Livewire\Admin\EditMidwife;
 use App\Http\Livewire\Admin\ManageCategories;
 use App\Http\Livewire\Admin\ManageTreatments;
@@ -51,7 +52,7 @@ Route::middleware(['auth'])->group(function () {
         Route::view('/notifications', 'admin.notifications')->name('.notifications');
         Route::view('/clients', 'admin.clients')->name('.clients');
         Route::get('/midwives/{midwife:id}/edit', [MidwifeController::class, 'edit'])->name('.midwives.edit');
-        Route::view('/midwives/add', 'admin.midwives.add')->name('.midwives.add');
+        Route::get('/midwives/add', AddMidwife::class)->name('.midwives.add');
         Route::view('/midwives', 'admin.midwives')->name('.midwives');
         Route::get('/treatments/categories', ManageCategories::class)->name('.categories');
         Route::get('/treatments', ManageTreatments::class)->name('.treatments');
