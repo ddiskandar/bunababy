@@ -75,7 +75,7 @@ class User extends Authenticatable
 
     public function kecamatans(): BelongsToMany
     {
-        return $this->belongsToMany(Kecamatan::class, 'kecamatan_user', 'midwife_user_id', 'kecamatan_id');
+        return $this->belongsToMany(Kecamatan::class, 'kecamatan_user', 'midwife_user_id', 'kecamatan_id')->orderBy('name');
     }
 
     // order untuk Bidan
