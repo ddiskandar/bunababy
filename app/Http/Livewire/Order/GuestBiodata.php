@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Order;
 
 use App\Models\Address;
 use App\Models\Family;
@@ -128,6 +128,6 @@ class GuestBiodata extends Component
 
     public function render()
     {
-        return view('livewire.guest-biodata');
+        return view('livewire.order.guest-biodata');
     }
 }

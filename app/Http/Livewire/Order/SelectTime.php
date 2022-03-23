@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Order;
 
 use App\Models\Order;
 use App\Models\Slot;
@@ -62,7 +62,7 @@ class SelectTime extends Component
             return 'siang';
         });
 
-        return view('livewire.select-time', [
+        return view('livewire.order.select-time', [
             'slots' => $slots,
             'data' => $data,
         ]);

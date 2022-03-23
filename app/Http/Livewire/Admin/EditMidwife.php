@@ -81,6 +81,6 @@ class EditMidwife extends Component
         return view('livewire.admin.edit-midwife', [
             'kecamatans' => $kecamatans,
             'kecamatansFiltered' => $kecamatansFiltered
-        ])->layout('layouts.app');
+        ]);
     }
 }

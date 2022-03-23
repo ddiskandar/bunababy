@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Order;
 
 use App\Models\Order;
 use Carbon\Carbon;
@@ -139,7 +139,7 @@ class OrderSummary extends Component
         $data['total_transport'] = $this->total_transport();
         $data['grand_total'] = $this->total_transport() + $this->total_price();
 
-        return view('livewire.order-summary', [
+        return view('livewire.order.order-summary', [
             'data' => $data,
             'treatments' => $this->treatments,
         ]);

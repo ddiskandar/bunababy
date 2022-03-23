@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Order;
 
 use Livewire\Component;
 
@@ -15,7 +15,7 @@ class AuthBiodata extends Component
 
     public function render()
     {
-        return view('livewire.auth-biodata');
+        return view('livewire.order.auth-biodata');
     }
 }
 

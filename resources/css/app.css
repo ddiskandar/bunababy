@@ -3,3 +3,17 @@
 @import 'tailwindcss/utilities';
 
 [x-cloak] { display: none !important; }
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: pink;
+    border-radius: 3px;
+    padding: 3px;
+}

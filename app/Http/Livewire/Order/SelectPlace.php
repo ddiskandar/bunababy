@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Order;
 
 use Livewire\Component;
 
@@ -21,6 +21,6 @@ class SelectPlace extends Component
 
     public function render()
     {
-        return view('livewire.select-place');
+        return view('livewire.order.select-place');
     }
 }

@@ -41,6 +41,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/families', ManageFamilies::class)->name('families');
     Route::get('/change-password', ChangePassword::class)->name('change-password');
 
+    Route::get('/time', ChangePassword::class)->name('time');
+
     // Admin
     Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
     Route::prefix('admin')->name('admin')->group(function(){
@@ -56,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
         Route::view('/midwives', 'admin.midwives')->name('.midwives');
         Route::get('/treatments/categories', ManageCategories::class)->name('.categories');
         Route::get('/treatments', ManageTreatments::class)->name('.treatments');
+        Route::view('/wilayah', 'admin.setting')->name('.wilayah');
         Route::view('/setting', 'admin.setting')->name('.setting');
 
     });

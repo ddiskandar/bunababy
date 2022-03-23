@@ -10,7 +10,7 @@ class ManageMidwife extends Component
 {
     use WithPagination;
 
-    public $perPage = 3;
+    public $perPage = 6;
 
     public $filterSearch;
     public $filterStatus;

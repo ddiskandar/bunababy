@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Order;
 
 use App\Models\Category;
 use App\Models\Treatment;
@@ -100,7 +100,7 @@ class ManageTreatment extends Component
 
         $data = collect();
 
-        return view('livewire.manage-treatment', [
+        return view('livewire.order.manage-treatment', [
             'categories' => $categories,
         ]);
     }

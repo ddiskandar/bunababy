@@ -20,8 +20,8 @@
 
                 <div class="w-16 mt-3 text-center sm:mt-0 sm:text-right">
                     <select wire:model="perPage" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
-                        <option value="3" selected="selected">3</option>
-                        <option value="8">8</option>
+                        <option value="3">3</option>
+                        <option value="6" selected>6</option>
                         <option value="15">15</option>
                         <option value="30">30</option>
                     </select>
@@ -54,16 +54,13 @@
                 <table class="min-w-full text-sm align-middle">
                 <thead>
                     <tr class="bg-slate-50">
-                        <th class="p-3 text-sm font-semibold tracking-wider text-center text-gray-700 uppercase">
-                            Photo
-                        </th>
-                        <th class="p-3 text-sm font-semibold tracking-wider text-left text-gray-700 uppercase">
+                        <th class="p-3 pl-6 text-sm font-medium tracking-wider text-left text-gray-400 uppercase">
                             Nama
                         </th>
-                        <th class="p-3 text-sm font-semibold tracking-wider text-left text-gray-700 uppercase md:table-cell">
+                        <th class="p-3 text-sm font-medium tracking-wider text-left text-gray-400 uppercase md:table-cell">
                             Wilayah
                         </th>
-                        <th class="p-3 text-sm font-semibold tracking-wider text-center text-gray-700 uppercase">
+                        <th class="p-3 text-sm font-medium tracking-wider text-center text-gray-400 uppercase">
                             Actions
                         </th>
                     </tr>
@@ -75,13 +72,16 @@
                             'bg-slate-50' => $loop->even,
                             'text-slate-400' => ! $midwife->active,
                         ])>
-                            <td class="p-3 text-center ">
-                                <img src="{{ $midwife->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
-                              </td>
-                            <td class="p-3">
-                                <p class="font-semibold">{{ $midwife->name }}</p>
+                            <td class="p-3 pl-6">
+                                <div class="flex items-center">
+                                    <img src="{{ $midwife->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
+                                    <div class="ml-3 ">
+                                        <p class="font-semibold">{{ $midwife->name }}</p>
+                                        <p class="text-slate-600">{{ $midwife->email }}</p>
+                                    </div>
+                                </div>
                             </td>
-                            <td class="w-2/3 p-3 md:table-cell">
+                            <td class="w-1/2 p-3 md:table-cell">
                                 <div class="flex flex-wrap gap-2">
                                     @forelse ($midwife->kecamatans as $kecamatan)
                                         <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 rounded-full text-slate-600 bg-slate-200">
@@ -95,10 +95,7 @@
                             <td class="p-3 text-center ">
                                 <div class="flex justify-center space-x-2">
                                     <a href="{{ route('admin.midwives.edit', $midwife->id) }}" class="text-slate-400 hover:text-bunababy-200">
-                                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 19.25L9 18.25L18.2929 8.95711C18.6834 8.56658 18.6834 7.93342 18.2929 7.54289L16.4571 5.70711C16.0666 5.31658 15.4334 5.31658 15.0429 5.70711L5.75 15L4.75 19.25Z"></path>
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 19.25H13.75"></path>
-                                        </svg>
+                                        Edit
                                     </a>
                                 </div>
                             </td>

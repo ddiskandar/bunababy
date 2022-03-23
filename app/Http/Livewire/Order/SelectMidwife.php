@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Order;
 
 use App\Models\Order;
 use App\Models\Slot;
@@ -87,7 +87,7 @@ class SelectMidwife extends Component
             $data->push($new);
         }
 
-        return view('livewire.select-midwife', [
+        return view('livewire.order.select-midwife', [
             'data' => $data,
         ]);
     }

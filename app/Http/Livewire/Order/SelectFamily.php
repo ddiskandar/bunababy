@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Order;
 
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -48,7 +48,7 @@ class SelectFamily extends Component
     {
         $families = collect(session('order.families') ?? [] );
 
-        return view('livewire.select-family', [
+        return view('livewire.order.select-family', [
             'families' => $families,
         ]);
     }

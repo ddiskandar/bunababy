@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Order;
 
 use App\Models\Payment;
 use App\Models\Order;
@@ -84,7 +84,7 @@ class ManagePaymentDocument extends Component
     {
         $payments = Payment::where('order_id', $this->order->id)->get();
 
-        return view('livewire.manage-payment-document', [
+        return view('livewire.order.manage-payment-document', [
             'payments' => $payments,
         ]);
     }

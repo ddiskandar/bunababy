@@ -32,7 +32,8 @@ class User extends Authenticatable
         'phone',
         'photo',
         'ig',
-        'active'
+        'active',
+        'type'
     ];
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Order;
 
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
@@ -48,7 +48,7 @@ class SelectLocation extends Component
                 })
                 ->get();
 
-        return view('livewire.select-location', [
+        return view('livewire.order.select-location', [
             'kabupatens' => $kabupatens
         ]);
     }
