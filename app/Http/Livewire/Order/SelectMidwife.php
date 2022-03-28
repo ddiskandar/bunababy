@@ -87,7 +87,7 @@ class SelectMidwife extends Component
             $data->push($new);
         }
 
-        return view('livewire.order.select-midwife', [
+        return view('client.order.select-midwife', [
             'data' => $data,
         ]);
     }

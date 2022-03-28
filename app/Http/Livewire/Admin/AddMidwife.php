@@ -65,10 +65,9 @@ class AddMidwife extends Component
             ->orderBy('name')
             ->get();
 
-        return view('livewire.admin.add-midwife', [
+        return view('midwives.add-midwife', [
             'kecamatans' => $kecamatans,
             'kecamatansFiltered' => $kecamatansFiltered
-        ])
-        ->layout('layouts.app');
+        ]);
     }
 }

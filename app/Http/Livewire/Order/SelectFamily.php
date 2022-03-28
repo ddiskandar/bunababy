@@ -48,7 +48,7 @@ class SelectFamily extends Component
     {
         $families = collect(session('order.families') ?? [] );
 
-        return view('livewire.order.select-family', [
+        return view('client.order.select-family', [
             'families' => $families,
         ]);
     }

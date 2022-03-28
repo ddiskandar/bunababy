@@ -15,7 +15,7 @@ class AuthBiodata extends Component
 
     public function render()
     {
-        return view('livewire.order.auth-biodata');
+        return view('client.order.auth-biodata');
     }
 }
 

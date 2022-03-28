@@ -62,7 +62,7 @@ class SelectTime extends Component
             return 'siang';
         });
 
-        return view('livewire.order.select-time', [
+        return view('client.order.select-time', [
             'slots' => $slots,
             'data' => $data,
         ]);

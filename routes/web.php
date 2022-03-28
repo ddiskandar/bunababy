@@ -1,66 +1,55 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\OptionController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\InvoiceController;
-use App\Http\Controllers\MidwifeController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Livewire\Admin\AddMidwife;
-use App\Http\Livewire\Admin\EditMidwife;
-use App\Http\Livewire\Admin\ManageCategories;
-use App\Http\Livewire\Admin\ManageTreatments;
-use App\Http\Livewire\Admin\Midwife\Edit;
-use App\Http\Livewire\Client\ChangePassword;
-use App\Http\Livewire\Client\ClientHistory;
-use App\Http\Livewire\Client\EditClientProfile;
-use App\Http\Livewire\Client\ManageAddresses;
-use App\Http\Livewire\Client\ManageFamilies;
 use Illuminate\Support\Facades\Route;
 
 // Home
 Route::view('/', 'home')->name('home');
 
 // make an order
-Route::get('/order/step-1', [OrderController::class, 'index'])->name('order.step-1');
-Route::get('/order/step-2', [OrderController::class, 'time'])->name('order.step-2');
-Route::get('/order/step-3', [OrderController::class, 'client'])->name('order.step-3');
-Route::get('/order/{order:no_reg}/invoice', InvoiceController::class)->name('order.invoice');
-Route::get('/order/{order:no_reg}', [OrderController::class, 'show'])->name('order.show');
+Route::get('/order/step-1', [App\Http\Controllers\Client\OrderController::class, 'index'])->name('order.step-1');
+Route::get('/order/step-2', [App\Http\Controllers\Client\OrderController::class, 'time'])->name('order.step-2');
+Route::get('/order/step-3', [App\Http\Controllers\Client\OrderController::class, 'client'])->name('order.step-3');
+Route::get('/order/{order:no_reg}/invoice', App\Http\Controllers\OrderInvoiceController::class)->name('order.invoice');
+Route::get('/order/{order:no_reg}', [App\Http\Controllers\Client\OrderController::class, 'show'])->name('order.show');
 
 
 Route::middleware(['auth'])->group(function () {
 
-    // Client
-    Route::get('/me', [HomeController::class, 'show'])->name('home');
-    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
-    Route::get('/profile/edit', EditClientProfile::class)->name('profile.edit');
-    Route::get('/history', ClientHistory::class)->name('history');
-    Route::get('/addresses', ManageAddresses::class)->name('addresses');
-    Route::get('/families', ManageFamilies::class)->name('families');
-    Route::get('/change-password', ChangePassword::class)->name('change-password');
+    // Client...
+    Route::get('/me', [App\Http\Controllers\HomeController::class, 'show'])->name('me');
+    Route::get('/profile', [App\Http\Controllers\Client\ProfileController::class, 'show'])->name('client.profile');
+    Route::get('/profile/edit', [App\Http\Controllers\Client\ProfileController::class, 'edit'])->name('client.profile.edit');
+    Route::get('/history', [App\Http\Controllers\Client\OrderHistoryController::class, 'show'])->name('client.history');
+    Route::get('/addresses', [App\Http\Controllers\Client\AddressesController::class, 'index'])->name('client.addresses');
+    Route::get('/families', [App\Http\Controllers\Client\FamiliesController::class, 'index'])->name('client.families');
+    Route::get('/change-password', App\Http\Controllers\Client\UpdatePasswordController::class)->name('client.change-password');
 
-    Route::get('/time', ChangePassword::class)->name('time');
+    // Dashboard
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'show'])->name('dashboard');
 
-    // Admin
-    Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
+    // Midwife...
+    Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'show'])->name('calendar');
+    Route::get('/orders', [App\Http\Controllers\OrdersController::class, 'index'])->name('orders');
+    Route::get('/timetables', [App\Http\Controllers\TimetablesController::class, 'show'])->name('timetables');
+
+    // Admin...
+    Route::get('/payments', [App\Http\Controllers\PaymentsController::class, 'index'])->name('payments');
+    Route::get('/testimonials', [App\Http\Controllers\TestimonialsController::class, 'index'])->name('testimonials');
+    Route::get('/notifications', [App\Http\Controllers\NotificationsController::class, 'index'])->name('notifications');
+    Route::get('/clients', [App\Http\Controllers\ClientsController::class, 'index'])->name('clients');
+    Route::get('/clients/tags', [App\Http\Controllers\ClientsTagsController::class, 'index'])->name('clients.tags');
+
+    // Owner..
+    Route::get('/midwives/{midwife}/edit', [App\Http\Controllers\MidwivesController::class, 'edit'])->name('midwives.edit');
+    Route::get('/midwives/create', [App\Http\Controllers\MidwivesController::class, 'create'])->name('midwives.create');
+    Route::get('/midwives', [App\Http\Controllers\MidwivesController::class, 'index'])->name('midwives');
+    Route::get('/treatments/categories', [App\Http\Controllers\TreatmentCategoriesController::class, 'index'])->name('categories');
+    Route::get('/treatments', [App\Http\Controllers\TreatmentsController::class, 'index'])->name('treatments');
+    Route::get('/wilayah', [App\Http\Controllers\WilayahController::class, 'index'])->name('wilayah');
+    Route::get('/settings', [App\Http\Controllers\SettingController::class, 'show'])->name('settings');
+
     Route::prefix('admin')->name('admin')->group(function(){
-
-        Route::view('/calendar', 'admin.calendar')->name('.calendar');
-        Route::view('/orders', 'admin.orders')->name('.orders');
-        Route::view('/payments', 'admin.payments')->name('.payments');
-        Route::view('/testimonials', 'admin.testimonials')->name('.testimonials');
-        Route::view('/notifications', 'admin.notifications')->name('.notifications');
-        Route::view('/clients', 'admin.clients')->name('.clients');
-        Route::get('/midwives/{midwife:id}/edit', [MidwifeController::class, 'edit'])->name('.midwives.edit');
-        Route::get('/midwives/add', AddMidwife::class)->name('.midwives.add');
-        Route::view('/midwives', 'admin.midwives')->name('.midwives');
-        Route::get('/treatments/categories', ManageCategories::class)->name('.categories');
-        Route::get('/treatments', ManageTreatments::class)->name('.treatments');
-        Route::view('/wilayah', 'admin.setting')->name('.wilayah');
-        Route::view('/setting', 'admin.setting')->name('.setting');
-
+        //
     });
 
 });

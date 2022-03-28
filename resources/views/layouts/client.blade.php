@@ -25,9 +25,9 @@
         <div class="font-sans antialiased text-gray-900">
 
             @if (request()->is('order/step-*'))
-                @include('layouts.partials.step')
+                @include('partials.step')
             @else
-                @include('layouts.partials.menubar')
+                @include('partials.menubar')
             @endif
 
             {{ $slot }}

@@ -48,7 +48,7 @@ class SelectLocation extends Component
                 })
                 ->get();
 
-        return view('livewire.order.select-location', [
+        return view('client.order.select-location', [
             'kabupatens' => $kabupatens
         ]);
     }

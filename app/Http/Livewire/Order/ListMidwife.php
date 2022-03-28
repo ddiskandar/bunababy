@@ -24,9 +24,9 @@ class ListMidwife extends Component
                 ->first();
 
             $this->midwives = User::query()
-                ->where('role', 'midwife')
+                ->where('type', User::MIDWIFE)
                 ->whereNotIn('id', $this->kecamatan->midwives->pluck('id'))
-                ->select('id', 'name', 'role', 'photo')
+                ->select('id', 'name', 'type', 'photo')
                 ->get();
         }
 
@@ -34,6 +34,6 @@ class ListMidwife extends Component
 
     public function render()
     {
-        return view('livewire.order.list-midwife');
+        return view('client.order.list-midwife');
     }
 }

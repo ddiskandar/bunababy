@@ -21,6 +21,6 @@ class SelectPlace extends Component
 
     public function render()
     {
-        return view('livewire.order.select-place');
+        return view('client.order.select-place');
     }
 }

@@ -45,7 +45,7 @@ class ManageMidwife extends Component
             ->with('kecamatans')
             ->paginate($this->perPage);
 
-        return view('livewire.admin.manage-midwife', [
+        return view('midwives.manage-midwife', [
             'midwives' => $midwives,
         ]);
     }

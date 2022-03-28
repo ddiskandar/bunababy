@@ -35,11 +35,11 @@
             }"
         >
             <!-- Page Sidebar -->
-                @include('layouts.partials.sidebar')
+                @include('partials.sidebar')
             <!-- Page Sidebar -->
 
             <!-- Page Header -->
-                @include('layouts.partials.header')
+                @include('partials.header')
             <!-- END Page Header -->
 
             <!-- Page Content -->
@@ -53,7 +53,7 @@
             <!-- END Page Content -->
 
             <!-- Page Footer -->
-                @include('layouts.partials.footer')
+                @include('partials.footer')
             <!-- END Page Footer -->
 
         </div>

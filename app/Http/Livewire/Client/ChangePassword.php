@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Client;
 
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
 class ChangePassword extends Component
@@ -27,6 +28,11 @@ class ChangePassword extends Component
     public function save()
     {
         $this->validate();
+
+        if(! isset($this->current_password) || ! Hash::check($this->current_password, $this->user->password)){
+            return;
+        }
+
         $this->user->update([
             'password' => bcrypt($this->password),
         ]);
