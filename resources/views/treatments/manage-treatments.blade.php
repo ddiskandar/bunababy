@@ -69,31 +69,31 @@
                 <table class="min-w-full text-sm align-middle">
                 <thead>
                     <tr class="bg-slate-50">
-                        <th class="p-3 pl-6 text-sm font-medium tracking-wider text-left text-gray-400 uppercase">
+                        <th class="p-3 pl-6 text-sm font-medium tracking-wider text-left text-slate-400">
                             Nama
                         </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-left text-gray-400 uppercase md:table-cell">
+                        <th class="p-3 text-sm font-medium tracking-wider text-left text-slate-400 md:table-cell">
                             Deskripsi
                         </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-left text-gray-400 uppercase md:table-cell">
+                        <th class="p-3 text-sm font-medium tracking-wider text-left text-slate-400 md:table-cell">
                         Harga / Durasi
                         </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-center text-gray-400 uppercase md:text-left">
+                        <th class="p-3 text-sm font-medium tracking-wider text-center text-slate-400 md:text-left">
                             Kategori
                         </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-center text-gray-400 uppercase ">
+                        <th class="p-3 text-sm font-medium tracking-wider text-center text-slate-400 ">
                             Urutan
                         </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-center text-gray-400 uppercase">
+                        <th class="p-3 text-sm font-medium tracking-wider text-center text-slate-400">
                             Actions
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="divide-y divide-slate-100">
                     @forelse ($treatments as $treatment)
                         <tr @class([
                             '',
-                            'bg-slate-50' => $loop->even,
+                            // 'bg-slate-50' => $loop->even,
                             'text-slate-400' => ! $treatment->active,
                         ])>
                             <td class="p-3 pl-6 align-top">

@@ -66,6 +66,7 @@ class ManageCategories extends Component
     {
         $categories = Category::query()
             ->Where('active', 'LIKE', '%' . $this->filterStatus . '%')
+            ->withCount('treatments')
             ->get();
 
         return view('treatments.manage-categories', [

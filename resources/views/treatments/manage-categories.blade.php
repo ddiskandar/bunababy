@@ -2,7 +2,7 @@
     <!-- Card -->
     <div class="flex flex-col overflow-hidden bg-white rounded shadow-sm">
         <!-- Card Header -->
-        <div class="w-full py-3 pl-6 pr-3 bg-gray-50 sm:flex sm:justify-between sm:items-center">
+        <div class="w-full py-3 pl-6 pr-3 bg-white sm:flex sm:justify-between sm:items-center">
             <div class="flex items-center">
                 <h3 class="mr-4 font-semibold">
                     Kategori
@@ -36,33 +36,39 @@
                 <!-- Alternate Responsive Table -->
                 <table class="min-w-full text-sm align-middle">
                 <thead>
-                    <tr class="bg-slate-100">
-                        <th class="p-3 pl-6 text-sm font-semibold tracking-wider text-left text-gray-700 uppercase">
+                    <tr class="bg-slate-50">
+                        <th class="p-3 pl-6 text-sm font-medium tracking-wider text-left text-slate-400">
                             Nama
                         </th>
-                        <th class="p-3 text-sm font-semibold tracking-wider text-left text-gray-700 uppercase md:table-cell">
+                        <th class="p-3 text-sm font-medium tracking-wider text-left text-slate-400 md:table-cell">
                             Deskripsi
                         </th>
-                        <th class="p-3 text-sm font-semibold tracking-wider text-center text-gray-700 uppercase ">
+                        <th class="p-3 text-sm font-medium tracking-wider text-center text-slate-400 ">
+                            Jumlah
+                        </th>
+                        <th class="p-3 text-sm font-medium tracking-wider text-center text-slate-400 ">
                             Urutan
                         </th>
-                        <th class="p-3 text-sm font-semibold tracking-wider text-center text-gray-700 uppercase">
+                        <th class="p-3 text-sm font-medium tracking-wider text-center text-slate-400">
                             Actions
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="divide-y divide-slate-100">
                     @forelse ($categories as $category)
                         <tr @class([
                             '',
-                            'bg-slate-50' => $loop->even,
+                            // 'bg-slate-50' => $loop->even,
                             'text-slate-400' => ! $category->active,
                         ])>
                             <td class="p-3 pl-6 align-top">
-                                <p class="font-semibold">{{ $category->name }}</p>
+                                <p class="font-medium">{{ $category->name }}</p>
                             </td>
                             <td class="w-64 p-3 align-top md:table-cell">
                                 {{ $category->desc }}
+                            </td>
+                            <td class="p-3 text-center align-top md:table-cell">
+                                <p>{{ $category->treatments_count }}</p>
                             </td>
                             <td class="p-3 text-center align-top md:table-cell">
                                 <p>{{ $category->order }}</p>

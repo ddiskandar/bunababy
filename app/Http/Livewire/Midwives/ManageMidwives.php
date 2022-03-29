@@ -6,7 +6,7 @@ use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ManageMidwife extends Component
+class ManageMidwives extends Component
 {
     use WithPagination;
 
@@ -45,7 +45,7 @@ class ManageMidwife extends Component
             ->with('kecamatans')
             ->paginate($this->perPage);
 
-        return view('midwives.manage-midwife', [
+        return view('midwives.manage-midwives', [
             'midwives' => $midwives,
         ]);
     }
