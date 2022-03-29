@@ -13,8 +13,8 @@
                 <div class="mt-3 text-center sm:mt-0 sm:text-right w-36">
                     <select wire:model="filterStatus" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
                         <option value="" selected="selected">Semua Status</option>
-                        <option value="0">Aktif</option>
-                        <option value="1">Tidak Aktif</option>
+                        <option value="1">Aktif</option>
+                        <option value="0">Tidak Aktif</option>
                     </select>
                 </div>
 

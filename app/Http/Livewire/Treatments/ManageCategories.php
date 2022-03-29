@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Midwives;
+namespace App\Http\Livewire\Treatments;
 
 use App\Models\Category;
 use App\Models\Treatment;
@@ -65,10 +65,11 @@ class ManageCategories extends Component
     public function render()
     {
         $categories = Category::query()
+            ->Where('active', 'LIKE', '%' . $this->filterStatus . '%')
             ->get();
 
-        return view('admin.categories', [
+        return view('treatments.manage-categories', [
             'categories' => $categories
-        ])->layout('layouts.app');
+        ]);
     }
 }

@@ -43,9 +43,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/midwives/{midwife}/edit', [App\Http\Controllers\MidwivesController::class, 'edit'])->name('midwives.edit');
     Route::get('/midwives/create', [App\Http\Controllers\MidwivesController::class, 'create'])->name('midwives.create');
     Route::get('/midwives', [App\Http\Controllers\MidwivesController::class, 'index'])->name('midwives');
-    Route::get('/treatments/categories', [App\Http\Controllers\TreatmentCategoriesController::class, 'index'])->name('categories');
     Route::get('/treatments', [App\Http\Controllers\TreatmentsController::class, 'index'])->name('treatments');
+    Route::get('/treatments/categories', [App\Http\Controllers\TreatmentCategoriesController::class, 'show'])->name('categories');
     Route::get('/wilayah', [App\Http\Controllers\WilayahController::class, 'index'])->name('wilayah');
+    Route::get('/wilayah/kabupaten', [App\Http\Controllers\KabupatenController::class, 'index'])->name('kabupaten');
     Route::get('/settings', [App\Http\Controllers\SettingController::class, 'show'])->name('settings');
 
     Route::prefix('admin')->name('admin')->group(function(){
