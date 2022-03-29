@@ -28,7 +28,7 @@
                 </div>
 
                 <div>
-                    <a href="{{ route('admin.midwives.create') }}" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded shadow-sm focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-white active:border-white active:shadow-none">
+                    <a href="{{ route('midwives.create') }}" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded shadow-sm focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-white active:border-white active:shadow-none">
                         + Tambah Baru
                     </a>
 
@@ -94,7 +94,7 @@
                             </td>
                             <td class="p-3 text-center ">
                                 <div class="flex justify-center space-x-2">
-                                    <a href="{{ route('admin.midwives.edit', $midwife->id) }}" class="text-slate-400 hover:text-bunababy-200">
+                                    <a href="{{ route('midwives.edit', $midwife->id) }}" class="text-slate-400 hover:text-bunababy-200">
                                         Edit
                                     </a>
                                 </div>

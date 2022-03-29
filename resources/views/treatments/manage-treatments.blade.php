@@ -11,7 +11,7 @@
             <div class="flex items-center justify-center space-x-4 sm:justify-end">
 
                 <div class="mt-3 text-center sm:mt-0 sm:text-right">
-                    <a href="{{ route('admin.categories') }}" class="text-sm text-slate-400 hover:text-bunababy-200 ">
+                    <a href="{{ route('categories') }}" class="text-sm text-slate-400 hover:text-bunababy-200 ">
                         Atur Kategori
                     </a>
                 </div>

@@ -19,7 +19,7 @@ class MidwivesController extends Controller
 
     public function edit(User $midwife)
     {
-        return view('midwife.edit', [
+        return view('midwives.edit', [
             'midwife' => $midwife
         ]);
     }

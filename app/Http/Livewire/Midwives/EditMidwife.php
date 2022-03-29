@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\Midwives;
 
 use App\Models\User;
 use Livewire\Component;
@@ -78,7 +78,7 @@ class EditMidwife extends Component
             ->orderBy('name')
             ->get();
 
-        return view('livewire.admin.edit-midwife', [
+        return view('midwives.edit-midwife', [
             'kecamatans' => $kecamatans,
             'kecamatansFiltered' => $kecamatansFiltered
         ]);

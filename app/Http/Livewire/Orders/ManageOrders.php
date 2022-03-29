@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\Orders;
 
 use App\Models\Kabupaten;
 use App\Models\Order;
 use Livewire\Component;
 
-class Orders extends Component
+class ManageOrders extends Component
 {
     public $search;
 
     public function render()
     {
-        return view('livewire.admin.orders', [
+        return view('livewire.orders.manage-orders', [
             'orders' => Order::with('client:id,name', 'treatments')->latest('date')->get(),
         ]);
     }

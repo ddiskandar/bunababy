@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\Calendar;
 
 use App\Models\Slot;
 use App\Models\User;
 use Livewire\Component;
 
-class Calendar extends Component
+class ShowCalendar extends Component
 {
     public $midwives;
     public $date;
@@ -22,7 +22,7 @@ class Calendar extends Component
     public function render()
     {
 
-        return view('livewire.admin.calendar', [
+        return view('livewire.calendar.show-calendar', [
             'slots' => Slot::all()
         ]);
     }

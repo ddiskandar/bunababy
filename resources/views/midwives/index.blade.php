@@ -1,3 +1,3 @@
 <x-app-layout>
-    @livewire('admin.manage-midwife')
+    @livewire('midwives.manage-midwife')
 </x-app-layout>

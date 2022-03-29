@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\Treatments;
 
 use App\Models\Category;
 use App\Models\Treatment;
@@ -131,8 +131,8 @@ class ManageTreatments extends Component
             ->orderBy('category_id')->orderBy('order')
             ->paginate($this->perPage);
 
-        return view('admin.treatments', [
+        return view('treatments.manage-treatments', [
             'treatments' => $treatments,
-        ])->layout('layouts.app');
+        ]);
     }
 }

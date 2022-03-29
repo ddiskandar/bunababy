@@ -1,3 +1,3 @@
 <x-app-layout>
-    @livewire('admin.edit-midwife', [$midwife->id])
+    @livewire('midwives.edit-midwife', [$midwife->id])
 </x-app-layout>

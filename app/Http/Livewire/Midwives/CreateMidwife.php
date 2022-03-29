@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\Midwives;
 
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class AddMidwife extends Component
+class CreateMidwife extends Component
 {
     use WithFileUploads;
 
@@ -65,7 +65,7 @@ class AddMidwife extends Component
             ->orderBy('name')
             ->get();
 
-        return view('midwives.add-midwife', [
+        return view('midwives.create-midwife', [
             'kecamatans' => $kecamatans,
             'kecamatansFiltered' => $kecamatansFiltered
         ]);
