@@ -30,12 +30,14 @@ Route::middleware(['auth'])->group(function () {
     // Midwife...
     Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'show'])->name('calendar');
     Route::get('/orders', [App\Http\Controllers\OrdersController::class, 'index'])->name('orders');
-    Route::get('/timetables', [App\Http\Controllers\TimetablesController::class, 'show'])->name('timetables');
+    Route::get('/timetables', [App\Http\Controllers\TimetableController::class, 'show'])->name('timetables');
 
     // Admin...
     Route::get('/payments', [App\Http\Controllers\PaymentsController::class, 'index'])->name('payments');
     Route::get('/testimonials', [App\Http\Controllers\TestimonialsController::class, 'index'])->name('testimonials');
     Route::get('/notifications', [App\Http\Controllers\NotificationsController::class, 'index'])->name('notifications');
+    Route::get('/clients/{client}/edit', [App\Http\Controllers\ClientsController::class, 'edit'])->name('clients.edit');
+    Route::get('/clients/create', [App\Http\Controllers\ClientsController::class, 'create'])->name('clients.create');
     Route::get('/clients', [App\Http\Controllers\ClientsController::class, 'index'])->name('clients');
     Route::get('/clients/tags', [App\Http\Controllers\ClientsTagsController::class, 'index'])->name('clients.tags');
 

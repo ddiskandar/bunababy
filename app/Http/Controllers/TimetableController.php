@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Timetable;
 
-class TimetablesController extends Controller
+class TimetableController extends Controller
 {
     /**
      * Display a listing of the resource.
