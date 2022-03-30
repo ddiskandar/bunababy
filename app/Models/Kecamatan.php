@@ -12,6 +12,8 @@ class Kecamatan extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     protected $casts = [
         'distance' => 'integer',
     ];

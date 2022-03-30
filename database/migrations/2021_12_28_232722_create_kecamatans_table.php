@@ -18,6 +18,7 @@ class CreateKecamatansTable extends Migration
             $table->foreignId('kabupaten_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->integer('distance')->default(0)->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

@@ -10,9 +10,11 @@ class Kabupaten extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public $timestamps = false;
 
-    public function kecamatans(): HasMany
+    public function kecamatan(): HasMany
     {
         return $this->hasMany(Kecamatan::class);
     }
