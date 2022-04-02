@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('client_user_id')->constrained('users')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id')->constrained('users')->onDelete('cascade');
             $table->string('phone')->nullable();
             $table->text('photo')->nullable();
             $table->string('ig')->nullable();
+            $table->string('no_reg')->nullable();
             $table->timestamps();
         });
     }
