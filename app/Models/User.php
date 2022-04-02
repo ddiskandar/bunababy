@@ -100,6 +100,11 @@ class User extends Authenticatable
         return $this->hasMany(Order::class, 'client_user_id');
     }
 
+    public function last_reservation()
+    {
+        return $this->hasOne(Order::class, 'client_user_id')->latestOfMany();
+    }
+
     public function latestReservation()
 {
     return $this->hasOne(Order::class, 'client_user_id')->latestOfMany();
@@ -110,9 +115,19 @@ class User extends Authenticatable
         return $this->hasMany(Address::class, 'client_user_id');
     }
 
+    public function getAddressAttribute()
+    {
+        return $this->addresses()->where('is_main', true)->first()->kecamatan->name;
+    }
+
     public function families(): HasMany
     {
         return $this->hasMany(Family::class, 'client_user_id');
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class, 'tag_user', 'client_user_id', 'tag_id');
     }
 
     public function getProfilePhotoUrlAttribute()

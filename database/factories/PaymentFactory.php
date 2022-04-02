@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Order;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PaymentFactory extends Factory
@@ -14,7 +16,8 @@ class PaymentFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'order_id' => Order::factory(),
+            'value' => 70000,
         ];
     }
 }

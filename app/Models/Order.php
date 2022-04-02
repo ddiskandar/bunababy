@@ -31,14 +31,14 @@ class Order extends Model
         'status' => 'integer',
     ];
 
-    public function client(): HasOne
+    public function client(): BelongsTo
     {
-        return $this->hasOne(User::class, 'id', 'client_user_id');
+        return $this->belongsTo(User::class, 'id', 'client_user_id');
     }
 
-    public function midwife(): HasOne
+    public function midwife(): BelongsTo
     {
-        return $this->hasOne(User::class, 'id', 'midwife_user_id');
+        return $this->belongsTo(User::class, 'id', 'midwife_user_id');
     }
 
     public function testimonial(): HasOne
@@ -48,7 +48,7 @@ class Order extends Model
 
     public function address(): BelongsTo
     {
-        return $this->belongsTo(Address::class);
+        return $this->belongsTo(Address::class, 'address_id');
     }
 
     public function treatments(): BelongsToMany

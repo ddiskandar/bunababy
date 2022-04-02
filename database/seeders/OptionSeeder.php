@@ -19,8 +19,8 @@ class OptionSeeder extends Seeder
             'site_location' => 'Bandung',
             'site_desc' => 'Mom and Baby Care',
             'ig' => '/bunababy.care',
-            'wa_admin' => '085624028940',
-            'wa_owner' => '085624343181',
+            'wa_admin' => '6285624028940',
+            'wa_owner' => '6285624343181',
             'account' => '1485963254',
             'account_name' => 'Febrianti Nur Azizah',
         ]);

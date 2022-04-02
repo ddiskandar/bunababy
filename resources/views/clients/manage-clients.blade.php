@@ -88,16 +88,17 @@
                                 </div>
                             </td>
                             <td class="p-3 md:table-cell">
-                                <div class="ml-3 ">
-                                    <p class="font-medium">Alamat Kecamatan</p>
-                                    <p class="text-slate-600">{{ $client->phone }}</p>
-                                </div>
+                                <p class="font-medium">{{ $client->address }}</p>
+                                <p class="text-slate-600">{{ $client->profile->phone }}</p>
                             </td>
                             <td class="p-3 md:table-cell">
-                                2 hari yang lalu
+                                {{ $client->last_reservation->date->diffForHumans() }}
                             </td>
                             <td class="p-3 md:table-cell">
-                                VIP
+                                @foreach ($client->tags as $tag)
+                                    <span>{{$tag->name}}</span>
+                                    {{ $loop->last ? '' : ', ' }}
+                                @endforeach
                             </td>
                             <td class="p-3 text-center ">
                                 <div class="flex justify-center space-x-2">
