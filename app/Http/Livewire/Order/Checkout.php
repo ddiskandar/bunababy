@@ -49,7 +49,7 @@ class Checkout extends Component
     public function getNoReg()
     {
         $alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-        $phone = auth()->user()->phone;
+        $phone = auth()->user()->profile->phone;
         $i = rand(1,26);
         $j = rand(1,26);
         return $alphabet[$i] . $alphabet[$j] . $phone;

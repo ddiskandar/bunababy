@@ -18,16 +18,16 @@ class OrderFactory extends Factory
     {
 
         return [
-            'no_reg' => Str::random(10),
-            'invoice' => Str::random(10),
+            'no_reg' => rand(1,9). time() . rand(000001,99999),
+            'invoice' => 'INV/' . str_replace('-', '', today()->toDateString()) . '/BBC/'. rand(1111111111, 9999999999),
             'client_user_id' => User::factory(['type' => User::CLIENT]),
             'midwife_user_id' => User::factory(['type' => User::MIDWIFE]),
             'address_id' => Address::factory(),
-            'total_price' => 100000,
+            'total_price' => rand(10,99) . '0000',
             'total_duration' => 45,
-            'total_transport' => 40000,
+            'total_transport' => rand(4,7) . '0000',
             'additional' => 0,
-            'date' => $this->faker->dateTimeThisMonth(),
+            'date' => $this->faker->dateTimeInInterval('-1 days', '+30 days'),
             'start_time' => '08:00:00',
             'end_time' => '08:45:00',
         ];

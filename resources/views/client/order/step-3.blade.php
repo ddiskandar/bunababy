@@ -4,17 +4,17 @@
 
     <div class="flex-1 space-y-4 md:mt-0">
         @guest
-            @livewire('guest-biodata')
+            @livewire('order.guest-biodata')
         @endguest
 
         @auth
-            @livewire('auth-biodata')
+            @livewire('order.auth-biodata')
         @endauth
 
 
     </div>
     <div class="mt-6 lg:w-96 lg:flex-initial lg:mt-0">
-        @livewire('order-summary')
+        @livewire('order.checkout')
     </div>
 </div>
 

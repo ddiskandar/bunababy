@@ -15,7 +15,7 @@
                 <div>{{ auth()->user()->email }}</div>
                 <div>{{ auth()->user()->phone }}</div>
                 <div>{{ auth()->user()->ig }}</div>
-                <div class="text-slate-600">{{ $address->fullAddress }}</div>
+                {{-- <div class="text-slate-600">{{ $address->full_address }}</div> --}}
             </div>
         </div>
 

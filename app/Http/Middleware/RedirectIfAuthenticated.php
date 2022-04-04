@@ -23,7 +23,7 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                $home = auth()->user()->type === '1' ? '/me' : '/dashboard';
+                $home = auth()->user()->isClient() ? '/me' : '/dashboard';
 
                 return redirect()->intended($home);
                 // return redirect(RouteServiceProvider::HOME);

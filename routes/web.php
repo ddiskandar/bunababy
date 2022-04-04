@@ -20,15 +20,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [App\Http\Controllers\Client\ProfileController::class, 'show'])->name('client.profile');
     Route::get('/profile/edit', [App\Http\Controllers\Client\ProfileController::class, 'edit'])->name('client.profile.edit');
     Route::get('/history', [App\Http\Controllers\Client\OrderHistoryController::class, 'show'])->name('client.history');
-    Route::get('/addresses', [App\Http\Controllers\Client\AddressesController::class, 'index'])->name('client.addresses');
-    Route::get('/families', [App\Http\Controllers\Client\FamiliesController::class, 'index'])->name('client.families');
-    Route::get('/change-password', App\Http\Controllers\Client\UpdatePasswordController::class)->name('client.change-password');
+    Route::get('/addresses', App\Http\Livewire\Client\ManageAddresses::class)->name('client.addresses');
+    Route::get('/families', App\Http\Livewire\Client\ManageFamilies::class)->name('client.families');
+    Route::get('/change-password', App\Http\Livewire\Client\ChangePassword::class)->name('client.change-password');
 
     // Dashboard
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'show'])->name('dashboard');
 
     // Midwife...
     Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'show'])->name('calendar');
+    Route::get('/orders/{order}', [App\Http\Controllers\OrdersController::class, 'show'])->name('orders.show');
+    Route::get('/orders/create', [App\Http\Controllers\OrdersController::class, 'create'])->name('orders.create');
     Route::get('/orders', [App\Http\Controllers\OrdersController::class, 'index'])->name('orders');
     Route::get('/timetables', [App\Http\Controllers\TimetableController::class, 'show'])->name('timetables');
 

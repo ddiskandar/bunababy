@@ -156,7 +156,7 @@
 
                             <div class="mt-4 w-full">
                                 <x-title>Pilih Profil</x-title>
-                                @livewire('select-family')
+                                @livewire('order.select-family')
                             </div>
                         </div>
                     </div>

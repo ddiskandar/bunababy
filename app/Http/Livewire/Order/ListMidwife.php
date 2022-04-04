@@ -26,7 +26,7 @@ class ListMidwife extends Component
             $this->midwives = User::query()
                 ->where('type', User::MIDWIFE)
                 ->whereNotIn('id', $this->kecamatan->midwives->pluck('id'))
-                ->select('id', 'name', 'type', 'photo')
+                ->select('id', 'name', 'type')
                 ->get();
         }
 

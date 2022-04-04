@@ -69,22 +69,22 @@
                 <table class="min-w-full text-sm align-middle">
                 <thead>
                     <tr class="bg-slate-50">
-                        <th class="p-3 pl-6 text-sm font-medium tracking-wider text-left text-slate-400">
+                        <th class="p-3 pl-6 text-xs font-medium tracking-wider text-left text-slate-400">
                             Nama
                         </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-left text-slate-400 md:table-cell">
+                        <th class="p-3 text-xs font-medium tracking-wider text-left text-slate-400 ">
                             Deskripsi
                         </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-left text-slate-400 md:table-cell">
+                        <th class="p-3 text-xs font-medium tracking-wider text-left text-slate-400 ">
                         Harga / Durasi
                         </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-center text-slate-400 md:text-left">
+                        <th class="p-3 text-xs font-medium tracking-wider text-center text-slate-400 md:text-left">
                             Kategori
                         </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-center text-slate-400 ">
+                        <th class="p-3 text-xs font-medium tracking-wider text-center text-slate-400 ">
                             Urutan
                         </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-center text-slate-400">
+                        <th class="p-3 text-xs font-medium tracking-wider text-center text-slate-400">
                             Actions
                         </th>
                     </tr>
@@ -96,23 +96,23 @@
                             // 'bg-slate-50' => $loop->even,
                             'text-slate-400' => ! $treatment->active,
                         ])>
-                            <td class="p-3 pl-6 align-top">
+                            <td class="p-3 pl-6 align-top whitespace-nowrap">
                                 <p class="font-semibold">{{ $treatment->name }}</p>
                             </td>
-                            <td class="w-64 p-3 align-top md:table-cell">
+                            <td class="w-64 p-3 align-top ">
                                 {{ $treatment->desc }}
                             </td>
-                            <td class="p-3 align-top md:table-cell">
+                            <td class="p-3 align-top whitespace-nowrap">
                                 <p class="font-medium">{{ rupiah($treatment->price) }}</p>
                                 <p>{{ $treatment->duration . ' menit' }}</p>
                             </td>
-                            <td class="p-3 align-top md:table-cell">
+                            <td class="p-3 align-top whitespace-nowrap">
                                 <p>{{ $treatment->category->name }}</p>
                             </td>
-                            <td class="p-3 text-center align-top md:table-cell">
+                            <td class="p-3 text-center align-top whitespace-nowrap">
                                 <p>{{ $treatment->order }}</p>
                             </td>
-                            <td class="p-3 text-center align-top">
+                            <td class="p-3 text-center align-top whitespace-nowrap">
                                 <div class="flex justify-center space-x-2">
                                     <button wire:click="ShowEditTreatmentDialog({{ $treatment->id }})" class="text-slate-400 hover:text-bunababy-200">
                                         Edit

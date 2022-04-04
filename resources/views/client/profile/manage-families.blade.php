@@ -1,6 +1,6 @@
 <div x-data="{ showDialog: @entangle('showDialog') }">
     <div class="py-4 px-4 md:px-6 flex items-center justify-between sticky shadow shadow-bunababy-50">
-        <a href="{{ route('profile') }}">
+        <a href="{{ route('client.profile') }}">
             <svg class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>

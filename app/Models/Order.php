@@ -33,12 +33,12 @@ class Order extends Model
 
     public function client(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'id', 'client_user_id');
+        return $this->belongsTo(User::class, 'client_user_id', 'id');
     }
 
     public function midwife(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'id', 'midwife_user_id');
+        return $this->belongsTo(User::class, 'midwife_user_id', 'id');
     }
 
     public function testimonial(): HasOne
@@ -139,6 +139,36 @@ class Order extends Model
     public function remaining_payment()
     {
         return $this->grand_total() - $this->verifiedPayments->pluck('value')->sum();
+    }
+
+    public function setNoRegdAttribute()
+    {
+        $this->attributes['no_reg'] = rand(1,9). time() . rand(00001,9999);
+    }
+
+    public function setInvoiceAttribute()
+    {
+        $this->attributes['invoice'] = 'INV/' . str_replace('-', '', today()->toDateString()) . '/BBC/'. rand(1111111111, 9999999999);
+    }
+
+    public function scopeActiveBetween($query, $from, $to)
+    {
+        $query->whereStatus(Order::STATUS_LOCKED)
+            ->betweenDates($from, $to);
+    }
+
+    public function scopeBetweenTime($query, $from, $to)
+    {
+        $query->where(function ($query) use ($to, $from) {
+            $query
+                ->whereBetween('start_time', [$from, $to])
+                ->orWhereBetween('end_time', [$from, $to])
+                ->orWhere(function ($query) use ($to, $from) {
+                    $query
+                        ->where('start_time', '<', $from)
+                        ->where('end_time', '>', $to);
+                });
+        });
     }
 
 }

@@ -7,6 +7,7 @@
                     <div>
                         <div class="flex items-center">
                             <div class="font-semibold ">{{ rupiah($payment->value) }}</div>
+                            @if ($payment->attachment)
                             <a href="{{ asset('storage/' . $payment->attachment) }} " target="_blank">
                                 <svg class="w-5 h-5 ml-2 text-slate-600" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.75 14.75V16.25C4.75 17.9069 6.09315 19.25 7.75 19.25H16.25C17.9069 19.25 19.25 17.9069 19.25 16.25V14.75"></path>
@@ -14,6 +15,7 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.75 10.75L12 14.25L15.25 10.75"></path>
                                 </svg>
                             </a>
+                            @endif
 
                         </div>
                         <div class="text-sm">{{ $payment->created_at }}</div>

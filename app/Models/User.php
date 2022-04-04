@@ -150,4 +150,9 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    public function scopeActive($query)
+    {
+        return $query->where('active', true);
+    }
+
 }

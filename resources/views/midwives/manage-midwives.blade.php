@@ -72,7 +72,7 @@
                             // 'bg-slate-50' => $loop->even,
                             'text-slate-400' => ! $midwife->active,
                         ])>
-                            <td class="p-3 pl-6">
+                            <td class="p-3 pl-6 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <img src="{{ $midwife->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
                                     <div class="ml-3 ">
@@ -81,10 +81,10 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="w-1/2 p-3 md:table-cell">
+                            <td class="w-1/2 p-3 whitespace-nowrap">
                                 <div class="flex flex-wrap gap-2">
                                     @forelse ($midwife->kecamatans as $kecamatan)
-                                        <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 rounded-full text-slate-600 bg-slate-200">
+                                        <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 border rounded-full text-slate-600 bg-slate-50 border-slate-200">
                                             {{ $kecamatan->name }}
                                         </div>
                                     @empty
@@ -92,7 +92,7 @@
                                     @endforelse
                                 </div>
                             </td>
-                            <td class="p-3 text-center ">
+                            <td class="p-3 text-center whitespace-nowrap">
                                 <div class="flex justify-center space-x-2">
                                     <a href="{{ route('midwives.edit', $midwife->id) }}" class="text-slate-400 hover:text-bunababy-200">
                                         Edit

@@ -128,6 +128,6 @@ class GuestBiodata extends Component
 
     public function render()
     {
-        return view('livewire.order.guest-biodata');
+        return view('client.order.guest-biodata');
     }
 }

@@ -34,7 +34,7 @@ class ManageClients extends Component
     {
         $clients = User::query()
             ->where('type', User::CLIENT)
-            ->with('addresses', 'addresses.kecamatan')
+            ->with('tags', 'reservations', 'addresses', 'addresses.kecamatan')
             ->where(function($query){
                 $query->where('name', 'LIKE', '%' . $this->filterSearch . '%')
                 // ->orWhereHas('kecamatans', function ($query) {

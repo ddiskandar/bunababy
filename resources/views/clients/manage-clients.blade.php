@@ -54,19 +54,19 @@
                 <table class="min-w-full text-sm align-middle">
                 <thead>
                     <tr class="bg-slate-50">
-                        <th class="p-3 pl-6 text-sm font-medium tracking-wider text-left text-slate-500">
+                        <th class="p-3 pl-6 text-xs font-medium tracking-wider text-left uppercase text-slate-500">
                             Nama
                         </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-left text-slate-500 md:table-cell">
+                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
                             Alamat / Phone
                         </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-left text-slate-500 md:table-cell">
+                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
                             Order Terakhir
                         </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-left text-slate-500 md:table-cell">
+                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
                             Tag
                         </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-center text-slate-500">
+                        <th class="p-3 text-xs font-medium tracking-wider text-center uppercase text-slate-500">
                             Actions
                         </th>
                     </tr>
@@ -78,7 +78,7 @@
                             // 'bg-slate-50' => $loop->even,
                             'text-slate-400' => ! $client->active,
                         ])>
-                            <td class="p-3 pl-6">
+                            <td class="p-3 pl-6 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <img src="{{ $client->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
                                     <div class="ml-3 ">
@@ -87,20 +87,20 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="p-3 md:table-cell">
+                            <td class="p-3 whitespace-nowrap">
                                 <p class="font-medium">{{ $client->address }}</p>
                                 <p class="text-slate-600">{{ $client->profile->phone }}</p>
                             </td>
-                            <td class="p-3 md:table-cell">
+                            <td class="p-3 whitespace-nowrap">
                                 {{ $client->last_reservation->date->diffForHumans() }}
                             </td>
-                            <td class="p-3 md:table-cell">
+                            <td class="p-3 whitespace-nowrap">
                                 @foreach ($client->tags as $tag)
                                     <span>{{$tag->name}}</span>
                                     {{ $loop->last ? '' : ', ' }}
                                 @endforeach
                             </td>
-                            <td class="p-3 text-center ">
+                            <td class="p-3 text-center whitespace-nowrap">
                                 <div class="flex justify-center space-x-2">
                                     <a href="{{ route('clients.edit', $client->id) }}" class="text-slate-400 hover:text-bunababy-200">
                                         Edit

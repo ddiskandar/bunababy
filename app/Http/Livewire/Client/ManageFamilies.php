@@ -64,7 +64,7 @@ class ManageFamilies extends Component
 
     public function render()
     {
-        return view('client.manage-families')
+        return view('client.profile.manage-families')
             ->layout('layouts.client');
     }
 }

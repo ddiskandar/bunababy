@@ -32,4 +32,9 @@ class Kecamatan extends Model
     {
         return $this->belongsToMany(User::class, 'kecamatan_user', 'kecamatan_id', 'midwife_user_id');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', true);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Clients;
 
+use App\Models\Order;
 use Livewire\Component;
 
 class CreateClient extends Component
