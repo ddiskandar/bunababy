@@ -14,6 +14,7 @@ class ManageClients extends Component
 
     public $filterSearch;
     public $filterStatus;
+    public $filterTag;
 
     public $state = [];
 
@@ -34,16 +35,21 @@ class ManageClients extends Component
     {
         $clients = User::query()
             ->where('type', User::CLIENT)
-            ->with('tags', 'reservations', 'addresses', 'addresses.kecamatan')
             ->where(function($query){
                 $query->where('name', 'LIKE', '%' . $this->filterSearch . '%')
-                // ->orWhereHas('kecamatans', function ($query) {
-                //     $query->where('name', 'like', '%' . $this->filterSearch . '%');
-                // })
-                ;
+                ->orWhereHas('addresses.kecamatan', function ($query) {
+                    $query->where('name', 'like', '%' . $this->filterSearch . '%');
+                })
+                ->orWhereHas('profile', function ($query) {
+                    $query->where('phone', 'like', '%' . $this->filterSearch . '%')
+                    ->orWhere('ig', 'like', '%' . $this->filterSearch . '%')
+                    ;
+                });
             })
-
-            // ->with()
+            ->whereHas('tags', function ($query) {
+                $query->where('name', 'LIKE', '%' . $this->filterTag . '%');
+            })
+            ->with('tags', 'reservations', 'addresses', 'addresses.kecamatan')
             ->paginate($this->perPage);
 
         return view('clients.manage-clients', [

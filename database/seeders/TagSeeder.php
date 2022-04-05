@@ -16,10 +16,9 @@ class TagSeeder extends Seeder
     public function run()
     {
         DB::table('tags')->insert([
-            ['name' => 'Baru Melahirkan'],
+            ['name' => 'Baru'],
             ['name' => 'Pelanggan'],
-            ['name' => 'VIP'],
-            ['name' => 'Pengantin Baru'],
+            ['name' => 'VVIP'],
         ]);
     }
 }

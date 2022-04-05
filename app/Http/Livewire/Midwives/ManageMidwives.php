@@ -10,7 +10,7 @@ class ManageMidwives extends Component
 {
     use WithPagination;
 
-    public $perPage = 6;
+    public $perPage = 3;
 
     public $filterSearch;
     public $filterStatus;
@@ -41,7 +41,7 @@ class ManageMidwives extends Component
                     $query->where('name', 'like', '%' . $this->filterSearch . '%');
                 });
             })
-
+            ->where('active', 'LIKE', '%' . $this->filterStatus . '%')
             ->with('kecamatans')
             ->paginate($this->perPage);
 

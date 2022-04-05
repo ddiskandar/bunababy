@@ -100,7 +100,8 @@ class DatabaseSeeder extends Seeder
                 'id' => $i
             ]);
 
-            $client->tags()->attach([1,2]);
+            $tag = rand(1,3);
+            $client->tags()->attach($tag);
 
             $address = Address::factory()
                 ->create([

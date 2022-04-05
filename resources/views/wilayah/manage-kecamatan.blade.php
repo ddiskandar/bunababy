@@ -4,46 +4,49 @@
         <!-- Card Header -->
         <div class="w-full py-3 pl-6 pr-3 bg-gray-50 sm:flex sm:justify-between sm:items-center">
             <div class="flex items-center">
-                <h3 class="mr-4 font-semibold">
+                <h3 class="font-semibold">
                     Wilayah
                 </h3>
             </div>
-            <div class="flex items-center justify-center space-x-4 sm:justify-end">
+            <div class="flex flex-col gap-2 mt-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-end">
 
-                <div class="mt-3 text-center sm:mt-0 sm:text-right">
-                    <a href="{{ route('kabupaten') }}" class="text-sm text-slate-400 hover:text-bunababy-200 ">
+                <div class="flex items-center space-x-2 space-x-reverse sm:space-x-2">
+                    <a href="{{ route('kabupaten') }}" class="order-2 text-xs font-medium uppercase sm:order-1 text-slate-400 hover:text-bunababy-200 ">
                         Atur Kabupaten
                     </a>
+                    <div class="order-1 w-40 sm:order-2">
+                        <select wire:model="filterKabupaten" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
+                            <option value="" selected="selected">Semua Kabupaten</option>
+                            @foreach (DB::table('kabupatens')->get() as $kabupaten)
+                                <option value="{{ $kabupaten->id }}">{{ $kabupaten->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
 
-                <div class="w-40 mt-3 text-center sm:mt-0 sm:text-right">
-                    <select wire:model="filterKabupaten" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
-                        <option value="" selected="selected">Semua Kabupaten</option>
-                        @foreach (DB::table('kabupatens')->get() as $kabupaten)
-                            <option value="{{ $kabupaten->id }}">{{ $kabupaten->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                <div class="flex space-x-2">
 
-                <div class="mt-3 text-center sm:mt-0 sm:text-right w-36">
-                    <select wire:model="filterStatus" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
-                        <option value="" selected="selected">Semua Status</option>
-                        <option value="0">Aktif</option>
-                        <option value="1">Tidak Aktif</option>
-                    </select>
-                </div>
 
-                <div class="w-16 mt-3 text-center sm:mt-0 sm:text-right">
-                    <select wire:model="perPage" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
-                        <option value="3" selected="selected">3</option>
-                        <option value="8">8</option>
-                        <option value="15">15</option>
-                        <option value="30">30</option>
-                    </select>
+                    <div class=" w-36">
+                        <select wire:model="filterStatus" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
+                            <option value="" selected="selected">Semua Status</option>
+                            <option value="0">Aktif</option>
+                            <option value="1">Tidak Aktif</option>
+                        </select>
+                    </div>
+
+                    <div class="w-16 ">
+                        <select wire:model="perPage" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
+                            <option value="3" selected="selected">3</option>
+                            <option value="8">8</option>
+                            <option value="15">15</option>
+                            <option value="30">30</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div>
-                    <button wire:click="showCreateNewKecamatanDialog" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded shadow-sm focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-white active:border-white active:shadow-none">
+                    <button wire:click="showCreateNewKecamatanDialog" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-bunababy-100">
                         + Tambah Baru
                     </button>
 
@@ -67,60 +70,60 @@
             <div class="min-w-full overflow-x-auto bg-white ">
                 <!-- Alternate Responsive Table -->
                 <table class="min-w-full text-sm align-middle">
-                <thead>
-                    <tr class="bg-slate-50">
-                        <th class="p-3 pl-6 text-sm font-medium tracking-wider text-left text-slate-400">
-                            Nama
-                        </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-center text-slate-400 md:table-cell">
-                            Jarak (Km)
-                        </th>
-                        <th class="p-3 text-sm font-medium text-center tracking-wider text-slate-400 md:table-cell">
-                            Jumlah Bidan
-                        </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-center text-slate-400 md:text-left">
-                            Kabupaten
-                        </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-center text-slate-400">
-                            Actions
-                        </th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100">
-                    @forelse ($kecamatan as $item)
-                        <tr @class([
-                            '',
-                            // 'bg-slate-50' => $loop->even,
-                            'text-slate-400' => ! $item->active,
-                        ])>
-                            <td class="p-3 pl-6 align-top">
-                                <p class="font-semibold">{{ $item->name }}</p>
-                            </td>
-                            <td class="w-64 p-3 align-top text-center md:table-cell">
-                                {{ $item->distance }}
-                            </td>
-                            <td class="w-64 p-3 align-top text-center md:table-cell">
-                                {{ $item->midwives_count }}
-                            </td>
-                            <td class="p-3 align-top md:table-cell">
-                                <p>{{ $item->kabupaten->name }}</p>
-                            </td>
-                            <td class="p-3 text-center align-top">
-                                <div class="flex justify-center space-x-2">
-                                    <button wire:click="ShowEditKecamatanDialog({{ $item->id }})" class="text-slate-400 hover:text-bunababy-200">
-                                        Edit
-                                    </button>
-                                </div>
-                            </td>
+                    <thead>
+                        <tr class="bg-slate-50">
+                            <th class="p-3 pl-6 text-xs font-medium tracking-wider text-left uppercase whitespace-nowrap text-slate-400">
+                                Nama
+                            </th>
+                            <th class="p-3 text-xs font-medium tracking-wider text-center uppercase whitespace-nowrap text-slate-400">
+                                Jarak (Km)
+                            </th>
+                            <th class="p-3 text-xs font-medium tracking-wider text-center uppercase whitespace-nowrap text-slate-400">
+                                Jumlah Bidan
+                            </th>
+                            <th class="p-3 text-xs font-medium tracking-wider text-left uppercase whitespace-nowrap text-slate-400">
+                                Kota / Kabupaten
+                            </th>
+                            <th class="p-3 text-xs font-medium tracking-wider text-center uppercase whitespace-nowrap text-slate-400">
+                                Actions
+                            </th>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6" class="py-12 text-center">
-                                <p class="text-slate-400">Tidak ada yang ditemukan</p>
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        @forelse ($kecamatan as $item)
+                            <tr @class([
+                                '',
+                                'bg-slate-50/30' => $loop->even,
+                                'text-slate-400' => ! $item->active,
+                            ])>
+                                <td class="p-3 pl-6 align-top whitespace-nowrap">
+                                    <p class="font-semibold">{{ $item->name }}</p>
+                                </td>
+                                <td class="w-64 p-3 text-center align-top">
+                                    {{ $item->distance }}
+                                </td>
+                                <td class="w-64 p-3 text-center align-top">
+                                    {{ $item->midwives_count }}
+                                </td>
+                                <td class="p-3 align-top">
+                                    <p>{{ $item->kabupaten->name }}</p>
+                                </td>
+                                <td class="p-3 text-center align-top">
+                                    <div class="flex justify-center space-x-2">
+                                        <button wire:click="ShowEditKecamatanDialog({{ $item->id }})" class="text-slate-400 hover:text-bunababy-200">
+                                            Edit
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="py-12 text-center">
+                                    <p class="text-slate-400">Tidak ada yang ditemukan</p>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
                 </table>
                 <!-- END Alternate Responsive Table -->
             </div>
@@ -130,7 +133,9 @@
 
         <!-- Card Footer: Pagination -->
 
+        <div class="w-full bg-slate-50">
             {{ $kecamatan->links() }}
+        </div>
 
         <!-- END Card Footer: Pagination -->
 

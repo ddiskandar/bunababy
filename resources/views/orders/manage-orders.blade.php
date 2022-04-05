@@ -4,7 +4,7 @@
         <!-- Card Header -->
         <div class="w-full py-3 pl-6 pr-3 bg-gray-50 sm:flex sm:justify-between sm:items-center">
             <div class="flex items-center">
-                <h3 class="mr-4 font-semibold">
+                <h3 class="font-semibold">
                     Orders
                 </h3>
             </div>

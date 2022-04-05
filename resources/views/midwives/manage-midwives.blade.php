@@ -4,31 +4,33 @@
         <!-- Card Header -->
         <div class="w-full py-3 pl-6 pr-3 bg-gray-50 sm:flex sm:justify-between sm:items-center">
             <div class="flex items-center">
-                <h3 class="mr-4 font-semibold">
+                <h3 class="font-semibold">
                     Bidan
                 </h3>
             </div>
-            <div class="flex items-center justify-center space-x-4 sm:justify-end">
+            <div class="flex flex-col gap-2 mt-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-end">
 
-                <div class="mt-3 text-center sm:mt-0 sm:text-right w-36">
-                    <select wire:model="filterStatus" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
-                        <option value="" selected="selected">Semua Status</option>
-                        <option value="0">Aktif</option>
-                        <option value="1">Tidak Aktif</option>
-                    </select>
-                </div>
+                <div class="flex space-x-2">
+                    <div class="mt-3 text-center sm:mt-0 sm:text-right w-36">
+                        <select wire:model="filterStatus" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
+                            <option value="" selected="selected">Semua Status</option>
+                            <option value="1">Aktif</option>
+                            <option value="0">Tidak Aktif</option>
+                        </select>
+                    </div>
 
-                <div class="w-16 mt-3 text-center sm:mt-0 sm:text-right">
-                    <select wire:model="perPage" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
-                        <option value="3">3</option>
-                        <option value="6" selected>6</option>
-                        <option value="15">15</option>
-                        <option value="30">30</option>
-                    </select>
+                    <div class="w-16 mt-3 text-center sm:mt-0 sm:text-right">
+                        <select wire:model="perPage" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
+                            <option value="3">3</option>
+                            <option value="6" selected>6</option>
+                            <option value="15">15</option>
+                            <option value="30">30</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div>
-                    <a href="{{ route('midwives.create') }}" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded shadow-sm focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-white active:border-white active:shadow-none">
+                    <a href="{{ route('midwives.create') }}" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-bunababy-100">
                         + Tambah Baru
                     </a>
 
@@ -54,13 +56,13 @@
                 <table class="min-w-full text-sm align-middle">
                 <thead>
                     <tr class="bg-slate-50">
-                        <th class="p-3 pl-6 text-sm font-medium tracking-wider text-left text-slate-500">
+                        <th class="p-3 pl-6 text-xs font-medium tracking-wider text-left uppercase text-slate-500">
                             Nama
                         </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-left text-slate-500 md:table-cell">
+                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
                             Wilayah
                         </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-center text-slate-500">
+                        <th class="p-3 text-xs font-medium tracking-wider text-center uppercase text-slate-500">
                             Actions
                         </th>
                     </tr>
@@ -69,10 +71,10 @@
                     @forelse ($midwives as $midwife)
                         <tr @class([
                             '',
-                            // 'bg-slate-50' => $loop->even,
+                            'bg-slate-50/30' => $loop->even,
                             'text-slate-400' => ! $midwife->active,
                         ])>
-                            <td class="p-3 pl-6 whitespace-nowrap">
+                            <td class="p-3 pl-6 w-96 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <img src="{{ $midwife->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
                                     <div class="ml-3 ">
@@ -82,7 +84,7 @@
                                 </div>
                             </td>
                             <td class="w-1/2 p-3 whitespace-nowrap">
-                                <div class="flex flex-wrap gap-2">
+                                <div class="flex flex-wrap gap-2 whitespace-nowrap">
                                     @forelse ($midwife->kecamatans as $kecamatan)
                                         <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 border rounded-full text-slate-600 bg-slate-50 border-slate-200">
                                             {{ $kecamatan->name }}
@@ -117,7 +119,9 @@
 
         <!-- Card Footer: Pagination -->
 
+        <div class="w-full bg-slate-50">
             {{ $midwives->links() }}
+        </div>
 
         <!-- END Card Footer: Pagination -->
 

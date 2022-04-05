@@ -4,13 +4,17 @@
         <!-- Card Header -->
         <div class="w-full py-3 pl-6 pr-3 bg-white sm:flex sm:justify-between sm:items-center">
             <div class="flex items-center">
-                <h3 class="mr-4 font-semibold">
+                <h3 class="font-semibold">
                     Kategori
                 </h3>
             </div>
-            <div class="flex items-center justify-center space-x-4 sm:justify-end">
+            <div class="flex flex-col gap-2 mt-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-end">
 
-                <div class="mt-3 text-center sm:mt-0 sm:text-right w-36">
+                <a href="{{ route('treatments') }}" class="text-xs font-medium uppercase text-slate-400 hover:text-bunababy-200 ">
+                    Atur Treatment
+                </a>
+
+                <div class="w-36">
                     <select wire:model="filterStatus" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
                         <option value="" selected="selected">Semua Status</option>
                         <option value="1">Aktif</option>
@@ -19,7 +23,7 @@
                 </div>
 
                 <div>
-                    <button wire:click="showAddNewCategoryDialog" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded shadow-sm focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-white active:border-white active:shadow-none">
+                    <button wire:click="showAddNewCategoryDialog" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-bunababy-100">
                         + Tambah Baru
                     </button>
 

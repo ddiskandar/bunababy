@@ -6,6 +6,7 @@
 
 ::-webkit-scrollbar {
     width: 5px;
+    height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -13,7 +14,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: pink;
+    background-color: lightpink;
     border-radius: 3px;
     padding: 3px;
 }

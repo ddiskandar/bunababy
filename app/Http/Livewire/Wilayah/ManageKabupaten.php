@@ -62,7 +62,7 @@ class ManageKabupaten extends Component
     {
         $kabupaten = Kabupaten::query()
             ->Where('active', 'LIKE', '%' . $this->filterStatus . '%')
-            ->withCount('kecamatan')
+            ->withCount('kecamatans')
             ->get();
 
         return view('wilayah.manage-kabupaten', [
