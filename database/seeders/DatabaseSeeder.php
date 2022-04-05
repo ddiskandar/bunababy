@@ -94,7 +94,7 @@ class DatabaseSeeder extends Seeder
 
         $midwife6->kecamatans()->attach([16, 11, 23, 14, 27, 6, 7, 25, 20, 22, 26, 17, 32, 40, 43]);
 
-        for( $i = 9; $i <= 20; $i++ ){
+        for( $i = 9; $i <= 30; $i++ ){
 
             $client = User::factory()->hasProfile()->create([
                 'id' => $i
@@ -120,6 +120,7 @@ class DatabaseSeeder extends Seeder
                     'date' => today()->addDays($i),
                     'start_time' => '10:00:00',
                     'end_time' => '11:00:00',
+                    'status' => rand(1,3)
                 ]);
 
             $order->treatments()->attach([3,4]);

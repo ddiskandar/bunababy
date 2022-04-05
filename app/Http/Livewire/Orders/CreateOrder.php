@@ -61,7 +61,7 @@ class CreateOrder extends Component
             'end_time' => $this->time,
         ]);
 
-        return redirect()->route('orders.edit', $order->id);
+        return redirect()->route('orders.show', $order->id);
     }
 
     public function render()

@@ -17,7 +17,7 @@ class CreateTestimonialsTable extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
             $table->tinyInteger('rate');
-            $table->text('desc')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

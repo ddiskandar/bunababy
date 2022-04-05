@@ -29,8 +29,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Midwife...
     Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'show'])->name('calendar');
-    Route::get('/orders/{order}', [App\Http\Controllers\OrdersController::class, 'show'])->name('orders.show');
     Route::get('/orders/create', [App\Http\Controllers\OrdersController::class, 'create'])->name('orders.create');
+    Route::get('/orders/{order}', [App\Http\Controllers\OrdersController::class, 'show'])->name('orders.show');
     Route::get('/orders', [App\Http\Controllers\OrdersController::class, 'index'])->name('orders');
     Route::get('/timetables', [App\Http\Controllers\TimetableController::class, 'show'])->name('timetables');
 

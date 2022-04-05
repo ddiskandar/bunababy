@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('midwife_user_id')->constrained('users')->onDelete('cascade');
             $table->date('date');
             $table->tinyInteger('type');
+            $table->string('note');
             $table->timestamps();
         });
     }
