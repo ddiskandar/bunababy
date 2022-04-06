@@ -1382,14 +1382,14 @@ select {
 .w-36 {
   width: 9rem;
 }
+.w-40 {
+  width: 10rem;
+}
 .w-16 {
   width: 4rem;
 }
 .w-10 {
   width: 2.5rem;
-}
-.w-40 {
-  width: 10rem;
 }
 .w-64 {
   width: 16rem;
@@ -2126,6 +2126,10 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(238 242 255 / var(--tw-bg-opacity));
 }
+.bg-red-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(220 38 38 / var(--tw-bg-opacity));
+}
 .bg-opacity-75 {
   --tw-bg-opacity: 0.75;
 }
@@ -2503,6 +2507,10 @@ select {
   --tw-text-opacity: 1;
   color: rgb(22 163 74 / var(--tw-text-opacity));
 }
+.text-indigo-600 {
+  --tw-text-opacity: 1;
+  color: rgb(79 70 229 / var(--tw-text-opacity));
+}
 .text-slate-800 {
   --tw-text-opacity: 1;
   color: rgb(30 41 59 / var(--tw-text-opacity));
@@ -2601,10 +2609,6 @@ select {
 .text-bunababy-300 {
   --tw-text-opacity: 1;
   color: rgb(215 164 223 / var(--tw-text-opacity));
-}
-.text-indigo-600 {
-  --tw-text-opacity: 1;
-  color: rgb(79 70 229 / var(--tw-text-opacity));
 }
 .text-pink-500 {
   --tw-text-opacity: 1;
@@ -3019,6 +3023,11 @@ select {
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-red-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(185 28 28 / var(--tw-bg-opacity));
+}
+
 .hover\:text-gray-500:hover {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
@@ -3235,6 +3244,11 @@ select {
   --tw-ring-color: rgb(252 231 243 / var(--tw-ring-opacity));
 }
 
+.focus\:ring-indigo-500:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(99 102 241 / var(--tw-ring-opacity));
+}
+
 .focus\:ring-bunababy-100:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(254 112 197 / var(--tw-ring-opacity));
@@ -3267,11 +3281,6 @@ select {
 
 .focus\:ring-transparent:focus {
   --tw-ring-color: transparent;
-}
-
-.focus\:ring-indigo-500:focus {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(99 102 241 / var(--tw-ring-opacity));
 }
 
 .focus\:ring-slate-500:focus {
@@ -3424,6 +3433,10 @@ select {
 
 .disabled\:opacity-25:disabled {
   opacity: 0.25;
+}
+
+.group:hover .group-hover\:visible {
+  visibility: visible;
 }
 
 .group:hover .group-hover\:rotate-6 {

@@ -5,7 +5,7 @@
         <div class="w-full py-3 pl-6 pr-3 bg-gray-50 sm:flex sm:justify-between sm:items-center">
             <div class="flex items-center">
                 <h3 class="font-semibold">
-                    notifications
+                    Notifications
                 </h3>
             </div>
             <div class="flex flex-col gap-2 mt-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-end">
@@ -16,11 +16,29 @@
 
                 <div class="flex space-x-2">
 
+                    @if ($selectedNotifications)
+                    <div>
+                        <button
+                            wire:click="deleteSelectedNotificatons()"
+                            type="button"
+                            class="inline-flex justify-center w-full px-4 py-1 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                            Hapus
+                        </button>
+                    </div>
+                    @endif
+
+                    <div class="w-40 ">
+                        <select wire:model="filterType" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
+                            <option value="" selected>Semua Tipe</option>
+                            <option value="order">Order</option>
+                            <option value="payment">Payment</option>
+                        </select>
+                    </div>
                     <div class="w-40 ">
                         <select wire:model="filterStatus" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
-                            <option value="" selected="selected">Tampilkan Semua</option>
-                            <option value="1">Belum dibaca</option>
-                            <option value="2">Sudah dibaca</option>
+                            <option value="" selected>Semua Status</option>
+                            <option value="unread">Belum dibaca</option>
+                            <option value="read">Sudah dibaca</option>
                         </select>
                     </div>
 
@@ -65,11 +83,14 @@
                 <tbody class="divide-y divide-slate-100">
                     @forelse ($notifications as $notification)
                         <tr @class([
-                            '',
+                            'group',
                             'bg-slate-50/30' => $loop->even,
                         ])>
                             <td class="table-cell p-3 pl-6 w-72 ">
-                                <div class="flex justify-between gap-2">
+                                <div class="flex justify-between gap-2 ">
+                                    <div>
+                                        <input wire:model="selectedNotifications.{{ $notification->id }}" id="comments" name="comments" type="checkbox" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                                    </div>
                                     <div @class([
                                         'grow text-slate-800',
                                         'opacity-40' => isset($notification->read_at),
@@ -101,7 +122,7 @@
                                             <span class="font-semibold">{{ $notification->data['order_no_reg'] }}</span>
                                        @endif
                                     </div>
-                                    <div class="flex justify-center space-x-2">
+                                    <div class="flex justify-center invisible space-x-2 group-hover:visible">
                                         @if (!isset($notification->read_at))
                                         <button wire:click.prevent="markAsRead('{{ $notification->id }}')" class="text-slate-400 hover:text-bunababy-200">
                                             <svg width="24" height="24" fill="none" viewBox="0 0 24 24">

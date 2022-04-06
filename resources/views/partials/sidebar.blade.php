@@ -91,7 +91,7 @@
                     </svg>
                 </span>
                 <span class="py-2 grow">Notifikasi</span>
-                <span class="px-2 py-1 text-xs font-medium leading-4 text-gray-600 bg-gray-500 rounded-full bg-opacity-10">89</span>
+                @livewire('notifications.user-notifications-count')
             </x-nav-link>
             <x-nav-link :href="route('payments')" :active="request()->routeIs('payments')">
                 <span class="flex items-center flex-none opacity-50">

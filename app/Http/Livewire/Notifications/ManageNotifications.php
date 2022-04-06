@@ -18,6 +18,9 @@ class ManageNotifications extends Component
 
     public $filterStatus;
     public $filterSearch;
+    public $filterType;
+
+    public $selectedNotifications = [];
 
     public $state = [];
 
@@ -54,18 +57,34 @@ class ManageNotifications extends Component
     {
         $notification = DatabaseNotification::findOrFail($notificationId);
         $notification->markAsRead();
+        $this->emit('refreshSidebar');
     }
 
     public function markAsUnRead($notificationId)
     {
         $notification = DatabaseNotification::findOrFail($notificationId);
         $notification->update(['read_at' => NULL ]);
+        $this->emit('refreshSidebar');
     }
 
     public function delete($notificationId)
     {
         $notification = DatabaseNotification::findOrFail($notificationId);
         $notification->delete();
+        $this->emit('refreshSidebar');
+    }
+
+    public function deleteSelectedNotificatons()
+    {
+        foreach($this->selectedNotifications as $notification => $boolean){
+            if($boolean) {
+                $notification = DatabaseNotification::find($notification);
+                $notification->delete();
+            }
+        }
+
+        $this->selectedNotifications = '';
+        $this->emit('refreshSidebar');
     }
 
     public function save()
@@ -78,9 +97,9 @@ class ManageNotifications extends Component
 
     public function render()
     {
-        if($this->filterStatus == '1') {
+        if($this->filterStatus == 'unread') {
             $query = auth()->user()->unreadNotifications();
-        } else if ($this->filterStatus == '2') {
+        } else if ($this->filterStatus == 'read') {
             $query = auth()->user()->readNotifications();
         } else {
             $query = auth()->user()->notifications();
@@ -88,6 +107,7 @@ class ManageNotifications extends Component
 
         $notifications = $query
         ->where('data', 'LIKE', '%' . $this->filterSearch . '%')
+        ->where('data->type', 'LIKE', '%' . $this->filterType . '%')
         ->paginate($this->perPage);
 
         return view('notifications.manage-notifications', [
