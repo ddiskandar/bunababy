@@ -8,6 +8,8 @@ use App\Models\Payment;
 use App\Models\Profile;
 use App\Models\Testimonial;
 use App\Models\User;
+use App\Notifications\NewOrder;
+use App\Notifications\NewPayment;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -132,10 +134,14 @@ class DatabaseSeeder extends Seeder
                     'order_id' => $order->id,
                 ]);
 
-            $payment1 = Payment::factory()
+            $payment = Payment::factory()
                 ->create([
                     'order_id' => $order->id,
                 ]);
+
+            $owner->notify( new NewOrder($order));
+            $owner->notify( new NewPayment($payment));
+
         }
     }
 }

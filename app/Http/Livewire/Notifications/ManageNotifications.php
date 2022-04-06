@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Notifications;
 
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Support\Facades\Notification;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,14 +16,12 @@ class ManageNotifications extends Component
     public $showDialog = false;
     public $successMessage = false;
 
+    public $filterStatus;
     public $filterSearch;
-    public $filterRate;
-    public $filterMidwife;
 
     public $state = [];
 
     protected $queryString = [
-        'filterSearch' => ['except' => ''],
         'page' => ['except' => 1],
         'perPage' => ['except' => 3],
     ];
@@ -50,6 +50,24 @@ class ManageNotifications extends Component
         'state.active' => 'status aktif',
     ];
 
+    public function markAsRead($notificationId)
+    {
+        $notification = DatabaseNotification::findOrFail($notificationId);
+        $notification->markAsRead();
+    }
+
+    public function markAsUnRead($notificationId)
+    {
+        $notification = DatabaseNotification::findOrFail($notificationId);
+        $notification->update(['read_at' => NULL ]);
+    }
+
+    public function delete($notificationId)
+    {
+        $notification = DatabaseNotification::findOrFail($notificationId);
+        $notification->delete();
+    }
+
     public function save()
     {
         $this->validate();
@@ -60,7 +78,17 @@ class ManageNotifications extends Component
 
     public function render()
     {
-        $notifications = auth()->user()->notifications()->paginate($this->perPage);
+        if($this->filterStatus == '1') {
+            $query = auth()->user()->unreadNotifications();
+        } else if ($this->filterStatus == '2') {
+            $query = auth()->user()->readNotifications();
+        } else {
+            $query = auth()->user()->notifications();
+        }
+
+        $notifications = $query
+        ->where('data', 'LIKE', '%' . $this->filterSearch . '%')
+        ->paginate($this->perPage);
 
         return view('notifications.manage-notifications', [
             'notifications' => $notifications,

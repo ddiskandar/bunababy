@@ -16,12 +16,11 @@
 
                 <div class="flex space-x-2">
 
-                    <div class=" w-36">
+                    <div class="w-40 ">
                         <select wire:model="filterStatus" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
-                            <option value="" selected="selected">Semua Status</option>
-                            <option value="1">Unverified</option>
-                            <option value="2">Verified</option>
-                            <option value="3">Rejected</option>
+                            <option value="" selected="selected">Tampilkan Semua</option>
+                            <option value="1">Belum dibaca</option>
+                            <option value="2">Sudah dibaca</option>
                         </select>
                     </div>
 
@@ -35,13 +34,6 @@
                     </div>
                 </div>
 
-                <div>
-                    <button wire:click="showAddNewTreatmentDialog" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-bunababy-100">
-                        + Tambah Baru
-                    </button>
-
-                </div>
-
             </div>
         </div>
         <div class="w-full p-3 border-b border-gray-100 grow">
@@ -49,7 +41,7 @@
                 <div class="absolute inset-y-0 left-0 flex items-center justify-center w-10 my-px ml-px text-gray-500 rounded-l pointer-events-none">
                     <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 hi-solid hi-search"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                 </div>
-                <input wire:model="filterSearch" class="block w-full py-1 pl-10 pr-3 text-sm leading-6 border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="text" placeholder="Mencari berdasarkan nama client atau deskripsi ..." />
+                <input wire:model="filterSearch" class="block w-full py-1 pl-10 pr-3 text-sm leading-6 border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="text" placeholder="Mencari ..." />
             </div>
         </div>
         <!-- END Card Header -->
@@ -60,75 +52,80 @@
             <div class="min-w-full overflow-x-auto bg-white ">
                 <!-- Alternate Responsive Table -->
                 <table class="min-w-full text-sm align-middle">
-                <thead>
+                {{-- <thead>
                     <tr class="bg-slate-50">
                         <th class="p-3 pl-6 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
-                            Client
-                        </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
-                            Order / Tanggal
-                        </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
-                            Besar Bayar / Sisa
-                        </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
-                            Pembayaran
-                        </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
-                            Status
-                        </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
-                            Verificator
-                        </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
-                            Catatan
+                            Notifications
                         </th>
                         <th class="p-3 text-xs font-medium tracking-wider text-center uppercase text-slate-400">
                             Actions
                         </th>
                     </tr>
-                </thead>
+                </thead> --}}
                 <tbody class="divide-y divide-slate-100">
                     @forelse ($notifications as $notification)
                         <tr @class([
                             '',
                             'bg-slate-50/30' => $loop->even,
-                            'text-slate-400' => ! $notification->active,
                         ])>
-                            <td class="p-3 pl-6 w-72  whitespace-nowrap table-cell">
-                                <div class="flex items-center">
-                                    <img src="{{ $notification->order->client->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
-                                    <div class="ml-3 ">
-                                        <p class="font-semibold text-slate-800">{{ $notification->order->client->name }}</p>
-                                        <p class="text-slate-600">{{ $notification->order->client->address }}</p>
+                            <td class="table-cell p-3 pl-6 w-72 ">
+                                <div class="flex justify-between gap-2">
+                                    <div @class([
+                                        'grow text-slate-800',
+                                        'opacity-40' => isset($notification->read_at),
+                                    ])>
+                                       @if ($notification->data['type'] == 'order')
+                                       <div>
+                                            <svg class="inline-block w-5 h-5" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 6.75C19.25 6.19772 18.8023 5.75 18.25 5.75H5.75C5.19772 5.75 4.75 6.19771 4.75 6.75V8.04566C4.75 8.50939 5.07835 8.89813 5.49029 9.11107C6.53552 9.65136 7.25 10.7422 7.25 12C7.25 13.2578 6.53552 14.3486 5.49029 14.8889C5.07835 15.1019 4.75 15.4906 4.75 15.9543V17.25C4.75 17.8023 5.19771 18.25 5.75 18.25H18.25C18.8023 18.25 19.25 17.8023 19.25 17.25V15.9543C19.25 15.4906 18.9216 15.1019 18.5097 14.8889C17.4645 14.3486 16.75 13.2578 16.75 12C16.75 10.7422 17.4645 9.65136 18.5097 9.11107C18.9216 8.89813 19.25 8.50939 19.25 8.04566V6.75Z"></path>
+                                            </svg>
+                                            <span class="font-semibold">{{ $notification->data['order_client_name'] }}</span>
+                                            ({{ $notification->data['order_client_address_name'] }})
+                                            membuat order baru untuk tanggal
+                                            {{ $notification->data['order_date'] }}
+                                            jam
+                                            {{ $notification->data['order_start_time'] }}
+                                            untuk bidan
+                                            {{ $notification->data['order_midwife_name'] }}
+                                        </div>
+                                       @elseif ($notification->data['type'] == 'payment')
+                                            <svg class="inline-block w-5 h-5" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 8.25V17.25C19.25 18.3546 18.3546 19.25 17.25 19.25H6.75C5.64543 19.25 4.75 18.3546 4.75 17.25V6.75"></path>
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M16.5 13C16.5 13.2761 16.2761 13.5 16 13.5C15.7239 13.5 15.5 13.2761 15.5 13C15.5 12.7239 15.7239 12.5 16 12.5C16.2761 12.5 16.5 12.7239 16.5 13Z"></path>
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 8.25H6.5C5.5335 8.25 4.75 7.4665 4.75 6.5C4.75 5.5335 5.5335 4.75 6.5 4.75H15.25C16.3546 4.75 17.25 5.64543 17.25 6.75V8.25ZM17.25 8.25H19.25"></path>
+                                            </svg>
+                                            <span class="font-semibold">{{ $notification->data['payment_client_name'] }}</span>
+                                            melakukan pembayaran sebesar
+                                            <span class="font-semibold">{{ $notification->data['payment_value'] }}</span>
+                                            untuk order
+                                            <span class="font-semibold">{{ $notification->data['order_no_reg'] }}</span>
+                                       @endif
                                     </div>
-                                </div>
-                            </td>
-                            <td class="p-3  ">
-                                <p class="text-slate-800">{{ $notification->order->no_reg }}</p>
-                                <p class=" ">{{ $notification->order->date->format('d M Y') }}</p>
-                            </td>
-                            <td class="p-3  ">
-                                <p class="text-slate-800">{{ rupiah($notification->order->grand_total()) }}</p>
-                            </td>
-                            <td class="p-3  ">
-                                <p class="text-slate-800">{{ rupiah($notification->value) }}</p>
-                            </td>
-                            <td class="p-3  ">
-                                <p class="text-slate-800">{{ $notification->status }}</p>
-                            </td>
-                            <td class="p-3  ">
-                                <p class="text-slate-800">{{ $notification->not }}</p>
-                            </td>
-                            <td class="p-3  ">
-                                <p class="text-slate-800 font-semibold">
-                                </p>
-                            </td>
-                            <td class="p-3 text-center  whitespace-nowrap">
-                                <div class="flex justify-center space-x-2">
-                                    <button wire:click="ShowEditnotificationDialog({{ $notification->id }})" class="text-slate-400 hover:text-bunababy-200">
-                                        Edit
-                                    </button>
+                                    <div class="flex justify-center space-x-2">
+                                        @if (!isset($notification->read_at))
+                                        <button wire:click.prevent="markAsRead('{{ $notification->id }}')" class="text-slate-400 hover:text-bunababy-200">
+                                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12C19.25 13 17.5 18.25 12 18.25C6.5 18.25 4.75 13 4.75 12C4.75 11 6.5 5.75 12 5.75C17.5 5.75 19.25 11 19.25 12Z"></path>
+                                                <circle cx="12" cy="12" r="2.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></circle>
+                                            </svg>
+                                        </button>
+                                        @else
+                                        <button wire:click.prevent="markAsUnRead('{{ $notification->id }}')" class="text-slate-400 hover:text-bunababy-200">
+                                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18.6247 10C19.0646 10.8986 19.25 11.6745 19.25 12C19.25 13 17.5 18.25 12 18.25C11.2686 18.25 10.6035 18.1572 10 17.9938M7 16.2686C5.36209 14.6693 4.75 12.5914 4.75 12C4.75 11 6.5 5.75 12 5.75C13.7947 5.75 15.1901 6.30902 16.2558 7.09698"></path>
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 4.75L4.75 19.25"></path>
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.409 13.591C9.53033 12.7123 9.53033 11.2877 10.409 10.409C11.2877 9.5303 12.7123 9.5303 13.591 10.409"></path>
+                                            </svg>
+                                        </button>
+                                        @endif
+                                        <button wire:click="delete('{{ $notification->id }}')" class="text-slate-400 hover:text-bunababy-200">
+                                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.75 7.75L7.59115 17.4233C7.68102 18.4568 8.54622 19.25 9.58363 19.25H14.4164C15.4538 19.25 16.319 18.4568 16.4088 17.4233L17.25 7.75"></path>
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 7.5V6.75C9.75 5.64543 10.6454 4.75 11.75 4.75H12.25C13.3546 4.75 14.25 5.64543 14.25 6.75V7.5"></path>
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 7.75H19"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
