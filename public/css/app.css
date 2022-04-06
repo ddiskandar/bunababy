@@ -1094,6 +1094,9 @@ select {
 .col-start-\[8\] {
   grid-column-start: 8;
 }
+.col-start-1 {
+  grid-column-start: 1;
+}
 .row-span-4 {
   grid-row: span 4 / span 4;
 }
@@ -1135,6 +1138,9 @@ select {
 }
 .row-start-\[12\] {
   grid-row-start: 12;
+}
+.row-start-1 {
+  grid-row-start: 1;
 }
 .-m-3 {
   margin: -0.75rem;
@@ -1633,6 +1639,9 @@ select {
 }
 .grid-cols-\[70px\2c repeat\(7\2c 200px\)\] {
   grid-template-columns: 70px repeat(7,200px);
+}
+.grid-cols-\[70px\2c repeat\(6\2c 200px\)\] {
+  grid-template-columns: 70px repeat(6,200px);
 }
 .grid-rows-\[auto\2c repeat\(11\2c 50px\)\] {
   grid-template-rows: auto repeat(11,50px);

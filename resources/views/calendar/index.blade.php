@@ -1,5 +1,5 @@
 <x-app-layout>
 
-    @livewire('admin.calendar')
+    @livewire('calendar.show-calendar')
 
 </x-app-layout>

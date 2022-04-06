@@ -12,9 +12,13 @@ class ShowCalendar extends Component
     public $date;
 
     public function mount(){
-        $this->midwives = User::where('role', 'midwife')
-                        ->with('schedules')->get();
         $this->date = today()->format('Y-m-d');
+        $this->midwives = User::where('type', User::MIDWIFE)
+                        ->orWhereHas('schedules', function($query){
+                            $query->where('date', $this->date);
+                        })
+                        ->with('schedules')
+                        ->get();
 
         // dd($this->selectedDate);
     }
@@ -22,7 +26,7 @@ class ShowCalendar extends Component
     public function render()
     {
 
-        return view('livewire.calendar.show-calendar', [
+        return view('calendar.show-calendar', [
             'slots' => Slot::all()
         ]);
     }
