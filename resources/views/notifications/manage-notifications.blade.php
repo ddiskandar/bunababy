@@ -89,7 +89,7 @@
                             <td class="table-cell p-3 pl-6 w-72 ">
                                 <div class="flex justify-between gap-2 ">
                                     <div>
-                                        <input wire:model="selectedNotifications.{{ $notification->id }}" id="comments" name="comments" type="checkbox" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                                        <input wire:model="selectedNotifications.{{ $notification->id }}" id="comments" name="comments" type="checkbox" class="w-4 h-4 border-gray-300 rounded text-bunababy-200 focus:ring-bunababy-200">
                                     </div>
                                     <div @class([
                                         'grow text-slate-800',
@@ -177,7 +177,7 @@
     <!-- END Card -->
 
     <x-notification wire:model="successMessage">
-        Data berhasil disimpan
+        Notifications deleted!
     </x-notification>
 
     <x-dialog wire:model="showDialog">

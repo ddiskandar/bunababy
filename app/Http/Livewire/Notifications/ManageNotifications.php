@@ -85,6 +85,7 @@ class ManageNotifications extends Component
 
         $this->selectedNotifications = '';
         $this->emit('refreshSidebar');
+        $this->successMessage = true;
     }
 
     public function save()
