@@ -5,7 +5,7 @@
         <div class="w-full py-3 pl-6 pr-3 bg-gray-50 sm:flex sm:justify-between sm:items-center">
             <div class="flex items-center">
                 <h3 class="font-semibold">
-                    Penjadwalan
+                    Payments
                 </h3>
             </div>
             <div class="flex flex-col gap-2 mt-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-end">
@@ -17,10 +17,11 @@
                 <div class="flex space-x-2">
 
                     <div class=" w-36">
-                        <select wire:model="filterType" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
-                            <option value="" selected="selected">Semua Type</option>
-                            <option value="1">Lembur</option>
-                            <option value="2">Libur</option>
+                        <select wire:model="filterStatus" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
+                            <option value="" selected="selected">Semua Status</option>
+                            <option value="1">Unverified</option>
+                            <option value="2">Verified</option>
+                            <option value="3">Rejected</option>
                         </select>
                     </div>
 
@@ -48,7 +49,7 @@
                 <div class="absolute inset-y-0 left-0 flex items-center justify-center w-10 my-px ml-px text-gray-500 rounded-l pointer-events-none">
                     <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 hi-solid hi-search"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                 </div>
-                <input wire:model="filterSearch" class="block w-full py-1 pl-10 pr-3 text-sm leading-6 border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="text" placeholder="Mencari berdasarkan nama, deskripsi, harga, atau durasi ..." />
+                <input wire:model="filterSearch" class="block w-full py-1 pl-10 pr-3 text-sm leading-6 border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="text" placeholder="Mencari berdasarkan nama client atau deskripsi ..." />
             </div>
         </div>
         <!-- END Card Header -->
@@ -62,13 +63,22 @@
                 <thead>
                     <tr class="bg-slate-50">
                         <th class="p-3 pl-6 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
-                            Nama
+                            Client
+                        </th>
+                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
+                            Order / Tanggal
                         </th>
                         <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
-                            Tanggal
+                            Besar Bayar / Sisa
                         </th>
                         <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
-                            Type
+                            Pembayaran
+                        </th>
+                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
+                            Status
+                        </th>
+                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
+                            Verificator
                         </th>
                         <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
                             Catatan
@@ -79,28 +89,44 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
-                    @forelse ($timetables as $timetable)
+                    @forelse ($payments as $payment)
                         <tr @class([
                             '',
                             'bg-slate-50/30' => $loop->even,
-                            'text-slate-400' => ! $timetable->active,
+                            'text-slate-400' => ! $payment->active,
                         ])>
-                            <td class="p-3 pl-6 align-top whitespace-nowrap">
-                                <p class="font-semibold">{{ $timetable->name }}</p>
+                            <td class="p-3 pl-6 w-72  whitespace-nowrap table-cell">
+                                <div class="flex items-center">
+                                    <img src="{{ $payment->order->client->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
+                                    <div class="ml-3 ">
+                                        <p class="font-semibold text-slate-800">{{ $payment->order->client->name }}</p>
+                                        <p class="text-slate-600">{{ $payment->order->client->address }}</p>
+                                    </div>
+                                </div>
                             </td>
-                            <td class="w-64 p-3 align-top ">
-                                {{ $timetable->desc }}
+                            <td class="p-3  ">
+                                <p class="text-slate-800">{{ $payment->order->no_reg }}</p>
+                                <p class=" ">{{ $payment->order->date->format('d M Y') }}</p>
                             </td>
-                            <td class="p-3 align-top whitespace-nowrap">
-                                <p class="font-medium">{{ rupiah($timetable->price) }}</p>
-                                <p>{{ $timetable->duration . ' menit' }}</p>
+                            <td class="p-3  ">
+                                <p class="text-slate-800">{{ rupiah($payment->order->grand_total()) }}</p>
                             </td>
-                            <td class="p-3 align-top whitespace-nowrap">
-                                <p>{{ $timetable->category->name }}</p>
+                            <td class="p-3  ">
+                                <p class="text-slate-800">{{ rupiah($payment->value) }}</p>
                             </td>
-                            <td class="p-3 text-center align-top whitespace-nowrap">
+                            <td class="p-3  ">
+                                <p class="text-slate-800">{{ $payment->status }}</p>
+                            </td>
+                            <td class="p-3  ">
+                                <p class="text-slate-800">{{ $payment->not }}</p>
+                            </td>
+                            <td class="p-3  ">
+                                <p class="text-slate-800 font-semibold">
+                                </p>
+                            </td>
+                            <td class="p-3 text-center  whitespace-nowrap">
                                 <div class="flex justify-center space-x-2">
-                                    <button wire:click="ShowEdittimetableDialog({{ $timetable->id }})" class="text-slate-400 hover:text-bunababy-200">
+                                    <button wire:click="ShowEditpaymentDialog({{ $payment->id }})" class="text-slate-400 hover:text-bunababy-200">
                                         Edit
                                     </button>
                                 </div>
@@ -124,7 +150,7 @@
         <!-- Card Footer: Pagination -->
 
         <div class="w-full bg-slate-50">
-            {{ $timetables->links() }}
+            {{ $payments->links() }}
         </div>
 
         <!-- END Card Footer: Pagination -->

@@ -35,9 +35,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/timetables', [App\Http\Controllers\TimetableController::class, 'index'])->name('timetables');
 
     // Admin...
+    Route::get('/notifications', [App\Http\Controllers\NotificationsController::class, 'index'])->name('notifications');
     Route::get('/payments', [App\Http\Controllers\PaymentsController::class, 'index'])->name('payments');
     Route::get('/testimonials', [App\Http\Controllers\TestimonialsController::class, 'index'])->name('testimonials');
-    Route::get('/notifications', [App\Http\Controllers\NotificationsController::class, 'index'])->name('notifications');
     Route::get('/clients/{client}/edit', [App\Http\Controllers\ClientsController::class, 'edit'])->name('clients.edit');
     Route::get('/clients/create', [App\Http\Controllers\ClientsController::class, 'create'])->name('clients.create');
     Route::get('/clients', [App\Http\Controllers\ClientsController::class, 'index'])->name('clients');
