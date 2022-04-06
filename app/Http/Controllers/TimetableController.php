@@ -13,7 +13,7 @@ class TimetableController extends Controller
      */
     public function index()
     {
-        //
+        return view('timetables.index');
     }
 
     /**

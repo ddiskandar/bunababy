@@ -32,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/orders/create', [App\Http\Controllers\OrdersController::class, 'create'])->name('orders.create');
     Route::get('/orders/{order}', [App\Http\Controllers\OrdersController::class, 'show'])->name('orders.show');
     Route::get('/orders', [App\Http\Controllers\OrdersController::class, 'index'])->name('orders');
-    Route::get('/timetables', [App\Http\Controllers\TimetableController::class, 'show'])->name('timetables');
+    Route::get('/timetables', [App\Http\Controllers\TimetableController::class, 'index'])->name('timetables');
 
     // Admin...
     Route::get('/payments', [App\Http\Controllers\PaymentsController::class, 'index'])->name('payments');

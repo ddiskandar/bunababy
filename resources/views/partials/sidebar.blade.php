@@ -72,7 +72,7 @@
             </x-nav-link>
 
             <div class="px-3 pt-5 pb-2 text-xs font-medium tracking-wider uppercase text-bunababy-300">Bidan</div>
-            <x-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')">
+            <x-nav-link :href="route('timetables')" :active="request()->routeIs('timetables')">
                 <span class="flex items-center flex-none opacity-50">
                     <svg class="inline-block w-6 h-6 " fill="none" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="7.25" stroke="currentColor" stroke-width="1.5"></circle>

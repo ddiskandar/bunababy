@@ -6,6 +6,7 @@ use App\Models\Address;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Profile;
+use App\Models\Testimonial;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -126,9 +127,14 @@ class DatabaseSeeder extends Seeder
 
             $order->treatments()->attach([3,4]);
 
+            $testimonial = Testimonial::factory()
+                ->create([
+                    'order_id' => $order->id,
+                ]);
+
             $payment1 = Payment::factory()
                 ->create([
-                    'order_id' => $i
+                    'order_id' => $order->id,
                 ]);
         }
     }

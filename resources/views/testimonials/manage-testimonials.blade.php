@@ -5,24 +5,40 @@
         <div class="w-full py-3 pl-6 pr-3 bg-gray-50 sm:flex sm:justify-between sm:items-center">
             <div class="flex items-center">
                 <h3 class="font-semibold">
-                    Bidan
+                    Testimonials
                 </h3>
             </div>
             <div class="flex flex-col gap-2 mt-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-end">
 
+                <div class="flex items-center space-x-2 space-x-reverse sm:space-x-2">
+
+                </div>
+
                 <div class="flex space-x-2">
-                    <div class="mt-3 text-center sm:mt-0 sm:text-right w-36">
-                        <select wire:model="filterStatus" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
-                            <option value="" selected="selected">Semua Status</option>
-                            <option value="1">Aktif</option>
-                            <option value="0">Tidak Aktif</option>
+
+                    <div class=" w-36">
+                        <select wire:model="filterMidwife" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
+                            <option value="" selected="selected">Semua Bidan</option>
+                            @foreach ($midwives as $midwife)
+                            <option value="{{ $midwife->id }}">{{ $midwife->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class=" w-36">
+                        <select wire:model="filterRate" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
+                            <option value="" selected="selected">Semua Rating</option>
+                            <option value="5">5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1</option>
                         </select>
                     </div>
 
-                    <div class="w-16 mt-3 text-center sm:mt-0 sm:text-right">
+                    <div class="w-16 ">
                         <select wire:model="perPage" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
-                            <option value="3">3</option>
-                            <option value="6" selected>6</option>
+                            <option value="3" selected="selected">3</option>
+                            <option value="8">8</option>
                             <option value="15">15</option>
                             <option value="30">30</option>
                         </select>
@@ -30,9 +46,9 @@
                 </div>
 
                 <div>
-                    <a href="{{ route('midwives.create') }}" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-bunababy-100">
+                    <button wire:click="showAddNewTreatmentDialog" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-bunababy-100">
                         + Tambah Baru
-                    </a>
+                    </button>
 
                 </div>
 
@@ -43,7 +59,7 @@
                 <div class="absolute inset-y-0 left-0 flex items-center justify-center w-10 my-px ml-px text-gray-500 rounded-l pointer-events-none">
                     <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 hi-solid hi-search"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                 </div>
-                <input wire:model="filterSearch" class="block w-full py-1 pl-10 pr-3 text-sm leading-6 border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="text" placeholder="Mencari berdasarkan nama, atau wilayah ..." />
+                <input wire:model="filterSearch" class="block w-full py-1 pl-10 pr-3 text-sm leading-6 border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="text" placeholder="Mencari berdasarkan nama client atau deskripsi ..." />
             </div>
         </div>
         <!-- END Card Header -->
@@ -56,67 +72,72 @@
                 <table class="min-w-full text-sm align-middle">
                 <thead>
                     <tr class="bg-slate-50">
-                        <th class="p-3 pl-6 text-xs font-medium tracking-wider text-left uppercase text-slate-500">
-                            Nama
+                        <th class="p-3 pl-6 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
+                            Client
                         </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
-                            Wilayah
-                        </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
+                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
                             Rating
                         </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-center uppercase text-slate-500">
+                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
+                            Description
+                        </th>
+                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
+                            Order / Tanggal
+                        </th>
+                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
+                            Bidan
+                        </th>
+                        <th class="p-3 text-xs font-medium tracking-wider text-center uppercase text-slate-400">
                             Actions
                         </th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
-                    @forelse ($midwives as $midwife)
+                    @forelse ($testimonials as $testimonial)
                         <tr @class([
                             '',
                             'bg-slate-50/30' => $loop->even,
-                            'text-slate-400' => ! $midwife->active,
+                            'text-slate-400' => ! $testimonial->active,
                         ])>
-                            <td class="p-3 pl-6 w-96 whitespace-nowrap align-top">
+                            <td class="p-3 pl-6 w-72 align-top whitespace-nowrap table-cell">
                                 <div class="flex items-center">
-                                    <img src="{{ $midwife->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
+                                    <img src="{{ $testimonial->order->client->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
                                     <div class="ml-3 ">
-                                        <p class="font-semibold">{{ $midwife->name }}</p>
-                                        <p class="text-slate-600">{{ $midwife->email }}</p>
+                                        <p class="font-semibold text-slate-800">{{ $testimonial->order->client->name }}</p>
+                                        <p class="text-slate-600">{{ $testimonial->order->client->address }}</p>
                                     </div>
                                 </div>
                             </td>
-                            <td class="w-1/2 p-3 whitespace-nowrap align-top">
-                                <div class="flex flex-wrap gap-2 whitespace-nowrap">
-                                    @forelse ($midwife->kecamatans as $kecamatan)
-                                        <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 border rounded-full text-slate-600 bg-slate-50 border-slate-200">
-                                            {{ $kecamatan->name }}
-                                        </div>
-                                    @empty
-                                        <span>Belum ada</span>
-                                    @endforelse
-                                </div>
-                            </td>
-                            <td class="p-3 text-center whitespace-nowrap align-top">
+                            <td class="p-3 w-16 align-top ">
                                 <div class="flex items-center">
-                                    <svg class="text-yellow-500" width="24" height="24"  viewBox="0 0 24 24">
-                                        <path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.75L13.75 10.25H19.25L14.75 13.75L16.25 19.25L12 15.75L7.75 19.25L9.25 13.75L4.75 10.25H10.25L12 4.75Z"></path>
-                                    </svg>
-                                    <div class="font-semibold">5</div>
-                                    <div> (83) </div>
+                                    @for ( $i = 1; $i <= 5; $i++ )
+                                        <svg class="{{ $i <= $testimonial->rate ? 'text-yellow-500' : 'text-slate-400' }}" width="24" height="24"  viewBox="0 0 24 24">
+                                            <path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.75L13.75 10.25H19.25L14.75 13.75L16.25 19.25L12 15.75L7.75 19.25L9.25 13.75L4.75 10.25H10.25L12 4.75Z"></path>
+                                        </svg>
+                                    @endfor
                                 </div>
                             </td>
-                            <td class="p-3 text-center whitespace-nowrap align-top">
+                            <td class="p-3 w-96 align-top ">
+                                <p class="text-slate-800">{{ $testimonial->description }}</p>
+                            </td>
+                            <td class="p-3 w-32 align-top ">
+                                <p class="text-slate-800">{{ $testimonial->order->no_reg }}</p>
+                                <p class=" ">{{ $testimonial->order->date->format('d M Y') }}</p>
+                            </td>
+                            <td class="p-3 w-32 align-top ">
+                                <p class="text-slate-800 font-semibold">{{ $testimonial->order->midwife->name }}</p>
+                            </td>
+                            <td class="p-3 text-center align-top whitespace-nowrap">
                                 <div class="flex justify-center space-x-2">
-                                    <a href="{{ route('midwives.edit', $midwife->id) }}" class="text-slate-400 hover:text-bunababy-200">
+                                    <button wire:click="ShowEdittestimonialDialog({{ $testimonial->id }})" class="text-slate-400 hover:text-bunababy-200">
                                         Edit
-                                    </a>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="py-12 text-center">
+                            <td colspan="5" class="py-12 text-center">
                                 <p class="text-slate-400">Tidak ada yang ditemukan</p>
                             </td>
                         </tr>
@@ -132,7 +153,7 @@
         <!-- Card Footer: Pagination -->
 
         <div class="w-full bg-slate-50">
-            {{ $midwives->links() }}
+            {{ $testimonials->links() }}
         </div>
 
         <!-- END Card Footer: Pagination -->
