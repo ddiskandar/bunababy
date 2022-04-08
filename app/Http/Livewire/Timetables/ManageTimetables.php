@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Timetables;
 
 use App\Models\Timetable;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -16,27 +17,24 @@ class ManageTimetables extends Component
     public $successMessage = false;
 
     public $filterSearch;
-    public $filterCategory;
-    public $filterStatus;
+    public $filterType;
+    public $filterMidwife;
 
     public $state = [];
 
     protected $queryString = [
-        'filterSearch' => ['except' => ''],
         'page' => ['except' => 1],
         'perPage' => ['except' => 3],
-        'filterCategory' => ['except' => ''],
-        'filterStatus' => ['except' => ''],
+        'filterSearch' => ['except' => ''],
+        'filterType' => ['except' => ''],
+        'filterMidwife' => ['except' => ''],
     ];
 
     protected $rules = [
-        'state.name' => 'required',
-        'state.desc' => 'required',
-        'state.price' => 'required',
-        'state.duration' => 'required',
-        'state.order' => 'required',
-        'state.category_id' => 'required',
-        'state.active' => 'required',
+        'state.midwife_user_id' => 'required',
+        'state.date' => 'required',
+        'state.type' => 'required',
+        'state.note' => 'nullable',
     ];
 
     protected $messages = [
@@ -44,18 +42,59 @@ class ManageTimetables extends Component
     ];
 
     protected $validationAttributes = [
-        'state.name' => 'nama',
-        'state.desc' => 'deskripsi',
-        'state.price' => 'harga',
-        'state.duration' => 'durasi',
-        'state.order' => 'urutan',
-        'state.category_id' => 'kategori',
-        'state.active' => 'status aktif',
+        'state.midwife_user_id' => 'bidan',
+        'state.date' => 'tanggal',
+        'state.type' => 'tipe',
+        'state.note' => 'catatan',
     ];
+
+    public function updatingPerPage()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterMidwife()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterType()
+    {
+        $this->resetPage();
+    }
+
+    public function showAddNewTimetableDialog()
+    {
+        $this->showDialog = true;
+        $this->state = [];
+    }
+
+    public function ShowEditTimetableDialog( Timetable $timetable)
+    {
+        $this->state = $timetable->toArray();
+        $this->showDialog = true;
+    }
 
     public function save()
     {
         $this->validate();
+
+        Timetable::updateOrCreate(
+            [
+                'id' => $this->state['id'] ?? Timetable::max('id') + 1,
+            ],
+            [
+                'midwife_user_id' => $this->state['midwife_user_id'],
+                'date' => $this->state['date'],
+                'type' => $this->state['type'],
+                'note' => $this->state['note'] ?? '',
+            ]
+        );
 
         $this->showDialog = false;
         $this->successMessage = true;
@@ -65,10 +104,13 @@ class ManageTimetables extends Component
     {
         $timetables = Timetable::query()
 
-        ->paginate($this->perPage);
+            ->paginate($this->perPage);
+
+        $midwives = \DB::table('users')->where('type', User::MIDWIFE)->get();
 
         return view('timetables.manage-timetables', [
             'timetables' => $timetables,
+            'midwives' => $midwives,
         ]);
     }
 }

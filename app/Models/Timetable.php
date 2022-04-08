@@ -9,7 +9,19 @@ class Timetable extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     const OVERTIME = 1; // kerja lembur
     const LEAVE = 2;    // libur, cuti
+
+    public function midwife()
+    {
+        return $this->belongsTo(User::class, 'midwife_user_id');
+    }
+
+    public function type()
+    {
+        return $this->type == 1 ? 'Lembur' : 'Libur';
+    }
 
 }

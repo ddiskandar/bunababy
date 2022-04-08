@@ -88,9 +88,9 @@
                         ])>
                             <td class="table-cell p-3 pl-6 w-72 ">
                                 <div class="flex justify-between gap-2 ">
-                                    <div>
+                                    {{-- <div>
                                         <input wire:model="selectedNotifications.{{ $notification->id }}" id="comments" name="comments" type="checkbox" class="w-4 h-4 border-gray-300 rounded text-bunababy-200 focus:ring-bunababy-200">
-                                    </div>
+                                    </div> --}}
                                     <div @class([
                                         'grow text-slate-800',
                                         'opacity-40' => isset($notification->read_at),

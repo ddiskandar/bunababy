@@ -15,12 +15,20 @@
                 </div>
 
                 <div class="flex space-x-2">
-
+                    <div class="w-36">
+                        <select wire:model="filterMidwife" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
+                            <option value="" selected="selected">Semua Bidan</option>
+                            @foreach ($midwives as $midwife)
+                            <option value="{{ $midwife->id }}">{{ $midwife->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class=" w-36">
                         <select wire:model="filterType" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
                             <option value="" selected="selected">Semua Type</option>
-                            <option value="1">Lembur</option>
-                            <option value="2">Libur</option>
+                            <option value="1">Klinik</option>
+                            <option value="2">Lembur</option>
+                            <option value="3">Libur</option>
                         </select>
                     </div>
 
@@ -35,7 +43,7 @@
                 </div>
 
                 <div>
-                    <button wire:click="showAddNewTreatmentDialog" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-bunababy-100">
+                    <button wire:click="showAddNewTimetableDialog" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-bunababy-100">
                         + Tambah Baru
                     </button>
 
@@ -81,26 +89,25 @@
                 <tbody class="divide-y divide-slate-100">
                     @forelse ($timetables as $timetable)
                         <tr @class([
-                            '',
+                            'text-slate-800',
                             'bg-slate-50/30' => $loop->even,
                             'text-slate-400' => ! $timetable->active,
                         ])>
-                            <td class="p-3 pl-6 align-top whitespace-nowrap">
-                                <p class="font-semibold">{{ $timetable->name }}</p>
+                            <td class="p-3 pl-6 whitespace-nowrap">
+                                <p class="font-semibold">{{ $timetable->midwife->name }}</p>
                             </td>
-                            <td class="w-64 p-3 align-top ">
-                                {{ $timetable->desc }}
+                            <td class="p-3 whitespace-nowrap">
+                                {{ $timetable->date }}
                             </td>
-                            <td class="p-3 align-top whitespace-nowrap">
-                                <p class="font-medium">{{ rupiah($timetable->price) }}</p>
-                                <p>{{ $timetable->duration . ' menit' }}</p>
+                            <td class="p-3 whitespace-nowrap">
+                                <p>{{ $timetable->type() }}</p>
                             </td>
-                            <td class="p-3 align-top whitespace-nowrap">
-                                <p>{{ $timetable->category->name }}</p>
+                            <td class="p-3 whitespace-nowrap">
+                                <p>{{ $timetable->note }}</p>
                             </td>
-                            <td class="p-3 text-center align-top whitespace-nowrap">
+                            <td class="p-3 text-center whitespace-nowrap">
                                 <div class="flex justify-center space-x-2">
-                                    <button wire:click="ShowEdittimetableDialog({{ $timetable->id }})" class="text-slate-400 hover:text-bunababy-200">
+                                    <button wire:click="ShowEditTimetableDialog({{ $timetable->id }})" class="text-slate-400 hover:text-bunababy-200">
                                         Edit
                                     </button>
                                 </div>
@@ -138,53 +145,37 @@
 
     <x-dialog wire:model="showDialog">
 
-        <x-title>Data Treatment</x-title>
+        <x-title>Data Penjadwalan</x-title>
 
         <div class="h-64 mt-2 space-y-3 overflow-y-auto">
             <div class="space-y-1">
-                <x-label class="" for="state.name">Nama</x-label>
-                <x-input wire:model.lazy="state.name" class="w-full" type="text" id="state.name" />
-                <x-input-error for="state.name" class="mt-2" />
-            </div>
-            <div class="space-y-1">
-                <x-label class="" for="state.desc">Deskripsi</x-label>
-                <x-textarea wire:model.lazy="state.desc" class="w-full" type="text" id="state.desc" />
-                <x-input-error for="state.desc" class="mt-2" />
-            </div>
-            <div class="space-y-1">
-                <x-label class="" for="state.price">Harga</x-label>
-                <x-input wire:model.lazy="state.price" class="w-full" type="number" id="state.price" />
-                <x-input-error for="state.price" class="mt-2" />
-            </div>
-            <div class="space-y-1">
-                <x-label class="" for="state.duration">Durasi</x-label>
-                <x-input wire:model.lazy="state.duration" class="w-full" type="number" id="state.duration" />
-                <x-input-error for="state.duration" class="mt-2" />
-            </div>
-            <div class="space-y-1">
-                <x-label class="" for="state.category_id">Kategory</x-label>
-                <select wire:model.lazy="state.category_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.category_id">
+                <x-label class="" for="state.midwife_user_id">Bidan</x-label>
+                <select wire:model.lazy="state.midwife_user_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.midwife_user_id">
                     <option value="" selected>-- Pilih salah satu</option>
-                    @foreach (DB::table('categories')->get() as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @foreach ($midwives as $midwife)
+                        <option value="{{ $midwife->id }}">{{ $midwife->name }}</option>
                     @endforeach
                 </select>
-                <x-input-error for="state.category_id" class="mt-2" />
+                <x-input-error for="state.midwife_user_id" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.order">Urutan</x-label>
-                <x-input wire:model.lazy="state.order" class="w-full" type="number" id="state.order" />
-                <x-input-error for="state.order" class="mt-2" />
+                <x-label class="" for="state.date">Tanggal</x-label>
+                <x-input wire:model.lazy="state.date" class="w-full" type="date" id="state.date" />
+                <x-input-error for="state.date" class="mt-2" />
             </div>
-            <div class="py-4 space-y-1">
-                <div class="inline-flex items-center ml-2">
-                    <div class="flex items-center h-5 ">
-                        <input wire:model.lazy="state.active" id="active" name="active" type="checkbox" class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
-                    </div>
-                    <div class="ml-2 ">
-                        <x-label class="" for="state.active">Aktif</x-label>
-                    </div>
-                </div>
+            <div class="space-y-1">
+                <x-label class="" for="state.type">Tipe</x-label>
+                <select wire:model.lazy="state.type" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.type">
+                    <option value="" selected>-- Pilih salah satu</option>
+                    <option value="1">Lembur</option>
+                    <option value="2">Libur / Cuti</option>
+                </select>
+                <x-input-error for="state.type" class="mt-2" />
+            </div>
+            <div class="space-y-1">
+                <x-label class="" for="state.note">Catatan</x-label>
+                <x-textarea wire:model.lazy="state.note" class="w-full" type="text" id="state.note" />
+                <x-input-error for="state.note" class="mt-2" />
             </div>
 
         </div>
