@@ -63,8 +63,8 @@ class ManageOrders extends Component
 
     public function mount()
     {
-        $this->filterFromDate = today()->subDay(7)->toDateString();
-        $this->filterToDate = today()->addDay(7)->toDateString();
+        $this->filterFromDate = today()->subWeek()->toDateString();
+        $this->filterToDate = today()->addWeeks(2)->toDateString();
 
     }
 

@@ -76,6 +76,10 @@ class Payments extends Component
             ]
         );
 
+        $this->order->update([
+            'status' => Order::STATUS_LOCKED,
+        ]);
+
         $this->showDialog = false;
         $this->successMessage = true;
         $this->emit('saved');

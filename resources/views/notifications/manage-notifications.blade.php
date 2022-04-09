@@ -32,6 +32,7 @@
                             <option value="" selected>Semua Tipe</option>
                             <option value="order">Order</option>
                             <option value="payment">Payment</option>
+                            <option value="unpaid">Unpaid</option>
                         </select>
                     </div>
                     <div class="w-40 ">
@@ -120,6 +121,15 @@
                                             <span class="font-semibold">{{ $notification->data['payment_value'] }}</span>
                                             untuk order
                                             <span class="font-semibold">{{ $notification->data['order_no_reg'] }}</span>
+                                        @elseif ($notification->data['type'] == 'unpaid')
+                                            <svg class="inline-block w-5 h-5" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 8.25V17.25C19.25 18.3546 18.3546 19.25 17.25 19.25H6.75C5.64543 19.25 4.75 18.3546 4.75 17.25V6.75"></path>
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M16.5 13C16.5 13.2761 16.2761 13.5 16 13.5C15.7239 13.5 15.5 13.2761 15.5 13C15.5 12.7239 15.7239 12.5 16 12.5C16.2761 12.5 16.5 12.7239 16.5 13Z"></path>
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 8.25H6.5C5.5335 8.25 4.75 7.4665 4.75 6.5C4.75 5.5335 5.5335 4.75 6.5 4.75H15.25C16.3546 4.75 17.25 5.64543 17.25 6.75V8.25ZM17.25 8.25H19.25"></path>
+                                            </svg>
+                                            <span class="font-semibold">{{ $notification->data['order_client_name'] }}</span>
+                                            belum melakukan pembayaran DP dalam batas waktu 30 menit untuk order
+                                            <span class="font-semibold">{{ $notification->data['order_id'] }}</span>
                                        @endif
                                     </div>
                                     <div class="flex justify-center invisible space-x-2 group-hover:visible">

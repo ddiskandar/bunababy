@@ -109,6 +109,7 @@ class ManageNotifications extends Component
         $notifications = $query
         ->where('data', 'LIKE', '%' . $this->filterSearch . '%')
         ->where('data->type', 'LIKE', '%' . $this->filterType . '%')
+        ->latest()
         ->paginate($this->perPage);
 
         return view('notifications.manage-notifications', [

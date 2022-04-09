@@ -10,6 +10,10 @@ class Address extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'is_main' => 'boolean',
+    ];
+
     protected $guarded = [];
 
     public function client(): BelongsTo
