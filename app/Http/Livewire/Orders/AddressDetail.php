@@ -47,6 +47,7 @@ class AddressDetail extends Component
         $this->order->update([
             'address_id' => $this->selectedAddressId,
         ]);
+        $this->emit('saved');
     }
 
     public function updatedPlace()
@@ -54,6 +55,7 @@ class AddressDetail extends Component
         $this->order->update([
             'place' => $this->place,
         ]);
+        $this->emit('saved');
     }
 
     public function save()

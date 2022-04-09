@@ -1,4 +1,4 @@
-<div class="py-6 space-y-4">
+<div class="space-y-4">
 
     <!-- User Profile -->
     <div class="md:flex md:space-x-5">
@@ -51,7 +51,7 @@
                                     </div>
 
                                     <!-- Role Description -->
-                                    <div class="mt-2 text-xs text-left text-gray-600">
+                                    <div class="mt-2 text-sm text-left text-gray-600">
                                         {{ $address->full_address }}
                                     </div>
                                 </div>

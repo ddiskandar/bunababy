@@ -7,7 +7,7 @@ use App\Models\Order;
 use App\Models\User;
 use Livewire\Component;
 
-class ClientDetail extends Component
+class MidwifeTime extends Component
 {
     public $state = [];
 
@@ -57,7 +57,7 @@ class ClientDetail extends Component
             ->orderBy('name')
             ->get();
 
-        return view('orders.client-detail', [
+        return view('orders.midwife-time', [
             'midwives' => $midwives,
             'kecamatans' => $kecamatans,
         ]);

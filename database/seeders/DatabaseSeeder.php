@@ -124,10 +124,16 @@ class DatabaseSeeder extends Seeder
                     'date' => today()->addDays($i),
                     'start_time' => '10:00:00',
                     'end_time' => '11:00:00',
-                    'status' => rand(1,3)
                 ]);
 
-            $order->treatments()->attach([3,4]);
+            $treatment = rand(1,21);
+
+            $order->treatments()->attach($treatment);
+
+            $order->update([
+                'total_price' => $order->treatments()->sum('price'),
+                'total_duration' => $order->treatments()->sum('duration')
+            ]);
 
             $testimonial = Testimonial::factory()
                 ->create([

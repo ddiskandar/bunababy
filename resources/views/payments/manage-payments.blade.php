@@ -35,13 +35,6 @@
                     </div>
                 </div>
 
-                <div>
-                    <button wire:click="showAddNewTreatmentDialog" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-bunababy-100">
-                        + Tambah Baru
-                    </button>
-
-                </div>
-
             </div>
         </div>
         <div class="w-full p-3 border-b border-gray-100 grow">
@@ -115,7 +108,7 @@
                                 <p class="text-slate-800">{{ rupiah($payment->value) }}</p>
                             </td>
                             <td class="p-3  ">
-                                <p class="text-slate-800">{{ $payment->status }}</p>
+                                <p class="text-slate-800">{{ $payment->status() }}</p>
                             </td>
                             <td class="p-3  ">
                                 <p class="text-slate-800">{{ $payment->not }}</p>

@@ -29,6 +29,7 @@ class Order extends Model
         'additional' => 'integer',
         'date' => 'date',
         'status' => 'integer',
+        'finished_at' => 'datetime'
     ];
 
     public function client(): BelongsTo
@@ -98,7 +99,7 @@ class Order extends Model
 
     public function grand_total()
     {
-        return ($this->total_price + $this->total_transport + $this->total_fee_apd);
+        return ($this->total_price + $this->total_transport + $this->additional);
     }
 
     public function payments_verified()

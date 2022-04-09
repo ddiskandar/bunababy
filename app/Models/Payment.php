@@ -52,8 +52,8 @@ class Payment extends Model
         return $this->status === self::STATUS_VERIFIED
             ? 'Verified'
             : ( $this->status === self::STATUS_UNVERIFIED
-                ? 'Menunggu'
-                : 'Ditolak'
+                ? 'Waiting'
+                : 'Rejected'
             );
     }
 

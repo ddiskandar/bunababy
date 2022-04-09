@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Treatments;
 
-use App\Models\Category;
 use App\Models\Treatment;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -86,7 +85,7 @@ class ManageTreatments extends Component
         $this->state['active'] = true;
     }
 
-    public function ShowEditTreatmentDialog( Treatment $treatment)
+    public function ShowEditTreatmentDialog(Treatment $treatment)
     {
         $this->state = $treatment->toArray();
         $this->showDialog = true;

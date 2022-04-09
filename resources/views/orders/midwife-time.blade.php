@@ -1,33 +1,4 @@
-<div class="space-y-4">
-
-    <div class="flex flex-col overflow-hidden bg-white shadow-sm ">
-        <!-- Card Body: User Profile -->
-        <div class="items-center justify-between w-full p-5 lg:p-6 grow md:flex">
-            <div class="space-y-2 md:space-y-0 md:space-x-3 md:items-center md:flex">
-                <span class="inline-flex items-center px-2 text-xs font-semibold leading-5 text-green-500 uppercase border border-green-300 rounded-full bg-green-50">
-                    <span class="w-2 h-2 mr-2 bg-green-600 rounded-full"></span>
-                    <span class="">{{ $order->status() }}</span>
-                </span>
-                <div class="text-2xl font-semibold">{{ $order->client->name }}</div>
-                <div class="hidden md:block">/</div>
-                <div>{{ $order->client->profile->phone }}</div>
-            </div>
-            <div class="flex items-center justify-between mt-4 space-x-4 md:mt-0 md:justify-end">
-
-                <a href="{{ url()->previous() }}">
-                    <x-secondary-button class="" type="button" >
-                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
-                          </svg>
-
-                        {{ __('Kembali') }}
-                    </x-secondary-button>
-                </a>
-            </div>
-        </div>
-    </div>
-
+<div>
     <!-- User Profile -->
     <div class="md:flex md:space-x-5">
         <!-- User Profile Info -->

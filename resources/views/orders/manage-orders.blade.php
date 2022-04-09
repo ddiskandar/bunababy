@@ -19,6 +19,7 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-2">
+                    @if (auth()->user()->isAdmin())
                     <div class="w-36">
                         <select wire:model="filterMidwife" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
                             <option value="" selected="selected">Semua Bidan</option>
@@ -27,6 +28,7 @@
                             @endforeach
                         </select>
                     </div>
+                    @endif
                     <div class="w-36">
                         <select wire:model="filterStatus" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
                             <option value="" selected="selected">Semua Status</option>
@@ -69,7 +71,7 @@
                     <thead>
                         <tr class="bg-slate-50">
                             <th scope="col" class="p-3 pl-6 text-xs font-medium tracking-wider text-left uppercase text-slate-500">
-                                Date
+                                Tempat / Date
                             </th>
                             <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
                                 Client / Alamat
@@ -99,6 +101,7 @@
                                 'text-slate-400' => ! $order->active,
                             ])>
                                 <td class="p-3 pl-6 align-top whitespace-nowrap">
+                                    <p class="font-medium text-bunababy-200">{{ $order->place() }}</p>
                                     <p class="font-semibold">{{ $order->date->isoFormat('ddd, DD MMM') }}</p>
                                     <p class="text-slate-600">{{\Carbon\Carbon::createFromFormat('H:i:s',$order->start_time)->format('h:i')}} - {{\Carbon\Carbon::createFromFormat('H:i:s',$order->end_time)->format('h:i')}}</p>
                                 </td>
@@ -148,7 +151,6 @@
                                                 <x-icon-pencil-alt />
                                             </a>
                                         </x-button-icon>
-
                                     </div>
                                 </td>
                             </tr>

@@ -23,13 +23,14 @@ class EditMidwife extends Component
         'state.active' => 'required',
     ];
 
+    protected $listeners = ['refreshPage' => '$refresh'];
+
     public function mount(User $user)
     {
         $this->midwife = $user;
         $this->state = $user->toArray();
     }
 
-    protected $listeners = ['refreshPage' => '$refresh'];
 
     public function addWilayah()
     {

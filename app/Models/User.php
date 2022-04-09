@@ -63,7 +63,7 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->type === self::ADMIN;
+        return $this->type === self::ADMIN OR $this->type === self::OWNER;
     }
 
     public function isClient()
@@ -143,7 +143,7 @@ class User extends Authenticatable
             return mb_substr($segment, 0, 1);
         })->join(' '));
 
-        return 'https://ui-avatars.com/api/?name='.urlencode($name).'&color=7F9CF5&background=EBF4FF';
+        return 'https://ui-avatars.com/api/?name='.urlencode($name).'&color=FE0E9C&background=FCE7F3';
     }
 
     protected $appends = [
