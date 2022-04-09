@@ -23,7 +23,7 @@ class EditMidwife extends Component
         'state.active' => 'required',
     ];
 
-    protected $listeners = ['refreshPage' => '$refresh'];
+    protected $listeners = ['saved' => '$refresh'];
 
     public function mount(User $user)
     {
@@ -38,14 +38,14 @@ class EditMidwife extends Component
         $this->validate();
         $this->midwife->kecamatans()->attach([$this->kecamatan_id]);
         $this->kecamatan_id = '';
-        $this->emit('refreshPage');
+        $this->emit('saved');
 
     }
 
     public function deleteWilayah($id)
     {
         $this->midwife->kecamatans()->detach([$id]);
-        $this->emit('refreshPage');
+        $this->emit('saved');
     }
 
     public function save()

@@ -117,7 +117,7 @@ class User extends Authenticatable
 
     public function getAddressAttribute()
     {
-        return $this->addresses()->where('is_main', true)->first()->kecamatan->name;
+        return $this->addresses()->where('is_main', true)->first()->kecamatan->name ?? '-';
     }
 
     public function families(): HasMany

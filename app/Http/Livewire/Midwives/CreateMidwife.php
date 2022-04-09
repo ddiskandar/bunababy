@@ -21,7 +21,7 @@ class CreateMidwife extends Component
         'state.phone' => 'required|string',
     ];
 
-    protected $listeners = ['refreshPage' => '$refresh'];
+    protected $listeners = ['saved' => '$refresh'];
 
     public function mount()
     {
@@ -37,9 +37,12 @@ class CreateMidwife extends Component
         $user = User::create([
             'name' => $this->state['name'],
             'email' => $this->state['email'],
-            'phone' => $this->state['phone'],
             'type' => User::MIDWIFE,
             'password' => bcrypt('password'),
+        ]);
+
+        $user->profile([
+            'phone' => $this->state['phone'],
         ]);
 
         if($this->photo)

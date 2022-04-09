@@ -1,3 +1,3 @@
 <x-app-layout>
-    @livewire('midwives.create-client')
+    @livewire('clients.create-client')
 </x-app-layout>

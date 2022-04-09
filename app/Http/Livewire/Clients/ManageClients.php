@@ -46,10 +46,13 @@ class ManageClients extends Component
                     ;
                 });
             })
-            ->whereHas('tags', function ($query) {
-                $query->where('name', 'LIKE', '%' . $this->filterTag . '%');
+            ->when($this->filterTag, function($query){
+                $query->whereHas('tags', function ($query) {
+                    $query->where('name', 'LIKE', '%' . $this->filterTag . '%');
+                });
             })
             ->with('tags', 'reservations', 'addresses', 'addresses.kecamatan')
+            ->latest()
             ->paginate($this->perPage);
 
         return view('clients.manage-clients', [

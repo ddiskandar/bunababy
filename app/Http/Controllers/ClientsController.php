@@ -17,9 +17,9 @@ class ClientsController extends Controller
         return view('clients.create');
     }
 
-    public function edit(User $client)
+    public function show(User $client)
     {
-        return view('clients.edit', [
+        return view('clients.show', [
             'client' => $client
         ]);
     }

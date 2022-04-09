@@ -35,7 +35,7 @@
 
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
-                    <img src="{{ $midwife->profile_photo_url }}" alt="{{ $midwife->name }}" class="object-cover w-20 h-20 rounded-full">
+                    <img src="{{ $client->profile_photo_url }}" alt="{{ $client->name }}" class="object-cover w-20 h-20 rounded-full">
                 </div>
 
                 <!-- New Profile Photo Preview -->
@@ -59,7 +59,7 @@
             </div>
 
             <div class="space-y-1">
-                <x-label class="" for="state.name">Nama bidan</x-label>
+                <x-label class="" for="state.name">Nama</x-label>
                 <x-input wire:model.lazy="state.name" class="w-full" type="text" id="state.name" />
                 <x-input-error for="state.name" class="mt-2" />
             </div>
@@ -72,16 +72,6 @@
                 <x-label class="" for="state.phone">Nomor WA</x-label>
                 <x-input wire:model.lazy="state.phone" class="w-full" type="text" id="state.phone" />
                 <x-input-error for="state.phone" class="mt-2" />
-            </div>
-            <div class="space-y-1">
-                <div class="inline-flex items-center ml-2">
-                    <div class="flex items-center h-5 ">
-                        <input wire:model.lazy="state.active" id="active" name="active" type="checkbox" class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
-                    </div>
-                    <div class="ml-2 ">
-                        <x-label class="" for="state.active">Aktif</x-label>
-                    </div>
-                </div>
             </div>
             <div class="flex items-center">
                 <div class="">
