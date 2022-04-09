@@ -74,8 +74,7 @@ class EditMidwife extends Component
         $kecamatans = $this->midwife->kecamatans;
 
         $kecamatansFiltered = \DB::table('kecamatans')
-            ->whereNotIn('id', $this->midwife->kecamatans
-            ->pluck('id'))
+            ->whereNotIn('id', $this->midwife->kecamatans->pluck('id'))
             ->orderBy('name')
             ->get();
 
