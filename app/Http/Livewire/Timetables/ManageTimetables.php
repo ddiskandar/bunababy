@@ -103,7 +103,9 @@ class ManageTimetables extends Component
     public function render()
     {
         $timetables = Timetable::query()
-
+            ->when(auth()->user()->isMidwife(), function ($query){
+                $query->where('midwife_user_id', auth()->id());
+            })
             ->paginate($this->perPage);
 
         $midwives = \DB::table('users')->where('type', User::MIDWIFE)->get();

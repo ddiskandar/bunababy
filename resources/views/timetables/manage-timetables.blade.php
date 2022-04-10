@@ -15,6 +15,7 @@
                 </div>
 
                 <div class="flex space-x-2">
+                    @if (auth()->user()->isAdmin())
                     <div class="w-36">
                         <select wire:model="filterMidwife" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
                             <option value="" selected="selected">Semua Bidan</option>
@@ -23,6 +24,7 @@
                             @endforeach
                         </select>
                     </div>
+                    @endif
                     <div class=" w-36">
                         <select wire:model="filterType" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
                             <option value="" selected="selected">Semua Type</option>
@@ -41,14 +43,13 @@
                         </select>
                     </div>
                 </div>
-
+                @if (auth()->user()->isAdmin())
                 <div>
                     <button wire:click="showAddNewTimetableDialog" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-bunababy-100">
                         + Tambah Baru
                     </button>
-
                 </div>
-
+                @endif
             </div>
         </div>
         <div class="w-full p-3 border-b border-gray-100 grow">

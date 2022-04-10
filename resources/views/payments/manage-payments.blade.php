@@ -9,17 +9,11 @@
                 </h3>
             </div>
             <div class="flex flex-col gap-2 mt-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-end">
-
-                <div class="flex items-center space-x-2 space-x-reverse sm:space-x-2">
-
-                </div>
-
                 <div class="flex space-x-2">
-
                     <div class=" w-36">
                         <select wire:model="filterStatus" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
                             <option value="" selected="selected">Semua Status</option>
-                            <option value="1">Unverified</option>
+                            <option value="1">Waiting</option>
                             <option value="2">Verified</option>
                             <option value="3">Rejected</option>
                         </select>
@@ -34,7 +28,6 @@
                         </select>
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="w-full p-3 border-b border-gray-100 grow">
@@ -42,7 +35,7 @@
                 <div class="absolute inset-y-0 left-0 flex items-center justify-center w-10 my-px ml-px text-gray-500 rounded-l pointer-events-none">
                     <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 hi-solid hi-search"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                 </div>
-                <input wire:model="filterSearch" class="block w-full py-1 pl-10 pr-3 text-sm leading-6 border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="text" placeholder="Mencari berdasarkan nama client atau deskripsi ..." />
+                <input wire:model="filterSearch" class="block w-full py-1 pl-10 pr-3 text-sm leading-6 border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="text" placeholder="Mencari berdasarkan nama client, order atau besar pembayaran ..." />
             </div>
         </div>
         <!-- END Card Header -->
@@ -88,28 +81,58 @@
                             'bg-slate-50/30' => $loop->even,
                             'text-slate-400' => ! $payment->active,
                         ])>
-                            <td class="table-cell p-3 pl-6 w-72 whitespace-nowrap">
+                            <td class="table-cell p-3 pl-6 w-60 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <img src="{{ $payment->order->client->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
                                     <div class="ml-3 ">
-                                        <p class="font-semibold text-slate-800">{{ $payment->order->client->name }}</p>
+                                        <p class="font-semibold truncate text-slate-800">{{ $payment->order->client->name }}</p>
                                         <p class="text-slate-600">{{ $payment->order->client->address }}</p>
                                     </div>
                                 </div>
                             </td>
                             <td class="p-3 ">
-                                <p class="text-slate-800">{{ $payment->order->no_reg }}</p>
-                                <p class="">{{ $payment->order->date->format('d M Y') }}</p>
+                                <a href="{{ route('clients.show', $payment->order->client->id) }}">
+                                    <p class="font-medium text-slate-800">
+                                        {{ $payment->order->no_reg }}
+                                    </p>
+                                </a>
+                                <p class="text-slate-600">{{ $payment->order->date->format('d M Y') }}</p>
                             </td>
                             <td class="p-3 ">
                                 <p class="text-slate-800">{{ rupiah($payment->order->grand_total()) }}</p>
-                                <p class="text-slate-800">{{ rupiah($payment->order->remaining_payment()) }}</p>
+                                @if ($payment->order->remaining_payment() == 0)
+                                <div class="flex items-center">
+                                    <span class="text-green-800">
+                                        Lunas
+                                    </span>
+                                    <svg class="w-4 h-4 ml-1 text-green-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                @else
+                                <p class="text-red-600">{{ rupiah($payment->order->remaining_payment()) }}</p>
+                                @endif
                             </td>
                             <td class="p-3 ">
-                                <p class="text-slate-800">{{ rupiah($payment->value) }}</p>
+                                <p class="font-semibold text-slate-800">{{ rupiah($payment->value) }}</p>
                             </td>
-                            <td class="p-3 ">
-                                <p class="text-slate-800">{{ $payment->status() }}</p>
+                            <td class="p-3 whitespace-nowrap">
+                                <span
+                                    @class([
+                                        'inline-flex items-center pl-2 pr-4 text-xs font-semibold leading-5  rounded-full',
+                                        'text-green-800 bg-green-100' => $payment->status() == 'Verified',
+                                        'text-red-800 bg-red-100' => $payment->status() == 'Rejected',
+                                        'text-yellow-800 bg-yellow-100' => $payment->status() == 'Waiting',
+                                    ])>
+                                    <span
+                                        @class([
+                                            'w-2 h-2 mr-2 rounded-full',
+                                            'bg-green-600 ' => $payment->status() == 'Verified',
+                                            'bg-red-600 ' => $payment->status() == 'Rejected',
+                                            'bg-yellow-600 ' => $payment->status() == 'Waiting',
+                                        ])></span>
+                                    <span>{{ $payment->status() }}</span>
+                                </span>
                             </td>
                             <td class="p-3 ">
                                 <p class="text-slate-800">
@@ -122,7 +145,7 @@
                             <td class="p-3 text-center whitespace-nowrap">
                                 <div class="flex justify-center space-x-2">
                                     <button wire:click="showEditPaymentDialog({{ $payment->id }})" class="text-slate-400 hover:text-bunababy-200">
-                                        Edit
+                                        <x-icon-pencil-alt/>
                                     </button>
                                 </div>
                             </td>

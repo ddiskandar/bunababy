@@ -46,12 +46,13 @@
                         </select>
                     </div>
                 </div>
-                <div class="">
+                @if (auth()->user()->isAdmin())
+                <div>
                     <a href="{{ route('orders.create') }}" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded shadow-sm focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-white active:border-white active:shadow-none">
                         + Tambah Baru
                     </a>
                 </div>
-
+                @endif
             </div>
         </div>
         <div class="w-full p-3 border-b border-gray-100 grow">
@@ -200,56 +201,58 @@
             </div>
             <!-- END Card: Simple Widget -->
 
-            <!-- Card: Simple Widget -->
+            @if (auth()->user()->isAdmin())
+                <!-- Card: Simple Widget -->
             <div class="flex flex-col overflow-hidden bg-white rounded shadow-sm">
-            <!-- Card Body: Simple Widget -->
-            <div class="w-full p-5 lg:p-6 grow">
-                <dl>
-                <dt class="text-2xl font-semibold">
-                    {{ rupiah($data['total_price']) }}
-                </dt>
-                <dd class="text-xs font-medium tracking-wider text-gray-500 uppercase">
-                    Total Harga
-                </dd>
-                </dl>
-            </div>
-            <!-- END Card Body: Simple Widget -->
-            </div>
-            <!-- END Card: Simple Widget -->
+                <!-- Card Body: Simple Widget -->
+                <div class="w-full p-5 lg:p-6 grow">
+                    <dl>
+                    <dt class="text-2xl font-semibold">
+                        {{ rupiah($data['total_price']) }}
+                    </dt>
+                    <dd class="text-xs font-medium tracking-wider text-gray-500 uppercase">
+                        Total Harga
+                    </dd>
+                    </dl>
+                </div>
+                <!-- END Card Body: Simple Widget -->
+                </div>
+                <!-- END Card: Simple Widget -->
 
-            <!-- Card: Simple Widget -->
-            <div class="flex flex-col overflow-hidden bg-white rounded shadow-sm">
-            <!-- Card Body: Simple Widget -->
-            <div class="w-full p-5 lg:p-6 grow">
-                <dl>
-                <dt class="text-2xl font-semibold">
-                    {{ rupiah($data['total_transport']) }}
-                </dt>
-                <dd class="text-xs font-medium tracking-wider text-gray-500 uppercase">
-                    Total Transport
-                </dd>
-                </dl>
-            </div>
-            <!-- END Card Body: Simple Widget -->
-            </div>
-            <!-- END Card: Simple Widget -->
+                <!-- Card: Simple Widget -->
+                <div class="flex flex-col overflow-hidden bg-white rounded shadow-sm">
+                <!-- Card Body: Simple Widget -->
+                <div class="w-full p-5 lg:p-6 grow">
+                    <dl>
+                    <dt class="text-2xl font-semibold">
+                        {{ rupiah($data['total_transport']) }}
+                    </dt>
+                    <dd class="text-xs font-medium tracking-wider text-gray-500 uppercase">
+                        Total Transport
+                    </dd>
+                    </dl>
+                </div>
+                <!-- END Card Body: Simple Widget -->
+                </div>
+                <!-- END Card: Simple Widget -->
 
-            <!-- Card: Simple Widget -->
-            <div class="flex flex-col overflow-hidden bg-white rounded shadow-sm">
-            <!-- Card Body: Simple Widget -->
-            <div class="w-full p-5 lg:p-6 grow">
-                <dl>
-                <dt class="text-2xl font-semibold">
-                    {{ rupiah($data['grand_total']) }}
-                </dt>
-                <dd class="text-xs font-medium tracking-wider text-gray-500 uppercase">
-                    Grand Total
-                </dd>
-                </dl>
-            </div>
-            <!-- END Card Body: Simple Widget -->
-            </div>
-            <!-- END Card: Simple Widget -->
+                <!-- Card: Simple Widget -->
+                <div class="flex flex-col overflow-hidden bg-white rounded shadow-sm">
+                <!-- Card Body: Simple Widget -->
+                <div class="w-full p-5 lg:p-6 grow">
+                    <dl>
+                    <dt class="text-2xl font-semibold">
+                        {{ rupiah($data['grand_total']) }}
+                    </dt>
+                    <dd class="text-xs font-medium tracking-wider text-gray-500 uppercase">
+                        Grand Total
+                    </dd>
+                    </dl>
+                </div>
+                <!-- END Card Body: Simple Widget -->
+                </div>
+                <!-- END Card: Simple Widget -->
+            @endif
         </div>
         <!-- END Simple Statistics Grid -->
     </div>

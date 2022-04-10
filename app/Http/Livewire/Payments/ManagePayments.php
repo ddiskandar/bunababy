@@ -87,6 +87,17 @@ class ManagePayments extends Component
     {
         $payments = Payment::query()
             ->latest()
+            ->where(function($query){
+                $query->where('value', 'LIKE', '%' . $this->filterSearch . '%')
+                ->orWhereHas('order', function ($query){
+                    $query->where('no_reg', 'LIKE', '%' . $this->filterSearch . '%')
+                    ->orWhereHas('client', function ($query){
+                        $query->where('name', 'LIKE', '%' . $this->filterSearch . '%');
+                    });
+                });
+            })
+            ->where('status', 'LIKE', '%' . $this->filterStatus)
+            ->with('order', 'order.client', 'verificator')
             ->paginate($this->perPage);
 
         return view('payments.manage-payments', [

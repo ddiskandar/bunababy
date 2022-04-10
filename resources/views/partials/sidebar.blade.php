@@ -82,6 +82,7 @@
                 <span class="py-2 grow">Penjadwalan</span>
             </x-nav-link>
 
+            @if (auth()->user()->isAdmin())
             <div class="px-3 pt-5 pb-2 text-xs font-medium tracking-wider uppercase text-bunababy-300">ADMIN</div>
             <x-nav-link :href="route('notifications')" :active="request()->is('notifications*')">
                 <span class="flex items-center flex-none opacity-50">
@@ -176,6 +177,7 @@
                 </span>
                 <span class="py-2 grow">Pengaturan</span>
             </x-nav-link>
+            @endif
 
             {{-- <div class="px-3 pt-5 pb-2 text-xs font-medium tracking-wider text-gray-500 uppercase">Account</div>
             <a href="javascript:void(0)" class="flex items-center px-3 space-x-3 font-medium text-gray-600 rounded hover:text-gray-700 hover:bg-gray-100 active:bg-gray-50">
