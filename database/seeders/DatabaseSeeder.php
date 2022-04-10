@@ -31,13 +31,17 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
         ]);
 
-        $owner = User::factory()->create([
+        $owner = User::factory()
+        ->has(Profile::factory())
+        ->create([
             'name' => 'Owner',
             'email' => 'owner@bunababy.com',
             'type' => User::OWNER,
         ]);
 
-        $admin = User::factory()->create([
+        $admin = User::factory()
+        ->has(Profile::factory())
+        ->create([
             'name' => 'Admin',
             'email' => 'bunababy.care@gmail.com',
             'type' => User::ADMIN,

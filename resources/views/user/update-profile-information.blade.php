@@ -4,10 +4,10 @@
         <!-- User Profile Info -->
         <div class="text-center md:flex-none md:w-1/3 md:text-left">
         <h3 class="flex items-center justify-center mb-1 space-x-2 font-semibold md:justify-start">
-            <span>Profil Client</span>
+            <span>Profile Information</span>
         </h3>
         <p class="mb-5 text-sm text-gray-500">
-            Informasi general client
+            Update your account's profile information and email address.
         </p>
         </div>
         <!-- END User Profile Info -->
@@ -49,17 +49,17 @@
                     {{ __('Select A New Photo') }}
                 </x-secondary-button>
 
-                {{-- @if ($this->user->profile_photo_path)
+                @if ($this->user->profile->photo)
                     <x-secondary-button type="button" class="mt-2" wire:click="deleteProfilePhoto">
                         {{ __('Remove Photo') }}
                     </x-secondary-button>
-                @endif --}}
+                @endif
 
                 <x-input-error for="photo" class="mt-2" />
             </div>
 
             <div class="space-y-1">
-                <x-label class="" for="state.name">Nama bidan</x-label>
+                <x-label class="" for="state.name">Nama</x-label>
                 <x-input wire:model.lazy="state.name" class="w-full" type="text" id="state.name" />
                 <x-input-error for="state.name" class="mt-2" />
             </div>
@@ -68,6 +68,7 @@
                 <x-input wire:model.lazy="state.email" class="w-full" type="email" id="state.email" />
                 <x-input-error for="state.email" class="mt-2" />
             </div>
+            @if (! auth()->user()->isAdmin())
             <div class="space-y-1">
                 <x-label class="" for="state.profile.phone">Nomor WA</x-label>
                 <x-input wire:model.lazy="state.profile.phone" class="w-full" type="text" id="state.profile.phone" />
@@ -78,6 +79,7 @@
                 <x-input wire:model.lazy="state.profile.ig" class="w-full" type="text" id="state.profile.ig" />
                 <x-input-error for="state.profile.ig" class="mt-2" />
             </div>
+            @endif
             <div class="flex items-center">
                 <div class="">
                     <x-button wire:click="save">Simpan</x-button>

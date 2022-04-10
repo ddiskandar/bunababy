@@ -19,8 +19,8 @@ class UpdateProfileInformation extends Component
         'state.name' => 'required',
         'state.email' => 'required|email',
         'state.profile.phone' => 'required',
-        'state.profile.photo' => 'nullable',
         'state.profile.ig' => 'nullable',
+        'photo' => 'nullable|image',
     ];
 
     public function mount()
@@ -48,6 +48,8 @@ class UpdateProfileInformation extends Component
             $this->user->profile->update([
                 'photo' => $this->photo->store('photos'),
             ]);
+
+            return redirect()->route('user.profile');
         }
 
         $this->emit('saved');
