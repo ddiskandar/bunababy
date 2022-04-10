@@ -58,22 +58,22 @@ class User extends Authenticatable
 
     public function isMidwife()
     {
-        return $this->type === self::MIDWIFE;
+        return $this->type == self::MIDWIFE;
     }
 
     public function isAdmin()
     {
-        return $this->type === self::ADMIN OR $this->type === self::OWNER;
+        return $this->type == self::ADMIN OR $this->type == self::OWNER;
     }
 
     public function isClient()
     {
-        return $this->type === self::CLIENT;
+        return $this->type == self::CLIENT;
     }
 
     public function isOwner()
     {
-        return $this->type === self::OWNER;
+        return $this->type == self::OWNER;
     }
 
     public function profile(): HasOne
