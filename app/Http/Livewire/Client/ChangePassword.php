@@ -12,6 +12,7 @@ class ChangePassword extends Component
     public $current_password;
     public $password;
     public $password_confirmation;
+    public $errorCurrentPasswordMessage;
 
     public $successMessage = false;
 
@@ -29,23 +30,25 @@ class ChangePassword extends Component
     {
         $this->validate();
 
-        if(! isset($this->current_password) || ! Hash::check($this->current_password, $this->user->password)){
-            return;
+        if (! isset($this->current_password) || ! Hash::check($this->current_password, $this->user->password)) {
+            return $this->errorCurrentPasswordMessage = 'Password sekarang yang anda berikan tidak sesuai.';
         }
 
         $this->user->update([
             'password' => bcrypt($this->password),
         ]);
 
-        $this->successMessage = true;
+        $this->current_password = '';
+        $this->password = '';
+        $this->password_confirmation = '';
 
-        // return redirect()->route('profile');
+        $this->successMessage = true;
 
     }
 
     public function render()
     {
-        return view('client.change-password')
+        return view('client.profile.change-password')
             ->layout('layouts.client');
     }
 }

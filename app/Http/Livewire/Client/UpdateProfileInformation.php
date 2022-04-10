@@ -41,13 +41,13 @@ class UpdateProfileInformation extends Component
             'email' => $this->state['email'],
         ]);
 
-        $this->user->update([
+        $this->user->profile->update([
             'phone' => $this->state['phone'],
         ]);
 
         if(isset($this->photo))
         {
-            auth()->user()->update([
+            $this->user->profile->update([
                 'photo' => $this->photo->store('photos'),
             ]);
         }

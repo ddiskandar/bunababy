@@ -1,12 +1,12 @@
 <div>
-    <div class="py-4 px-4 md:px-6 flex items-center justify-between sticky shadow shadow-bunababy-50">
-        <a href="{{ route('profile') }}">
-            <svg class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24">
+    <div class="sticky flex items-center justify-between px-4 py-4 shadow md:px-6 shadow-bunababy-50">
+        <a href="{{ route('client.profile') }}">
+            <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
             </svg>
         </a>
-        <h1 class="flex-1 md:text-center font-semibold">Ganti Kata Sandi</h1>
+        <h1 class="flex-1 font-semibold md:text-center">Ganti Kata Sandi</h1>
         <button
             wire:click="save"
             class="text-bunababy-100"
@@ -20,6 +20,9 @@
             <x-label for="current_password" :value="__('Password sekarang')" />
             <x-input wire:model="current_password" id="current_password" class="block w-full mt-1" type="password" name="current_password" />
             <x-input-error for="current_password" class="mt-2" />
+            @if ($errorCurrentPasswordMessage)
+            <p class="text-sm text-red-600">{{ $errorCurrentPasswordMessage }}</p>
+            @endif
         </div>
         <div class="mt-4">
             <x-label for="password" :value="__('Password Baru')" />
@@ -43,8 +46,8 @@
             x-transition:leave-start="opacity-100 transform translate-x-0"
             x-transition:leave-end="opacity-0 transform translate-x-8"
             style="display: none !important"
-            class="fixed inset-x-0 w-80 mx-auto bottom-0 right-0 z-60 flex justify-between items-center rounded-full mb-24 py-2 px-8 shadow-lg bg-bunababy-200">
-            <div class="inline-flex items-center text-pink-100 text-sm">
+            class="fixed inset-x-0 bottom-0 right-0 flex items-center justify-between px-8 py-2 mx-auto mb-24 rounded-full shadow-lg w-80 z-60 bg-bunababy-200">
+            <div class="inline-flex items-center text-sm text-pink-100">
                 <p>
                     Password berhasil diperbaharui
                 </p>
@@ -52,8 +55,8 @@
             <div class="flex items-center ml-2">
                 <button
                     wire:click="$set('successMessage', false)"
-                    type="button" class="p-1 rounded inline-flex justify-center items-center focus:outline-none text-white opacity-75 hover:opacity-100  active:opacity-75">
-                    <svg class="hi-outline hi-x inline-block w-4 h-4" stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    type="button" class="inline-flex items-center justify-center p-1 text-white rounded opacity-75 focus:outline-none hover:opacity-100 active:opacity-75">
+                    <svg class="inline-block w-4 h-4 hi-outline hi-x" stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
         </div>

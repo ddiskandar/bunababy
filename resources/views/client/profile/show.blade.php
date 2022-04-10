@@ -3,7 +3,7 @@
     <div class="container px-4 py-4 mx-auto md:py-10 sm:px-12 ">
 
         <div class="flex flex-col max-w-xl mx-auto md:flex-row">
-            <img src="{{ asset(auth()->user()->profile_photo_url) }}" alt="User Photo" class="inline-block w-32 h-32 mx-auto rounded-full md:mx-0">
+            <img src="{{ asset(auth()->user()->profile_photo_url) }}" alt="User Photo" class="inline-block w-32 h-32 mx-auto mb-6 rounded-full md:mb-0 md:mx-0">
             <div class="flex-1 ml-6 md:ml-12">
                 <h3 class="mb-1 text-lg font-semibold">
                     {{ auth()->user()->name }}
