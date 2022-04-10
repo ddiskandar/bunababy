@@ -16,7 +16,7 @@ class Treatment extends Model
     protected $casts = [
         'price' => 'integer',
         'duration' => 'integer',
-        'hidden' => 'boolean',
+        'active' => 'boolean',
     ];
 
     public function orders(): BelongsToMany
