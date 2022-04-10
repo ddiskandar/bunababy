@@ -60,6 +60,11 @@ class ManageTestimonials extends Component
         $this->successMessage = true;
     }
 
+    public function delete(Testimonial $testimonial)
+    {
+        $testimonial->delete();
+    }
+
     public function render()
     {
         $testimonials = Testimonial::query()

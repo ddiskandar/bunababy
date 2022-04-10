@@ -4,10 +4,10 @@
         <!-- User Profile Info -->
         <div class="mb-4 md:flex-none md:w-1/3">
             <h3 class="font-semibold">
-                <span>Nomor WA</span>
+                <span>Setting</span>
             </h3>
             <p class="text-sm text-gray-500">
-                Owner dan Admin
+                {{-- Nomor Rekening Pembayaran --}}
             </p>
         </div>
         <!-- END User Profile Info -->
@@ -17,14 +17,9 @@
         <!-- Card Body: User Profile -->
         <div class="w-full p-5 space-y-6 lg:p-6 grow">
             <div class="space-y-1">
-                <x-label class="" for="state.wa_admin">WA Admin</x-label>
-                <x-input wire:model.lazy="state.wa_admin" class="w-full" type="text" id="state.wa_admin" />
-                <x-input-error for="state.wa_admin" class="mt-2" />
-            </div>
-            <div class="space-y-1">
-                <x-label class="" for="state.wa_owner">WA Owner</x-label>
-                <x-input wire:model.lazy="state.wa_owner" class="w-full" type="text" id="state.wa_owner" />
-                <x-input-error for="state.wa_owner" class="mt-2" />
+                <x-label class="" for="state.timeout">Timeout</x-label>
+                <x-input wire:model.lazy="state.timeout" class="w-full" type="text" id="state.timeout" />
+                <x-input-error for="state.timeout" class="mt-2" />
             </div>
             <div class="flex items-center">
                 <div class="">

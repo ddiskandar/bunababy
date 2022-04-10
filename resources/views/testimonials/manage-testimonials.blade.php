@@ -99,7 +99,7 @@
                             'bg-slate-50/30' => $loop->even,
                             'text-slate-400' => ! $testimonial->active,
                         ])>
-                            <td class="p-3 pl-6 w-72 align-top whitespace-nowrap table-cell">
+                            <td class="table-cell p-3 pl-6 align-top w-72 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <img src="{{ $testimonial->order->client->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
                                     <div class="ml-3 ">
@@ -108,7 +108,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="p-3 w-16 align-top ">
+                            <td class="w-16 p-3 align-top ">
                                 <div class="flex items-center">
                                     @for ( $i = 1; $i <= 5; $i++ )
                                         <svg class="{{ $i <= $testimonial->rate ? 'text-yellow-500' : 'text-slate-400' }}" width="24" height="24"  viewBox="0 0 24 24">
@@ -117,22 +117,26 @@
                                     @endfor
                                 </div>
                             </td>
-                            <td class="p-3 w-96 align-top ">
+                            <td class="p-3 align-top w-96 ">
                                 <p class="text-slate-800">{{ $testimonial->description }}</p>
                             </td>
-                            <td class="p-3 w-32 align-top ">
-                                <p class="text-slate-800">{{ $testimonial->order->no_reg }}</p>
-                                <p class=" ">{{ $testimonial->order->date->format('d M Y') }}</p>
+                            <td class="w-32 p-3 align-top ">
+                                <a href="{{ route('orders.show', $testimonial->order->id) }}">
+                                    <p class="font-semibold text-slate-800">{{ $testimonial->order->no_reg }}</p>
+                                </a>
+                                <p class="text-slate-600">{{ $testimonial->order->date->format('d M Y') }}</p>
                             </td>
-                            <td class="p-3 w-32 align-top ">
-                                <p class="text-slate-800 font-semibold">{{ $testimonial->order->midwife->name }}</p>
+                            <td class="w-32 p-3 align-top ">
+                                <p class="font-semibold text-slate-800">{{ $testimonial->order->midwife->name }}</p>
                             </td>
                             <td class="p-3 text-center align-top whitespace-nowrap">
-                                <div class="flex justify-center space-x-2">
-                                    <button wire:click="ShowEdittestimonialDialog({{ $testimonial->id }})" class="text-slate-400 hover:text-bunababy-200">
-                                        Edit
-                                    </button>
-                                </div>
+                                <button wire:click="delete('{{ $testimonial->id }}')" class="text-slate-400 hover:text-bunababy-200">
+                                    <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.75 7.75L7.59115 17.4233C7.68102 18.4568 8.54622 19.25 9.58363 19.25H14.4164C15.4538 19.25 16.319 18.4568 16.4088 17.4233L17.25 7.75"></path>
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 7.5V6.75C9.75 5.64543 10.6454 4.75 11.75 4.75H12.25C13.3546 4.75 14.25 5.64543 14.25 6.75V7.5"></path>
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 7.75H19"></path>
+                                    </svg>
+                                </button>
                             </td>
                         </tr>
                     @empty

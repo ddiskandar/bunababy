@@ -1,4 +1,4 @@
-<div class="space-y-4">
+<div>
 
     <!-- User Profile -->
     <div class="md:flex md:space-x-5">
