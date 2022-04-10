@@ -65,7 +65,7 @@ class SelectMidwife extends Component
         foreach ($period as $date) {
             $new = collect(['date' => $date]);
             foreach($this->schedules as $order) {
-                if ( $order->date->format('m-d') === $date->format('m-d') ) {
+                if ( $order->date->format('m-d') == $date->format('m-d') ) {
                     foreach($this->slots as $slot){
                         if ( Carbon::parse($slot->time)->between(Carbon::parse($order->start_time), Carbon::parse($order->end_time)) ) {
                             $new->put($slot->time, 'booked');

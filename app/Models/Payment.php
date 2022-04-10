@@ -49,9 +49,9 @@ class Payment extends Model
 
     public function status()
     {
-        return $this->status === self::STATUS_VERIFIED
+        return $this->status == self::STATUS_VERIFIED
             ? 'Verified'
-            : ( $this->status === self::STATUS_UNVERIFIED
+            : ( $this->status == self::STATUS_UNVERIFIED
                 ? 'Waiting'
                 : 'Rejected'
             );

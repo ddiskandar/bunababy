@@ -124,14 +124,14 @@ class Order extends Model
 
     public function place()
     {
-        return $this->place === self::PLACE_CLIENT ? 'Homecare' : 'Onsite';
+        return $this->place == self::PLACE_CLIENT ? 'Homecare' : 'Onsite';
     }
 
     public function status()
     {
-        return $this->status === self::STATUS_FINISHED
+        return $this->status == self::STATUS_FINISHED
             ? 'Selesai'
-            : ( $this->status === self::STATUS_LOCKED
+            : ( $this->status == self::STATUS_LOCKED
                 ? 'Aktif'
                 : 'Pending'
             );
