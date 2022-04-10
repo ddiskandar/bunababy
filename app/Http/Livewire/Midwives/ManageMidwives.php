@@ -42,7 +42,7 @@ class ManageMidwives extends Component
                 });
             })
             ->where('active', 'LIKE', '%' . $this->filterStatus . '%')
-            ->with('kecamatans')
+            ->with('kecamatans', 'reviews')
             ->paginate($this->perPage);
 
         return view('midwives.manage-midwives', [

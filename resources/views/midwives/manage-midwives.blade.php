@@ -77,7 +77,7 @@
                             'bg-slate-50/30' => $loop->even,
                             'text-slate-400' => ! $midwife->active,
                         ])>
-                            <td class="p-3 pl-6 w-96 whitespace-nowrap align-top">
+                            <td class="p-3 pl-6 align-top w-96 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <img src="{{ $midwife->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
                                     <div class="ml-3 ">
@@ -86,7 +86,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="w-1/2 p-3 whitespace-nowrap align-top">
+                            <td class="w-1/2 p-3 align-top whitespace-nowrap">
                                 <div class="flex flex-wrap gap-2 whitespace-nowrap">
                                     @forelse ($midwife->kecamatans as $kecamatan)
                                         <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 border rounded-full text-slate-600 bg-slate-50 border-slate-200">
@@ -97,16 +97,16 @@
                                     @endforelse
                                 </div>
                             </td>
-                            <td class="p-3 text-center whitespace-nowrap align-top">
+                            <td class="p-3 text-center align-top whitespace-nowrap">
                                 <div class="flex items-center">
                                     <svg class="text-yellow-500" width="24" height="24"  viewBox="0 0 24 24">
                                         <path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.75L13.75 10.25H19.25L14.75 13.75L16.25 19.25L12 15.75L7.75 19.25L9.25 13.75L4.75 10.25H10.25L12 4.75Z"></path>
                                     </svg>
-                                    <div class="font-semibold">5</div>
-                                    <div> (83) </div>
+                                    <div class="font-semibold">{{ number_format($midwife->reviews->pluck('rate')->average(), 1, ',', '.') }} </div>
+                                    <div> ({{ $midwife->reviews->count() }})</div>
                                 </div>
                             </td>
-                            <td class="p-3 text-center whitespace-nowrap align-top">
+                            <td class="p-3 text-center align-top whitespace-nowrap">
                                 <div class="flex justify-center space-x-2">
                                     <a href="{{ route('midwives.edit', $midwife->id) }}" class="text-slate-400 hover:text-bunababy-200">
                                         Edit

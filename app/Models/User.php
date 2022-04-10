@@ -155,4 +155,28 @@ class User extends Authenticatable
         return $query->where('active', true);
     }
 
+    public function testimonials()
+    {
+        return $this->hasManyThrough(
+            Testimonial::class,
+            Order::class,
+            'client_user_id',
+            'order_id',
+            'id',
+            'id'
+        );
+    }
+
+    public function reviews()
+    {
+        return $this->hasManyThrough(
+            Testimonial::class,
+            Order::class,
+            'midwife_user_id',
+            'order_id',
+            'id',
+            'id'
+        );
+    }
+
 }

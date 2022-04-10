@@ -88,7 +88,7 @@
                             'bg-slate-50/30' => $loop->even,
                             'text-slate-400' => ! $payment->active,
                         ])>
-                            <td class="p-3 pl-6 w-72  whitespace-nowrap table-cell">
+                            <td class="table-cell p-3 pl-6 w-72 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <img src="{{ $payment->order->client->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
                                     <div class="ml-3 ">
@@ -97,29 +97,31 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="p-3  ">
+                            <td class="p-3 ">
                                 <p class="text-slate-800">{{ $payment->order->no_reg }}</p>
-                                <p class=" ">{{ $payment->order->date->format('d M Y') }}</p>
+                                <p class="">{{ $payment->order->date->format('d M Y') }}</p>
                             </td>
-                            <td class="p-3  ">
+                            <td class="p-3 ">
                                 <p class="text-slate-800">{{ rupiah($payment->order->grand_total()) }}</p>
+                                <p class="text-slate-800">{{ rupiah($payment->order->remaining_payment()) }}</p>
                             </td>
-                            <td class="p-3  ">
+                            <td class="p-3 ">
                                 <p class="text-slate-800">{{ rupiah($payment->value) }}</p>
                             </td>
-                            <td class="p-3  ">
+                            <td class="p-3 ">
                                 <p class="text-slate-800">{{ $payment->status() }}</p>
                             </td>
-                            <td class="p-3  ">
-                                <p class="text-slate-800">{{ $payment->not }}</p>
-                            </td>
-                            <td class="p-3  ">
-                                <p class="text-slate-800 font-semibold">
+                            <td class="p-3 ">
+                                <p class="text-slate-800">
+                                    {{ $payment->verificator->name }}
                                 </p>
                             </td>
-                            <td class="p-3 text-center  whitespace-nowrap">
+                            <td class="p-3 ">
+                                <p class="text-slate-800">{{ $payment->note }}</p>
+                            </td>
+                            <td class="p-3 text-center whitespace-nowrap">
                                 <div class="flex justify-center space-x-2">
-                                    <button wire:click="ShowEditpaymentDialog({{ $payment->id }})" class="text-slate-400 hover:text-bunababy-200">
+                                    <button wire:click="showEditPaymentDialog({{ $payment->id }})" class="text-slate-400 hover:text-bunababy-200">
                                         Edit
                                     </button>
                                 </div>
@@ -127,7 +129,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="py-12 text-center">
+                            <td colspan="8" class="py-12 text-center">
                                 <p class="text-slate-400">Tidak ada yang ditemukan</p>
                             </td>
                         </tr>
@@ -156,54 +158,39 @@
     </x-notification>
 
     <x-dialog wire:model="showDialog">
-
-        <x-title>Data Treatment</x-title>
+        <x-title>Status Pembayaran</x-title>
 
         <div class="h-64 mt-2 space-y-3 overflow-y-auto">
             <div class="space-y-1">
-                <x-label class="" for="state.name">Nama</x-label>
-                <x-input wire:model.lazy="state.name" class="w-full" type="text" id="state.name" />
-                <x-input-error for="state.name" class="mt-2" />
+                <x-label class="" for="state.value">Besar Pembayaran</x-label>
+                <x-input wire:model.lazy="state.value" class="w-full" type="number" id="state.value" />
+                <x-input-error for="state.value" class="mt-2" />
             </div>
+
+            @isset ($state['attachment'])
             <div class="space-y-1">
-                <x-label class="" for="state.desc">Deskripsi</x-label>
-                <x-textarea wire:model.lazy="state.desc" class="w-full" type="text" id="state.desc" />
-                <x-input-error for="state.desc" class="mt-2" />
+                <x-label>Bukti</x-label>
+                <a href="{{ asset('storage/' . $state['attachment']) }}" target="_blank">
+                    <x-secondary-button type="button" class="mt-2">
+                        {{ __('Lihat bukti lampiran') }}
+                    </x-secondary-button>
+                </a>
             </div>
+            @endisset
+
             <div class="space-y-1">
-                <x-label class="" for="state.price">Harga</x-label>
-                <x-input wire:model.lazy="state.price" class="w-full" type="number" id="state.price" />
-                <x-input-error for="state.price" class="mt-2" />
-            </div>
-            <div class="space-y-1">
-                <x-label class="" for="state.duration">Durasi</x-label>
-                <x-input wire:model.lazy="state.duration" class="w-full" type="number" id="state.duration" />
-                <x-input-error for="state.duration" class="mt-2" />
-            </div>
-            <div class="space-y-1">
-                <x-label class="" for="state.category_id">Kategory</x-label>
-                <select wire:model.lazy="state.category_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.category_id">
+                <x-label class="" for="state.status">Status</x-label>
+                <select wire:model.lazy="state.status" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.status">
                     <option value="" selected>-- Pilih salah satu</option>
-                    @foreach (DB::table('categories')->get() as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
+                    <option value="2">Approved</option>
+                    <option value="3">Reject</option>
                 </select>
-                <x-input-error for="state.category_id" class="mt-2" />
+                <x-input-error for="state.status" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.order">Urutan</x-label>
-                <x-input wire:model.lazy="state.order" class="w-full" type="number" id="state.order" />
-                <x-input-error for="state.order" class="mt-2" />
-            </div>
-            <div class="py-4 space-y-1">
-                <div class="inline-flex items-center ml-2">
-                    <div class="flex items-center h-5 ">
-                        <input wire:model.lazy="state.active" id="active" name="active" type="checkbox" class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
-                    </div>
-                    <div class="ml-2 ">
-                        <x-label class="" for="state.active">Aktif</x-label>
-                    </div>
-                </div>
+                <x-label class="" for="state.note">Catatan</x-label>
+                <x-textarea wire:model.lazy="state.note" class="w-full" type="text" id="state.note" />
+                <x-input-error for="state.note" class="mt-2" />
             </div>
 
         </div>

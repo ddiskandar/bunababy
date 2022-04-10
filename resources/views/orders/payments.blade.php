@@ -72,7 +72,7 @@
                 <div class="text-sm font-medium text-gray-500">Riwayat Pembayaran</div>
                 <div class="divide-y divide-bunababy-50">
                     @forelse ($order->payments as $payment)
-                    <div class="flex items-center py-3 justify-between text-sm">
+                    <div class="flex items-center justify-between py-3 text-sm">
                         <div>
                             <div class="font-semibold">
                                 {{ rupiah($payment->value) }}
@@ -119,7 +119,6 @@
     <!-- END User Profile -->
 
     <x-dialog wire:model="showDialog">
-
         <x-title>Status Pembayaran</x-title>
 
         <div class="h-64 mt-2 space-y-3 overflow-y-auto">
@@ -128,16 +127,18 @@
                 <x-input wire:model.lazy="state.value" class="w-full" type="number" id="state.value" />
                 <x-input-error for="state.value" class="mt-2" />
             </div>
-            @isset ($payment->attachment)
+
+            @isset ($state['attachment'])
             <div class="space-y-1">
-                <x-label class="" for="state.value">Bukti</x-label>
-                <a href="{{ $payment->attachment }}">
-                    <x-secondary-button type="button" class="mt-2" wire:click="deleteProfilePhoto">
+                <x-label>Bukti</x-label>
+                <a href="{{ asset('storage/' . $state['attachment']) }}" target="_blank">
+                    <x-secondary-button type="button" class="mt-2">
                         {{ __('Lihat bukti lampiran') }}
                     </x-secondary-button>
                 </a>
             </div>
             @endisset
+
             <div class="space-y-1">
                 <x-label class="" for="state.status">Status</x-label>
                 <select wire:model.lazy="state.status" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.status">

@@ -16,7 +16,7 @@ class TestimonialFactory extends Factory
     {
         return [
             'order_id' => Order::factory(),
-            'rate' => $this->faker->numberBetween(1,5),
+            'rate' => $this->faker->numberBetween(4,5),
             'description' => $this->faker->paragraph(),
         ];
     }
