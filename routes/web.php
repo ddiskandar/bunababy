@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/wilayah', [App\Http\Controllers\KecamatanController::class, 'index'])->name('wilayah');
     Route::get('/wilayah/kabupaten', [App\Http\Controllers\KabupatenController::class, 'show'])->name('kabupaten');
     Route::get('/settings', [App\Http\Controllers\SettingController::class, 'show'])->name('settings');
+    Route::get('/user/profile', [App\Http\Controllers\UserProfileController::class, 'show'])->name('user.profile');
 
     Route::prefix('admin')->name('admin')->group(function(){
         //

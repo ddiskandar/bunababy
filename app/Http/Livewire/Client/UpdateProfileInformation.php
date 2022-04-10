@@ -36,9 +36,12 @@ class UpdateProfileInformation extends Component
     {
         $this->validate();
 
-        auth()->user()->update([
+        $this->user->update([
             'name' => $this->state['name'],
             'email' => $this->state['email'],
+        ]);
+
+        $this->user->update([
             'phone' => $this->state['phone'],
         ]);
 

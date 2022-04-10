@@ -132,8 +132,8 @@ class User extends Authenticatable
 
     public function getProfilePhotoUrlAttribute()
     {
-        return $this->photo
-                    ? asset('storage/' . $this->photo)
+        return $this->profile->photo
+                    ? asset('storage/' . $this->profile->photo)
                     : $this->defaultProfilePhotoUrl();
     }
 
