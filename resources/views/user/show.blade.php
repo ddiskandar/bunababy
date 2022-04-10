@@ -4,6 +4,7 @@
         @if (!auth()->user()->isAdmin())
 
         @livewire('user.update-profile-information')
+        @livewire('user.update-user-password')
 
         @endif
     </div>
