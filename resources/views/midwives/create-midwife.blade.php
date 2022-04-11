@@ -15,7 +15,7 @@
         <!-- Card: User Profile -->
         <div class="flex flex-col overflow-hidden bg-white rounded shadow-sm md:w-2/3">
         <!-- Card Body: User Profile -->
-        <div class="w-full p-5 lg:p-6 grow">
+        <div class="w-full p-5 lg:p-6 grow space-y-6">
             <div class="space-y-1">
                 <x-label class="" for="state.name">Nama bidan</x-label>
                 <x-input wire:model.defer="state.name" class="w-full" type="text" id="state.name" />

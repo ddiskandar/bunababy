@@ -45,8 +45,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/clients', [App\Http\Controllers\ClientsController::class, 'index'])->name('clients');
 
     // Owner..
-    Route::get('/midwives/{midwife}/edit', [App\Http\Controllers\MidwivesController::class, 'edit'])->name('midwives.edit');
     Route::get('/midwives/create', [App\Http\Controllers\MidwivesController::class, 'create'])->name('midwives.create');
+    Route::get('/midwives/{midwife}/edit', [App\Http\Controllers\MidwivesController::class, 'edit'])->name('midwives.edit');
     Route::get('/midwives', [App\Http\Controllers\MidwivesController::class, 'index'])->name('midwives');
     Route::get('/treatments', [App\Http\Controllers\TreatmentsController::class, 'index'])->name('treatments');
     Route::get('/treatments/categories', [App\Http\Controllers\TreatmentCategoriesController::class, 'show'])->name('categories');

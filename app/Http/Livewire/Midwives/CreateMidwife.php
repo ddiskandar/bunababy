@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Midwives;
 
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class CreateMidwife extends Component
@@ -19,7 +20,6 @@ class CreateMidwife extends Component
 
     public function mount()
     {
-        $this->midwife = new User();
         $this->state['active'] = true;
     }
 
@@ -27,26 +27,27 @@ class CreateMidwife extends Component
     {
         $this->validate();
 
-        $user = User::create([
-            'name' => $this->state['name'],
-            'email' => $this->state['email'],
-            'type' => User::MIDWIFE,
-            'password' => bcrypt('password'),
-        ]);
+        DB::transaction(function(){
+            $user = User::create([
+                'name' => $this->state['name'],
+                'email' => $this->state['email'],
+                'type' => User::MIDWIFE,
+                'password' => bcrypt('password'),
+            ]);
 
-        $user->profile->create([
-            'phone' => $this->state['phone'],
-        ]);
+            $user->profile()->create([
+                'phone' => $this->state['phone'],
+            ]);
 
-        $this->midwife = $user;
+            $this->emit('saved');
 
-        $this->emit('saved');
+            return redirect()->route('midwives.edit', $user->id);
+        });
 
-        return redirect()->route('admin.midwives.edit', $user->id);
     }
 
     public function render()
     {
-        return view();
+        return view('midwives.create-midwife');
     }
 }

@@ -3,14 +3,11 @@
 namespace App\Http\Livewire\Clients;
 
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 
 class CreateClient extends Component
 {
-    use WithFileUploads;
-
-    public $photo;
     public $state = [];
 
     public $rules = [
@@ -23,35 +20,29 @@ class CreateClient extends Component
 
     public function mount()
     {
-        $this->client = new User();
+        $this->state['active'] = true;
     }
 
     public function save()
     {
         $this->validate();
 
-        $user = User::create([
-            'name' => $this->state['name'],
-            'email' => $this->state['email'],
-            'type' => User::CLIENT,
-            'password' => bcrypt('12345678'),
-        ]);
-
-        $user->profile()->create([
-            'phone' => $this->state['phone'],
-        ]);
-
-        if($this->photo)
-        {
-            $user->update([
-                'photo' => $this->photo->store('photos')
+        DB::transaction(function(){
+            $user = User::create([
+                'name' => $this->state['name'],
+                'email' => $this->state['email'],
+                'type' => User::CLIENT,
+                'password' => bcrypt('12345678'),
             ]);
-        }
-        $this->client = $user;
 
-        $this->emit('saved');
+            $user->profile()->create([
+                'phone' => $this->state['phone'],
+            ]);
 
-        return redirect()->route('clients.show', $user->id);
+            $this->emit('saved');
+
+            return redirect()->route('clients.show', $user->id);
+        });
     }
 
     public function render()
