@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Calendar;
 
-use App\Models\Slot;
 use App\Models\User;
 use Livewire\Component;
 

@@ -68,7 +68,26 @@
         </div>
         <div class="py-4">
             <div>Katalog Treatment</div>
-            <div></div>
+            <div class="flex snap-x scroll-pl-4 space-x-4 overflow-x-auto py-6 sm:scroll-pl-6 sm:space-x-8 md:scroll-pl-[calc(50%-20rem)] lg:scroll-pl-[calc(50%-25rem)]">
+                <div class="flex-none snap-start w-[calc(70%+1.5rem)] pl-4 sm:w-[calc(24rem+1.5rem)] sm:pl-6 md:w-[calc(24rem+(50%-20rem))] md:pl-[calc(50%-20rem)] lg:w-[calc(24rem+(50%-25rem))] lg:pl-[calc(50%-25rem)]">
+                    <img src="https://www.refactoringui.com/_next/static/media/font-suggestions-1.27cd08c06d0d05f4236b2ac9eca4273b.png" alt="" class="bg-white shadow-lg ring-1 ring-slate-900/5" width="768" height="576">
+                </div>
+                <div class="flex-none snap-start w-[70%] sm:w-[24rem]">
+                    <img src="https://www.refactoringui.com/_next/static/media/font-suggestions-2.654bbabf446786dd3b38073f61a7eea4.png" alt="" class="bg-white shadow-lg ring-1 ring-slate-900/5" width="768" height="576">
+                </div>
+                <div class="flex-none snap-start w-[70%] sm:w-[24rem]">
+                    <img src="https://www.refactoringui.com/_next/static/media/font-suggestions-3.4ba77c3798a400fa1c96a8ea6e51f5d0.png" alt="" class="bg-white shadow-lg ring-1 ring-slate-900/5" width="768" height="576">
+                </div>
+                <div class="flex-none snap-start w-[70%] sm:w-[24rem]">
+                    <img src="https://www.refactoringui.com/_next/static/media/font-suggestions-4.7cf6544bf9cc978d8114ef7211643816.png" alt="" class="bg-white shadow-lg ring-1 ring-slate-900/5" width="768" height="576">
+                </div>
+                <div class="flex-none snap-start w-[70%] sm:w-[24rem]">
+                    <img src="https://www.refactoringui.com/_next/static/media/font-suggestions-5.3d32a81c8cc7214de179a037b6f994fc.png" alt="" class="bg-white shadow-lg ring-1 ring-slate-900/5" width="768" height="576">
+                </div>
+                <div class="flex-none snap-start w-[calc(70%+1.5rem)] pr-4 sm:w-[calc(24rem+1.5rem)] sm:pr-6 md:w-[calc(24rem+(50%-20rem))] md:pr-[calc(50%-20rem)] lg:w-[calc(24rem+(50%-25rem))] lg:pr-[calc(50%-25rem)]">
+                    <img src="https://www.refactoringui.com/_next/static/media/font-suggestions-6.228928b55b0913310f88c68846ae5308.png" alt="" class="bg-white shadow-lg ring-1 ring-slate-900/5" width="768" height="576">
+                </div>
+            </div>
         </div>
     </div>
 

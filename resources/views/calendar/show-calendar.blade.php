@@ -7,6 +7,7 @@
                 <h3 class="font-semibold">
                     Kalender
                 </h3>
+                <p class="ml-3 text-red-600">under construction</p>
             </div>
             <div class="mt-3 text-center sm:mt-0 sm:text-right">
                 <input wire:model="date" type="date" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50"  />
@@ -80,20 +81,29 @@
                 <div class="row-start-[12] col-start-[{{ $i }}] border-slate-100 border-b border-r"></div>
                 @endfor
 
+
+
                 <!-- Calendar contents -->
+                {{-- row-start-[2]  jam mulai --}}
+                {{-- col-start-3    bidan --}}
+                {{-- row-span-4     durasi --}}
+
                 <div class="row-start-[2] col-start-3 row-span-4 bg-blue-400/20 border border-blue-700/10 rounded-lg m-1 p-1 flex flex-col">
                     <span class="text-xs text-blue-600">5 AM</span>
                     <span class="text-xs font-medium text-blue-600">Flight to vancouver</span>
                     <span class="text-xs text-blue-600">Toronto YYZ</span>
                 </div>
-                <div class="row-start-[3] col-start-[4] row-span-4 bg-purple-400/20 border border-purple-700/10 rounded-lg m-1 p-1 flex flex-col">
-                    <span class="text-xs text-purple-600">6 AM</span>
-                    <span class="text-xs font-medium text-purple-600">Breakfast</span>
-                    <span class="text-xs text-purple-600">Mel's Diner</span>
-                </div>
             </div>
         </div>
         <!-- END Card Body -->
+
+        @foreach ($midwives as $midwife)
+            @forelse ($midwife->schedules as $schedule)
+            {{-- <span>{{ $schedule->total_duration }}</span> --}}
+            @empty
+
+            @endforelse
+        @endforeach
 
     </div>
     <!-- END Card -->
