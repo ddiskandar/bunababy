@@ -16,160 +16,69 @@
 
         <!-- Card Body -->
         <div class="">
-            <div class="overflow-scroll grid grid-cols-[70px,repeat(7,200px)] grid-rows-[auto,repeat(16,50px)] max-h-[420px]">
+            <div class="overflow-scroll grid grid-cols-[70px,repeat(6,200px)] grid-rows-[auto,repeat(11,50px)] max-h-[420px]">
                 <!-- Calendar frame -->
                 <div class="row-start-[1] col-start-[1] sticky top-0 z-10 bg-white border-slate-100 bg-clip-padding text-slate-900 border-b text-sm font-medium py-2"></div>
-                <div class="row-start-[1] col-start-[2] sticky top-0 z-10 bg-white border-slate-100 bg-clip-padding text-slate-900 border-b text-sm font-medium py-2 text-center">Sun</div>
-                <div class="row-start-[1] col-start-[3] sticky top-0 z-10 bg-white border-slate-100 bg-clip-padding text-slate-900 border-b text-sm font-medium py-2 text-center">Mon</div>
-                <div class="row-start-[1] col-start-[4] sticky top-0 z-10 bg-white border-slate-100 bg-clip-padding text-slate-900 border-b text-sm font-medium py-2 text-center">Tue</div>
-                <div class="row-start-[1] col-start-[5] sticky top-0 z-10 bg-white border-slate-100 bg-clip-padding text-slate-900 border-b text-sm font-medium py-2 text-center">Wed</div>
-                <div class="row-start-[1] col-start-[6] sticky top-0 z-10 bg-white border-slate-100 bg-clip-padding text-slate-900 border-b text-sm font-medium py-2 text-center">Thu</div>
-                <div class="row-start-[1] col-start-[7] sticky top-0 z-10 bg-white border-slate-100 bg-clip-padding text-slate-900 border-b text-sm font-medium py-2 text-center">Fri</div>
-                <div class="row-start-[1] col-start-[8] sticky top-0 z-10 bg-white border-slate-100 bg-clip-padding text-slate-900 border-b text-sm font-medium py-2 text-center">Sat</div>
+                @foreach ($midwives as $midwife)
+                    <div class="row-start-1 col-start-[{{ $loop->iteration + 1 }}] sticky top-0 z-10 bg-white border-slate-100 bg-clip-padding text-slate-900 border-b text-sm font-medium py-2 text-center">
+                        {{ $midwife->name }}
+                    </div>
+                @endforeach
 
-                <div class="row-start-[2] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">5 AM</div>
-                <div class="row-start-[2] col-start-[2] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[2] col-start-[3] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[2] col-start-[4] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[2] col-start-[5] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[2] col-start-[6] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[2] col-start-[7] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[2] col-start-[8] border-slate-100 border-b"></div>
+                <div class="row-start-[2] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">08:00</div>
+                @for($i = 2; $i <= $midwives->count() + 1; $i++)
+                <div class="row-start-[2] col-start-[{{ $i }}] border-slate-100 border-b border-r"></div>
+                @endfor
 
-                <div class="row-start-[3] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">6 AM</div>
-                <div class="row-start-[3] col-start-[2] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[3] col-start-[3] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[3] col-start-[4] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[3] col-start-[5] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[3] col-start-[6] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[3] col-start-[7] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[3] col-start-[8] border-slate-100 border-b"></div>
+                <div class="row-start-[3] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">09:00</div>
+                @for($i = 2; $i <= $midwives->count() + 1; $i++)
+                <div class="row-start-[3] col-start-[{{ $i }}] border-slate-100 border-b border-r"></div>
+                @endfor
 
-                <div class="row-start-[4] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">7 AM</div>
-                <div class="row-start-[4] col-start-[2] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[4] col-start-[3] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[4] col-start-[4] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[4] col-start-[5] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[4] col-start-[6] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[4] col-start-[7] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[4] col-start-[8] border-slate-100 border-b"></div>
+                <div class="row-start-[4] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">10:00</div>
+                @for($i = 2; $i <= $midwives->count() + 1; $i++)
+                <div class="row-start-[4] col-start-[{{ $i }}] border-slate-100 border-b border-r"></div>
+                @endfor
 
-                <div class="row-start-[5] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">8 AM</div>
-                <div class="row-start-[5] col-start-[2] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[5] col-start-[3] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[5] col-start-[4] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[5] col-start-[5] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[5] col-start-[6] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[5] col-start-[7] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[5] col-start-[8] border-slate-100 border-b"></div>
+                <div class="row-start-[5] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">11:00</div>
+                @for($i = 2; $i <= $midwives->count() + 1; $i++)
+                <div class="row-start-[5] col-start-[{{ $i }}] border-slate-100 border-b border-r"></div>
+                @endfor
 
-                <div class="row-start-[6] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">9 AM</div>
-                <div class="row-start-[6] col-start-[2] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[6] col-start-[3] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[6] col-start-[4] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[6] col-start-[5] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[6] col-start-[6] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[6] col-start-[7] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[6] col-start-[8] border-slate-100 border-b"></div>
+                <div class="row-start-[6] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">12:00</div>
+                @for($i = 2; $i <= $midwives->count() + 1; $i++)
+                <div class="row-start-[6] col-start-[{{ $i }}] border-slate-100 border-b border-r"></div>
+                @endfor
 
-                <div class="row-start-[7] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">10 AM</div>
-                <div class="row-start-[7] col-start-[2] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[7] col-start-[3] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[7] col-start-[4] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[7] col-start-[5] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[7] col-start-[6] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[7] col-start-[7] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[7] col-start-[8] border-slate-100 border-b"></div>
+                <div class="row-start-[7] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">13:00</div>
+                @for($i = 2; $i <= $midwives->count() + 1; $i++)
+                <div class="row-start-[7] col-start-[{{ $i }}] border-slate-100 border-b border-r"></div>
+                @endfor
 
-                <div class="row-start-[8] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">11 AM</div>
-                <div class="row-start-[8] col-start-[2] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[8] col-start-[3] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[8] col-start-[4] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[8] col-start-[5] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[8] col-start-[6] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[8] col-start-[7] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[8] col-start-[8] border-slate-100 border-b"></div>
+                <div class="row-start-[8] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">14:00</div>
+                @for($i = 2; $i <= $midwives->count() + 1; $i++)
+                <div class="row-start-[8] col-start-[{{ $i }}] border-slate-100 border-b border-r"></div>
+                @endfor
 
-                <div class="row-start-[9] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">12 PM</div>
-                <div class="row-start-[9] col-start-[2] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[9] col-start-[3] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[9] col-start-[4] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[9] col-start-[5] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[9] col-start-[6] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[9] col-start-[7] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[9] col-start-[8] border-slate-100 border-b"></div>
+                <div class="row-start-[9] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">15:00</div>
+                @for($i = 2; $i <= $midwives->count() + 1; $i++)
+                <div class="row-start-[9] col-start-[{{ $i }}] border-slate-100 border-b border-r"></div>
+                @endfor
 
-                <div class="row-start-[10] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">1 PM</div>
-                <div class="row-start-[10] col-start-[2] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[10] col-start-[3] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[10] col-start-[4] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[10] col-start-[5] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[10] col-start-[6] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[10] col-start-[7] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[10] col-start-[8] border-slate-100 border-b"></div>
+                <div class="row-start-[10] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">16:00</div>
+                @for($i = 2; $i <= $midwives->count() + 1; $i++)
+                <div class="row-start-[10] col-start-[{{ $i }}] border-slate-100 border-b border-r"></div>
+                @endfor
 
-                <div class="row-start-[11] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">2 PM</div>
-                <div class="row-start-[11] col-start-[2] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[11] col-start-[3] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[11] col-start-[4] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[11] col-start-[5] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[11] col-start-[6] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[11] col-start-[7] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[11] col-start-[8] border-slate-100 border-b"></div>
+                <div class="row-start-[11] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">17:00</div>
+                @for($i = 2; $i <= $midwives->count() + 1; $i++)
+                <div class="row-start-[11] col-start-[{{ $i }}] border-slate-100 border-b border-r"></div>
+                @endfor
 
-                <div class="row-start-[12] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">3 PM</div>
-                <div class="row-start-[12] col-start-[2] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[12] col-start-[3] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[12] col-start-[4] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[12] col-start-[5] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[12] col-start-[6] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[12] col-start-[7] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[12] col-start-[8] border-slate-100 border-b"></div>
-
-                <div class="row-start-[13] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">4 PM</div>
-                <div class="row-start-[13] col-start-[2] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[13] col-start-[3] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[13] col-start-[4] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[13] col-start-[5] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[13] col-start-[6] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[13] col-start-[7] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[13] col-start-[8] border-slate-100 border-b"></div>
-
-                <div class="row-start-[14] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">5 PM</div>
-                <div class="row-start-[14] col-start-[2] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[14] col-start-[3] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[14] col-start-[4] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[14] col-start-[5] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[14] col-start-[6] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[14] col-start-[7] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[14] col-start-[8] border-slate-100 border-b"></div>
-
-                <div class="row-start-[15] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">6 PM</div>
-                <div class="row-start-[15] col-start-[2] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[15] col-start-[3] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[15] col-start-[4] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[15] col-start-[5] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[15] col-start-[6] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[15] col-start-[7] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[15] col-start-[8] border-slate-100 border-b"></div>
-
-                <div class="row-start-[16] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">7 PM</div>
-                <div class="row-start-[16] col-start-[2] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[16] col-start-[3] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[16] col-start-[4] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[16] col-start-[5] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[16] col-start-[6] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[16] col-start-[7] border-slate-100 border-b border-r"></div>
-                <div class="row-start-[16] col-start-[8] border-slate-100 border-b"></div>
-
-                <div class="row-start-[17] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">8 PM</div>
-                <div class="row-start-[17] col-start-[2] border-slate-100 border-r"></div>
-                <div class="row-start-[17] col-start-[3] border-slate-100 border-r"></div>
-                <div class="row-start-[17] col-start-[4] border-slate-100 border-r"></div>
-                <div class="row-start-[17] col-start-[5] border-slate-100 border-r"></div>
-                <div class="row-start-[17] col-start-[6] border-slate-100 border-r"></div>
-                <div class="row-start-[17] col-start-[7] border-slate-100 border-r"></div>
-                <div class="row-start-[17] col-start-[8]"></div>
+                <div class="row-start-[12] col-start-[1] border-slate-100 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white font-medium">18:00</div>
+                @for($i = 2; $i <= $midwives->count() + 1; $i++)
+                <div class="row-start-[12] col-start-[{{ $i }}] border-slate-100 border-b border-r"></div>
+                @endfor
 
                 <!-- Calendar contents -->
                 <div class="row-start-[2] col-start-3 row-span-4 bg-blue-400/20 border border-blue-700/10 rounded-lg m-1 p-1 flex flex-col">
@@ -181,11 +90,6 @@
                     <span class="text-xs text-purple-600">6 AM</span>
                     <span class="text-xs font-medium text-purple-600">Breakfast</span>
                     <span class="text-xs text-purple-600">Mel's Diner</span>
-                </div>
-                <div class="row-start-[14] col-start-[7] row-span-3 bg-pink-400/20 border border-pink-700/10 rounded-lg m-1 p-1 flex flex-col">
-                    <span class="text-xs text-pink-600">5 PM</span>
-                    <span class="text-xs font-medium text-pink-600">🎉 Party party 🎉</span>
-                    <span class="text-xs text-pink-600">We like to party!</span>
                 </div>
             </div>
         </div>

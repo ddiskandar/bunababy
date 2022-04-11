@@ -4,16 +4,10 @@ namespace App\Http\Livewire\Midwives;
 
 use App\Models\User;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 
 class CreateMidwife extends Component
 {
-    use WithFileUploads;
-
-    public $photo;
-
     public $state = [];
-    public $kecamatan_id;
 
     public $rules = [
         'state.name' => 'required|string',
@@ -27,7 +21,6 @@ class CreateMidwife extends Component
     {
         $this->midwife = new User();
         $this->state['active'] = true;
-
     }
 
     public function save()
@@ -41,16 +34,10 @@ class CreateMidwife extends Component
             'password' => bcrypt('password'),
         ]);
 
-        $user->profile([
+        $user->profile->create([
             'phone' => $this->state['phone'],
         ]);
 
-        if($this->photo)
-        {
-            $user->update([
-                'photo' => $this->photo->store('photos')
-            ]);
-        }
         $this->midwife = $user;
 
         $this->emit('saved');
@@ -60,17 +47,6 @@ class CreateMidwife extends Component
 
     public function render()
     {
-        $kecamatans = $this->midwife->kecamatans;
-
-        $kecamatansFiltered = \DB::table('kecamatans')
-            ->whereNotIn('id', $this->midwife->kecamatans
-            ->pluck('id'))
-            ->orderBy('name')
-            ->get();
-
-        return view('midwives.create-midwife', [
-            'kecamatans' => $kecamatans,
-            'kecamatansFiltered' => $kecamatansFiltered
-        ]);
+        return view();
     }
 }
