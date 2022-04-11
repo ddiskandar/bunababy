@@ -1434,6 +1434,9 @@ select {
 .w-\[70\%\] {
   width: 70%;
 }
+.w-\[70\%\+1\.5rem\] {
+  width: 70% + 1.5rem;
+}
 .min-w-full {
   min-width: 100%;
 }
@@ -2478,6 +2481,9 @@ select {
 .leading-8 {
   line-height: 2rem;
 }
+.leading-tight {
+  line-height: 1.25;
+}
 .tracking-wider {
   letter-spacing: 0.05em;
 }
@@ -2674,6 +2680,10 @@ select {
 .text-bunababy-100 {
   --tw-text-opacity: 1;
   color: rgb(254 112 197 / var(--tw-text-opacity));
+}
+.text-bunababy-50 {
+  --tw-text-opacity: 1;
+  color: rgb(252 231 243 / var(--tw-text-opacity));
 }
 .underline {
   -webkit-text-decoration-line: underline;
@@ -3624,6 +3634,10 @@ select {
 
   .sm\:w-\[24rem\] {
     width: 24rem;
+  }
+
+  .sm\:w-\[24rem\+1\.5rem\] {
+    width: 24rem + 1.5rem;
   }
 
   .sm\:max-w-lg {
