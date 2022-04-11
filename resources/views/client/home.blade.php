@@ -1,9 +1,21 @@
 <x-client-layout>
-
-    <div class="container px-4 py-4 mx-auto md:py-10 sm:px-12 ">
-        <div class="font-semibold text-2xl mb-6 text-bunababy-400">
-            Hai, {{ auth()->user()->name }}
+    <div class="sticky top-0 py-3 bg-white border-b z-20 border-bunababy-50 ">
+        <div class="container flex items-center justify-between px-4 mx-auto sm:px-12">
+            <div>
+                <a href="/"><img src="/images/logo.svg" alt="Logo"></a>
+            </div>
         </div>
+    </div>
+    <div class="container px-4 py-4 mx-auto md:py-10 sm:px-12 ">
+        <div class="font-semibold text-xl text-bunababy-400">
+            Hi, {{ auth()->user()->name }}
+        </div>
+        <div class="py-2">
+            <p class="text-slate-400 text-sm">Nomor WA</p>
+            <p class="font-semibold">{{ auth()->user()->profile->phone }}</p>
+        </div>
+
+        @livewire('treatments-catalog')
 
         <div class="py-4">
             <div class="font-semibold mb-4">Treatment anda</div>
@@ -66,8 +78,6 @@
                 <div>Buat Order Sekarang</div>
             @endif
         </div>
-
-        @livewire('treatments-catalog')
 
     </div>
 
