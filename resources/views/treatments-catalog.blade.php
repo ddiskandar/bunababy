@@ -24,7 +24,7 @@
     </div>
     <div class="flex snap-x scroll-pl-4 space-x-4 overflow-x-auto py-6 sm:scroll-pl-6 sm:space-x-8 md:scroll-pl-[calc(50%-20rem)] lg:scroll-pl-[calc(50%-25rem)]">
         @foreach ($treatments as $treatment)
-        <div class="flex-none flex flex-col gap-1 justify-between snap-start w-80 p-6 border max-w-lg border-bunababy-50 rounded shadow-lg shadow-bunababy-50">
+        <div class="flex-none flex flex-col gap-1 justify-between snap-start w-72 p-6 border max-w-lg border-bunababy-50 rounded shadow-lg shadow-bunababy-50">
             <div class="space-y-1">
                 <p class="text-xs text-bunababy-100">{{ $treatment->category->name }}</p>
                 <h3 class="font-bold leading-tight text-lg">
