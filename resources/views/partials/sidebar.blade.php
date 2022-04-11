@@ -81,6 +81,18 @@
                 </span>
                 <span class="py-2 grow">Penjadwalan</span>
             </x-nav-link>
+            <x-nav-link :href="route('clinic')" :active="request()->is('clinic*')">
+                <span class="flex items-center flex-none opacity-50">
+                    <svg class="inline-block w-6 h-6" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.75 6.75C5.75 5.64543 6.64543 4.75 7.75 4.75H16.25C17.3546 4.75 18.25 5.64543 18.25 6.75V19.25H5.75V6.75Z"></path>
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 19.25H4.75"></path>
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 15.75C9.75 14.6454 10.6454 13.75 11.75 13.75H12.25C13.3546 13.75 14.25 14.6454 14.25 15.75V19.25H9.75V15.75Z"></path>
+                        <circle cx="10" cy="10" r="1" fill="currentColor"></circle>
+                        <circle cx="14" cy="10" r="1" fill="currentColor"></circle>
+                    </svg>
+                </span>
+                <span class="py-2 grow">Klinik</span>
+            </x-nav-link>
 
             @if (auth()->user()->isAdmin())
             <div class="px-3 pt-5 pb-2 text-xs font-medium tracking-wider uppercase text-bunababy-300">ADMIN</div>
