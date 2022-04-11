@@ -155,10 +155,10 @@ class Order extends Model
     public function scopeActiveBetween($query, $from, $to)
     {
         $query->whereStatus(Order::STATUS_LOCKED)
-            ->betweenDates($from, $to);
+            ->betweenTimes($from, $to);
     }
 
-    public function scopeBetweenTime($query, $from, $to)
+    public function scopeBetweenTimes($query, $from, $to)
     {
         $query->where(function ($query) use ($to, $from) {
             $query

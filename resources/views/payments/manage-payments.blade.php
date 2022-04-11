@@ -91,7 +91,7 @@
                                 </div>
                             </td>
                             <td class="p-3 ">
-                                <a href="{{ route('clients.show', $payment->order->client->id) }}">
+                                <a href="{{ route('orders.show', $payment->order->client->id) }}">
                                     <p class="font-medium text-slate-800">
                                         {{ $payment->order->no_reg }}
                                     </p>

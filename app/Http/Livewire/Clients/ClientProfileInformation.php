@@ -31,6 +31,29 @@ class ClientProfileInformation extends Component
         $this->state = $this->client->toArray();
     }
 
+    public function save()
+    {
+        $this->validate();
+
+        $this->client->update([
+            'name' => $this->state['name'],
+            'email' => $this->state['email'],
+        ]);
+
+        $this->client->profile->update([
+            'phone' => $this->state['profile']['phone'],
+            'ig' => $this->state['profile']['ig'],
+        ]);
+
+        if (isset($this->photo)) {
+            $this->client->profile->update([
+                'photo' => $this->photo->store('photos'),
+            ]);
+        }
+
+        $this->emit('saved');
+    }
+
     public function render()
     {
         return view('clients.client-profile-information');

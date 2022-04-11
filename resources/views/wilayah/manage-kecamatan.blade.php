@@ -111,7 +111,7 @@
                                 <td class="p-3 text-center align-top">
                                     <div class="flex justify-center space-x-2">
                                         <button wire:click="ShowEditKecamatanDialog({{ $item->id }})" class="text-slate-400 hover:text-bunababy-200">
-                                            Edit
+                                            <x-icon-pencil/>
                                         </button>
                                     </div>
                                 </td>

@@ -5,13 +5,13 @@
         <div class="w-full py-3 pl-6 pr-3 bg-white sm:flex sm:justify-between sm:items-center">
             <div class="flex items-center">
                 <h3 class="font-semibold">
-                    Kategori
+                    Tag
                 </h3>
             </div>
             <div class="flex flex-col gap-2 mt-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-end">
 
-                <a href="{{ route('treatments') }}" class="text-xs font-medium uppercase text-slate-400 hover:text-bunababy-200 ">
-                    Atur Treatment
+                <a href="{{ route('clients') }}" class="text-xs font-medium uppercase text-slate-400 hover:text-bunababy-200 ">
+                    Atur Pelanggan
                 </a>
 
                 <div class="w-36">
@@ -23,7 +23,7 @@
                 </div>
 
                 <div>
-                    <button wire:click="showAddNewCategoryDialog" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-bunababy-100">
+                    <button wire:click="showAddNewTagDialog" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-bunababy-100">
                         + Tambah Baru
                     </button>
 
@@ -50,47 +50,38 @@
                         <th class="p-3 text-sm font-medium tracking-wider text-center text-slate-400 ">
                             Jumlah
                         </th>
-                        <th class="p-3 text-sm font-medium tracking-wider text-center text-slate-400 ">
-                            Urutan
-                        </th>
                         <th class="p-3 text-sm font-medium tracking-wider text-center text-slate-400">
                             Actions
                         </th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
-                    @forelse ($categories as $category)
+                    @forelse ($tags as $tag)
                         <tr @class([
                             '',
                             // 'bg-slate-50' => $loop->even,
-                            'text-slate-400' => ! $category->active,
+                            'text-slate-400' => ! $tag->active,
                         ])>
                             <td class="p-3 pl-6 align-top">
-                                <p class="font-medium">{{ $category->name }}</p>
+                                <p class="font-medium">{{ $tag->name }}</p>
                             </td>
                             <td class="w-64 p-3 align-top md:table-cell">
-                                {{ $category->description }}
+                                {{ $tag->description }}
                             </td>
                             <td class="p-3 text-center align-top md:table-cell">
-                                <p>{{ $category->treatments_count }}</p>
-                            </td>
-                            <td class="p-3 text-center align-top md:table-cell">
-                                <p>{{ $category->order }}</p>
+                                <p>{{ $tag->clients_count }}</p>
                             </td>
                             <td class="p-3 text-center align-top">
                                 <div class="flex justify-center space-x-2">
-                                    <button wire:click="ShowEditCategoryDialog({{ $category->id }})" class="text-slate-400 hover:text-bunababy-200">
-                                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 19.25L9 18.25L18.2929 8.95711C18.6834 8.56658 18.6834 7.93342 18.2929 7.54289L16.4571 5.70711C16.0666 5.31658 15.4334 5.31658 15.0429 5.70711L5.75 15L4.75 19.25Z"></path>
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 19.25H13.75"></path>
-                                        </svg>
+                                    <button wire:click="showEditTagDialog({{ $tag->id }})" class="text-slate-400 hover:text-bunababy-200">
+                                        <x-icon-pencil/>
                                     </button>
                                 </div>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="py-12 text-center">
+                            <td colspan="5" class="py-12 text-center">
                                 <p class="text-slate-400">Tidak ada yang ditemukan</p>
                             </td>
                         </tr>
@@ -112,7 +103,7 @@
 
     <x-dialog wire:model="showDialog">
 
-        <x-title>Data Kategori</x-title>
+        <x-title>Data Tag</x-title>
 
         <div class="h-64 mt-2 space-y-3 overflow-y-auto">
             <div class="space-y-1">
@@ -124,11 +115,6 @@
                 <x-label class="" for="state.description">Deskripsi</x-label>
                 <x-textarea wire:model.lazy="state.description" class="w-full" type="text" id="state.description" />
                 <x-input-error for="state.description" class="mt-2" />
-            </div>
-            <div class="space-y-1">
-                <x-label class="" for="state.order">Urutan</x-label>
-                <x-input wire:model.lazy="state.order" class="w-full" type="number" id="state.order" />
-                <x-input-error for="state.order" class="mt-2" />
             </div>
             <div class="py-4 space-y-1">
                 <div class="inline-flex items-center ml-2">

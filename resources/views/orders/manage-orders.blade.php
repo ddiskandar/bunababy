@@ -147,11 +147,9 @@
                                 </td>
                                 <td class="p-3 align-top whitespace-nowrap">
                                     <div class="flex items-center justify-center space-x-2 text-gray-400">
-                                        <x-button-icon>
-                                            <a href="{{ route('orders.show', $order->id) }}">
-                                                <x-icon-pencil-alt />
-                                            </a>
-                                        </x-button-icon>
+                                        <a href="{{ route('orders.show', $order->id) }}" class="text-slate-400 hover:text-bunababy-200">
+                                            <x-icon-pencil />
+                                        </a>
                                     </div>
                                 </td>
                             </tr>

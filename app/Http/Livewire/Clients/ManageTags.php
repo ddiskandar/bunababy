@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Livewire\Treatments;
+namespace App\Http\Livewire\Clients;
 
-use App\Models\Category;
-use App\Models\Treatment;
+use App\Models\Tag;
 use Livewire\Component;
 
-class ManageCategories extends Component
+class ManageTags extends Component
 {
     public $showDialog = false;
     public $successMessage = false;
@@ -14,13 +13,11 @@ class ManageCategories extends Component
     public $filterStatus;
 
     public $state = [];
-
     protected $queryString = [];
 
     protected $rules = [
         'state.name' => 'required',
         'state.description' => 'nullable',
-        'state.order' => 'required',
         'state.active' => 'required',
     ];
 
@@ -28,17 +25,16 @@ class ManageCategories extends Component
 
     protected $validationAttributes = [];
 
-    public function showAddNewCategoryDialog()
+    public function showAddNewTagDialog()
     {
         $this->showDialog = true;
         $this->state = [];
-        $this->state['order'] = Category::max('id') + 1;
         $this->state['active'] = true;
     }
 
-    public function ShowEditCategoryDialog( Category $category)
+    public function showEditTagDialog( Tag $tag)
     {
-        $this->state = $category->toArray();
+        $this->state = $tag->toArray();
         $this->showDialog = true;
     }
 
@@ -46,14 +42,13 @@ class ManageCategories extends Component
     {
         $this->validate();
 
-        Category::updateOrCreate(
+        Tag::updateOrCreate(
             [
-                'id' => $this->state['id'] ?? Category::max('id') + 1,
+                'id' => $this->state['id'] ?? Tag::max('id') + 1,
             ],
             [
                 'name' => $this->state['name'],
                 'description' => $this->state['description'] ?? '',
-                'order' => $this->state['order'],
                 'active' => $this->state['active'],
             ]
         );
@@ -64,13 +59,13 @@ class ManageCategories extends Component
 
     public function render()
     {
-        $categories = Category::query()
-            ->Where('active', 'LIKE', '%' . $this->filterStatus . '%')
-            ->withCount('treatments')
+        $tags = Tag::query()
+            ->where('active', 'LIKE', '%' . $this->filterStatus . '%')
+            ->withCount('clients')
             ->get();
 
-        return view('treatments.manage-categories', [
-            'categories' => $categories
+        return view('clients.manage-tags', [
+            'tags' => $tags
         ]);
     }
 }

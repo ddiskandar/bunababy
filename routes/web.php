@@ -38,10 +38,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/notifications', [App\Http\Controllers\NotificationsController::class, 'index'])->name('notifications');
     Route::get('/payments', [App\Http\Controllers\PaymentsController::class, 'index'])->name('payments');
     Route::get('/testimonials', [App\Http\Controllers\TestimonialsController::class, 'index'])->name('testimonials');
+    Route::get('/clients/tags', [App\Http\Controllers\ClientsTagsController::class, 'show'])->name('clients.tags');
     Route::get('/clients/create', [App\Http\Controllers\ClientsController::class, 'create'])->name('clients.create');
     Route::get('/clients/{client}', [App\Http\Controllers\ClientsController::class, 'show'])->name('clients.show');
     Route::get('/clients', [App\Http\Controllers\ClientsController::class, 'index'])->name('clients');
-    Route::get('/clients/tags', [App\Http\Controllers\ClientsTagsController::class, 'index'])->name('clients.tags');
 
     // Owner..
     Route::get('/midwives/{midwife}/edit', [App\Http\Controllers\MidwivesController::class, 'edit'])->name('midwives.edit');

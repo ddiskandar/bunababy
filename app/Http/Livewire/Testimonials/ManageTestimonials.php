@@ -76,6 +76,7 @@ class ManageTestimonials extends Component
                 });
                 $query->where('midwife_user_id', 'LIKE', '%' . $this->filterMidwife . '%');
             })
+            ->with('order', 'order.client', 'order.client.profile')
             ->paginate($this->perPage);
 
         $midwives = \DB::table('users')->where('type', User::MIDWIFE)->get();

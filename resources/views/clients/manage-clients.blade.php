@@ -11,7 +11,7 @@
             <div class="flex flex-col gap-2 mt-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-end">
 
                 <div class="flex items-center space-x-2 space-x-reverse sm:space-x-2">
-                    <a href="#" class="order-2 text-xs font-medium uppercase sm:order-1 text-slate-400 hover:text-bunababy-200 ">
+                    <a href="{{ route('clients.tags') }}" class="order-2 text-xs font-medium uppercase sm:order-1 text-slate-400 hover:text-bunababy-200 ">
                         Atur Tag
                     </a>
                     <div class="order-1 text-center sm:order-2 sm:text-right w-36">
@@ -134,7 +134,7 @@
                             <td class="p-3 text-center whitespace-nowrap">
                                 <div class="flex justify-center space-x-2">
                                     <a href="{{ route('clients.show', $client->id) }}" class="text-slate-400 hover:text-bunababy-200">
-                                        <x-icon-pencil-alt />
+                                        <x-icon-pencil />
                                     </a>
                                 </div>
                             </td>
