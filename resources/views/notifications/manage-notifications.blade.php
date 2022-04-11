@@ -71,91 +71,85 @@
             <div class="min-w-full overflow-x-auto bg-white ">
                 <!-- Alternate Responsive Table -->
                 <table class="min-w-full text-sm align-middle">
-                {{-- <thead>
-                    <tr class="bg-slate-50">
-                        <th class="p-3 pl-6 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
-                            Notifications
-                        </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-center uppercase text-slate-400">
-                            Actions
-                        </th>
-                    </tr>
-                </thead> --}}
-                <tbody class="divide-y divide-slate-100">
+                <tbody class="divide-y divide-slate-200">
                     @forelse ($notifications as $notification)
-                        <tr @class([
-                            'group',
-                            'bg-slate-50/30' => $loop->even,
-                        ])>
-                            <td class="table-cell p-3 pl-6 w-72 ">
-                                <div class="flex justify-between gap-2 ">
-                                    {{-- <div>
-                                        <input wire:model="selectedNotifications.{{ $notification->id }}" id="comments" name="comments" type="checkbox" class="w-4 h-4 border-gray-300 rounded text-bunababy-200 focus:ring-bunababy-200">
-                                    </div> --}}
-                                    <div @class([
-                                        'grow text-slate-800',
-                                        'opacity-40' => isset($notification->read_at),
-                                    ])>
+                        <tr class="group">
+                            <td
+                                @class([
+                                    'p-3 pl-6 ',
+                                    '' => isset($notification->read_at),
+                                    'bg-yellow-50' => is_null($notification->read_at),
+                                ])
+                            >
+                                <div class="">
+                                    <div class="grow text-slate-800 py-2 space-y-3">
                                        @if ($notification->data['type'] == 'order')
-                                       <div>
-                                            <svg class="inline-block w-5 h-5" fill="none" viewBox="0 0 24 24">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 6.75C19.25 6.19772 18.8023 5.75 18.25 5.75H5.75C5.19772 5.75 4.75 6.19771 4.75 6.75V8.04566C4.75 8.50939 5.07835 8.89813 5.49029 9.11107C6.53552 9.65136 7.25 10.7422 7.25 12C7.25 13.2578 6.53552 14.3486 5.49029 14.8889C5.07835 15.1019 4.75 15.4906 4.75 15.9543V17.25C4.75 17.8023 5.19771 18.25 5.75 18.25H18.25C18.8023 18.25 19.25 17.8023 19.25 17.25V15.9543C19.25 15.4906 18.9216 15.1019 18.5097 14.8889C17.4645 14.3486 16.75 13.2578 16.75 12C16.75 10.7422 17.4645 9.65136 18.5097 9.11107C18.9216 8.89813 19.25 8.50939 19.25 8.04566V6.75Z"></path>
-                                            </svg>
-                                            <span class="font-semibold">{{ $notification->data['order_client_name'] }}</span>
-                                            ({{ $notification->data['order_client_address_name'] }})
-                                            membuat order baru untuk tanggal
-                                            {{ $notification->data['order_date'] }}
-                                            jam
-                                            {{ $notification->data['order_start_time'] }}
-                                            untuk bidan
-                                            {{ $notification->data['order_midwife_name'] }}
+                                       <div class="flex justify-between">
+                                            <div>
+                                                <span
+                                                    @class([
+                                                        '',
+                                                        '' => isset($notification->read_at),
+                                                        'font-semibold' => is_null($notification->read_at),
+                                                    ])
+                                                >
+                                                    {{ $notification->data['order_client_name'] }} ({{ $notification->data['order_client_address_name'] }})
+                                                    telah membuat order
+                                                    <a class="text-bunababy-200" href="{{ route('orders.show', $notification->data['order_id']) }}" target="_blank">#{{ $notification->data['order_no_reg'] }}</a>
+                                                </span>
+                                                ({{ $notification->data['order_midwife_name'] }})
+                                                untuk {{ $notification->data['order_datetime'] }}
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <div class="text-xs">{{ $notification->created_at->isoFormat('dddd, DD MMMM gggg') }}</div>
+                                                <div class="flex justify-center invisible space-x-2 group-hover:visible">
+                                                    @if (!isset($notification->read_at))
+                                                    <button wire:click.prevent="markAsRead('{{ $notification->id }}')" class="text-slate-400 hover:text-bunababy-200">
+                                                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12C19.25 13 17.5 18.25 12 18.25C6.5 18.25 4.75 13 4.75 12C4.75 11 6.5 5.75 12 5.75C17.5 5.75 19.25 11 19.25 12Z"></path>
+                                                            <circle cx="12" cy="12" r="2.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></circle>
+                                                        </svg>
+                                                    </button>
+                                                    @else
+                                                    <button wire:click.prevent="markAsUnRead('{{ $notification->id }}')" class="text-slate-400 hover:text-bunababy-200">
+                                                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18.6247 10C19.0646 10.8986 19.25 11.6745 19.25 12C19.25 13 17.5 18.25 12 18.25C11.2686 18.25 10.6035 18.1572 10 17.9938M7 16.2686C5.36209 14.6693 4.75 12.5914 4.75 12C4.75 11 6.5 5.75 12 5.75C13.7947 5.75 15.1901 6.30902 16.2558 7.09698"></path>
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 4.75L4.75 19.25"></path>
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.409 13.591C9.53033 12.7123 9.53033 11.2877 10.409 10.409C11.2877 9.5303 12.7123 9.5303 13.591 10.409"></path>
+                                                        </svg>
+                                                    </button>
+                                                    @endif
+                                                    <button wire:click="delete('{{ $notification->id }}')" class="text-slate-400 hover:text-bunababy-200">
+                                                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.75 7.75L7.59115 17.4233C7.68102 18.4568 8.54622 19.25 9.58363 19.25H14.4164C15.4538 19.25 16.319 18.4568 16.4088 17.4233L17.25 7.75"></path>
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 7.5V6.75C9.75 5.64543 10.6454 4.75 11.75 4.75H12.25C13.3546 4.75 14.25 5.64543 14.25 6.75V7.5"></path>
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 7.75H19"></path>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="mr-4">
+                                                <a class="py-2 text-xs font-semibold px-4 bg-bunababy-200 hover:bg-bunababy-100 text-white transition-all rounded-full"
+                                                    href="https://api.whatsapp.com/send?phone={{ $notification->data['order_client_phone'] }}&text=Halo+Buna+*{{ $notification->data['order_client_name'] }}*.%0aRincian+order+*{{ $notification->data['order_no_reg'] }}*.%0a%0aBidan+:%0a{{ $notification->data['order_midwife_name'] }}%0a%0aWaktu+:%0a{{ $notification->data['order_datetime'] }}%0a%0aTreatment+:%0a{{ $notification->data['order_treatments'] }}%0a%0aTotal+pembayaran+:%0a{{ $notification->data['order_grand_total'] }}%0a%0aJumlah+DP+:%0a{{ $notification->data['order_dp_amount'] }}%0a%0aHarap+segera+bayar+DP+sebelum+:%0a{{ $notification->data['order_dp_timeout'] }}.%0a%0aTerima+kasih" target="_blank"
+                                                >
+                                                    Kirim Pemberitahuan
+                                                </a>
+                                            </div>
                                         </div>
                                        @elseif ($notification->data['type'] == 'payment')
-                                            <svg class="inline-block w-5 h-5" fill="none" viewBox="0 0 24 24">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 8.25V17.25C19.25 18.3546 18.3546 19.25 17.25 19.25H6.75C5.64543 19.25 4.75 18.3546 4.75 17.25V6.75"></path>
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M16.5 13C16.5 13.2761 16.2761 13.5 16 13.5C15.7239 13.5 15.5 13.2761 15.5 13C15.5 12.7239 15.7239 12.5 16 12.5C16.2761 12.5 16.5 12.7239 16.5 13Z"></path>
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 8.25H6.5C5.5335 8.25 4.75 7.4665 4.75 6.5C4.75 5.5335 5.5335 4.75 6.5 4.75H15.25C16.3546 4.75 17.25 5.64543 17.25 6.75V8.25ZM17.25 8.25H19.25"></path>
-                                            </svg>
                                             <span class="font-semibold">{{ $notification->data['payment_client_name'] }}</span>
                                             melakukan pembayaran sebesar
                                             <span class="font-semibold">{{ $notification->data['payment_value'] }}</span>
                                             untuk order
                                             <span class="font-semibold">{{ $notification->data['order_no_reg'] }}</span>
                                         @elseif ($notification->data['type'] == 'unpaid')
-                                            <svg class="inline-block w-5 h-5" fill="none" viewBox="0 0 24 24">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 8.25V17.25C19.25 18.3546 18.3546 19.25 17.25 19.25H6.75C5.64543 19.25 4.75 18.3546 4.75 17.25V6.75"></path>
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M16.5 13C16.5 13.2761 16.2761 13.5 16 13.5C15.7239 13.5 15.5 13.2761 15.5 13C15.5 12.7239 15.7239 12.5 16 12.5C16.2761 12.5 16.5 12.7239 16.5 13Z"></path>
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 8.25H6.5C5.5335 8.25 4.75 7.4665 4.75 6.5C4.75 5.5335 5.5335 4.75 6.5 4.75H15.25C16.3546 4.75 17.25 5.64543 17.25 6.75V8.25ZM17.25 8.25H19.25"></path>
-                                            </svg>
                                             <span class="font-semibold">{{ $notification->data['order_client_name'] }}</span>
                                             belum melakukan pembayaran DP dalam batas waktu 30 menit untuk order
                                             <span class="font-semibold">{{ $notification->data['order_id'] }}</span>
                                        @endif
-                                    </div>
-                                    <div class="flex justify-center invisible space-x-2 group-hover:visible">
-                                        @if (!isset($notification->read_at))
-                                        <button wire:click.prevent="markAsRead('{{ $notification->id }}')" class="text-slate-400 hover:text-bunababy-200">
-                                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12C19.25 13 17.5 18.25 12 18.25C6.5 18.25 4.75 13 4.75 12C4.75 11 6.5 5.75 12 5.75C17.5 5.75 19.25 11 19.25 12Z"></path>
-                                                <circle cx="12" cy="12" r="2.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></circle>
-                                            </svg>
-                                        </button>
-                                        @else
-                                        <button wire:click.prevent="markAsUnRead('{{ $notification->id }}')" class="text-slate-400 hover:text-bunababy-200">
-                                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18.6247 10C19.0646 10.8986 19.25 11.6745 19.25 12C19.25 13 17.5 18.25 12 18.25C11.2686 18.25 10.6035 18.1572 10 17.9938M7 16.2686C5.36209 14.6693 4.75 12.5914 4.75 12C4.75 11 6.5 5.75 12 5.75C13.7947 5.75 15.1901 6.30902 16.2558 7.09698"></path>
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 4.75L4.75 19.25"></path>
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.409 13.591C9.53033 12.7123 9.53033 11.2877 10.409 10.409C11.2877 9.5303 12.7123 9.5303 13.591 10.409"></path>
-                                            </svg>
-                                        </button>
-                                        @endif
-                                        <button wire:click="delete('{{ $notification->id }}')" class="text-slate-400 hover:text-bunababy-200">
-                                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.75 7.75L7.59115 17.4233C7.68102 18.4568 8.54622 19.25 9.58363 19.25H14.4164C15.4538 19.25 16.319 18.4568 16.4088 17.4233L17.25 7.75"></path>
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 7.5V6.75C9.75 5.64543 10.6454 4.75 11.75 4.75H12.25C13.3546 4.75 14.25 5.64543 14.25 6.75V7.5"></path>
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 7.75H19"></path>
-                                            </svg>
-                                        </button>
                                     </div>
                                 </div>
                             </td>

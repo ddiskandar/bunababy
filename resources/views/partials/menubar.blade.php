@@ -1,6 +1,6 @@
 <ul class="fixed bottom-0 left-0 right-0 flex justify-around py-3 z-80 bg-slate-50/90 backdrop-blur-sm">
     <li >
-        <a href="{{ route('home') }}"
+        <a href="{{ route('me') }}"
             class="flex flex-col items-center text-gray-400 cursor-pointer hover:text-gray-600">
             <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.75024 19.2502H17.2502C18.3548 19.2502 19.2502 18.3548 19.2502 17.2502V9.75025L12.0002 4.75024L4.75024 9.75025V17.2502C4.75024 18.3548 5.64568 19.2502 6.75024 19.2502Z"></path>

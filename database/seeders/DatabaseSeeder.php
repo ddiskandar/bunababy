@@ -130,9 +130,10 @@ class DatabaseSeeder extends Seeder
                     'end_time' => '11:00:00',
                 ]);
 
-            $treatment = rand(1,21);
+            $treatment1 = rand(1,10);
+            $treatment2 = rand(11,21);
 
-            $order->treatments()->attach($treatment);
+            $order->treatments()->attach([$treatment1, $treatment2]);
 
             $order->update([
                 'total_price' => $order->treatments()->sum('price'),
@@ -151,6 +152,8 @@ class DatabaseSeeder extends Seeder
 
             $owner->notify( new NewOrder($order));
             // $owner->notify( new NewPayment($payment));
+
+            sleep(2);
 
         }
     }

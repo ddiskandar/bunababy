@@ -1257,6 +1257,9 @@ select {
 .mr-1 {
   margin-right: 0.25rem;
 }
+.mr-4 {
+  margin-right: 1rem;
+}
 .block {
   display: block;
 }
@@ -1797,6 +1800,24 @@ select {
   --tw-divide-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-divide-opacity));
 }
+.divide-bunababy-100 > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-opacity: 1;
+  border-color: rgb(254 112 197 / var(--tw-divide-opacity));
+}
+.divide-bunababy-100\/50 > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgb(254 112 197 / 0.5);
+}
+.divide-bunababy-100\/30 > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgb(254 112 197 / 0.3);
+}
+.divide-slate-400 > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-opacity: 1;
+  border-color: rgb(148 163 184 / var(--tw-divide-opacity));
+}
+.divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-opacity: 1;
+  border-color: rgb(226 232 240 / var(--tw-divide-opacity));
+}
 .overflow-auto {
   overflow: auto;
 }
@@ -2154,6 +2175,22 @@ select {
 }
 .bg-bunababy-50\/30 {
   background-color: rgb(252 231 243 / 0.3);
+}
+.bg-bunababy-50\/50 {
+  background-color: rgb(252 231 243 / 0.5);
+}
+.bg-bunababy-50\/70 {
+  background-color: rgb(252 231 243 / 0.7);
+}
+.bg-slate-50\/40 {
+  background-color: rgb(248 250 252 / 0.4);
+}
+.bg-yellow-50\/30 {
+  background-color: rgb(254 252 232 / 0.3);
+}
+.bg-yellow-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 252 232 / var(--tw-bg-opacity));
 }
 .bg-opacity-10 {
   --tw-bg-opacity: 0.1;

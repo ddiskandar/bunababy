@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\DB;
 
 class NewOrder extends Notification
 {
@@ -57,12 +58,32 @@ class NewOrder extends Notification
      */
     public function toArray($notifiable)
     {
+        $timeout = DB::table('options')->first()->timeout;
+        $this->order->load('treatments', 'client', 'midwife');
+
+        $order_treatments = '';
+        $treatments = $this->order->treatments->toArray();
+
+        foreach ($treatments as $key => $treatment) {
+
+            $order_treatments .= $treatment['name'];
+
+            if($key != array_key_last($treatments)) {
+                $order_treatments .= ', ';
+            }
+        }
+
         return [
             'type' => 'order',
             'order_id' => $this->order->id,
-            'order_date' => $this->order->date->isoFormat('d/M/Y'),
-            'order_start_time' => $this->order->start_time,
+            'order_no_reg' => $this->order->no_reg,
+            'order_datetime' => $this->order->date->isoFormat('dddd, DD MMMM gggg') . ' ' . \Carbon\Carbon::createFromFormat('H:i:s',$this->order->start_time)->format('h:i') . ' - '. \Carbon\Carbon::createFromFormat('H:i:s',$this->order->end_time)->format('h:i'),
+            'order_grand_total' => rupiah($this->order->grand_total()),
+            'order_dp_amount' => rupiah($this->order->dp_amount()),
+            'order_treatments' => $order_treatments,
+            'order_dp_timeout' => $this->order->created_at->addMinutes($timeout)->isoFormat('dddd, DD MMMM gggg H:mm'),
             'order_client_name' => $this->order->client->name,
+            'order_client_phone' => $this->order->client->profile->phone,
             'order_client_address_name' => $this->order->client->address,
             'order_midwife_name' => $this->order->midwife->name,
         ];
