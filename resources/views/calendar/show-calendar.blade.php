@@ -2,119 +2,192 @@
     <!-- Card -->
     <div class="flex flex-col overflow-hidden bg-white rounded shadow-sm">
         <!-- Card Header -->
-        <div class="w-full px-5 py-4 lg:px-6 bg-gray-50 sm:flex sm:justify-between sm:items-center">
-        <div class="flex justify-center sm:justify-left">
-            <h3 class="inline-flex items-center space-x-2 font-semibold">
-            <span >{{ $date }}</span>
-            </h3>
-        </div>
-        <div class="mt-3 text-center sm:mt-0 sm:text-right">
-            <input wire:model="date" type="date" class="block w-full px-3 py-2 leading-6 border border-gray-200 rounded focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"  />
-        </div>
+        <div class="w-full py-3 pl-6 pr-3 bg-gray-50 sm:flex sm:justify-between sm:items-center">
+            <div class="flex items-center">
+                <h3 class="font-semibold">
+                    Kalender
+                </h3>
+            </div>
+            <div class="mt-3 text-center sm:mt-0 sm:text-right">
+                <input wire:model="date" type="date" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50"  />
+            </div>
         </div>
         <!-- END Card Header -->
 
         <!-- Card Body -->
-        <div class="w-full grow">
+        <div class="">
+            <div class="overflow-scroll grid grid-cols-[70px,repeat(7,200px)] grid-rows-[auto,repeat(16,50px)] max-h-[420px]">
+                <!-- Calendar frame -->
+                <div class="row-start-[1] col-start-[1] sticky top-0 z-10 bg-white dark:bg-gradient-to-b dark:from-slate-600 dark:to-slate-700 border-slate-100 dark:border-black/10 bg-clip-padding text-slate-900 dark:text-slate-200 border-b text-sm font-medium py-2"></div>
+                <div class="row-start-[1] col-start-[2] sticky top-0 z-10 bg-white dark:bg-gradient-to-b dark:from-slate-600 dark:to-slate-700 border-slate-100 dark:border-black/10 bg-clip-padding text-slate-900 dark:text-slate-200 border-b text-sm font-medium py-2 text-center">Sun</div>
+                <div class="row-start-[1] col-start-[3] sticky top-0 z-10 bg-white dark:bg-gradient-to-b dark:from-slate-600 dark:to-slate-700 border-slate-100 dark:border-black/10 bg-clip-padding text-slate-900 dark:text-slate-200 border-b text-sm font-medium py-2 text-center">Mon</div>
+                <div class="row-start-[1] col-start-[4] sticky top-0 z-10 bg-white dark:bg-gradient-to-b dark:from-slate-600 dark:to-slate-700 border-slate-100 dark:border-black/10 bg-clip-padding text-slate-900 dark:text-slate-200 border-b text-sm font-medium py-2 text-center">Tue</div>
+                <div class="row-start-[1] col-start-[5] sticky top-0 z-10 bg-white dark:bg-gradient-to-b dark:from-slate-600 dark:to-slate-700 border-slate-100 dark:border-black/10 bg-clip-padding text-slate-900 dark:text-slate-200 border-b text-sm font-medium py-2 text-center">Wed</div>
+                <div class="row-start-[1] col-start-[6] sticky top-0 z-10 bg-white dark:bg-gradient-to-b dark:from-slate-600 dark:to-slate-700 border-slate-100 dark:border-black/10 bg-clip-padding text-slate-900 dark:text-slate-200 border-b text-sm font-medium py-2 text-center">Thu</div>
+                <div class="row-start-[1] col-start-[7] sticky top-0 z-10 bg-white dark:bg-gradient-to-b dark:from-slate-600 dark:to-slate-700 border-slate-100 dark:border-black/10 bg-clip-padding text-slate-900 dark:text-slate-200 border-b text-sm font-medium py-2 text-center">Fri</div>
+                <div class="row-start-[1] col-start-[8] sticky top-0 z-10 bg-white dark:bg-gradient-to-b dark:from-slate-600 dark:to-slate-700 border-slate-100 dark:border-black/10 bg-clip-padding text-slate-900 dark:text-slate-200 border-b text-sm font-medium py-2 text-center">Sat</div>
 
-            <div class="relative overflow-auto">
-                <div class="overflow-hidden bg-white shadow-xl">
-                    <div class="overflow-scroll grid grid-cols-[70px,repeat({{ $midwives->count() }},200px)] grid-rows-[auto,repeat(11,50px)] max-h-[450px]">
-                    <!-- Calendar frame -->
-                    <div class="sticky top-0 z-10 col-start-1 row-start-1 py-2 text-sm font-medium text-gray-900 bg-white border-b border-gray-100 bg-clip-padding"></div>
-                    @foreach ($midwives as $midwife)
-                    <div class="row-start-1 col-start-[{{ $loop->iteration + 1 }}] sticky top-0 z-10 bg-white border-gray-100 bg-clip-padding text-gray-900 border-b text-sm font-medium py-2 text-center">{{ $midwife->name }}</div>
-                    @endforeach
+                <div class="row-start-[2] col-start-[1] border-slate-100 dark:border-slate-200/5 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white dark:bg-slate-800 font-medium">5 AM</div>
+                <div class="row-start-[2] col-start-[2] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[2] col-start-[3] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[2] col-start-[4] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[2] col-start-[5] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[2] col-start-[6] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[2] col-start-[7] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[2] col-start-[8] border-slate-100 dark:border-slate-200/5 border-b"></div>
 
-                    <div class="row-start-[2] col-start-[1] border-gray-100 border-r text-xs p-1.5 text-right text-gray-400 uppercase sticky left-0 bg-white font-medium">08:00</div>
-                    @foreach ($midwives as $midwife)
-                    <div class="row-start-[2] col-start-[{{ $loop->iteration + 1 }}] border-gray-100 border-b border-r"></div>
-                    @endforeach
+                <div class="row-start-[3] col-start-[1] border-slate-100 dark:border-slate-200/5 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white dark:bg-slate-800 font-medium">6 AM</div>
+                <div class="row-start-[3] col-start-[2] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[3] col-start-[3] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[3] col-start-[4] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[3] col-start-[5] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[3] col-start-[6] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[3] col-start-[7] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[3] col-start-[8] border-slate-100 dark:border-slate-200/5 border-b"></div>
 
-                    <div class="row-start-[3] col-start-[1] border-gray-100 border-r text-xs p-1.5 text-right text-gray-400 uppercase sticky left-0 bg-white font-medium">09:00</div>
-                    @foreach ($midwives as $midwife)
-                    <div class="row-start-[3] col-start-[{{ $loop->iteration + 1 }}] border-gray-100 border-b border-r"></div>
-                    @endforeach
+                <div class="row-start-[4] col-start-[1] border-slate-100 dark:border-slate-200/5 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white dark:bg-slate-800 font-medium">7 AM</div>
+                <div class="row-start-[4] col-start-[2] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[4] col-start-[3] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[4] col-start-[4] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[4] col-start-[5] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[4] col-start-[6] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[4] col-start-[7] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[4] col-start-[8] border-slate-100 dark:border-slate-200/5 border-b"></div>
 
-                    <div class="row-start-[4] col-start-[1] border-gray-100 border-r text-xs p-1.5 text-right text-gray-400 uppercase sticky left-0 bg-white font-medium">10:00</div>
-                    @foreach ($midwives as $midwife)
-                    <div class="row-start-[4] col-start-[{{ $loop->iteration + 1 }}] border-gray-100 border-b border-r"></div>
-                    @endforeach
+                <div class="row-start-[5] col-start-[1] border-slate-100 dark:border-slate-200/5 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white dark:bg-slate-800 font-medium">8 AM</div>
+                <div class="row-start-[5] col-start-[2] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[5] col-start-[3] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[5] col-start-[4] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[5] col-start-[5] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[5] col-start-[6] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[5] col-start-[7] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[5] col-start-[8] border-slate-100 dark:border-slate-200/5 border-b"></div>
 
-                    <div class="row-start-[5] col-start-[1] border-gray-100 border-r text-xs p-1.5 text-right text-gray-400 uppercase sticky left-0 bg-white font-medium">11:00</div>
-                    @foreach ($midwives as $midwife)
-                    <div class="row-start-[5] col-start-[{{ $loop->iteration + 1 }}] border-gray-100 border-b border-r"></div>
-                    @endforeach
+                <div class="row-start-[6] col-start-[1] border-slate-100 dark:border-slate-200/5 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white dark:bg-slate-800 font-medium">9 AM</div>
+                <div class="row-start-[6] col-start-[2] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[6] col-start-[3] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[6] col-start-[4] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[6] col-start-[5] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[6] col-start-[6] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[6] col-start-[7] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[6] col-start-[8] border-slate-100 dark:border-slate-200/5 border-b"></div>
 
-                    <div class="row-start-[6] col-start-[1] border-gray-100 border-r text-xs p-1.5 text-right text-gray-400 uppercase sticky left-0 bg-white font-medium">12:00</div>
-                    @foreach ($midwives as $midwife)
-                    <div class="row-start-[6] col-start-[{{ $loop->iteration + 1 }}] border-gray-100 border-b border-r"></div>
-                    @endforeach
+                <div class="row-start-[7] col-start-[1] border-slate-100 dark:border-slate-200/5 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white dark:bg-slate-800 font-medium">10 AM</div>
+                <div class="row-start-[7] col-start-[2] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[7] col-start-[3] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[7] col-start-[4] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[7] col-start-[5] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[7] col-start-[6] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[7] col-start-[7] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[7] col-start-[8] border-slate-100 dark:border-slate-200/5 border-b"></div>
 
-                    <div class="row-start-[7] col-start-[1] border-gray-100 border-r text-xs p-1.5 text-right text-gray-400 uppercase sticky left-0 bg-white font-medium">13:00</div>
-                    @foreach ($midwives as $midwife)
-                    <div class="row-start-[7] col-start-[{{ $loop->iteration + 1 }}] border-gray-100 border-b border-r"></div>
-                    @endforeach
+                <div class="row-start-[8] col-start-[1] border-slate-100 dark:border-slate-200/5 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white dark:bg-slate-800 font-medium">11 AM</div>
+                <div class="row-start-[8] col-start-[2] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[8] col-start-[3] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[8] col-start-[4] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[8] col-start-[5] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[8] col-start-[6] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[8] col-start-[7] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[8] col-start-[8] border-slate-100 dark:border-slate-200/5 border-b"></div>
 
-                    <div class="row-start-[8] col-start-[1] border-gray-100 border-r text-xs p-1.5 text-right text-gray-400 uppercase sticky left-0 bg-white font-medium">14:00</div>
-                    @foreach ($midwives as $midwife)
-                    <div class="row-start-[8] col-start-[{{ $loop->iteration + 1 }}] border-gray-100 border-b border-r"></div>
-                    @endforeach
+                <div class="row-start-[9] col-start-[1] border-slate-100 dark:border-slate-200/5 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white dark:bg-slate-800 font-medium">12 PM</div>
+                <div class="row-start-[9] col-start-[2] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[9] col-start-[3] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[9] col-start-[4] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[9] col-start-[5] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[9] col-start-[6] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[9] col-start-[7] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[9] col-start-[8] border-slate-100 dark:border-slate-200/5 border-b"></div>
 
-                    <div class="row-start-[9] col-start-[1] border-gray-100 border-r text-xs p-1.5 text-right text-gray-400 uppercase sticky left-0 bg-white font-medium">15:00</div>
-                    @foreach ($midwives as $midwife)
-                    <div class="row-start-[9] col-start-[{{ $loop->iteration + 1 }}] border-gray-100 border-b border-r"></div>
-                    @endforeach
+                <div class="row-start-[10] col-start-[1] border-slate-100 dark:border-slate-200/5 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white dark:bg-slate-800 font-medium">1 PM</div>
+                <div class="row-start-[10] col-start-[2] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[10] col-start-[3] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[10] col-start-[4] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[10] col-start-[5] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[10] col-start-[6] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[10] col-start-[7] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[10] col-start-[8] border-slate-100 dark:border-slate-200/5 border-b"></div>
 
-                    <div class="row-start-[10] col-start-[1] border-gray-100 border-r text-xs p-1.5 text-right text-gray-400 uppercase sticky left-0 bg-white font-medium">16:00</div>
-                    @foreach ($midwives as $midwife)
-                    <div class="row-start-[10] col-start-[{{ $loop->iteration + 1 }}] border-gray-100 border-b border-r"></div>
-                    @endforeach
+                <div class="row-start-[11] col-start-[1] border-slate-100 dark:border-slate-200/5 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white dark:bg-slate-800 font-medium">2 PM</div>
+                <div class="row-start-[11] col-start-[2] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[11] col-start-[3] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[11] col-start-[4] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[11] col-start-[5] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[11] col-start-[6] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[11] col-start-[7] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[11] col-start-[8] border-slate-100 dark:border-slate-200/5 border-b"></div>
 
-                    <div class="row-start-[11] col-start-[1] border-gray-100 border-r text-xs p-1.5 text-right text-gray-400 uppercase sticky left-0 bg-white font-medium">17:00</div>
-                    @foreach ($midwives as $midwife)
-                    <div class="row-start-[11] col-start-[{{ $loop->iteration + 1 }}] border-gray-100 border-b border-r"></div>
-                    @endforeach
+                <div class="row-start-[12] col-start-[1] border-slate-100 dark:border-slate-200/5 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white dark:bg-slate-800 font-medium">3 PM</div>
+                <div class="row-start-[12] col-start-[2] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[12] col-start-[3] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[12] col-start-[4] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[12] col-start-[5] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[12] col-start-[6] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[12] col-start-[7] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[12] col-start-[8] border-slate-100 dark:border-slate-200/5 border-b"></div>
 
-                    <div class="row-start-[12] col-start-[1] border-gray-100 border-r text-xs p-1.5 text-right text-gray-400 uppercase sticky left-0 bg-white font-medium">18:00</div>
-                    @foreach ($midwives as $midwife)
-                    <div class="row-start-[12] col-start-[{{ $loop->iteration + 1 }}] border-gray-100 border-b border-r"></div>
-                    @endforeach
+                <div class="row-start-[13] col-start-[1] border-slate-100 dark:border-slate-200/5 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white dark:bg-slate-800 font-medium">4 PM</div>
+                <div class="row-start-[13] col-start-[2] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[13] col-start-[3] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[13] col-start-[4] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[13] col-start-[5] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[13] col-start-[6] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[13] col-start-[7] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[13] col-start-[8] border-slate-100 dark:border-slate-200/5 border-b"></div>
 
-                    <!-- Calendar contents -->
+                <div class="row-start-[14] col-start-[1] border-slate-100 dark:border-slate-200/5 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white dark:bg-slate-800 font-medium">5 PM</div>
+                <div class="row-start-[14] col-start-[2] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[14] col-start-[3] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[14] col-start-[4] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[14] col-start-[5] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[14] col-start-[6] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[14] col-start-[7] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[14] col-start-[8] border-slate-100 dark:border-slate-200/5 border-b"></div>
 
-                    {{-- note
-                        row-start-[2]   => jam
-                        col-start-[2]   => bidan
-                        row-span-4      => durasi
+                <div class="row-start-[15] col-start-[1] border-slate-100 dark:border-slate-200/5 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white dark:bg-slate-800 font-medium">6 PM</div>
+                <div class="row-start-[15] col-start-[2] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[15] col-start-[3] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[15] col-start-[4] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[15] col-start-[5] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[15] col-start-[6] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[15] col-start-[7] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[15] col-start-[8] border-slate-100 dark:border-slate-200/5 border-b"></div>
 
-                    end --}}
+                <div class="row-start-[16] col-start-[1] border-slate-100 dark:border-slate-200/5 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white dark:bg-slate-800 font-medium">7 PM</div>
+                <div class="row-start-[16] col-start-[2] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[16] col-start-[3] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[16] col-start-[4] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[16] col-start-[5] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[16] col-start-[6] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[16] col-start-[7] border-slate-100 dark:border-slate-200/5 border-b border-r"></div>
+                <div class="row-start-[16] col-start-[8] border-slate-100 dark:border-slate-200/5 border-b"></div>
 
-                    @foreach ($midwives as $midwife)
-                    @php
+                <div class="row-start-[17] col-start-[1] border-slate-100 dark:border-slate-200/5 border-r text-xs p-1.5 text-right text-slate-400 uppercase sticky left-0 bg-white dark:bg-slate-800 font-medium">8 PM</div>
+                <div class="row-start-[17] col-start-[2] border-slate-100 dark:border-slate-200/5 border-r"></div>
+                <div class="row-start-[17] col-start-[3] border-slate-100 dark:border-slate-200/5 border-r"></div>
+                <div class="row-start-[17] col-start-[4] border-slate-100 dark:border-slate-200/5 border-r"></div>
+                <div class="row-start-[17] col-start-[5] border-slate-100 dark:border-slate-200/5 border-r"></div>
+                <div class="row-start-[17] col-start-[6] border-slate-100 dark:border-slate-200/5 border-r"></div>
+                <div class="row-start-[17] col-start-[7] border-slate-100 dark:border-slate-200/5 border-r"></div>
+                <div class="row-start-[17] col-start-[8]"></div>
 
-                    @endphp
-                    {{-- <div class="row-start-{{ $loop->iteration }} col-start-[2] row-span-4 bg-bunababy-50/50 border border-bunababy-50  rounded-lg m-1 p-1 flex flex-col">
-                        <span class="text-xs text-blue-600 ">08:00 - 10:30</span>
-                        <span class="text-xs font-medium text-blue-600 ">Suhesti</span>
-                        <span class="text-xs text-blue-600 ">Mommy happy</span>
-                    </div> --}}
-                    @endforeach
-
-                    <div class="row-start-[2] col-start-[2] row-span-4 bg-bunababy-50/50 border border-bunababy-50  rounded-lg m-1 p-1 flex flex-col">
-                        <span class="text-xs text-blue-600 ">08:00 - 10:30</span>
-                        <span class="text-xs font-medium text-blue-600 ">Suhesti</span>
-                        <span class="text-xs text-blue-600 ">Mommy happy</span>
-                    </div>
-                    <div class="row-start-[2] col-start-[4] row-span-6 bg-bunababy-50/50 border border-bunababy-50  rounded-lg m-1 p-1 flex flex-col">
-                        <span class="text-xs text-blue-600 ">09:00 - 10:30</span>
-                        <span class="text-xs font-medium text-blue-600 ">Lastri</span>
-                        <span class="text-xs text-blue-600 ">Baby package</span>
-                    </div>
-                    </div>
+                <!-- Calendar contents -->
+                <div class="row-start-[2] col-start-3 row-span-4 bg-blue-400/20 dark:bg-sky-600/50 border border-blue-700/10 dark:border-sky-500 rounded-lg m-1 p-1 flex flex-col">
+                    <span class="text-xs text-blue-600 dark:text-sky-100">5 AM</span>
+                    <span class="text-xs font-medium text-blue-600 dark:text-sky-100">Flight to vancouver</span>
+                    <span class="text-xs text-blue-600 dark:text-sky-100">Toronto YYZ</span>
+                </div>
+                <div class="row-start-[3] col-start-[4] row-span-4 bg-purple-400/20 dark:bg-fuchsia-600/50 border border-purple-700/10 dark:border-fuchsia-500 rounded-lg m-1 p-1 flex flex-col">
+                    <span class="text-xs text-purple-600 dark:text-fuchsia-100">6 AM</span>
+                    <span class="text-xs font-medium text-purple-600 dark:text-fuchsia-100">Breakfast</span>
+                    <span class="text-xs text-purple-600 dark:text-fuchsia-100">Mel's Diner</span>
+                </div>
+                <div class="row-start-[14] col-start-[7] row-span-3 bg-pink-400/20 dark:bg-indigo-600/50 border border-pink-700/10 dark:border-indigo-500 rounded-lg m-1 p-1 flex flex-col">
+                    <span class="text-xs text-pink-600 dark:text-indigo-100">5 PM</span>
+                    <span class="text-xs font-medium text-pink-600 dark:text-indigo-100">🎉 Party party 🎉</span>
+                    <span class="text-xs text-pink-600 dark:text-indigo-100">We like to party!</span>
                 </div>
             </div>
-
         </div>
         <!-- END Card Body -->
 
