@@ -7,7 +7,7 @@
 
         <title>{{ config('app.name', 'Bunababy') }}</title>
 
-        @include('layouts._favicons')
+        <meta name="description" content="Baby and Maternity Care" />
 
         <!-- Inter web font from Google -->
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -15,28 +15,31 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
+        @stack('meta')
+
         <!-- Alpine Plugins -->
         <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
 
+        @include('layouts._favicons')
+        @include('layouts._social')
 
         @livewireStyles
     </head>
-    <body>
-        <div class="font-sans antialiased text-gray-900">
+    <body class="font-sans antialiased">
 
-            @if (request()->is('order/step-*'))
-                @include('partials.step')
-            @else
-                @include('partials.menubar')
-            @endif
+        @if (request()->is('order/step-*'))
+            @include('layouts._order-step')
+        @else
+            @include('layouts._bottom-menu')
+        @endif
 
-            {{ $slot }}
+        {{ $slot }}
 
-            <div class="mb-24"></div>
-        </div>
+        @include('layouts._margin-bottom')
+
         @livewireScripts
     </body>
 </html>
