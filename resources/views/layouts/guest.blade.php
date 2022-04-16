@@ -7,6 +7,8 @@
 
         <title>{{ config('app.name', 'Bunababy') }}</title>
 
+        @include('layouts._favicons')
+
         <!-- Inter web font from Google -->
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
@@ -15,6 +17,7 @@
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
+
 
         @livewireStyles
     </head>

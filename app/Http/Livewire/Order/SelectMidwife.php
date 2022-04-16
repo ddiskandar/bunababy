@@ -16,16 +16,22 @@ class SelectMidwife extends Component
     public $schedules;
 
     public function mount($midwife_user_id) {
+
         $this->selectedMonth = now()->format('Y-M');
+
         $this->slots = Slot::all();
+
         $this->midwife = User::query()
             ->where('id', $midwife_user_id)
             ->select('id', 'name', 'email')
-            // ->with('schedules:id,place,midwife_user_id,date,start_time,end_time,status')
+            ->with('profile')
             ->first();
+
         $this->schedules = Order::query()
-            ->where('status', Order::STATUS_LOCKED)
-            ->where('midwife_user_id', $midwife_user_id)->get();
+            ->where('midwife_user_id', $midwife_user_id)
+            ->locked()
+            ->get();
+
     }
 
     public function prevMonth() {
@@ -41,14 +47,14 @@ class SelectMidwife extends Component
     }
 
     public function selectDate($d, $m, $y) {
+        if(session()->missing('order.place')) {
+            return back();
+        }
+
         $date = Carbon::create($y, $m, $d);
 
         session()->put('order.date', $date);
         session()->put('order.midwife_user_id', $this->midwife->id);
-
-        if(session()->missing('order.place')) {
-            return back();
-        }
 
         return to_route('order.step-2');
     }
@@ -58,7 +64,11 @@ class SelectMidwife extends Component
         $period = Carbon::parse($this->selectedMonth)
             ->startOfMonth()
             ->startOfWeek()
-            ->DaysUntil(Carbon::parse($this->selectedMonth)->endOfMonth()->endOfWeek());
+            ->DaysUntil(
+                Carbon::parse($this->selectedMonth)
+                    ->endOfMonth()
+                    ->endOfWeek()
+            );
 
         $data = collect();
 

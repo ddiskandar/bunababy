@@ -28,8 +28,7 @@ class ListMidwife extends Component
                 ->first();
 
             $this->midwives = User::query()
-                ->where('type', User::MIDWIFE)
-                ->active()
+                ->midwives()->active()
                 ->whereNotIn('id', $this->kecamatan->midwives->pluck('id'))
                 ->select('id', 'name', 'type')
                 ->get();

@@ -25,7 +25,7 @@
         </div>
     @else
         <div class="flex flex-col items-center justify-center py-12">
-            <img src="/images/undraw_search_re_x5gq.svg" class="w-48 " alt="search">
+            <img src="{{ asset('/images/undraw_search_re_x5gq.svg') }}" class="w-48 " alt="search">
             <div class="py-8 text-center">
                 <div class="mb-2 font-semibold text-bunababy-400">Pilih Jadwal Bidan Tersedia</div>
                 <div class="text-sm text-slate-600 ">Mulai dengan memilih tempat dan lokasi treatment.</div>

@@ -3,8 +3,6 @@
 namespace App\Http\Livewire\Order;
 
 use App\Models\Kabupaten;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -17,12 +15,13 @@ class SelectLocation extends Component
 
         $kecamatan_id = '';
 
-        if(Auth::check() && Auth::user()->isClient()){
-            $kecamatan_id = Auth::user()->addresses->where('is_main', true)->first()->kecamatan_id;
+        if( auth()->check() && auth()->user()->isClient()) {
+            $kecamatan_id = auth()->user()->addresses->where('is_main', true)->first()->kecamatan_id;
             session()->put('order.kecamatan_id', $kecamatan_id);
         }
 
-        $this->kecamatan = DB::table('kecamatans')->where('id', session('order.kecamatan_id') ?? $kecamatan_id )->value('name') ?? 'Pilih salah satu';
+        $this->kecamatan = DB::table('kecamatans')
+            ->where('id', session('order.kecamatan_id') ?? $kecamatan_id )->value('name') ?? 'Pilih salah satu';
     }
 
     public function setLocation($kecamatan_id) {

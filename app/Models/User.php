@@ -155,6 +155,11 @@ class User extends Authenticatable
         return $query->where('active', true);
     }
 
+    public function scopeMidwives($query)
+    {
+        return $query->where('type', User::MIDWIFE);
+    }
+
     public function testimonials()
     {
         return $this->hasManyThrough(
