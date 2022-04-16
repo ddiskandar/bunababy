@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Order;
 
 use App\Models\Kabupaten;
-use App\Models\Kecamatan;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -17,7 +17,7 @@ class SelectLocation extends Component
 
         $kecamatan_id = '';
 
-        if(Auth::check() && Auth::user()->role == 'client'){
+        if(Auth::check() && Auth::user()->isClient()){
             $kecamatan_id = Auth::user()->addresses->where('is_main', true)->first()->kecamatan_id;
             session()->put('order.kecamatan_id', $kecamatan_id);
         }

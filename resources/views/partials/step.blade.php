@@ -1,4 +1,4 @@
-<div class="sticky top-0 py-4 bg-white border-b z-20 md:py-6 border-bunababy-50 ">
+<div class="sticky top-0 z-20 py-4 bg-white border-b md:py-6 border-bunababy-50 ">
     <div class="container flex items-center justify-between px-4 mx-auto sm:px-12">
         <div>
             <div class="hidden text-lg font-semibold lg:block text-bunababy-400">
@@ -11,7 +11,7 @@
 
         <div class="inline-flex items-center w-10/12 lg:w-1/2 ">
 
-            @if (request()->is('order'))
+            @if (Route::is('order.step-1'))
             <div class="inline-flex items-center text-sm text-bunababy-400">
                 <div class="flex items-center w-6 h-6 mx-auto border rounded-full border-bunababy-400">
                     <span class="w-full text-center ">
@@ -34,7 +34,7 @@
 
             <span aria-hidden="true" class="h-px mx-2 rounded grow bg-bunababy-400"></span>
 
-            @if (request()->is('order/2'))
+            @if (Route::is('order.step-2'))
             <div class="inline-flex items-center text-sm text-bunababy-400">
                 <div class="flex items-center w-6 h-6 mx-auto border rounded-full border-bunababy-400">
                     <span class="w-full text-center ">
@@ -43,7 +43,7 @@
                 </div>
                 <span class="ml-2 font-medium">Waktu & Treatment</span>
             </div>
-            @elseif (request()->is('order/3'))
+            @elseif (Route::is('order.step-3'))
             <div class="inline-flex items-center text-sm text-bunababy-400">
                 <div class="flex items-center justify-center w-6 h-6 mx-auto rounded-full bg-bunababy-400">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white " viewBox="0 0 20 20" fill="currentColor">
@@ -65,7 +65,7 @@
 
             <span aria-hidden="true" class="h-px mx-2 rounded grow bg-bunababy-400"></span>
 
-            @if (request()->is('order/3'))
+            @if (Route::is('order.step-3'))
             <div class="inline-flex items-center text-sm text-bunababy-400">
                 <div class="flex items-center w-6 h-6 mx-auto border rounded-full border-bunababy-400">
                     <span class="w-full text-center ">

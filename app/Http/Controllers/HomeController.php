@@ -9,7 +9,7 @@ class HomeController extends Controller
 {
     public function show()
     {
-        if (auth()->user()->isAdmin() || auth()->user()->isMidwife())
+        if (!auth()->user()->isClient())
         {
             return redirect('/dashboard');
         }

@@ -27,9 +27,6 @@ class OrderFactory extends Factory
             'total_duration' => 0,
             'total_transport' => 40000,
             'additional' => 0,
-            'date' => $this->faker->dateTimeInInterval('-1 days', '+30 days'),
-            'start_time' => '08:00:00',
-            'end_time' => '08:45:00',
         ];
     }
 }

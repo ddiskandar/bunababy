@@ -1,5 +1,5 @@
 <div class="sticky top-28 ">
-    <div class="inline-flex lg:hidden items-center mb-4 text-bunababy-400">
+    <div class="inline-flex items-center mb-4 lg:hidden text-bunababy-400">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
         </svg>
@@ -48,7 +48,7 @@
                     @forelse ($treatments as $key => $treatment)
                         <li class="py-4 text-sm">
                             <div class="font-semibold">{{ $key }}</div>
-                            <div class="text-slate-400 truncate ">
+                            <div class="truncate text-slate-400 ">
                                 @foreach ($treatment as $pemesan)
                                     <span>{{ $pemesan['family_name'] }}</span>
                                 @endforeach
@@ -57,7 +57,7 @@
                                 <div>{{ $treatment->count() }} x {{ rupiah($treatment[0]['treatment_price']) }}</div>
                                 <div class="font-semibold">{{ rupiah($treatment->sum('treatment_price')) }}</div>
                             </div>
-                            @if (request()->is('order/2'))
+                            @if (Route::is('order.step-2'))
                             <button
                                 wire:click="deleteTreatments({{ $treatment[0]['treatment_id'] }})"
                                 class="text-red-500">
@@ -87,12 +87,12 @@
                 <div>{{ rupiah($data['grand_total']) }}</div>
             </div>
 
-            @if (request()->is('order/step-3'))
+            @if (Route::is('order.step-3'))
 
             <div class="py-6">
                 <button
                     wire:click="confirm"
-                    class="w-full block py-4 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50">
+                    class="block w-full py-4 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50">
                     Konfirmasi
                 </button>
             </div>
@@ -100,7 +100,7 @@
             @else
 
             <div class="py-6">
-                <a href="{{ route('order.step-3') }}" class="w-full block py-4 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50">
+                <a href="{{ route('order.step-3') }}" class="block w-full py-4 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50">
                     Lanjut ke Data Pemesan
                 </a>
             </div>

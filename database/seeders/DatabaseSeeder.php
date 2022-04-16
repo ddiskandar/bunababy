@@ -10,6 +10,7 @@ use App\Models\Testimonial;
 use App\Models\User;
 use App\Notifications\NewOrder;
 use App\Notifications\NewPayment;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -125,9 +126,8 @@ class DatabaseSeeder extends Seeder
                     'address_id' => $i,
                     'midwife_user_id' => rand(3,8),
                     'client_user_id' => $i,
-                    'date' => today()->addDays($i),
-                    'start_time' => '10:00:00',
-                    'end_time' => '11:00:00',
+                    'start_datetime' => now()->addDays($i),
+                    'end_datetime' => now()->addDays($i),
                 ]);
 
             $treatment1 = rand(1,10);
@@ -150,7 +150,7 @@ class DatabaseSeeder extends Seeder
             //         'order_id' => $order->id,
             //     ]);
 
-            $owner->notify( new NewOrder($order));
+            // $owner->notify( new NewOrder($order));
             // $owner->notify( new NewPayment($payment));
 
             sleep(2);

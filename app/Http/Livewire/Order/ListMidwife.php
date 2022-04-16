@@ -20,11 +20,16 @@ class ListMidwife extends Component
             $this->kecamatan = Kecamatan::query()
                 ->where('id', session('order.kecamatan_id'))
                 ->select('id', 'name')
-                ->with(['midwives:id'])
+                ->with([
+                    'midwives' => function($query) {
+                        $query->active();
+                    }
+                ])
                 ->first();
 
             $this->midwives = User::query()
                 ->where('type', User::MIDWIFE)
+                ->active()
                 ->whereNotIn('id', $this->kecamatan->midwives->pluck('id'))
                 ->select('id', 'name', 'type')
                 ->get();

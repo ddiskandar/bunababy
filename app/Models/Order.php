@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,7 +28,8 @@ class Order extends Model
         'total_duration' => 'integer',
         'total_transport' => 'integer',
         'additional' => 'integer',
-        'date' => 'date',
+        'start_datetime' => 'datetime',
+        'end_datetime' => 'datetime',
         'status' => 'integer',
         'finished_at' => 'datetime'
     ];
@@ -162,12 +164,12 @@ class Order extends Model
     {
         $query->where(function ($query) use ($to, $from) {
             $query
-                ->whereBetween('start_time', [$from, $to])
-                ->orWhereBetween('end_time', [$from, $to])
+                ->whereBetween('start_datetime', [$from, $to])
+                ->orWhereBetween('end_datetime', [$from, $to])
                 ->orWhere(function ($query) use ($to, $from) {
                     $query
-                        ->where('start_time', '<', $from)
-                        ->where('end_time', '>', $to);
+                        ->where('start_datetime', '<', $from)
+                        ->where('end_datetime', '>', $to);
                 });
         });
     }

@@ -34,9 +34,9 @@ class SelectTime extends Component
     public function render()
     {
         $orders = Order::query()
-            ->where('date', session('order.date'))
             ->where('midwife_user_id', session('order.midwife_user_id'))
-            ->select('id', 'start_time', 'end_time')
+            ->whereDate('start_datetime', session('order.date'))
+            ->select('id', 'start_datetime', 'end_datetime')
             ->get();
 
         $slots = DB::table('slots')->get();
@@ -46,7 +46,7 @@ class SelectTime extends Component
             $new = collect(['id'=> $slot->id]);
             $new->put('time', $slot->time);
             foreach ($orders as $order) {
-                if ( Carbon::parse($slot->time)->between(Carbon::parse($order->start_time), Carbon::parse($order->end_time))) {
+                if ( Carbon::parse(session('order.date')->toDateString().$slot->time)->between($order->start_datetime, $order->end_datetime)) {
                     $new->put($order->id, 'booked');
                 } else { $new->put($order->id, 'empty'); }
             }
