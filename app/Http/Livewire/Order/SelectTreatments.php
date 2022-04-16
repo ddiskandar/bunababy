@@ -14,34 +14,24 @@ class SelectTreatments extends Component
 
     public Treatment $currentTreatment;
 
-    protected $listeners = [
-        'familySelected',
-        'timeChanged',
-        'treatmentDeleted',
-    ];
-
     public function mount()
     {
         $this->currentTreatment = new Treatment();
 
-        $this->family_id = time();
+        $this->family_id = time() . rand(11, 99);
     }
+
+    protected $listeners = [
+        'familySelected',
+        'timeChanged' => '$refresh',
+        'treatmentDeleted' => '$refresh',
+    ];
 
     public function familySelected($familyId)
     {
         $this->showAddTreatmentModal = false;
         $this->family_id = $familyId;
         $this->addTreatment($this->currentTreatment);
-    }
-
-    public function timeChanged()
-    {
-        $this->render();
-    }
-
-    public function treatmentDeleted()
-    {
-        $this->render();
     }
 
     public function confirmAddTreatment(Treatment $treatment)
@@ -71,7 +61,6 @@ class SelectTreatments extends Component
         ]);
 
         $this->emit('treatmentAdded');
-
     }
 
     public function deleteTreatment($index, Treatment $treatment)

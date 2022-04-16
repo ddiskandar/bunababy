@@ -11,18 +11,14 @@
         <div class="py-4">
             <h3 class="mb-2 text-sm font-semibold">Pagi</h3>
             <div class="flex flex-wrap gap-2">
-                {{-- @dd($data) --}}
                 @foreach ($data['pagi'] as $slot)
-                    {{-- TODO : cek jika waktu sudah lewat --}}
-                    @if(true)
+                    @if( \Carbon\Carbon::parse(session('order.date')->toDateString().$slot['time'])->gt(now()))
 
                         @php
                             $isSelected = $slot['id'] == session('order.start_time_id');
                             $isAvailable = '';
                             $inRange = \Carbon\Carbon::parse($slot['time'])->isBetween(\Carbon\Carbon::parse(session('order.start_time')), \Carbon\Carbon::parse(session('order.start_time'))->addMinutes(session('order.addMinutes')));
                         @endphp
-
-                        {{-- @dd(\Carbon\Carbon::parse(session('order.start_time'))) --}}
 
                         @if ($slot['status'] == 'empty')
                         <button
@@ -70,8 +66,7 @@
             <h3 class="mb-2 text-sm font-semibold">Siang</h3>
             <div class="flex flex-wrap gap-2">
                 @foreach ($data['siang'] as $slot)
-                    {{-- TODO --}}
-                    @if(true)
+                    @if(\Carbon\Carbon::parse(session('order.date')->toDateString().$slot['time'])->gt(now()))
 
                         @php
                             $isSelected = $slot['id'] == session('order.start_time_id');

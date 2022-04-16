@@ -10,22 +10,14 @@ use Livewire\Component;
 
 class SelectTime extends Component
 {
-    protected $listeners = ['treatmentAdded', 'treatmentDeleted'];
-
-    public function treatmentAdded()
-    {
-        $this->render();
-    }
-
-    public function treatmentDeleted()
-    {
-        $this->render();
-    }
+    protected $listeners = [
+        'treatmentAdded' => '$refresh',
+        'treatmentDeleted'=> '$refresh',
+    ];
 
     public function selectTime(Slot $slot)
     {
         session()->put('order.start_time', $slot->time);
-
         session()->put('order.start_time_id', $slot->id);
 
         $this->emit('timeChanged');
@@ -34,6 +26,7 @@ class SelectTime extends Component
     public function render()
     {
         $orders = Order::query()
+            ->locked()
             ->where('midwife_user_id', session('order.midwife_user_id'))
             ->whereDate('start_datetime', session('order.date'))
             ->select('id', 'start_datetime', 'end_datetime')

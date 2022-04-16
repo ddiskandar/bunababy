@@ -10,7 +10,7 @@ class SelectFamily extends Component
     public $name;
     public $type = 'Anak';
 
-    public $showAddFamily = false;
+    public $showAddNewFamily = false;
 
     protected $rules = [
         'name' => 'min:2|max:32'
@@ -18,9 +18,24 @@ class SelectFamily extends Component
 
     public function mount()
     {
+        if (auth()->check()) {
 
-        if(Auth::check()){
-            session()->put('order.families', Auth::user()->families);
+            if (auth()->user()->families()->exists()) {
+                session()->put('order.families', auth()->user()->families->toArray());
+                session()->push('order.families', [
+                    'id' => auth()->id(),
+                    'name' => auth()->user()->name,
+                    'type' => 'Diri Sendiri'
+                ]);
+            } else {
+                session()->put('order.families', [
+                    [
+                        'id' => auth()->id(),
+                        'name' => auth()->user()->name,
+                        'type' => 'Diri Sendiri'
+                    ]
+                ]);
+            }
         }
 
     }
@@ -36,7 +51,7 @@ class SelectFamily extends Component
             'type' => ! session('order.families') ? 'Diri Sendiri' : $this->type,
         ]);
         $this->name = '';
-        $this->showAddFamily = false;
+        $this->showAddNewFamily = false;
     }
 
     public function selectFamily($familyId)

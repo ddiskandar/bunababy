@@ -16,6 +16,7 @@
         <div class="py-4">
             @livewire('order.select-treatments')
         </div>
+
     </div>
     <div class="mt-6 lg:w-96 lg:flex-initial lg:mt-0">
         @livewire('order.checkout')
