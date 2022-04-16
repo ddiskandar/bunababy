@@ -10,7 +10,7 @@
                 </h3>
                 <div class="py-2">
                     <div class="text-sm text-slate-600">Nomor WA</div>
-                    <div class="">{{ auth()->user()->phone }}</div>
+                    <div class="">{{ auth()->user()->profile->phone }}</div>
                 </div>
                 <div class="py-2">
                     <div class="text-sm text-slate-600">Alamat Email</div>
