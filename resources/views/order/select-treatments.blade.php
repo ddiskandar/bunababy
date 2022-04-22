@@ -29,7 +29,7 @@
 
                                 @foreach ($category->treatments as $treatment)
                                 <li class="p-6 border rounded border-slate-200">
-                                    <div class="text-xl font-semibold leading-loose">{{ $treatment->name }}</div>
+                                    <div class="text-xl font-semibold leading-tight">{{ $treatment->name }}</div>
                                     <div class="text-sm text-slate-400">{{ $treatment->desc }}</div>
                                     <div class="py-2 text-sm text-slate-400"><span class="font-medium text-slate-600">{{ rupiah($treatment->price) }}</span> • <span class="font-medium text-slate-600">{{ $treatment->duration }} menit</span></div>
 

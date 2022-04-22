@@ -122,12 +122,12 @@ class GuestBiodata extends Component
 
             $this->state = [];
 
-            return redirect()->route('order.step-3');
+            return redirect()->route('order.checkout');
         });
     }
 
     public function render()
     {
-        return view('client.order.guest-biodata');
+        return view('order.guest-biodata');
     }
 }

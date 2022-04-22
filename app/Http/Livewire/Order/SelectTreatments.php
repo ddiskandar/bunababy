@@ -84,12 +84,12 @@ class SelectTreatments extends Component
     {
         $categories = Category::query()
             ->with('treatments', function($query){
-                $query->whereActive(true);
-            })->get();
+                $query->whereActive(true)->orderBy('order', 'ASC');
+            })
+            ->orderBy('order', 'ASC')
+            ->get();
 
-        $data = collect();
-
-        return view('client.order.select-treatments', [
+        return view('order.select-treatments', [
             'categories' => $categories,
         ]);
     }

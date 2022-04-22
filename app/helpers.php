@@ -6,3 +6,17 @@ if(!function_exists('rupiah')) {
         return 'Rp' . number_format($value, 0 , ',' , '.');
     }
 }
+
+if(!function_exists('tanggal')) {
+    function tanggal($value)
+    {
+        return $value->isoFormat('dddd, D MMMM G');
+    }
+}
+
+if(!function_exists('waktu')) {
+    function waktu($value)
+    {
+        return \Str::substr($value, 0, 5 );
+    }
+}

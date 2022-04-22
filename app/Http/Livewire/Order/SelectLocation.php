@@ -31,7 +31,7 @@ class SelectLocation extends Component
         session()->put('order.kecamatan_id', $kecamatan_id);
         session()->put('order.kecamatan_distance', $kecamatan->distance);
 
-        return redirect()->route('order.step-1');
+        return redirect()->route('order.create');
     }
 
     public function render()
@@ -47,7 +47,7 @@ class SelectLocation extends Component
                 })
                 ->get();
 
-        return view('client.order.select-location', [
+        return view('order.select-location', [
             'kabupatens' => $kabupatens
         ]);
     }

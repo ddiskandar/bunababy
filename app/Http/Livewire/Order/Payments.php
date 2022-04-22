@@ -84,7 +84,7 @@ class Payments extends Component
     {
         $payments = Payment::where('order_id', $this->order->id)->get();
 
-        return view('client.order.payments', [
+        return view('order.payments', [
             'payments' => $payments,
         ]);
     }

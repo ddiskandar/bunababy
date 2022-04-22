@@ -11,7 +11,7 @@
 
         <div class="inline-flex items-center w-10/12 lg:w-1/2 ">
 
-            @if (Route::is('order.step-1'))
+            @if (Route::is('order.create'))
             <div class="inline-flex items-center text-sm text-bunababy-400">
                 <div class="flex items-center w-6 h-6 mx-auto border rounded-full border-bunababy-400">
                     <span class="w-full text-center ">
@@ -34,7 +34,7 @@
 
             <span aria-hidden="true" class="h-px mx-2 rounded grow bg-bunababy-400"></span>
 
-            @if (Route::is('order.step-2'))
+            @if (Route::is('order.cart'))
             <div class="inline-flex items-center text-sm text-bunababy-400">
                 <div class="flex items-center w-6 h-6 mx-auto border rounded-full border-bunababy-400">
                     <span class="w-full text-center ">
@@ -43,7 +43,7 @@
                 </div>
                 <span class="ml-2 font-medium">Waktu & Treatment</span>
             </div>
-            @elseif (Route::is('order.step-3'))
+            @elseif (Route::is('order.checkout'))
             <div class="inline-flex items-center text-sm text-bunababy-400">
                 <div class="flex items-center justify-center w-6 h-6 mx-auto rounded-full bg-bunababy-400">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white " viewBox="0 0 20 20" fill="currentColor">
@@ -65,7 +65,7 @@
 
             <span aria-hidden="true" class="h-px mx-2 rounded grow bg-bunababy-400"></span>
 
-            @if (Route::is('order.step-3'))
+            @if (Route::is('order.checkout'))
             <div class="inline-flex items-center text-sm text-bunababy-400">
                 <div class="flex items-center w-6 h-6 mx-auto border rounded-full border-bunababy-400">
                     <span class="w-full text-center ">

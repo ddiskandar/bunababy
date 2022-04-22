@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'home')->name('home');
 
 // make an order
-Route::get('/order/step-1', [App\Http\Controllers\Client\OrderController::class, 'index'])->name('order.step-1');
-Route::get('/order/step-2', [App\Http\Controllers\Client\OrderController::class, 'time'])->name('order.step-2');
-Route::get('/order/step-3', [App\Http\Controllers\Client\OrderController::class, 'client'])->name('order.step-3');
-Route::get('/order/{order:no_reg}/invoice', App\Http\Controllers\OrderInvoiceController::class)->name('order.invoice');
-Route::get('/order/{order:no_reg}', [App\Http\Controllers\Client\OrderController::class, 'show'])->name('order.show');
+Route::get('/order/create', [App\Http\Controllers\Client\OrderController::class, 'create'])->name('order.create');
+Route::get('/order/cart', [App\Http\Controllers\Client\OrderController::class, 'cart'])->name('order.cart');
+Route::get('/order/checkout', [App\Http\Controllers\Client\OrderController::class, 'checkout'])->name('order.checkout');
+Route::get('/invoice/{order:no_reg}', App\Http\Controllers\OrderInvoiceController::class)->name('order.invoice');
+Route::get('/show/{order:no_reg}', [App\Http\Controllers\Client\OrderController::class, 'show'])->name('order.show');
 
 Route::middleware(['auth'])->group(function () {
 

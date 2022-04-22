@@ -8,7 +8,7 @@
                 Data Lengkap Pemesan
             </div>
         </div>
-        <div class="grid grid-cols-6 gap-6 ml-8">
+        <div class="grid grid-cols-6 gap-6">
 
             @foreach ($state['families'] as $index => $family)
                 <!-- Nama Lengkap -->
@@ -117,7 +117,7 @@
                 Akun Login
             </div>
         </div>
-        <div class="grid grid-cols-6 gap-6 ml-8">
+        <div class="grid grid-cols-6 gap-6">
             <!-- Alamat Email -->
             <div class="col-span-6 xl:col-span-4">
                 <x-label for="name" :value="__('Alamat Email')" />

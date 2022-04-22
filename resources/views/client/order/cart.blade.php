@@ -5,7 +5,7 @@
     <div class="flex-1 space-y-4 md:mt-0">
         <x-panel>
             <div class="py-4">
-                @include('client.order._selected-date')
+                @include('order._selected-date')
             </div>
 
             <div class="py-4">
@@ -19,7 +19,7 @@
 
     </div>
     <div class="mt-6 lg:w-96 lg:flex-initial lg:mt-0">
-        @livewire('order.checkout')
+        @livewire('order.cart-summary')
     </div>
 </div>
 

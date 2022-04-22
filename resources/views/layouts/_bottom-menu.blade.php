@@ -14,11 +14,11 @@
         </a>
     </li>
     <li >
-        <a href="{{ route('order.step-1') }}"
+        <a href="{{ route('order.create') }}"
             @class([
                 'flex flex-col items-center cursor-pointer hover:text-bunababy-200',
-                'text-bunababy-200' => Route::is('order.step-1'),
-                'text-gray-400 ' => ! Route::is('order.step-1'),
+                'text-bunababy-200' => Route::is('order.create'),
+                'text-gray-400 ' => ! Route::is('order.create'),
             ])>
             <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 12C4.75 7.99594 7.99594 4.75 12 4.75V4.75C16.0041 4.75 19.25 7.99594 19.25 12V12C19.25 16.0041 16.0041 19.25 12 19.25V19.25C7.99594 19.25 4.75 16.0041 4.75 12V12Z"></path>

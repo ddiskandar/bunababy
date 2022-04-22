@@ -123,6 +123,7 @@ class DatabaseSeeder extends Seeder
             $order = Order::factory()
                 ->create([
                     'id' => $i,
+                    'no_reg' => 'A' . rand(3,8) . str_replace('-', '', today()->addDays($i)->toDateString()) . rand(11,99),
                     'address_id' => $i,
                     'midwife_user_id' => rand(3,8),
                     'client_user_id' => $i,
@@ -152,8 +153,6 @@ class DatabaseSeeder extends Seeder
 
             // $owner->notify( new NewOrder($order));
             // $owner->notify( new NewPayment($payment));
-
-            sleep(2);
 
         }
     }

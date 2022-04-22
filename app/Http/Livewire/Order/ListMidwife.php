@@ -38,6 +38,6 @@ class ListMidwife extends Component
 
     public function render()
     {
-        return view('client.order.list-midwife');
+        return view('order.list-midwife');
     }
 }

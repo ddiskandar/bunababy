@@ -15,7 +15,7 @@ class AuthBiodata extends Component
 
     public function render()
     {
-        return view('client.order.auth-biodata');
+        return view('order.auth-biodata');
     }
 }
 

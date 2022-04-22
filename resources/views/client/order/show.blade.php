@@ -17,8 +17,8 @@
                         <div class="flex-1">
                             <x-title>Tanggal dan Waktu</x-title>
                             <div class="">
-                                <div class="font-semibold">{{ $order->date->isoFormat('dddd, D MMMM G') }}</div>
-                                <div class="text-sm">{{ Str::substr($order->start_time, 0, 5 )  }} - {{ Str::substr($order->end_time, 0, 5 )  }} WIB ( {{ $order->total_duration }} menit )</div>
+                                <div class="font-semibold">{{ $order->start_datetime->isoFormat('dddd, D MMMM G') }}</div>
+                                <div class="text-sm">{{ Str::substr($order->start_datetime, 0, 5 )  }} - {{ Str::substr($order->end_datetime, 0, 5 )  }} WIB ( {{ $order->total_duration }} menit )</div>
                             </div>
                         </div>
                         <div class="flex-1 mt-6 md:mt-0">

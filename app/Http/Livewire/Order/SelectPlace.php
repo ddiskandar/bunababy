@@ -21,6 +21,6 @@ class SelectPlace extends Component
 
     public function render()
     {
-        return view('client.order.select-place');
+        return view('order.select-place');
     }
 }

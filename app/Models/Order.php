@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
@@ -99,7 +100,7 @@ class Order extends Model
         return $this->hasMany(Payment::class)->where('status', Payment::STATUS_VERIFIED);
     }
 
-    public function grand_total()
+    public function getGrandTotal()
     {
         return ($this->total_price + $this->total_transport + $this->additional);
     }
@@ -109,7 +110,7 @@ class Order extends Model
         return $this->payments()->verified()->pluck('value')->sum();
     }
 
-    public function paid()
+    public function isPaid()
     {
         return $this->payments_verified() >= $this->grand_total();
     }
@@ -119,9 +120,9 @@ class Order extends Model
         return $this->payments_verified() >= $this->grand_total() * 50/100;
     }
 
-    public function dp_amount()
+    public function getDpAmount()
     {
-        return $this->grand_total() / 2;
+        return $this-> getGrandTotal() / 2;
     }
 
     public function place()
@@ -172,6 +173,33 @@ class Order extends Model
                         ->where('end_datetime', '>', $to);
                 });
         });
+    }
+
+    public function getTotalTransport()
+    {
+        if (session('order.kecamatan_distance') !== null) {
+            if(session('order.kecamatan_distance') < 4) {
+                return 40000;
+            } else {
+                return 40000 + ((session('order.kecamatan_distance') - 4) * 5000);
+            }
+        }
+
+    }
+
+    public function getTotalPrice()
+    {
+        return collect(session('order.treatments'))->sum('treatment_price') ?? 0;
+    }
+
+    public function getStartTime()
+    {
+        return DB::table('slots')->where('id', session('order.start_time_id'))->value('time');
+    }
+
+    public function getEndTime()
+    {
+        return Carbon::parse($this->getStartTime())->addMinutes(session('order.addMinutes'))->toTimeString();
     }
 
 }

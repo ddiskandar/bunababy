@@ -56,7 +56,7 @@ class SelectMidwife extends Component
         session()->put('order.date', $date);
         session()->put('order.midwife_user_id', $this->midwife->id);
 
-        return to_route('order.step-2');
+        return to_route('order.cart');
     }
 
     public function render()
@@ -97,7 +97,7 @@ class SelectMidwife extends Component
             $data->push($new);
         }
 
-        return view('client.order.select-midwife', [
+        return view('order.select-midwife', [
             'data' => $data,
         ]);
     }

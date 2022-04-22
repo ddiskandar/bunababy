@@ -55,7 +55,7 @@ class SelectTime extends Component
             return 'siang';
         });
 
-        return view('client.order.select-time', [
+        return view('order.select-time', [
             'slots' => $slots,
             'data' => $data,
         ]);

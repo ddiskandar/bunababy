@@ -30,7 +30,7 @@
     </head>
     <body class="font-sans antialiased">
 
-        @if (request()->is('order/step-*'))
+        @if (request()->is('order/*'))
             @include('layouts._order-step')
         @else
             @include('layouts._bottom-menu')

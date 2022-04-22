@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Order;
 
+use App\Models\Family;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -23,21 +24,21 @@ class SelectFamily extends Component
             if (auth()->user()->families()->exists()) {
                 session()->put('order.families', auth()->user()->families->toArray());
                 session()->push('order.families', [
-                    'id' => auth()->id(),
+                    'id' => time() . rand(111,999),
                     'name' => auth()->user()->name,
                     'type' => 'Diri Sendiri'
                 ]);
             } else {
                 session()->put('order.families', [
                     [
-                        'id' => auth()->id(),
+                        'id' => time() . rand(111,999),
                         'name' => auth()->user()->name,
                         'type' => 'Diri Sendiri'
                     ]
                 ]);
             }
-        }
 
+        }
     }
 
     public function addFamily()
@@ -45,7 +46,7 @@ class SelectFamily extends Component
         $this->validate();
 
         session()->push('order.families', [
-            'id' => time(),
+            'id' => time() . rand(111,999),
             'name' => $this->name,
             'birthdate' => '',
             'type' => ! session('order.families') ? 'Diri Sendiri' : $this->type,
@@ -63,7 +64,7 @@ class SelectFamily extends Component
     {
         $families = collect(session('order.families') ?? [] );
 
-        return view('client.order.select-family', [
+        return view('order.select-family', [
             'families' => $families,
         ]);
     }
