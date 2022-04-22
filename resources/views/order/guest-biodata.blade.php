@@ -1,6 +1,6 @@
 <x-panel>
-    <div class="py-6">
-        <div class="flex items-center mb-2 text-bunababy-400">
+    <div class="pt-2 pb-6">
+        <div class="flex items-center mb-6 text-bunababy-400">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
             </svg>
@@ -109,7 +109,7 @@
     </div>
 
     <div  class="py-6">
-        <div class="flex items-center mb-2 text-bunababy-400">
+        <div class="flex items-center mb-6 text-bunababy-400">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>

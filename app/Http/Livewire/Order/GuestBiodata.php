@@ -61,21 +61,6 @@ class GuestBiodata extends Component
         'state.password' => 'Kata sandi'
     ];
 
-    protected $messages = [
-        'state.address.required' => 'Alamat harus diisi',
-        'state.families.*.birthdate.required' => 'Tanggal Lahir harus diisi',
-        'state.rt.required' => 'Rt harus diisi',
-        'state.rw.required' => 'Rw harus diisi',
-        'state.desa.required' => 'Desa harus diisi',
-        'state.phone.required' => 'WhatsApp harus diisi',
-        'state.phone.min' => 'Nomor WhatsApp harus diisi setidaknya 11 karakter',
-        'state.ig' => 'User Instagram',
-        'state.email.required' => 'Email harus diisi',
-        'state.email.email' => 'Email harus diisi dengan alamat email yang benar',
-        'state.password.required' => 'Password harus diisi',
-        'state.password.confirmed' => 'Password tidak sama',
-    ];
-
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);

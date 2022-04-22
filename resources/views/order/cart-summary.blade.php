@@ -42,7 +42,7 @@
                 </div>
             </div>
 
-            <div class="py-4">
+            <div class="pt-4">
                 <x-title>Treatment</x-title>
                 <ul class="-mt-4 divide-y divide-bunababy-50">
                     @forelse ($treatments as $name => $treatment)
