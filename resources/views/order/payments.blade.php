@@ -101,31 +101,32 @@
                             </button>
 
                             <div class="px-4 pt-5 pb-4 overflow-hidden bg-white rounded-lg shadow-xl sm:p-6 sm:pb-4">
-                                <x-title>Upload bukti transfer</x-title>
+                                <form wire:submit.prevent="upload">
 
+                                    <x-title>Upload bukti transfer</x-title>
                                 <div class="py-4">
                                     <label class="block space-y-1">
                                         <x-label class="">Pilih file</x-label>
-                                        <input wire:model="attachment" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100" type="file" id="photo" name="photo">
+                                        <input wire:model.defer="attachment" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100" type="file" id="photo" name="photo">
                                     </label>
                                     <x-input-error for="attachment" class="mt-2" />
                                 </div>
                                 <div class="py-4 space-y-1">
                                     <x-label class="" for="value">Nominal</x-label>
                                     <div>
-                                        <x-input wire:model="value" class="w-full" type="number" id="value" />
+                                        <x-input wire:model.defer="value" class="w-full" type="number" id="value" />
                                     </div>
                                     <x-input-error for="value" class="mt-2" />
                                 </div>
 
                                 <div class="py-4">
                                     <button
-                                        wire:click = "upload"
-                                        type="button"
+                                        type="submit"
                                         class="block w-full py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
                                     >Upload Bukti</button>
                                 </div>
 
+                                </form>
                             </div>
                         </div>
                     </div>

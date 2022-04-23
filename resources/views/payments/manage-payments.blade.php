@@ -100,7 +100,9 @@
                             </td>
                             <td class="p-3 ">
                                 <p class="text-slate-800">{{ rupiah($payment->order->getGrandTotal()) }}</p>
-                                @if ($payment->order->remaining_payment() == 0)
+                                @if ($payment->order->getRemainingPayment() > 0)
+                                <p class="text-red-600">{{ rupiah($payment->order->getRemainingPayment()) }}</p>
+                                @else
                                 <div class="flex items-center">
                                     <span class="text-green-800">
                                         Lunas
@@ -109,8 +111,6 @@
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                                     </svg>
                                 </div>
-                                @else
-                                <p class="text-red-600">{{ rupiah($payment->order->remaining_payment()) }}</p>
                                 @endif
                             </td>
                             <td class="p-3 ">

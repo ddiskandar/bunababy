@@ -1,5 +1,5 @@
 <div class="py-4">
-    <div class="font-semibold">Katalog Treatment</div>
+    <div class="font-semibold text-bunababy-400">Katalog Treatment</div>
     <div class="flex flex-wrap mt-3 gap-2">
         <button
             wire:click="$set('filterCategory', '')"

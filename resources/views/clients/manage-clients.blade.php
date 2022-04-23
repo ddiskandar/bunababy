@@ -120,7 +120,7 @@
                                 <p class="text-slate-600">instagram.com/{{ $client->profile->ig }}</p>
                             </td>
                             <td class="p-3 whitespace-nowrap">
-                                {{ $client->last_reservation ? $client->last_reservation->date->diffForHumans() : 'Belum pernah reservasi' }}
+                                {{ $client->last_reservation ? $client->last_reservation->start_datetime->diffForHumans() : 'Belum pernah reservasi' }}
                             </td>
                             <td class="p-3 whitespace-nowrap">
                                 <div class="flex flex-wrap gap-2 whitespace-nowrap">

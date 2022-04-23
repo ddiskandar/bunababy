@@ -11,7 +11,7 @@ class HomeController extends Controller
     {
         $reservation = auth()->user()->latestReservation;
 
-        return view('client.home', [
+        return view('client.me', [
             'reservation' => $reservation,
         ]);
     }

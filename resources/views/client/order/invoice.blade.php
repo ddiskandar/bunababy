@@ -215,7 +215,7 @@
                         Sisa Pembayaran
                         </td>
                         <td class="py-2 font-semibold text-right bg-gray-50">
-                        {{ rupiah($order->remaining_payment()) }}
+                        {{ rupiah($order->getRemainingPayment()) }}
                         </td>
                     </tr>
                     </tbody>

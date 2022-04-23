@@ -26,12 +26,7 @@ class Payments extends Component
 
     protected $validationAttributes = [
         'attachment' => 'lampiran foto',
-    ];
-
-    protected $messages = [
-        'attachment.required' => 'lampiran foto harus diisi',
-        'attachment.image' => 'lampiran foto harus berupa image foto',
-        'attachment.max' => 'ukuran file lampiran foto maksimal 1MB',
+        'value' => 'besar pembayaran'
     ];
 
     public function mount(Order $order)
@@ -41,7 +36,7 @@ class Payments extends Component
         $this->isLocked = $order->pendingPayments()->exists();
     }
 
-    public function updatedAttachment($value)
+    public function updatedAttachment()
     {
         $validator = Validator::make(
             ['attachment' => $this->attachment],

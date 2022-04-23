@@ -62,7 +62,7 @@
                 <li class="py-3 text-sm ">
                     <div class="flex justify-between">
                     <div class="">Sisa Pembayaran</div>
-                    <div class="">{{ rupiah($order->remaining_payment()) }}</div>
+                    <div class="">{{ rupiah($order->getRemainingPayment()) }}</div>
                     </div>
                 </li>
 

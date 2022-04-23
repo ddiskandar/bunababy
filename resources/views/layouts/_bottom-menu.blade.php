@@ -25,7 +25,7 @@
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8.75003V15.25"></path>
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.25 12L8.75 12"></path>
             </svg>
-            <span class="mt-2 text-xs">Reservasi</span>
+            <span class="mt-2 text-xs">Reservasi Baru</span>
         </a>
     </li>
     <li>

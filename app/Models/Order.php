@@ -140,7 +140,7 @@ class Order extends Model
             );
     }
 
-    public function remaining_payment()
+    public function getRemainingPayment()
     {
         return $this->getGrandTotal() - $this->verifiedPayments->pluck('value')->sum();
     }
