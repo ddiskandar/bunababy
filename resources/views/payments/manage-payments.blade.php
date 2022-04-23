@@ -99,7 +99,7 @@
                                 <p class="text-slate-600">{{ $payment->order->date->format('d M Y') }}</p>
                             </td>
                             <td class="p-3 ">
-                                <p class="text-slate-800">{{ rupiah($payment->order->grand_total()) }}</p>
+                                <p class="text-slate-800">{{ rupiah($payment->order->getGrandTotal()) }}</p>
                                 @if ($payment->order->remaining_payment() == 0)
                                 <div class="flex items-center">
                                     <span class="text-green-800">

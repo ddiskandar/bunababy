@@ -13,7 +13,7 @@ class OrderController extends Controller
             return redirect()->route('dashboard');
         }
 
-        if( auth()->check() AND (auth()->user()->latestReservation AND ! auth()->user()->latestReservation->paid())){
+        if( auth()->check() AND (auth()->user()->latestReservation AND ! auth()->user()->latestReservation->isPaid())){
             return redirect('/me')->with('status', 'Anda masih punya order aktif yang belum dibayar!');
         }
 

@@ -37,7 +37,7 @@ class Payments extends Component
     public function mount(Order $order)
     {
         $this->order = $order;
-        $this->value = $order->dp_amount();
+        $this->value = $order->getDpAmount();
         $this->isLocked = $order->pendingPayments()->exists();
     }
 

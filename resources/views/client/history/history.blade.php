@@ -55,7 +55,7 @@
                     <div class="mt-4 md:flex md:items-center md:justify-between">
                         <div>
                             <div class="text-sm">Total Pembayaran</div>
-                            <div class="font-bold">{{ rupiah($reservation->grand_total()) }}</div>
+                            <div class="font-bold">{{ rupiah($reservation->getGrandTotal()) }}</div>
                         </div>
                         <div class="mt-6 md:mt-0">
                             @if ($reservation->status == '1')

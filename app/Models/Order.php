@@ -112,12 +112,12 @@ class Order extends Model
 
     public function isPaid()
     {
-        return $this->payments_verified() >= $this->grand_total();
+        return $this->payments_verified() >= $this->getGrandTotal();
     }
 
     public function dp()
     {
-        return $this->payments_verified() >= $this->grand_total() * 50/100;
+        return $this->payments_verified() >= $this->getGrandTotal() * 50/100;
     }
 
     public function getDpAmount()
@@ -142,7 +142,7 @@ class Order extends Model
 
     public function remaining_payment()
     {
-        return $this->grand_total() - $this->verifiedPayments->pluck('value')->sum();
+        return $this->getGrandTotal() - $this->verifiedPayments->pluck('value')->sum();
     }
 
     public function setNoRegdAttribute()
@@ -200,6 +200,11 @@ class Order extends Model
     public function getEndTime()
     {
         return Carbon::parse($this->getStartTime())->addMinutes(session('order.addMinutes'))->toTimeString();
+    }
+
+    public function getTotalDuation()
+    {
+        return collect(session('order.treatments'))->sum('treatment_duration') + 40;
     }
 
 }

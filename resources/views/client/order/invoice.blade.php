@@ -52,7 +52,7 @@
                         Terbit : {{ $order->created_at->isoFormat('DD MMMM Y H:mm') }} WIB
                     </div>
                     <div class="text-slate-600">
-                        Besar DP : <span class="font-semibold">{{ rupiah($order->dp_amount()) }}</span>
+                        Besar DP : <span class="font-semibold">{{ rupiah($order->getDpAmount()) }}</span>
                      </div>
                     <div class="text-slate-600">
                         Bayar sebelum : {{ $order->created_at->addMinutes(30)->isoFormat('DD MMMM Y H:mm') }} WIB
@@ -148,7 +148,7 @@
                             Total Tagihan
                         </td>
                         <td class="py-2 font-semibold text-right border-y border-bunababy-50">
-                            {{ rupiah($order->grand_total()) }}
+                            {{ rupiah($order->getGrandTotal()) }}
                         </td>
                     </tr>
                     </tbody>

@@ -35,7 +35,7 @@ class OrderPayment extends Command
             ->get();
         foreach ($orders as $order) {
 
-            if(! $order->paid() && (now()->gt($order->created_at->addMinutes(30))) ) {
+            if(! $order->isPaid() && (now()->gt($order->created_at->addMinutes(30))) ) {
 
                 $order->update([
                     'status' => Order::STATUS_UNPAID,

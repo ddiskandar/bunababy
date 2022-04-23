@@ -77,7 +77,7 @@
                             <li class="py-2 text-sm font-semibold">
                                 <div class="flex justify-between py-2">
                                     <div class="">Total Tagihan</div>
-                                    <div class="">{{ rupiah($order->grand_total()) }}</div>
+                                    <div class="">{{ rupiah($order->getGrandTotal()) }}</div>
                                 </div>
                             </li>
 
@@ -172,10 +172,10 @@
                     </div>
 
                     <x-title>Minimal Pembayaran DP</x-title>
-                    <div class="mb-4 font-semibold">{{ rupiah($order->dp_amount()) }}</div>
+                    <div class="mb-4 font-semibold">{{ rupiah($order->getDpAmount()) }}</div>
 
                     <x-title>Total Tagihan</x-title>
-                    <div class="mb-4 font-semibold">{{ rupiah($order->grand_total()) }}</div>
+                    <div class="mb-4 font-semibold">{{ rupiah($order->getGrandTotal()) }}</div>
 
                     <x-title>Batas Akhir Pembayaran</x-title>
                     <div class="mb-4 font-semibold">{{ $order->created_at->addMinutes(30)->isoFormat('dddd, D MMMM G HH:mm') }}</div>

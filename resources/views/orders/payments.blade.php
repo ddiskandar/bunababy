@@ -48,7 +48,7 @@
                 <li class="py-3 text-sm font-semibold">
                     <div class="flex justify-between">
                     <div class="">Total Tagihan</div>
-                    <div class="">{{ rupiah($order->grand_total()) }}</div>
+                    <div class="">{{ rupiah($order->getGrandTotal()) }}</div>
                     </div>
                 </li>
 

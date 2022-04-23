@@ -2,14 +2,17 @@
 
 namespace App\Http\Livewire\Order;
 
+use App\Models\Order;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Confirm extends Component
 {
     public function confirm()
     {
-        sleep(2);
-        return back();
+        // sleep(2);
+        // return back();
         $this->orderNow();
     }
 
@@ -24,31 +27,33 @@ class Confirm extends Component
 
     public function orderNow()
     {
-        $order = Order::create([
-            'place' => session('order.place'),
-            'client_user_id' => auth()->id(),
-            'midwife_user_id' => session('order.midwife_user_id'),
-            'address_id' => 1,
-            'total_price' => $this->total_price(),
-            'total_duration' => $this->total_duration(),
-            'total_transport' => $this->total_transport(),
-            'date' => session('order.date'),
-            'start_time' => $this->start_time(),
-            'end_time' => $this->end_time(),
-            'status' => Order::STATUS_LOCKED,
-            'invoice' => 'INV/' . session('order.date')->isoFormat('YYYYMMDD') . '/BBC/' . rand(111111, 999999),
-            'no_reg' => $this->getNoReg(),
-        ]);
+        DB::transaction(function(){
 
-        foreach ( collect(session('order.treatments')) as $treatment ) {
-            $order->treatments()->attach(
-                $treatment['treatment_id']
-            );
-        }
+            $order = new Order();
+            $order->no_reg = $this->getNoReg();
+            $order->invoice = 'INV/' . session('order.date')->isoFormat('YYYYMMDD') . '/BBC/' . rand(111111, 999999);
+            $order->place = session('order.place');
+            $order->client_user_id = auth()->id();
+            $order->midwife_user_id = session('order.midwife_user_id');
+            $order->address_id = 31;
+            $order->total_price = $order->getTotalPrice();
+            $order->total_duration = $order->getTotalDuation();
+            $order->total_transport = $order->getTotalTransport();
+            $order->start_datetime = Carbon::parse(session('order.date')->toDateString() . ' ' . session('order.start_time'));
+            $order->end_datetime = $order->start_datetime->addMinutes(session('order.addMinutes'));
+            $order->status = Order::STATUS_LOCKED;
+            $order->save();
 
-        session()->forget('order');
+            foreach ( collect(session('order.treatments')) as $treatment ) {
+                $order->treatments()->attach(
+                    $treatment['treatment_id']
+                );
+            }
 
-        return redirect()->route('home');
+            session()->forget('order');
+
+            return redirect()->route('me');
+        });
 
     }
 
