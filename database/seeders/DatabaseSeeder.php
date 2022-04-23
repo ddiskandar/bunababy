@@ -120,31 +120,31 @@ class DatabaseSeeder extends Seeder
                     'kecamatan_id' => rand(1,70),
                 ]);
 
-            $order = Order::factory()
-                ->create([
-                    'id' => $i,
-                    'no_reg' => 'A' . rand(3,8) . str_replace('-', '', today()->addDays($i)->toDateString()) . rand(11,99),
-                    'address_id' => $i,
-                    'midwife_user_id' => rand(3,8),
-                    'client_user_id' => $i,
-                    'start_datetime' => now()->addDays($i),
-                    'end_datetime' => now()->addDays($i),
-                ]);
+            // $order = Order::factory()
+            //     ->create([
+            //         'id' => $i,
+            //         'no_reg' => 'A' . rand(3,8) . str_replace('-', '', today()->addDays($i)->toDateString()) . rand(11,99),
+            //         'address_id' => $i,
+            //         'midwife_user_id' => rand(3,8),
+            //         'client_user_id' => $i,
+            //         'start_datetime' => now()->addDays($i),
+            //         'end_datetime' => now()->addDays($i),
+            //     ]);
 
-            $treatment1 = rand(1,10);
-            $treatment2 = rand(11,21);
+            // $treatment1 = rand(1,10);
+            // $treatment2 = rand(11,21);
 
-            $order->treatments()->attach([$treatment1, $treatment2]);
+            // $order->treatments()->attach([$treatment1, $treatment2]);
 
-            $order->update([
-                'total_price' => $order->treatments()->sum('price'),
-                'total_duration' => $order->treatments()->sum('duration')
-            ]);
+            // $order->update([
+            //     'total_price' => $order->treatments()->sum('price'),
+            //     'total_duration' => $order->treatments()->sum('duration')
+            // ]);
 
-            $testimonial = Testimonial::factory()
-                ->create([
-                    'order_id' => $order->id,
-                ]);
+            // $testimonial = Testimonial::factory()
+            //     ->create([
+            //         'order_id' => $order->id,
+            //     ]);
 
             // $payment = Payment::factory()
             //     ->create([
