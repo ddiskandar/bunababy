@@ -6,7 +6,11 @@
                     wire:click="selectFamily({{ $family['id'] }})"
                     class="flex items-center justify-between w-full p-4 text-gray-700 hover:text-gray-700 hover:bg-bunababy-50/20 active:bg-white" >
                     <div class="flex items-center space-x-4">
-                        <img class="object-cover w-12 h-12 rounded-full" src="https://ui-avatars.com/api/?name={{ urlencode($family['name']) }}&color=7F9CF5&background=EBF4FF" alt="{{ $family['name'] }}" >
+                        <svg class="w-8 h-8 text-slate-400" fill="none" viewBox="0 0 24 24">
+                            <circle cx="12" cy="8" r="3.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></circle>
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.8475 19.25H17.1525C18.2944 19.25 19.174 18.2681 18.6408 17.2584C17.8563 15.7731 16.068 14 12 14C7.93201 14 6.14367 15.7731 5.35924 17.2584C4.82597 18.2681 5.70558 19.25 6.8475 19.25Z"></path>
+                        </svg>
+                        {{-- <img class="object-cover w-12 h-12 rounded-full" src="https://ui-avatars.com/api/?name={{ urlencode($family['name']) }}&color=7F9CF5&background=EBF4FF" alt="{{ $family['name'] }}" > --}}
                         <div class="text-left">
                         <p class="text-sm font-semibold">
                             {{ $family['name'] }}
@@ -35,7 +39,7 @@
             </svg>
         </div>
         <div class="font-semibold leading-loose">Tambah Pofil </div>
-        <div class="text-sm text-slate-400">Belum ada yang tersimpan, tambahkan profil anda</div>
+        <div class="text-sm text-slate-400 text-center">Belum ada yang tersimpan, tambahkan nama anda terlebih dahulu</div>
     </div>
     @endif
 

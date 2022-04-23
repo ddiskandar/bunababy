@@ -13,7 +13,21 @@ class SelectTime extends Component
     protected $listeners = [
         'treatmentAdded' => '$refresh',
         'treatmentDeleted'=> '$refresh',
+        'newUser'
     ];
+
+
+    public function newUser()
+    {
+        session()->put('order.status', 'newUser');
+    }
+
+    public function mount()
+    {
+        if(auth()->check()){
+            session()->put('order.status', 'authUser');
+        }
+    }
 
     public function selectTime(Slot $slot)
     {

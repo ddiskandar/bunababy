@@ -85,18 +85,6 @@
                 <div>{{ $data['grand_total'] }}</div>
             </div>
 
-            <div class="py-6">
-                @if (session()->has('treatments'))
-                    <div class="mb-4 text-sm text-red-600">{{ session('treatments') }}</div>
-                @endif
-
-                <x-button-lg wire:loading.attr="disabled" wire:click="confirm">
-                    Konfirmasi
-                </x-button-lg>
-            </div>
-
-
-
         </x-panel>
     </div>
 </div>

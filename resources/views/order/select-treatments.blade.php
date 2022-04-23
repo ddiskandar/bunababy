@@ -155,7 +155,7 @@
                             </div>
 
                             <div class="w-full mt-4">
-                                <x-title>Pilih Profil</x-title>
+                                <x-title>Profil untuk pilihan treatment</x-title>
                                 @livewire('order.select-family')
                             </div>
                         </div>

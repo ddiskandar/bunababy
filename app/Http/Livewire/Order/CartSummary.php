@@ -28,7 +28,12 @@ class CartSummary extends Component
 
     public function checkout()
     {
-        if( count(session('order.treatments')) <= 0) {
+        if( session()->missing('order.start_time')){
+            session()->flash('treatments', 'Belum ada slot yang dipilih, silahkan anda mulai reservasi dengan memilih waktu mulai treatment');
+            return back();
+        }
+
+        if( session()->has('order.treatments') AND count(session('order.treatments')) <= 0) {
             session()->flash('treatments', 'Belum ada treatment yang dipilih, silahkan anda pilih terlebih dahulu');
             return back();
         }

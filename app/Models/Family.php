@@ -12,7 +12,7 @@ class Family extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'birt_date' => 'date'
+        'birth_date' => 'date'
     ];
 
     public function client()

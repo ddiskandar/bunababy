@@ -14,6 +14,13 @@ if(!function_exists('tanggal')) {
     }
 }
 
+if(!function_exists('tanggal_indo')) {
+    function tanggal_indo($value)
+    {
+        return $value->isoFormat('D MMMM G');
+    }
+}
+
 if(!function_exists('waktu')) {
     function waktu($value)
     {

@@ -10,10 +10,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 
 use Livewire\Component;
 
-class GuestBiodata extends Component
+class NewUser extends Component
 {
     public $state = [];
 
@@ -22,8 +23,7 @@ class GuestBiodata extends Component
         $kecamatan = Kecamatan::find(session('order.kecamatan_id'));
         $kecamatan->load('kabupaten:id,name');
 
-        $this->state['families'] = collect(session('order.families'))
-            ->toArray();
+        $this->state['families'] = collect(session('order.families'))->toArray();
         $this->state['address'] = '';
         $this->state['rt'] = '';
         $this->state['rw'] = '';
@@ -32,7 +32,6 @@ class GuestBiodata extends Component
         $this->state['kab'] = $kecamatan->kabupaten->name;
         $this->state['phone'] = '';
         $this->state['ig'] = '';
-        // dd($this->state);
     }
 
     protected $rules = [
@@ -44,7 +43,7 @@ class GuestBiodata extends Component
         'state.desa' => 'required|min:4|max:64',
         'state.phone' => 'required|min:11|max:13',
         'state.ig' => 'nullable|min:2',
-        'state.email' => 'required|email',
+        'state.email' => 'required|email|unique:users,email',
         'state.password' => 'required|string|confirmed|min:4',
     ];
 
@@ -71,14 +70,23 @@ class GuestBiodata extends Component
         $this->validate();
 
         DB::transaction(function(){
+
+            $newUser = Arr::where($this->state['families'], function ($item){
+                return $item['type'] == 'Diri Sendiri';
+            })[0];
+
             $user = User::create([
-                'name' => $this->state['families'][0]['name'],
+                'name' => $newUser['name'],
                 'email' => $this->state['email'],
                 'password' => Hash::make( $this->state['password']),
-                'role' => 'client',
+                'type' => User::CLIENT,
+                'remember_token' => Str::random(10),
+            ]);
+
+            $user->profile()->create([
                 'phone' => '62' . $this->state['phone'],
                 'ig' => $this->state['ig'],
-                'remember_token' => Str::random(10),
+                'birthdate' => $newUser['birthdate'],
             ]);
 
             $address = Address::create([
@@ -92,7 +100,11 @@ class GuestBiodata extends Component
                 'is_main' => true,
             ]);
 
-            foreach ($this->state['families'] as $family)
+            $families = Arr::where($this->state['families'], function ($item){
+                return $item['type'] != 'Diri Sendiri';
+            });
+
+            foreach ($families as $family)
             {
                 Family::create([
                     'id' => $family['id'],
@@ -113,6 +125,6 @@ class GuestBiodata extends Component
 
     public function render()
     {
-        return view('order.guest-biodata');
+        return view('order.new-user');
     }
 }

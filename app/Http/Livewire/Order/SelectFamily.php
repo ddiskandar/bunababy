@@ -47,7 +47,7 @@ class SelectFamily extends Component
 
         session()->push('order.families', [
             'id' => time() . rand(111,999),
-            'name' => $this->name,
+            'name' => ucwords($this->name),
             'birthdate' => '',
             'type' => ! session('order.families') ? 'Diri Sendiri' : $this->type,
         ]);

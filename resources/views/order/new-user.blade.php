@@ -1,4 +1,5 @@
 <x-panel>
+    <form wire:submit.prevent="save">
     <div class="pt-2 pb-6">
         <div class="flex items-center mb-6 text-bunababy-400">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -10,11 +11,12 @@
         </div>
         <div class="grid grid-cols-6 gap-6">
 
+
             @foreach ($state['families'] as $index => $family)
                 <!-- Nama Lengkap -->
                 <div class="col-span-6 xl:col-span-2">
                     <x-label for="name" :value="__('Nama Lengkap')" />
-                    <x-input wire:model.lazy="state.families.{{ $index }}.name" id="name" class="block w-full mt-1 uppercase" type="text" name="name" required />
+                    <x-input wire:model.lazy="state.families.{{ $index }}.name" id="name" class="block w-full mt-1 uppercase" type="text" name="name" />
                     <x-input-error for="state.families.{{ $index }}.name" class="mt-2" />
                 </div>
 
@@ -22,7 +24,7 @@
                     <!-- Pilihan Kelas -->
                     <div class="col-span-6 xl:col-span-2">
                         <x-label for="join_wa" :value="__('Hubungan Keluarga')" />
-                        <x-select wire:model.lazy="state.families.{{ $index }}.type" id="join_wa" name="join_wa" autocomplete="join_wa" class="block w-full px-3 mt-1" required>
+                        <x-select wire:model.lazy="state.families.{{ $index }}.type" id="join_wa" name="join_wa" autocomplete="join_wa" class="block w-full px-3 mt-1">
                             <option value="Diri Sendiri">Diri Sendiri</option>
                             <option value="Anak">Anak</option>
                             <option value="Pasangan">Pasangan</option>
@@ -109,7 +111,7 @@
     </div>
 
     <div  class="py-6">
-        <div class="flex items-center mb-6 text-bunababy-400">
+        <div class="flex items-center mb-4 text-bunababy-400">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -117,31 +119,34 @@
                 Akun Login
             </div>
         </div>
+        <div class="mb-4 text-sm text-bunababy-400">Simpan dan catat akun login anda agar reservasi treatment kedepannya bisa lebih cepat.</div>
         <div class="grid grid-cols-6 gap-6">
             <!-- Alamat Email -->
             <div class="col-span-6 xl:col-span-4">
                 <x-label for="name" :value="__('Alamat Email')" />
-                <x-input wire:model.lazy="state.email" id="name" class="block w-full mt-1" type="email" name="email" required />
+                <x-input wire:model.lazy="state.email" id="name" class="block w-full mt-1" type="email" name="email" />
                 <x-input-error for="state.email" class="mt-2" />
             </div>
 
             <!-- Kata Sandi -->
             <div class="col-span-6 xl:col-span-3">
                 <x-label for="name" :value="__('Kata Sandi')" />
-                <x-input wire:model.lazy="state.password" id="name" class="block w-full mt-1" type="password" name="password" required />
+                <x-input wire:model.lazy="state.password" id="name" class="block w-full mt-1" type="password" name="password" />
                 <x-input-error for="state.password" class="mt-2" />
             </div>
 
             <!-- Konfirmasi Kata Sandi -->
             <div class="col-span-6 xl:col-span-3">
                 <x-label for="name" :value="__('Konfirmasi Kata Sandi')" />
-                <x-input wire:model.lazy="state.password_confirmation" id="name" class="block w-full mt-1" type="password" name="password" required />
+                <x-input wire:model.lazy="state.password_confirmation" id="name" class="block w-full mt-1" type="password" name="password" />
                 <x-input-error for="state.password_confirmation" class="mt-2" />
             </div>
             <div class="col-span-6 xl:col-span-2">
-                <button wire:click="save" class="block w-full py-3 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50">
-                    Buat Akun
-                </button>
+                <x-button class=""
+                    wire:loading.attr="disabled"
+                >
+                    Simpan dan Buat Akun
+                </x-button>
             </div>
         </div>
     </div>

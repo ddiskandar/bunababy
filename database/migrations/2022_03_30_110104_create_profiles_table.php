@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('photo')->nullable();
             $table->string('ig')->nullable();
             $table->string('no_reg')->nullable();
-            $table->date('birthdate')->nullable();
+            $table->date('birth_date')->nullable();
             $table->timestamps();
         });
     }
