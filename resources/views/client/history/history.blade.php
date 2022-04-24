@@ -43,7 +43,7 @@
 
                         <div class="text-sm font-medium">
                             <span>{{ $reservation->start_datetime->isoFormat('dddd, DD MMMM Y') }}</span>
-                            <span class="">{{ $reservation->start_datetime->isoFormat('HH:mm') . ' - ' . $reservation->start_datetime->isoFormat('HH:mm') }} WIB</span>
+                            <span class="">{{ $reservation->start_datetime->isoFormat('HH:mm') . ' - ' . $reservation->end_datetime->isoFormat('HH:mm') }} WIB</span>
                         </div>
                     </div>
                     <div>

@@ -19,6 +19,27 @@ class SelectTreatments extends Component
         $this->currentTreatment = new Treatment();
 
         $this->family_id = time() . rand(11, 99);
+
+        if (auth()->check()) {
+
+            if (auth()->user()->families()->exists()) {
+                session()->put('order.families', auth()->user()->families->toArray());
+                session()->push('order.families', [
+                    'id' => time() . rand(111,999),
+                    'name' => auth()->user()->name,
+                    'type' => 'Diri Sendiri'
+                ]);
+            } else {
+                session()->put('order.families', [
+                    [
+                        'id' => time() . rand(111,999),
+                        'name' => auth()->user()->name,
+                        'type' => 'Diri Sendiri'
+                    ]
+                ]);
+            }
+
+        }
     }
 
     protected $listeners = [

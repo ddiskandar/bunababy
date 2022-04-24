@@ -145,14 +145,19 @@ class Order extends Model
         return $this->getGrandTotal() - $this->verifiedPayments->pluck('value')->sum();
     }
 
-    public function setNoRegdAttribute()
+    public function numberStartTime()
     {
-        $this->attributes['no_reg'] = rand(1,9). time() . rand(00001,9999);
+        return session('order.place') . session('order.midwife_user_id') . session('order.start_time')[0] . session('order.start_time')[1];
     }
 
-    public function setInvoiceAttribute()
+    public function getNoReg()
     {
-        $this->attributes['invoice'] = 'INV/' . str_replace('-', '', today()->toDateString()) . '/BBC/'. rand(1111111111, 9999999999);
+        return session('order.date')->isoFormat('YYMMDD') . $this->numberStartTime();
+    }
+
+    public function getInvoice()
+    {
+        return 'INV/' . session('order.date')->isoFormat('YYMMDD') . '/BBC/' . $this->numberStartTime();
     }
 
     public function scopeActiveBetween($query, $from, $to)

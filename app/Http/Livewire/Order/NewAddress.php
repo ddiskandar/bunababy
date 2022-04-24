@@ -49,7 +49,7 @@ class NewAddress extends Component
     {
         $this->validate();
 
-        Address::create([
+        $address = Address::create([
             'client_user_id' => auth()->id(),
             'label' => 'Alamat Baru',
             'address' => $this->state['address'],
@@ -59,6 +59,8 @@ class NewAddress extends Component
             'kecamatan_id' => session('order.kecamatan_id'),
             'is_main' => true,
         ]);
+
+        session()->put('order.address_id', $address->id);
 
         $this->state = [];
 

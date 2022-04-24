@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\Order;
 
 class OrderController extends Controller
@@ -41,6 +42,15 @@ class OrderController extends Controller
 
         if( session()->missing('order.midwife_user_id') OR session()->missing('order.place') OR session()->missing('order.kecamatan_id') OR session()->missing('order.date') OR session()->missing('order.start_time_id') OR session()->missing('order.treatments') ) {
             return to_route('order.cart');
+        }
+
+        if(auth()->check()){
+
+            $address = auth()->user()->addresses->where('kecamatan_id', session('order.kecamatan_id'))->first();
+
+            if ($address) {
+                session()->put('order.address_id', $address->id);
+            }
         }
 
         return view('client.order.checkout');

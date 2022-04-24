@@ -24,7 +24,7 @@ class CreateOrdersTable extends Migration
             $table->integer('total_price');
             $table->integer('total_duration');
             $table->integer('total_transport');
-            $table->integer('additional')->nullable();
+            $table->integer('additional')->default(0);
             $table->timestamp('start_datetime');
             $table->timestamp('end_datetime')->nullable();
             $table->string('screening')->nullable();

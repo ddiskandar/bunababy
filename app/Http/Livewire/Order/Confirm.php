@@ -11,18 +11,7 @@ class Confirm extends Component
 {
     public function confirm()
     {
-        // sleep(2);
-        // return back();
         $this->orderNow();
-    }
-
-    public function getNoReg()
-    {
-        $alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-        $phone = auth()->user()->profile->phone;
-        $i = rand(1,26);
-        $j = rand(1,26);
-        return $alphabet[$i] . $alphabet[$j] . $phone;
     }
 
     public function orderNow()
@@ -30,12 +19,12 @@ class Confirm extends Component
         DB::transaction(function(){
 
             $order = new Order();
-            $order->no_reg = $this->getNoReg();
-            $order->invoice = 'INV/' . session('order.date')->isoFormat('YYYYMMDD') . '/BBC/' . rand(111111, 999999);
+            $order->no_reg = $order->getNoReg();
+            $order->invoice = $order->getInvoice();
             $order->place = session('order.place');
             $order->client_user_id = auth()->id();
             $order->midwife_user_id = session('order.midwife_user_id');
-            $order->address_id = 31;
+            $order->address_id = session('order.address_id');
             $order->total_price = $order->getTotalPrice();
             $order->total_duration = $order->getTotalDuation();
             $order->total_transport = $order->getTotalTransport();
