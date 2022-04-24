@@ -1,3 +1,10 @@
+{{-- <div @class([
+    'inline-flex px-6 py-1 leading-4 text-xs rounded-full',
+    'text-orange-700 bg-orange-200' => $order->status == '1',
+    'text-green-700 bg-green-200' => $order->status == '2',
+    'text-blue-700 bg-blue-200' => $order->status == '3',
+])
+>{{ $order->status() }}</div> --}}
 <x-panel>
     <div>
         <div class="mb-4">

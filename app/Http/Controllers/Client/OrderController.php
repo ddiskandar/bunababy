@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -58,8 +59,11 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
+        $options = DB::table('options')->select('account', 'account_name')->first();
+
         return view('client.order.show', [
             'order' => $order,
+            'options' => $options
         ]);
     }
 }

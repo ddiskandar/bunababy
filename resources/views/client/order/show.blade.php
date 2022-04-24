@@ -13,7 +13,7 @@
             @include('client.order._summary')
             @livewire('order.payments', [$order->id])
         </div>
-        <div class="order-1 mt-6 space-y-8 lg:order-2 lg:w-96 lg:flex-initial lg:mt-0">
+        <div class="order-1 space-y-6 lg:order-2 lg:w-96 lg:flex-initial lg:mt-0">
             @include('client.order._detail')
             @include('client.order._activity')
         </div>

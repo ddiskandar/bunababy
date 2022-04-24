@@ -1,38 +1,55 @@
 <x-panel>
-    <div>
-        <div class="flex items-center justify-between mb-4">
-            <div  >
-                <x-title>ID Transaksi</x-title>
-                <div class="font-semibold">{{ $order->no_reg }}</div>
-                {{-- <p class="text-xs">Harap inputkan ID Transaksi di nomor referensi atau pesan pada proses transfer.</p> --}}
-            </div>
-            <div @class([
-                    'inline-flex px-6 py-1 leading-4 text-xs rounded-full',
-                    'text-orange-700 bg-orange-200' => $order->status == '1',
-                    'text-green-700 bg-green-200' => $order->status == '2',
-                    'text-blue-700 bg-blue-200' => $order->status == '3',
-                ])
-            >{{ $order->status() }}</div>
+    <div class="flex items-center justify-between ">
+        <div>
+            <x-title>ID Transaksi</x-title>
+            <div class="font-semibold">{{ $order->no_reg }}</div>
+        </div>
+        <div class="flex items-center text-bunababy-200">
+            <a href="{{ route('order.invoice', $order->no_reg) }}" target="_blank"
+                class="block w-full py-2 text-sm text-center"
+            >
+                Download Invoice
+            </a>
+            <svg width="24" height="24" class="ml-2" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.75 6.75L19.25 12L13.75 17.25"></path>
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 12H4.75"></path>
+            </svg>
 
         </div>
-
-        <x-title>Minimal Pembayaran DP</x-title>
-        <div class="mb-4 font-semibold">{{ rupiah($order->getDpAmount()) }}</div>
-
-        <x-title>Total Tagihan</x-title>
-        <div class="mb-4 font-semibold">{{ rupiah($order->getGrandTotal()) }}</div>
-
-        <x-title>Batas Akhir Pembayaran</x-title>
-        <div class="mb-4 font-semibold">{{ $order->created_at->addMinutes(30)->isoFormat('dddd, D MMMM G HH:mm') }}</div>
-
-        <x-title>Pembayaran melalui</x-title>
-        <div class="mb-4 font-semibold">BCA 2810417067<br>a/n Febrianti Nur Azizah</div>
-
-    </div>
-
-    <div class="py-6">
-        <a href="{{ route('order.invoice', $order->no_reg) }}" target="_blank"
-            class="block w-full py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
-            >Download Invoice</a>
     </div>
 </x-panel>
+
+@if (! $order->isPaid())
+<div class="flex flex-col px-4 py-4 border divide-y rounded md:px-8 border-bunababy-100">
+    <div>
+        @if (!$order->payments()->exists())
+            <div class="text-sm">Besar Pembayaran DP (50%)</div>
+            <div class="mb-4 text-3xl font-semibold text-red-600">{{ rupiah($order->getDpAmount()) }}</div>
+
+            <div class="text-sm">Silahkan untuk segera melakukan pembayaran di ATM atau Internet Banking sebelum</div>
+            <div class="mt-1 mb-4 font-semibold">{{ $order->created_at->addMinutes(30)->isoFormat('dddd, D MMMM G HH:mm') }}</div>
+            @else
+            <div class="text-sm">Sisa Pembayaran</div>
+            <div class="mb-4 text-3xl font-semibold text-red-600">{{ rupiah($order->getRemainingPayment()) }}</div>
+            <div class="mb-4 text-sm">Silahkan untuk segera melakukan pembayaran di ATM atau Internet Banking</div>
+        @endif
+
+        <div class="text-sm">Pembayaran melalui</div>
+        <div class="mb-4 font-semibold">
+            <div>
+                {{ $options->account }}
+            </div>
+            <div>
+                {{ $options->account_name }}
+            </div>
+        </div>
+
+        <div class="text-sm">Kode Referensi</div>
+        <div class="mb-4 font-semibold">
+            <div>
+                {{ $order->no_reg }}
+            </div>
+        </div>
+    </div>
+</div>
+@endif
