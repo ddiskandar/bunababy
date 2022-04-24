@@ -10,7 +10,7 @@ Route::get('/order/create', [App\Http\Controllers\Client\OrderController::class,
 Route::get('/order/cart', [App\Http\Controllers\Client\OrderController::class, 'cart'])->name('order.cart');
 Route::get('/order/checkout', [App\Http\Controllers\Client\OrderController::class, 'checkout'])->name('order.checkout');
 Route::get('/invoice/{order:no_reg}', App\Http\Controllers\OrderInvoiceController::class)->name('order.invoice');
-Route::get('/show/{order:no_reg}', [App\Http\Controllers\Client\OrderController::class, 'show'])->name('order.show');
+Route::get('/reservation/{order:no_reg}', [App\Http\Controllers\Client\OrderController::class, 'show'])->name('order.show');
 
 Route::middleware(['auth'])->group(function () {
 
@@ -23,6 +23,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/addresses', App\Http\Livewire\Client\ManageAddresses::class)->name('client.addresses');
         Route::get('/families', App\Http\Livewire\Client\ManageFamilies::class)->name('client.families');
         Route::get('/change-password', App\Http\Livewire\Client\ChangePassword::class)->name('client.change-password');
+        Route::get('/reservation/{order:no_reg}/testimonial/create', [App\Http\Controllers\TestimonialsController::class, 'create'])->name('testimonial.create');
+        Route::get('/reservation/{order:no_reg}/testimonial', [App\Http\Controllers\TestimonialsController::class, 'show'])->name('testimonial.show');
     });
 
     // Dashboard

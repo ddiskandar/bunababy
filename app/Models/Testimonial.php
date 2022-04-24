@@ -10,6 +10,8 @@ class Testimonial extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);

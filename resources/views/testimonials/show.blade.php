@@ -1,7 +1,13 @@
-<div class="py-4">
-    <div class="mb-4 text-lg font-semibold text-bunababy-400">Treatment anda</div>
+<x-client-layout>
+    <div class="sticky top-0 z-20 py-3 bg-white border-b border-bunababy-50 ">
+        <div class="container flex items-center justify-between px-4 mx-auto sm:px-12">
+            <div>
+                <a href="/"><img src="/images/logo.svg" alt="Logo"></a>
+            </div>
+        </div>
+    </div>
 
-    @if ($reservation)
+    <div class="container px-4 py-4 mx-auto md:py-6 sm:px-12 ">
         <div class="max-w-lg p-6 border rounded shadow-lg border-bunababy-50 shadow-bunababy-50">
             <div class="flex flex-col gap-3 mb-4 md:flex-row md:justify-between md:items-center">
                 <div class="flex items-center gap-2">
@@ -39,7 +45,7 @@
                     <span class="">{{ $reservation->midwife->name }}</span>
                 </div>
             </div>
-            <div class="grid grid-cols-2 mt-4">
+            <div class="grid grid-cols-2 pb-4 mt-4">
                 <div>
                     <div class="text-sm">Total Pembayaran</div>
                     <div class="font-bold">{{ rupiah($reservation->getGrandTotal()) }}</div>
@@ -60,37 +66,28 @@
                     @endif
                 </div>
             </div>
-            <div class="mt-6">
-                @if ($reservation->status == '1')
-                    <a href="{{ route('order.show', $reservation->no_reg) }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-bunababy-100 bg-bunababy-200">
-                        Bayar DP
-                    </a>
-                @elseif ($reservation->status == '2')
-                    <a href="{{ route('order.show', $reservation->no_reg) }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-bunababy-100 bg-bunababy-200 ">
-                        Lunasi Pembayaran
-                    </a>
-                @else
 
-                    @if ($reservation->testimonial()->exists())
-                        <a href="{{ route('testimonial.show', $reservation->no_reg) }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-bunababy-100 bg-bunababy-200">
-                            Lihat Ulasan
-                        </a>
-                    @else
-                        <a href="{{ route('testimonial.create', $reservation->no_reg) }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-bunababy-100 bg-bunababy-200">
-                            Beri Ulasan
-                        </a>
-                    @endif
-
-                @endif
+            <div class="py-4 border-t border-bunababy-50">
+                <div>
+                    <x-title>Ulasan anda</x-title>
+                    <div class="py-2">
+                        <div class="flex">
+                            @for ( $i = 1; $i <= 5; $i++ )
+                                <svg class="h-8 w-8 {{ $i <= $reservation->testimonial->rate ? 'text-yellow-500' : 'text-slate-400' }}"  viewBox="0 0 24 24">
+                                    <path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.75L13.75 10.25H19.25L14.75 13.75L16.25 19.25L12 15.75L7.75 19.25L9.25 13.75L4.75 10.25H10.25L12 4.75Z"></path>
+                                </svg>
+                            @endfor
+                        </div>
+                    </div>
+                    <div class="py-2">
+                        <div class="text-base">
+                            {{ $reservation->testimonial->description }}
+                        </div>
+                    </div>
+                </div>
             </div>
-
-        </div>
-        <div class="py-4">
-            <a href="{{ route('client.history') }}" class="text-sm text-bunababy-200 ">Lihat semua riwayat reservasi</a>
         </div>
 
-    @else
-        <div>Belum ada</div>
-        <div>Buat Order Sekarang</div>
-    @endif
-</div>
+    </div>
+
+</x-client-layout>
