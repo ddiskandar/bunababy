@@ -1,5 +1,5 @@
 <div>
-    Ulasan anda
+    <x-title>Ulasan anda</x-title>
     <div class="py-2">
         <div class="flex">
             @for ( $i = 1; $i <= 5; $i++ )
