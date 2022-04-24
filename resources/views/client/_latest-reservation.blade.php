@@ -90,7 +90,12 @@
         </div>
 
     @else
-        <div>Belum ada</div>
-        <div>Buat Order Sekarang</div>
+        <div class="flex flex-col items-center justify-center max-w-lg border border-dashed rounded py-14 border-bunababy-50">
+            <div class="font-semibold text-slate-600">Belum Ada Reservasi</div>
+            <div class="text-sm text-slate-400">Anda belum pernah membuat reservasi</div>
+            <a href="{{ route('order.create') }}" class="mt-4">
+                <x-button>+ Buat Reservasi</x-button>
+            </a>
+        </div>
     @endif
 </div>

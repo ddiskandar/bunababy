@@ -1902,6 +1902,9 @@ select {
 .border-l-4 {
   border-left-width: 4px;
 }
+.border-dashed {
+  border-style: dashed;
+}
 .border-gray-300 {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
@@ -2339,6 +2342,10 @@ select {
 .px-28 {
   padding-left: 7rem;
   padding-right: 7rem;
+}
+.py-14 {
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
 }
 .pr-12 {
   padding-right: 3rem;
