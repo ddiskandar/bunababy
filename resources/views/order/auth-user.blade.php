@@ -9,7 +9,7 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 w-full ">
+        <div class="grid w-full grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2 ">
             <div class="sm:col-span-1">
                 <dt class="text-sm font-medium text-gray-500">
                     Nama Buna
@@ -20,18 +20,19 @@
             </div>
             <div class="sm:col-span-1">
                 <dt class="text-sm font-medium text-gray-500">
-                    Nama Baby
-                </dt>
-                <dd class="mt-1 text-sm text-gray-900">
-                    {{ $baby->name }}
-                </dd>
-            </div>
-            <div class="sm:col-span-1">
-                <dt class="text-sm font-medium text-gray-500">
                     Usia Buna
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900">
                     {{ auth()->user()->profile->birth_date->age }}
+                </dd>
+            </div>
+            @isset($baby)
+            <div class="sm:col-span-1">
+                <dt class="text-sm font-medium text-gray-500">
+                    Nama Baby
+                </dt>
+                <dd class="mt-1 text-sm text-gray-900">
+                    {{ $baby->name }}
                 </dd>
             </div>
             <div class="sm:col-span-1">
@@ -42,6 +43,7 @@
                     {{ tanggal_indo($baby->birth_date) }}
                 </dd>
             </div>
+            @endisset
             <div class="sm:col-span-1">
                 <dt class="text-sm font-medium text-gray-500">
                     Nomor Whatsapp
@@ -66,6 +68,7 @@
                     {{ auth()->user()->profile->ig }}
                 </dd>
             </div>
+            @if (isset($address->full_address))
             <div class="sm:col-span-2">
                 <dt class="text-sm font-medium text-gray-500">
                     Alamat
@@ -74,10 +77,16 @@
                     {{ $address->full_address }}
                 </dd>
             </div>
+            @endif
 
         </div>
 
-        @livewire('order.confirm')
+        @if (isset($address->full_address))
+            @livewire('order.confirm')
+        @else
+            @livewire('order.new-address')
+        @endif
+
 
     </div>
 
