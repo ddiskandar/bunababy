@@ -3,7 +3,7 @@
         <div class="md:flex">
             <div class="flex-1">
                 <x-title>Tanggal dan Waktu</x-title>
-                <div  >
+                <div>
                     <div class="font-semibold">{{ $order->start_datetime->isoFormat('dddd, D MMMM G') }}</div>
                     <span  >{{ $order->start_datetime->isoFormat('HH:mm') . ' - ' . $order->end_datetime->isoFormat('HH:mm') }} WIB</span>
                 </div>
@@ -38,45 +38,45 @@
             <ul class="divide-y divide-bunababy-50">
                 @foreach ($order->treatments as $treatment)
                     <li class="flex justify-between py-2 text-sm">
-                        <div  >{{ $treatment->name }}</div>
+                        <div>{{ $treatment->name }}</div>
                         <div class="truncate text-slate-400 ">
                         </div>
                         <div class="flex justify-between ">
-                            <div  >{{ rupiah($treatment->price) }}</div>
+                            <div>{{ rupiah($treatment->price) }}</div>
                         </div>
                     </li>
                 @endforeach
 
                 <li class="py-2 text-sm font-semibold">
                     <div class="flex justify-between py-2">
-                        <div  >Subtotal</div>
-                        <div  >{{ rupiah($order->total_price) }}</div>
+                        <div>Subtotal</div>
+                        <div>{{ rupiah($order->total_price) }}</div>
                     </div>
                 </li>
 
                 <li class="py-2 text-sm ">
                     <div class="flex justify-between py-2">
-                        <div  >Transport</div>
-                        <div  >{{ rupiah($order->total_transport) }}</div>
+                        <div>Transport</div>
+                        <div>{{ rupiah($order->total_transport) }}</div>
                     </div>
                 </li>
 
                 <li class="py-2 text-sm font-semibold">
                     <div class="flex justify-between py-2">
-                        <div  >Total Tagihan</div>
-                        <div  >{{ rupiah($order->getGrandTotal()) }}</div>
+                        <div>Total Tagihan</div>
+                        <div>{{ rupiah($order->getGrandTotal()) }}</div>
                     </div>
                 </li>
                 <li class="py-2 text-sm ">
                     <div class="flex justify-between py-2">
-                        <div  >Sudah Bayar</div>
-                        <div  >{{ rupiah($order->getVerifiedPayments()) }}</div>
+                        <div>Sudah Bayar</div>
+                        <div>{{ rupiah($order->getVerifiedPayments()) }}</div>
                     </div>
                 </li>
                 <li class="py-2 text-sm font-semibold">
                     <div class="flex justify-between py-2">
-                        <div  >Sisa Pembayaran</div>
-                        <div  >{{ rupiah($order->getRemainingPayment()) }}</div>
+                        <div>Sisa Pembayaran</div>
+                        <div>{{ rupiah($order->getRemainingPayment()) }}</div>
                     </div>
                 </li>
             </ul>

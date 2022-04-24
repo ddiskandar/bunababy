@@ -57,13 +57,24 @@ class OrderController extends Controller
         return view('client.order.checkout');
     }
 
-    public function show(Order $order)
+    public function show($no_reg)
     {
         $options = DB::table('options')->select('account', 'account_name')->first();
+        $order = Order::where('no_reg', $no_reg)
+            ->first();
+
+        $isPaid = $order->isPaid();
+        $dp =  $order->dp();
+        $hasPayments = $order->payments()->exists();
+        $hasTestimonial = $order->testimonial()->exists();
 
         return view('client.order.show', [
             'order' => $order,
-            'options' => $options
+            'options' => $options,
+            'isPaid' => $isPaid,
+            'hasPayments' => $hasPayments,
+            'dp' => $dp,
+            'hasTestimonial' => $hasTestimonial,
         ]);
     }
 }

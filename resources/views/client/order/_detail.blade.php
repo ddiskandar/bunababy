@@ -19,15 +19,15 @@
     </div>
 </x-panel>
 
-@if (! $order->isPaid())
+@if (! $isPaid)
 <div class="flex flex-col px-4 py-4 border divide-y rounded md:px-8 border-bunababy-100">
-    <div>
-        @if (!$order->payments()->exists())
+    <div class="mt-2">
+        @if (!$hasPayments)
             <div class="text-sm">Besar Pembayaran DP (50%)</div>
             <div class="mb-4 text-3xl font-semibold text-red-600">{{ rupiah($order->getDpAmount()) }}</div>
 
             <div class="text-sm">Silahkan untuk segera melakukan pembayaran di ATM atau Internet Banking sebelum</div>
-            <div class="mt-1 mb-4 font-semibold">{{ $order->created_at->addMinutes(30)->isoFormat('dddd, D MMMM G HH:mm') }}</div>
+            <div class="mt-1 mb-4 font-semibold">{{ $order->created_at->addMinutes(30)->isoFormat('dddd, D MMMM G HH:mm') }} WIB</div>
             @else
             <div class="text-sm">Sisa Pembayaran</div>
             <div class="mb-4 text-3xl font-semibold text-red-600">{{ rupiah($order->getRemainingPayment()) }}</div>
@@ -50,6 +50,8 @@
                 {{ $order->no_reg }}
             </div>
         </div>
+
+        <div class="text-sm">Pastikan untuk segera upload bukti transfer setelah melakukan pembayaran</div>
     </div>
 </div>
 @endif
