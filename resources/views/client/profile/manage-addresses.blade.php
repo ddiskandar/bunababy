@@ -41,13 +41,11 @@
                     {{ $address->full_address }}
                 </div>
                 <div class="py-2">
-                    <a
+                    <button class="text-sm font-semibold text-bunababy-200"
                         wire:click="showEditDialog({{ $address->id }})"
-                        href="#"
-                        class="text-sm font-semibold text-bunababy-200"
-                        >
+                    >
                         Ubah Alamat
-                    </a>
+                    </button>
                 </div>
 
             </li>
