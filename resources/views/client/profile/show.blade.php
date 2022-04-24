@@ -10,11 +10,11 @@
                 </h3>
                 <div class="py-2">
                     <div class="text-sm text-slate-600">Nomor WA</div>
-                    <div class="">{{ auth()->user()->profile->phone }}</div>
+                    <div  >{{ auth()->user()->profile->phone }}</div>
                 </div>
                 <div class="py-2">
                     <div class="text-sm text-slate-600">Alamat Email</div>
-                    <div class="">{{ auth()->user()->email }}</div>
+                    <div  >{{ auth()->user()->email }}</div>
                 </div>
                 <div class="flex items-center py-2 text-bunababy-100">
                     <a href="{{ route('client.profile.edit') }}" class="text-sm">Edit Profil</a>

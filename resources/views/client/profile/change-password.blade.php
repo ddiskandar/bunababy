@@ -16,7 +16,7 @@
     </div>
 
     <div class="max-w-xl px-4 py-6 mx-auto ">
-        <div class="">
+        <div  >
             <x-label for="current_password" :value="__('Password sekarang')" />
             <x-input wire:model="current_password" id="current_password" class="block w-full mt-1" type="password" name="current_password" />
             <x-input-error for="current_password" class="mt-2" />

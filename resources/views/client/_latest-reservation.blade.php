@@ -14,7 +14,7 @@
 
                     <div class="text-sm font-medium">
                         <span>{{ $reservation->start_datetime->isoFormat('dddd, DD MMMM Y') }}</span>
-                        <span class="">{{ $reservation->start_datetime->isoFormat('HH:mm') . ' - ' . $reservation->end_datetime->isoFormat('HH:mm') }} WIB</span>
+                        <span  >{{ $reservation->start_datetime->isoFormat('HH:mm') . ' - ' . $reservation->end_datetime->isoFormat('HH:mm') }} WIB</span>
                     </div>
                 </div>
                 <div>
@@ -30,13 +30,13 @@
                 <div class="text-lg font-semibold hover:underline">
                     <a href="{{ route('order.show', $reservation->no_reg) }}">
                         @foreach ($reservation->treatments as $treatment)
-                            <span class="">{{ $treatment->name }}</span>@if(!$loop->last)<span>, </span>@endif
+                            <span  >{{ $treatment->name }}</span>@if(!$loop->last)<span>, </span>@endif
                         @endforeach
                     </a>
                 </div>
                 <div>
-                    <span class="">{{ $reservation->place() }}</span>
-                    <span class="">{{ $reservation->midwife->name }}</span>
+                    <span  >{{ $reservation->place() }}</span>
+                    <span  >{{ $reservation->midwife->name }}</span>
                 </div>
             </div>
             <div class="grid grid-cols-2 mt-4">

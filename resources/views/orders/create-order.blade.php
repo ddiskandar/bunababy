@@ -19,7 +19,7 @@
             <form onsubmit="return false;" enctype="multipart/form-data" class="space-y-6">
 
             <div class="space-y-1">
-                <x-label class="" for="place">Tempat</x-label>
+                <x-label   for="place">Tempat</x-label>
                 <select wire:model="place" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="place">
                     <option value="">--Pilih salah satu</option>
                     <option value="1">Homecare</option>
@@ -29,7 +29,7 @@
             </div>
 
             <div class="space-y-1">
-                <x-label class="" for="clientId">Client</x-label>
+                <x-label   for="clientId">Client</x-label>
                 <select wire:model="clientId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="clientId">
                     <option value="" selected>-- Pilih salah satu</option>
                     @foreach ($clients as $client)
@@ -41,7 +41,7 @@
 
             @if ($clientId)
             <div class="space-y-1">
-                <x-label class="" for="kecamatanId">Kecamatan</x-label>
+                <x-label   for="kecamatanId">Kecamatan</x-label>
                 <select wire:model="kecamatanId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="kecamatanId">
                     <option value="" selected>-- Pilih salah satu</option>
                     @foreach ($kecamatans as $kecamatan)
@@ -54,7 +54,7 @@
 
             @if ($kecamatanId && ! $showAllMidwives)
             <div class="space-y-1">
-                <x-label class="" for="midwifeId">Bidan</x-label>
+                <x-label   for="midwifeId">Bidan</x-label>
                 <select wire:model="midwifeId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="midwifeId">
                     <option value="" selected>-- Pilih salah satu</option>
                     @foreach ($kecamatan->midwives as $midwife)
@@ -72,7 +72,7 @@
 
             @if ($kecamatanId && $showAllMidwives)
             <div class="space-y-1">
-                <x-label class="" for="midwifeId">Bidan</x-label>
+                <x-label   for="midwifeId">Bidan</x-label>
                 <select wire:model="midwifeId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="midwifeId">
                     <option value="" selected>-- Pilih salah satu</option>
                     @foreach ($midwives as $midwife)
@@ -90,7 +90,7 @@
 
             @if ($midwifeId)
             <div class="space-y-1">
-                <x-label class="" for="date">Tanggal Treatment</x-label>
+                <x-label   for="date">Tanggal Treatment</x-label>
                 <x-input wire:model="date" class="w-full" type="date" id="date" />
                 <x-input-error for="date" class="mt-2" />
             </div>
@@ -98,7 +98,7 @@
 
             @if ($orders)
             <div class="space-y-1">
-                <x-label class="" for="date">Jadwal Yang Sudah Dipesan</x-label>
+                <x-label   for="date">Jadwal Yang Sudah Dipesan</x-label>
                 @foreach ($orders as $order)
                     <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 border rounded-full text-slate-600 bg-slate-50 border-slate-200">
                         {{\Carbon\Carbon::createFromFormat('H:i:s',$order->start_time)->format('h:i')}} - {{\Carbon\Carbon::createFromFormat('H:i:s',$order->end_time)->format('h:i')}}
@@ -108,13 +108,13 @@
 
                 @if ($midwifeId)
                 <div class="space-y-1">
-                    <x-label class="" for="time">Waktu Treatment</x-label>
+                    <x-label   for="time">Waktu Treatment</x-label>
                     <x-input wire:model="time" class="w-full" type="time" id="time" />
                     <x-input-error for="time" class="mt-2" />
                 </div>
 
                 <div class="flex items-center">
-                    <div class="">
+                    <div  >
                         <x-button wire:click="save">Tambah</x-button>
                     </div>
                     <x-action-message class="ml-3" on="saved">

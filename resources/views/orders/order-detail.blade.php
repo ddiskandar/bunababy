@@ -66,8 +66,8 @@
                     Waktu
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900">
-                    <span class="">{{ $order->date->isoFormat('dddd, DD MMMM gggg') }}</span>
-                    <span class="">{{\Carbon\Carbon::createFromFormat('H:i:s',$order->start_time)->format('h:i')}} - {{\Carbon\Carbon::createFromFormat('H:i:s',$order->end_time)->format('h:i')}}</span>
+                    <span  >{{ $order->date->isoFormat('dddd, DD MMMM gggg') }}</span>
+                    <span  >{{\Carbon\Carbon::createFromFormat('H:i:s',$order->start_time)->format('h:i')}} - {{\Carbon\Carbon::createFromFormat('H:i:s',$order->end_time)->format('h:i')}}</span>
                 </dd>
             </div>
 

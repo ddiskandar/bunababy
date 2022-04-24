@@ -59,17 +59,17 @@
             </div>
 
             <div class="space-y-1">
-                <x-label class="" for="state.name">Nama bidan</x-label>
+                <x-label   for="state.name">Nama bidan</x-label>
                 <x-input wire:model.lazy="state.name" class="w-full" type="text" id="state.name" />
                 <x-input-error for="state.name" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.email">Alamat Email</x-label>
+                <x-label   for="state.email">Alamat Email</x-label>
                 <x-input wire:model.lazy="state.email" class="w-full" type="email" id="state.email" />
                 <x-input-error for="state.email" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.phone">Nomor WA</x-label>
+                <x-label   for="state.phone">Nomor WA</x-label>
                 <x-input wire:model.lazy="state.phone" class="w-full" type="text" id="state.phone" />
                 <x-input-error for="state.phone" class="mt-2" />
             </div>
@@ -79,12 +79,12 @@
                         <input wire:model.lazy="state.active" id="active" name="active" type="checkbox" class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
                     </div>
                     <div class="ml-2 ">
-                        <x-label class="" for="state.active">Aktif</x-label>
+                        <x-label   for="state.active">Aktif</x-label>
                     </div>
                 </div>
             </div>
             <div class="flex items-center">
-                <div class="">
+                <div  >
                     <x-button wire:click="save">Simpan</x-button>
                 </div>
                 <x-action-message class="ml-3" on="saved">
@@ -116,7 +116,7 @@
         <!-- Card Body: User Profile -->
         <div class="w-full p-5 lg:p-6 grow">
             <div class="space-y-1">
-                <x-label class="" >Wilayah</x-label>
+                <x-label   >Wilayah</x-label>
                 <div class="flex flex-wrap gap-2 py-2">
                     @forelse ($kecamatans as $kecamatan)
                         <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 rounded-full text-bunababy-200 bg-bunababy-50">
@@ -135,7 +135,7 @@
             </div>
 
             <div class="mt-4 space-y-1">
-                <x-label class="" for="kecamatan_id">Tambah Wilayah baru</x-label>
+                <x-label   for="kecamatan_id">Tambah Wilayah baru</x-label>
                 <select wire:model="kecamatan_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="kecamatan_id">
                     <option value="" selected>-- Pilih salah satu</option>
                     @foreach ($kecamatansFiltered as $kecamatan)

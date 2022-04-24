@@ -17,12 +17,12 @@
         <!-- Card Body: User Profile -->
         <div class="w-full p-5 space-y-6 lg:p-6 grow">
             <div class="space-y-1">
-                <x-label class="" for="state.timeout">Timeout</x-label>
+                <x-label   for="state.timeout">Timeout</x-label>
                 <x-input wire:model.lazy="state.timeout" class="w-full" type="text" id="state.timeout" />
                 <x-input-error for="state.timeout" class="mt-2" />
             </div>
             <div class="flex items-center">
-                <div class="">
+                <div  >
                     <x-button wire:click="save">Simpan</x-button>
                 </div>
                 <x-action-message class="ml-3" on="saved">

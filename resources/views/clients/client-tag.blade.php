@@ -16,7 +16,7 @@
         <!-- Card Body: User Profile -->
         <div class="w-full p-5 lg:p-6 grow">
             <div class="space-y-1">
-                <x-label class="">Tag</x-label>
+                <x-label  >Tag</x-label>
                 <div class="flex flex-wrap gap-2 py-2">
                     @forelse ($client->tags as $tag)
                         <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 rounded-full text-bunababy-200 bg-bunababy-50">
@@ -35,7 +35,7 @@
             </div>
 
             <div class="mt-4 space-y-1">
-                <x-label class="" for="tagId">Tambah Tag</x-label>
+                <x-label   for="tagId">Tambah Tag</x-label>
                 <select wire:model="tagId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="kecamatan_id">
                     <option value="" selected>-- Pilih salah satu</option>
                     @foreach ($tags as $tag)

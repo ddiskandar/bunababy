@@ -150,7 +150,7 @@
 
         <div class="h-64 mt-2 space-y-3 overflow-y-auto">
             <div class="space-y-1">
-                <x-label class="" for="state.midwife_user_id">Bidan</x-label>
+                <x-label   for="state.midwife_user_id">Bidan</x-label>
                 <select wire:model.lazy="state.midwife_user_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.midwife_user_id">
                     <option value="" selected>-- Pilih salah satu</option>
                     @foreach ($midwives as $midwife)
@@ -160,12 +160,12 @@
                 <x-input-error for="state.midwife_user_id" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.date">Tanggal</x-label>
+                <x-label   for="state.date">Tanggal</x-label>
                 <x-input wire:model.lazy="state.date" class="w-full" type="date" id="state.date" />
                 <x-input-error for="state.date" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.type">Tipe</x-label>
+                <x-label   for="state.type">Tipe</x-label>
                 <select wire:model.lazy="state.type" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.type">
                     <option value="" selected>-- Pilih salah satu</option>
                     <option value="1">Lembur</option>
@@ -174,7 +174,7 @@
                 <x-input-error for="state.type" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.note">Catatan</x-label>
+                <x-label   for="state.note">Catatan</x-label>
                 <x-textarea wire:model.lazy="state.note" class="w-full" type="text" id="state.note" />
                 <x-input-error for="state.note" class="mt-2" />
             </div>

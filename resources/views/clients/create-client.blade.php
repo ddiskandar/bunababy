@@ -18,22 +18,22 @@
         <div class="w-full p-5 lg:p-6 grow">
             <form onsubmit="return false;" enctype="multipart/form-data" class="space-y-6">
             <div class="space-y-1">
-                <x-label class="" for="state.name">Nama</x-label>
+                <x-label   for="state.name">Nama</x-label>
                 <x-input wire:model.lazy="state.name" class="w-full" type="text" id="state.name" />
                 <x-input-error for="state.name" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.email">Alamat Email</x-label>
+                <x-label   for="state.email">Alamat Email</x-label>
                 <x-input wire:model.lazy="state.email" class="w-full" type="email" id="state.email" />
                 <x-input-error for="state.email" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.phone">Nomor WA</x-label>
+                <x-label   for="state.phone">Nomor WA</x-label>
                 <x-input wire:model.lazy="state.phone" class="w-full" type="text" id="state.phone" />
                 <x-input-error for="state.phone" class="mt-2" />
             </div>
             <div class="flex items-center">
-                <div class="">
+                <div  >
                     <x-button wire:click="save">Simpan</x-button>
                 </div>
                 <x-action-message class="ml-3" on="saved">

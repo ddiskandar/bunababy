@@ -20,19 +20,19 @@
 
             @isset($order->finished_at)
             <div class="space-y-1">
-                <x-label class="" for="finished_at">Selesai</x-label>
+                <x-label   for="finished_at">Selesai</x-label>
                 <span>{{ $order->finished_at->isoFormat('dddd, DD MMMM gggg H:mm') }}</span>
             </div>
             @endisset
 
             <div class="space-y-1">
-                <x-label class="" for="finished_at"> @isset($order->finished_at)<span>Edit</span>@endif Waktu Selesai</x-label>
+                <x-label   for="finished_at"> @isset($order->finished_at)<span>Edit</span>@endif Waktu Selesai</x-label>
                 <x-input wire:model.defer="finished_at" class="w-full" type="time" id="finished_at" min="08:00" />
                 <x-input-error for="finished_at" class="mt-2" />
             </div>
 
             <div class="flex items-center">
-                <div class="">
+                <div  >
                     <x-button wire:click="save">Selesai</x-button>
                 </div>
                 <x-dirty-message class="ml-3" target="time">

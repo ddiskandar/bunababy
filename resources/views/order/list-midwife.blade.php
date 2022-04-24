@@ -10,7 +10,7 @@
 
             @foreach ($midwives as $midwife)
                 <div class="p-4 border rounded border-slate-100">
-                    <div class="">
+                    <div  >
                         <div class="flex items-center">
                             <img src="{{ $midwife->profile_photo_url }}" alt="User Avatar" class="inline-block w-10 h-10 rounded-full grayscale" />
                             <div class="ml-4 ">

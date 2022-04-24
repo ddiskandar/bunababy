@@ -24,7 +24,7 @@
                     'border-bunababy-100' => $address->is_main == true,
                 ])>
                 <div class="flex items-center mb-2">
-                    <div class="">
+                    <div  >
                         <div class="text-xl font-semibold capitalize">{{ $address->label }}</div>
                     </div>
                     @if ($address->is_main)
@@ -133,33 +133,33 @@
                     <x-title>Alamat</x-title>
                     <div class="h-64 mt-2 space-y-3 overflow-y-auto">
                         <div class="space-y-1">
-                            <x-label class="" for="state.label">Label</x-label>
+                            <x-label   for="state.label">Label</x-label>
                             <x-input wire:model.defer="state.label" class="w-full" type="text" id="state.label" placeholder="Contoh: Rumah, Kantor" />
                             <x-input-error for="state.label" class="mt-2" />
                         </div>
                         <div class="space-y-1">
-                            <x-label class="" for="state.address">Kampung/Jalan</x-label>
+                            <x-label   for="state.address">Kampung/Jalan</x-label>
                             <x-input wire:model.defer="state.address" class="w-full" type="text" id="state.address" />
                             <x-input-error for="state.address" class="mt-2" />
                         </div>
                         <div class="space-y-1">
-                            <x-label class="" for="state.rt">Rt</x-label>
+                            <x-label   for="state.rt">Rt</x-label>
                             <x-input wire:model.defer="state.rt" class="w-full" type="number" id="state.rt" />
                             <x-input-error for="state.rt" class="mt-2" />
                         </div>
                         <div class="space-y-1">
-                            <x-label class="" for="state.rw">Rw</x-label>
+                            <x-label   for="state.rw">Rw</x-label>
                             <x-input wire:model.defer="state.rw" class="w-full" type="number" id="state.rw" />
                             <x-input-error for="state.rw" class="mt-2" />
                         </div>
                         <div class="space-y-1">
-                            <x-label class="" for="state.desa">Desa</x-label>
+                            <x-label   for="state.desa">Desa</x-label>
                             <x-input wire:model.defer="state.desa" class="w-full" type="text" id="state.desa" />
                             <x-input-error for="state.desa" class="mt-2" />
                         </div>
 
                         <div class="space-y-1">
-                            <x-label class="" for="state.kecamatan_id">Kecamatan</x-label>
+                            <x-label   for="state.kecamatan_id">Kecamatan</x-label>
                             <select @if ($dialogEditMode) disabled @endif wire:model.defer="state.kecamatan_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.kecamatan_id">
                                 <option value="" selected>-- Pilih salah satu</option>
                                 @foreach (\DB::table('kecamatans')->orderBy('name')->get(['id', 'name']) as $kecamatan)
@@ -170,7 +170,7 @@
                         </div>
 
                         <div class="space-y-1">
-                            <x-label class="" for="state.note">Catatan Petunjuk</x-label>
+                            <x-label   for="state.note">Catatan Petunjuk</x-label>
                             <x-textarea wire:model.defer="state.note" class="w-full" type="text" id="state.note" placeholder="Patokan alamat atau petunjuk menuju lokasi" />
                             <x-input-error for="state.note" class="mt-2" />
                         </div>

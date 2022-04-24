@@ -17,7 +17,7 @@
         <!-- Card Body: User Profile -->
         <div class="w-full p-5 space-y-6 lg:p-6 grow">
             <div class="space-y-1">
-                <x-label class="" for="current_password">Password sekarang</x-label>
+                <x-label   for="current_password">Password sekarang</x-label>
                 <x-input wire:model.defer="current_password" class="w-full" type="password" id="current_password" />
                 <x-input-error for="current_password" class="mt-2" />
                 @if ($errorCurrentPasswordMessage)
@@ -26,17 +26,17 @@
                 <x-input-error for="current_password" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="password">Password baru</x-label>
+                <x-label   for="password">Password baru</x-label>
                 <x-input wire:model.defer="password" class="w-full" type="password" id="password" />
                 <x-input-error for="password" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="password_confirmation">Konfirmasi password baru</x-label>
+                <x-label   for="password_confirmation">Konfirmasi password baru</x-label>
                 <x-input wire:model.defer="password_confirmation" class="w-full" type="password" id="password_confirmation" />
                 <x-input-error for="password_confirmation" class="mt-2" />
             </div>
             <div class="flex items-center">
-                <div class="">
+                <div  >
                     <x-button wire:click="save">Simpan</x-button>
                 </div>
                 <x-action-message class="ml-3" on="saved">

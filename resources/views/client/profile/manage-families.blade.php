@@ -20,7 +20,7 @@
             @forelse ( auth()->user()->families as $family)
             <li class="max-w-lg p-6 border rounded shadow-lg border-bunababy-50 shadow-bunababy-50">
                 <div class="flex items-center mb-2">
-                    <div class="">
+                    <div  >
                         <div class="text-xl font-semibold">{{ $family->name }}</div>
                     </div>
                 </div>
@@ -135,18 +135,18 @@
                         <x-title>Data Anggota Keluarga</x-title>
                     <div class="h-64 mt-2 space-y-3 overflow-y-auto">
                         <div class="space-y-1">
-                            <x-label class="" for="state.name">Nama</x-label>
+                            <x-label   for="state.name">Nama</x-label>
                             <x-input wire:model.defer="state.name" class="w-full" type="text" id="state.name" />
                             <x-input-error for="state.name" class="mt-2" />
                         </div>
                         <div class="space-y-1">
-                            <x-label class="" for="state.birth_date">Tanggal lahir</x-label>
+                            <x-label   for="state.birth_date">Tanggal lahir</x-label>
                             <x-input wire:model.defer="state.birth_date" class="w-full" type="date" id="state.birth_date" />
                             <x-input-error for="state.birth_date" class="mt-2" />
                         </div>
 
                         <div class="space-y-1">
-                            <x-label class="" for="state.type">Hubungan keluarga</x-label>
+                            <x-label   for="state.type">Hubungan keluarga</x-label>
                             <select wire:model.defer="state.type" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.type">
                                 <option value="" selected>-- Pilih salah satu</option>
                                 <option value="Anak">Anak</option>

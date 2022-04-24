@@ -42,7 +42,7 @@
         </div>
 
         <div class="col-span-6 xl:col-span-2">
-            <x-button class=""
+            <x-button
                 wire:loading.attr="disabled"
             >
                 Simpan Alamat

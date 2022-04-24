@@ -59,27 +59,27 @@
             </div>
 
             <div class="space-y-1">
-                <x-label class="" for="state.name">Nama bidan</x-label>
+                <x-label   for="state.name">Nama bidan</x-label>
                 <x-input wire:model.lazy="state.name" class="w-full" type="text" id="state.name" />
                 <x-input-error for="state.name" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.email">Alamat Email</x-label>
+                <x-label   for="state.email">Alamat Email</x-label>
                 <x-input wire:model.lazy="state.email" class="w-full" type="email" id="state.email" />
                 <x-input-error for="state.email" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.profile.phone">Nomor WA</x-label>
+                <x-label   for="state.profile.phone">Nomor WA</x-label>
                 <x-input wire:model.lazy="state.profile.phone" class="w-full" type="text" id="state.profile.phone" />
                 <x-input-error for="state.profile.phone" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.profile.ig">Instagram</x-label>
+                <x-label   for="state.profile.ig">Instagram</x-label>
                 <x-input wire:model.lazy="state.profile.ig" class="w-full" type="text" id="state.profile.ig" />
                 <x-input-error for="state.profile.ig" class="mt-2" />
             </div>
             <div class="flex items-center">
-                <div class="">
+                <div  >
                     <x-button wire:click="save">Simpan</x-button>
                 </div>
                 <x-action-message class="ml-3" on="saved">

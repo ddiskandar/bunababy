@@ -142,7 +142,7 @@
                 <x-input-error for="state.password_confirmation" class="mt-2" />
             </div>
             <div class="col-span-6 xl:col-span-2">
-                <x-button class=""
+                <x-button
                     wire:loading.attr="disabled"
                 >
                     Simpan dan Buat Akun

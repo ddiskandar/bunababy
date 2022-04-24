@@ -17,17 +17,17 @@
         <!-- Card Body: User Profile -->
         <div class="w-full p-5 space-y-6 lg:p-6 grow">
             <div class="space-y-1">
-                <x-label class="" for="state.account">Account</x-label>
+                <x-label   for="state.account">Account</x-label>
                 <x-input wire:model.lazy="state.account" class="w-full" type="text" id="state.account" />
                 <x-input-error for="state.account" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.account_name">Account Name</x-label>
+                <x-label   for="state.account_name">Account Name</x-label>
                 <x-input wire:model.lazy="state.account_name" class="w-full" type="text" id="state.account_name" />
                 <x-input-error for="state.account_name" class="mt-2" />
             </div>
             <div class="flex items-center">
-                <div class="">
+                <div  >
                     <x-button wire:click="save">Simpan</x-button>
                 </div>
                 <x-action-message class="ml-3" on="saved">

@@ -7,10 +7,10 @@
             <!-- Invoice Header -->
             <div class="flex flex-col py-3 border-b border-gray-100 md:flex-row md:justify-between md:items-center print:pt-0 print:pb-1">
                 <!-- Company Info -->
-                <div class="">
+                <div  >
                     <img class="mb-2" src="/images/logo.svg" alt="Logo Bunababy">
                     <div class="text-base font-semibold">Bunababy Care</div>
-                    <div class="">Baby and Maternity Care</div>
+                    <div  >Baby and Maternity Care</div>
                     <div class="text-gray-500 ">
                         <div>Komplek Nataendah Blok N No 170 Cibabat, Cimahi</div>
                         <div>IG : @bunababy_care WA : 08997897991</div>
@@ -39,7 +39,7 @@
 
             <!-- Invoice Info -->
             <div class="grid grid-cols-1 gap-4 py-3 md:grid-cols-2 lg:gap-8 print:grid-cols-2">
-                <div class="">
+                <div  >
                     <div class="flex items-center py-1">
                         <h3 class="text-sm font-semibold">
                             Invoice {{ $order->invoice }}
@@ -76,11 +76,11 @@
             {{-- <h3 class="mb-2 font-semibold">Treatment</h3> --}}
             <div class=" text-slate-600">
                 <div class="font-semibold text-slate-700">{{ $order->place() }}</div>
-                <div class="">{{ $order->address->fullAddress }}</div>
-                <div class="">
+                <div  >{{ $order->address->fullAddress }}</div>
+                <div  >
                     {{ $order->start_datetime->isoFormat('dddd, DD MMMM Y') }}, pukul {{ $order->start_datetime }} - {{ $order->end_datetime }} WIB
                 </div>
-                <div class="">{{ $order->midwife->name }}</div>
+                <div  >{{ $order->midwife->name }}</div>
             </div>
 
             <!-- Responsive Table Container -->

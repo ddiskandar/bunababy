@@ -19,7 +19,7 @@
         <div class="w-full p-5 space-y-6 lg:p-6 grow">
 
             <div class="space-y-1">
-                <x-label class="" for="place">Tempat</x-label>
+                <x-label   for="place">Tempat</x-label>
                 <select wire:model="place" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="place">
                     <option value="" selected>-- Pilih salah satu</option>
                     <option value="1">Homecare</option>
@@ -30,7 +30,7 @@
 
             @if ($place == 1)
             <div class="space-y-1">
-                <div class="">
+                <div  >
                     <x-label for="role" value="{{ __('Alamat') }}" />
                     <x-input-error for="role" class="mt-2" />
 
@@ -74,33 +74,33 @@
 
                 <x-title>Alamat Baru</x-title>
                 <div class="space-y-1">
-                    <x-label class="" for="state.label">Label</x-label>
+                    <x-label   for="state.label">Label</x-label>
                     <x-input wire:model.defer="state.label" class="w-full" type="text" id="state.label" />
                     <x-input-error for="state.label" class="mt-2" />
                 </div>
                 <div class="space-y-1">
-                    <x-label class="" for="state.address">Kampung/ Jalan</x-label>
+                    <x-label   for="state.address">Kampung/ Jalan</x-label>
                     <x-input wire:model.defer="state.address" class="w-full" type="text" id="state.address" />
                     <x-input-error for="state.address" class="mt-2" />
                 </div>
                 <div class="space-y-1">
-                    <x-label class="" for="state.rt">Rt</x-label>
+                    <x-label   for="state.rt">Rt</x-label>
                     <x-input wire:model.defer="state.rt" class="w-full" type="number" id="state.rt" />
                     <x-input-error for="state.rt" class="mt-2" />
                 </div>
                 <div class="space-y-1">
-                    <x-label class="" for="state.rw">Rw</x-label>
+                    <x-label   for="state.rw">Rw</x-label>
                     <x-input wire:model.defer="state.rw" class="w-full" type="number" id="state.rw" />
                     <x-input-error for="state.rw" class="mt-2" />
                 </div>
                 <div class="space-y-1">
-                    <x-label class="" for="state.desa">Desa</x-label>
+                    <x-label   for="state.desa">Desa</x-label>
                     <x-input wire:model.defer="state.desa" class="w-full" type="text" id="state.desa" />
                     <x-input-error for="state.desa" class="mt-2" />
                 </div>
 
                 <div class="space-y-1">
-                    <x-label class="" for="state.kecamatan_id">Kecamatan</x-label>
+                    <x-label   for="state.kecamatan_id">Kecamatan</x-label>
                     <select wire:model.defer="state.kecamatan_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.kecamatan_id">
                         <option value="" selected>-- Pilih salah satu</option>
                         @foreach (\DB::table('kecamatans')->orderBy('name')->get(['id', 'name']) as $kecamatan)
@@ -111,13 +111,13 @@
                 </div>
 
                 <div class="space-y-1">
-                    <x-label class="" for="state.note">Catatan</x-label>
+                    <x-label   for="state.note">Catatan</x-label>
                     <x-textarea wire:model.defer="state.note" class="w-full" type="text" id="state.note" />
                     <x-input-error for="state.note" class="mt-2" />
                 </div>
 
                 <div class="flex items-center">
-                    <div class="">
+                    <div  >
                         <x-button wire:click="save">Simpan</x-button>
                     </div>
 

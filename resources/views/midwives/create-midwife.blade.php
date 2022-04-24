@@ -17,17 +17,17 @@
         <!-- Card Body: User Profile -->
         <div class="w-full p-5 lg:p-6 grow space-y-6">
             <div class="space-y-1">
-                <x-label class="" for="state.name">Nama bidan</x-label>
+                <x-label   for="state.name">Nama bidan</x-label>
                 <x-input wire:model.defer="state.name" class="w-full" type="text" id="state.name" />
                 <x-input-error for="state.name" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.email">Alamat Email</x-label>
+                <x-label   for="state.email">Alamat Email</x-label>
                 <x-input wire:model.defer="state.email" class="w-full" type="email" id="state.email" />
                 <x-input-error for="state.email" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.phone">Nomor WA</x-label>
+                <x-label   for="state.phone">Nomor WA</x-label>
                 <x-input wire:model.defer="state.phone" class="w-full" type="text" id="state.phone" />
                 <x-input-error for="state.phone" class="mt-2" />
             </div>
@@ -37,12 +37,12 @@
                         <input wire:model.defer="state.active" id="active" name="active" type="checkbox" class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
                     </div>
                     <div class="ml-2 ">
-                        <x-label class="" for="state.active">Aktif</x-label>
+                        <x-label   for="state.active">Aktif</x-label>
                     </div>
                 </div>
             </div>
             <div class="flex items-center">
-                <div class="">
+                <div  >
                     <x-button wire:click="save">Simpan</x-button>
                 </div>
                 <x-action-message class="ml-3" on="saved">

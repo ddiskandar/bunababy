@@ -1,7 +1,7 @@
 <x-panel>
     <div>
         <div class="flex items-center justify-between mb-4">
-            <div class="">
+            <div  >
                 <x-title>ID Transaksi</x-title>
                 <div class="font-semibold">{{ $order->no_reg }}</div>
                 {{-- <p class="text-xs">Harap inputkan ID Transaksi di nomor referensi atau pesan pada proses transfer.</p> --}}

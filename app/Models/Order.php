@@ -85,6 +85,21 @@ class Order extends Model
         $query->where('status', self::STATUS_FINISHED);
     }
 
+    public function place()
+    {
+        return $this->place == self::PLACE_CLIENT ? 'Homecare' : 'Onsite';
+    }
+
+    public function status()
+    {
+        return $this->status == self::STATUS_FINISHED
+            ? 'Selesai'
+            : ( $this->status == self::STATUS_LOCKED
+                ? 'Aktif'
+                : 'Pending'
+            );
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
@@ -112,32 +127,17 @@ class Order extends Model
 
     public function isPaid()
     {
-        return $this->payments_verified() >= $this->getGrandTotal();
+        return $this->getVerifiedPayments() >= $this->getGrandTotal();
     }
 
     public function dp()
     {
-        return $this->payments_verified() >= $this->getGrandTotal() * 50/100;
+        return $this->getVerifiedPayments() >= $this->getGrandTotal() * 50/100;
     }
 
     public function getDpAmount()
     {
         return $this-> getGrandTotal() / 2;
-    }
-
-    public function place()
-    {
-        return $this->place == self::PLACE_CLIENT ? 'Homecare' : 'Onsite';
-    }
-
-    public function status()
-    {
-        return $this->status == self::STATUS_FINISHED
-            ? 'Selesai'
-            : ( $this->status == self::STATUS_LOCKED
-                ? 'Aktif'
-                : 'Pending'
-            );
     }
 
     public function getRemainingPayment()

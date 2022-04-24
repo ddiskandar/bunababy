@@ -19,7 +19,7 @@
         <div class="w-full p-5 space-y-6 lg:p-6 grow">
 
             <div class="space-y-1">
-                <div class="">
+                <div  >
                     <div class="relative z-0 mt-1 border border-gray-200 rounded-lg cursor-pointer">
                         @forelse ($addresses as $index => $address)
                             <div class="relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 {{ $index > 0 ? 'border-t border-gray-200 rounded-t-none' : '' }} {{ ! $loop->last ? 'rounded-b-none' : '' }}">
@@ -82,33 +82,33 @@
         <x-title>Data Treatment</x-title>
         <div class="h-64 mt-2 space-y-3 overflow-y-auto">
             <div class="space-y-1">
-                <x-label class="" for="state.label">Label</x-label>
+                <x-label   for="state.label">Label</x-label>
                 <x-input wire:model.defer="state.label" class="w-full" type="text" id="state.label" />
                 <x-input-error for="state.label" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.address">Kampung/ Jalan</x-label>
+                <x-label   for="state.address">Kampung/ Jalan</x-label>
                 <x-input wire:model.defer="state.address" class="w-full" type="text" id="state.address" />
                 <x-input-error for="state.address" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.rt">Rt</x-label>
+                <x-label   for="state.rt">Rt</x-label>
                 <x-input wire:model.defer="state.rt" class="w-full" type="number" id="state.rt" />
                 <x-input-error for="state.rt" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.rw">Rw</x-label>
+                <x-label   for="state.rw">Rw</x-label>
                 <x-input wire:model.defer="state.rw" class="w-full" type="number" id="state.rw" />
                 <x-input-error for="state.rw" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.desa">Desa</x-label>
+                <x-label   for="state.desa">Desa</x-label>
                 <x-input wire:model.defer="state.desa" class="w-full" type="text" id="state.desa" />
                 <x-input-error for="state.desa" class="mt-2" />
             </div>
 
             <div class="space-y-1">
-                <x-label class="" for="state.kecamatan_id">Kecamatan</x-label>
+                <x-label   for="state.kecamatan_id">Kecamatan</x-label>
                 <select wire:model.defer="state.kecamatan_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.kecamatan_id">
                     <option value="" selected>-- Pilih salah satu</option>
                     @foreach (\DB::table('kecamatans')->orderBy('name')->get(['id', 'name']) as $kecamatan)
@@ -119,7 +119,7 @@
             </div>
 
             <div class="space-y-1">
-                <x-label class="" for="state.note">Catatan</x-label>
+                <x-label   for="state.note">Catatan</x-label>
                 <x-textarea wire:model.defer="state.note" class="w-full" type="text" id="state.note" />
                 <x-input-error for="state.note" class="mt-2" />
             </div>

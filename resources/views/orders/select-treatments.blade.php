@@ -39,7 +39,7 @@
 
             <form onsubmit="return false;">
                 <div class="space-y-1">
-                    <x-label class="" for="treatmentId">Tambah Treatment</x-label>
+                    <x-label   for="treatmentId">Tambah Treatment</x-label>
                     <select wire:model="treatmentId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="treatmentId">
                         <option value="" selected>-- Pilih salah satu</option>
                         @foreach ($treatments as $treatment)
@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="flex items-center mt-4">
-                    <div class="">
+                    <div  >
                         <x-button wire:click="save">Tambah</x-button>
                     </div>
 

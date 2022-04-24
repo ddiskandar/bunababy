@@ -107,12 +107,12 @@
 
         <div class="h-64 mt-2 space-y-3 overflow-y-auto">
             <div class="space-y-1">
-                <x-label class="" for="state.name">Nama</x-label>
+                <x-label   for="state.name">Nama</x-label>
                 <x-input wire:model.lazy="state.name" class="w-full" type="text" id="state.name" />
                 <x-input-error for="state.name" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.description">Deskripsi</x-label>
+                <x-label   for="state.description">Deskripsi</x-label>
                 <x-textarea wire:model.lazy="state.description" class="w-full" type="text" id="state.description" />
                 <x-input-error for="state.description" class="mt-2" />
             </div>
@@ -122,7 +122,7 @@
                         <input wire:model.lazy="state.active" id="active" name="active" type="checkbox" class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
                     </div>
                     <div class="ml-2 ">
-                        <x-label class="" for="state.active">Aktif</x-label>
+                        <x-label   for="state.active">Aktif</x-label>
                     </div>
                 </div>
             </div>

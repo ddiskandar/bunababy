@@ -21,15 +21,15 @@
             <ul class="divide-y divide-bunababy-50">
                 <li class="py-3 text-sm ">
                     <div class="flex justify-between">
-                    <div class="">Harga</div>
-                    <div class="">{{ rupiah($order->total_price) }}</div>
+                    <div  >Harga</div>
+                    <div  >{{ rupiah($order->total_price) }}</div>
                     </div>
                 </li>
 
                 <li class="py-3 text-sm ">
                     <div class="flex justify-between">
-                    <div class="">Transport</div>
-                    <div class="">{{ rupiah($order->total_transport) }}</div>
+                    <div  >Transport</div>
+                    <div  >{{ rupiah($order->total_transport) }}</div>
                     </div>
                 </li>
 
@@ -41,28 +41,28 @@
                             <x-icon-pencil-alt />
                         </x-button-icon>
                     </div>
-                    <div class="">{{ rupiah($order->additional) }}</div>
+                    <div  >{{ rupiah($order->additional) }}</div>
                     </div>
                 </li>
 
                 <li class="py-3 text-sm font-semibold">
                     <div class="flex justify-between">
-                    <div class="">Total Tagihan</div>
-                    <div class="">{{ rupiah($order->getGrandTotal()) }}</div>
+                    <div  >Total Tagihan</div>
+                    <div  >{{ rupiah($order->getGrandTotal()) }}</div>
                     </div>
                 </li>
 
                 <li class="py-3 text-sm ">
                     <div class="flex justify-between">
-                    <div class="">Total Pembayaran</div>
-                    <div class="">{{ rupiah($order->payments_verified()) }}</div>
+                    <div  >Total Pembayaran</div>
+                    <div  >{{ rupiah($order->payments_verified()) }}</div>
                     </div>
                 </li>
 
                 <li class="py-3 text-sm ">
                     <div class="flex justify-between">
-                    <div class="">Sisa Pembayaran</div>
-                    <div class="">{{ rupiah($order->getRemainingPayment()) }}</div>
+                    <div  >Sisa Pembayaran</div>
+                    <div  >{{ rupiah($order->getRemainingPayment()) }}</div>
                     </div>
                 </li>
 
@@ -77,7 +77,7 @@
                             <div class="font-semibold">
                                 {{ rupiah($payment->value) }}
                             </div>
-                            <div class="">{{ $payment->created_at }}</div>
+                            <div  >{{ $payment->created_at }}</div>
                         </div>
                         <div>
                             <div
@@ -123,7 +123,7 @@
 
         <div class="h-64 mt-2 space-y-3 overflow-y-auto">
             <div class="space-y-1">
-                <x-label class="" for="state.value">Besar Pembayaran</x-label>
+                <x-label   for="state.value">Besar Pembayaran</x-label>
                 <x-input wire:model.lazy="state.value" class="w-full" type="number" id="state.value" />
                 <x-input-error for="state.value" class="mt-2" />
             </div>
@@ -140,7 +140,7 @@
             @endisset
 
             <div class="space-y-1">
-                <x-label class="" for="state.status">Status</x-label>
+                <x-label   for="state.status">Status</x-label>
                 <select wire:model.lazy="state.status" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.status">
                     <option value="" selected>-- Pilih salah satu</option>
                     <option value="2">Approved</option>
@@ -149,7 +149,7 @@
                 <x-input-error for="state.status" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.note">Catatan</x-label>
+                <x-label   for="state.note">Catatan</x-label>
                 <x-textarea wire:model.lazy="state.note" class="w-full" type="text" id="state.note" />
                 <x-input-error for="state.note" class="mt-2" />
             </div>
@@ -172,7 +172,7 @@
 
         <div class="h-64 mt-2 space-y-3 overflow-y-auto">
             <div class="space-y-1">
-                <x-label class="" for="additional">Besar Additional</x-label>
+                <x-label   for="additional">Besar Additional</x-label>
                 <x-input wire:model.lazy="additional" class="w-full" type="number" id="additional" />
                 <x-input-error for="additional" class="mt-2" />
             </div>

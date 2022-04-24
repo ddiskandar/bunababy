@@ -152,17 +152,17 @@
 
         <div class="h-64 mt-2 space-y-3 overflow-y-auto">
             <div class="space-y-1">
-                <x-label class="" for="state.name">Nama</x-label>
+                <x-label   for="state.name">Nama</x-label>
                 <x-input wire:model.lazy="state.name" class="w-full" type="text" id="state.name" />
                 <x-input-error for="state.name" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.distance">Jarak</x-label>
+                <x-label   for="state.distance">Jarak</x-label>
                 <x-input wire:model.lazy="state.distance" class="w-full" type="number" id="state.distance" />
                 <x-input-error for="state.distance" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label class="" for="state.kabupaten_id">Kabupaten</x-label>
+                <x-label   for="state.kabupaten_id">Kabupaten</x-label>
                 <select wire:model.lazy="state.kabupaten_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.kabupaten_id">
                     <option value="" selected>-- Pilih salah satu</option>
                     @foreach (DB::table('kabupatens')->get() as $item)
@@ -177,7 +177,7 @@
                         <input wire:model.lazy="state.active" id="active" name="active" type="checkbox" class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
                     </div>
                     <div class="ml-2 ">
-                        <x-label class="" for="state.active">Aktif</x-label>
+                        <x-label   for="state.active">Aktif</x-label>
                     </div>
                 </div>
             </div>
