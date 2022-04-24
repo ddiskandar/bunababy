@@ -61,7 +61,7 @@ class OrderController extends Controller
     {
         $options = DB::table('options')->select('account', 'account_name')->first();
         $order = Order::where('no_reg', $no_reg)
-            ->first();
+            ->firstOrFail();
 
         $isPaid = $order->isPaid();
         $dp =  $order->dp();

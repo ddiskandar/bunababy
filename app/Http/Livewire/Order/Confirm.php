@@ -3,8 +3,11 @@
 namespace App\Http\Livewire\Order;
 
 use App\Models\Order;
+use App\Models\User;
+use App\Notifications\NewOrder;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Livewire\Component;
 
 class Confirm extends Component
@@ -43,6 +46,12 @@ class Confirm extends Component
             }
 
             session()->forget('order');
+
+            $admin = User::where('type', User::ADMIN)
+                ->orWhere('type', User::OWNER)
+                ->get();
+
+            Notification::send($admin, new NewOrder($order));
 
             return redirect()->route('me');
         });

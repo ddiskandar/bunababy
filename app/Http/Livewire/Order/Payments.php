@@ -4,6 +4,9 @@ namespace App\Http\Livewire\Order;
 
 use App\Models\Payment;
 use App\Models\Order;
+use App\Models\User;
+use App\Notifications\NewPayment;
+use Illuminate\Support\Facades\Notification;
 use Livewire\WithFileUploads;
 use Livewire\Component;
 use Illuminate\Support\Facades\Validator;
@@ -32,7 +35,16 @@ class Payments extends Component
     public function mount(Order $order)
     {
         $this->order = $order;
-        $this->value = $order->getDpAmount();
+        if(!$this->order->payments()->exists())
+        {
+            $this->value = $order->getDpAmount();
+        }
+
+        if($this->order->payments()->exists())
+        {
+            $this->value = $order->getRemainingPayment();
+        }
+
         $this->isLocked = $order->pendingPayments()->exists();
     }
 
@@ -62,7 +74,7 @@ class Payments extends Component
 
         $attachment = $this->attachment->store('attachment');
 
-        Payment::create([
+        $payment = Payment::create([
             'order_id' => $this->order->id,
             'value' => $this->value,
             'attachment' => $attachment,
@@ -71,6 +83,13 @@ class Payments extends Component
 
         $this->showUploadDialog = false;
         $this->isLocked = true;
+
+        $admin = User::where('type', User::ADMIN)
+                ->orWhere('type', User::OWNER)
+                ->get();
+
+        Notification::send($admin, new NewPayment($payment));
+
         $this->render();
 
     }

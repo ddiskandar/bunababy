@@ -151,7 +151,6 @@ class DatabaseSeeder extends Seeder
             //         'order_id' => $order->id,
             //     ]);
 
-            // $owner->notify( new NewOrder($order));
             // $owner->notify( new NewPayment($payment));
 
         }
