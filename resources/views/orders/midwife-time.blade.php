@@ -30,9 +30,9 @@
             </div>
 
             <div class="space-y-1">
-                <x-label   for="date">Tanggal Treatment</x-label>
-                <x-input wire:model.defer="date" class="w-full" type="date" id="date" />
-                <x-input-error for="date" class="mt-2" />
+                <x-label for="state.date">Tanggal Treatment</x-label>
+                <x-input wire:model.defer="state.date" class="w-full" type="date" id="state.date" />
+                <x-input-error for="state.date" class="mt-2" />
             </div>
 
             <div class="space-y-1">

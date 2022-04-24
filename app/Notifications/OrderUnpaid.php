@@ -57,14 +57,17 @@ class OrderUnpaid extends Notification
      */
     public function toArray($notifiable)
     {
+        if(substr($this->order->client->profile->phone, 0, 2) == '08'){
+            $phone = substr_replace($this->order->client->profile->phone, '62', 0, 1);
+        } else {
+            $phone = $this->order->client->profile->phone;
+        }
+
         return [
             'type' => 'unpaid',
             'order_id' => $this->order->id,
-            'order_date' => $this-> order->start_datetime->isoFormat('d/M/Y'),
-            'order_start_time' => $this->order->start_time,
             'order_client_name' => $this->order->client->name,
-            'order_client_address_name' => $this->order->client->address,
-            'order_midwife_name' => $this->order->midwife->name,
+            'order_client_phone' => $phone,
             'order_no_reg' => $this->order->no_reg,
         ];
     }

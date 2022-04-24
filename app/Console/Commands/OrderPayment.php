@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Support\Facades\Notification;
 use App\Models\Order;
+use App\Models\Payment;
 use App\Models\User;
 use App\Notifications\OrderUnpaid;
 use Illuminate\Console\Command;
@@ -32,7 +33,13 @@ class OrderPayment extends Command
     public function handle()
     {
         $orders = Order::where('status', Order::STATUS_LOCKED)
+            ->doesntHave('payments')
+            ->whereDoesntHave('payments', function($query){
+                $query->where('status', Payment::STATUS_VERIFIED)
+                    ->orWhere('status', Payment::STATUS_UNVERIFIED);
+            })
             ->get();
+
         foreach ($orders as $order) {
 
             if(! $order->isPaid() && (now()->gt($order->created_at->addMinutes(30))) ) {

@@ -26,7 +26,7 @@ class ManageNotifications extends Component
 
     protected $queryString = [
         'page' => ['except' => 1],
-        'perPage' => ['except' => 3],
+        'perPage' => ['except' => 8],
     ];
 
     protected $rules = [

@@ -30,7 +30,7 @@ Route::middleware(['auth'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'show'])->name('dashboard');
 
-    Route::middleware(['admin'])->group(function () {
+    Route::middleware(['midwife'])->group(function () {
         Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'show'])->name('calendar');
         Route::get('/orders/create', [App\Http\Controllers\OrdersController::class, 'create'])->name('orders.create');
         Route::get('/orders/{order}', [App\Http\Controllers\OrdersController::class, 'show'])->name('orders.show');

@@ -73,17 +73,23 @@ class NewOrder extends Notification
             }
         }
 
+        if(substr($this->order->client->profile->phone, 0, 2) == '08'){
+            $phone = substr_replace($this->order->client->profile->phone, '62', 0, 1);
+        } else {
+            $phone = $this->order->client->profile->phone;
+        }
+
         return [
             'type' => 'order',
             'order_id' => $this->order->id,
             'order_no_reg' => $this->order->no_reg,
-            'order_datetime' => $this->order->start_datetime->isoFormat('dddd, DD MMMM gggg HH:mm - ') . $this->order->end_datetime->isoFormat('HH:mm'),
+            'order_datetime' => $this->order->start_datetime->isoFormat('dddd, DD MMMM gggg HH:mm - ') . $this->order->end_datetime->isoFormat('HH:mm') . ' WIB',
             'order_grand_total' => rupiah($this->order->getGrandTotal()),
             'order_dp_amount' => rupiah($this->order->getDpAmount()),
             'order_treatments' => $order_treatments,
             'order_dp_timeout' => $this->order->created_at->addMinutes($timeout)->isoFormat('dddd, DD MMMM gggg HH:mm'),
             'order_client_name' => $this->order->client->name,
-            'order_client_phone' => $this->order->client->profile->phone,
+            'order_client_phone' => $phone,
             'order_client_address_name' => $this->order->client->address,
             'order_midwife_name' => $this->order->midwife->name,
         ];

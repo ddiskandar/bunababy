@@ -63,7 +63,7 @@ class NewPayment extends Notification
             'payment_value'         => rupiah($this->payment->value),
             'payment_client_name'   => $this->payment->order->client->name,
             'order_id'              => $this->payment->order->id,
-            'order_no_reg'              => $this->payment->order->no_reg,
+            'order_no_reg'          => $this->payment->order->no_reg,
         ];
     }
 }
