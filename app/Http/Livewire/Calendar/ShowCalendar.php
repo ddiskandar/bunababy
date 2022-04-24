@@ -18,7 +18,7 @@ class ShowCalendar extends Component
         $midwives = User::query()
             ->where('type', User::MIDWIFE)
             ->with('schedules', function($query){
-                $query->where('date', $this->date);
+                $query->where('start_datetime', $this->date);
             })
             ->get();
 

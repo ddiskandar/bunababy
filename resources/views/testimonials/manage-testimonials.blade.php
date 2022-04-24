@@ -124,7 +124,7 @@
                                 <a href="{{ route('orders.show', $testimonial->order->id) }}">
                                     <p class="font-semibold text-slate-800">{{ $testimonial->order->no_reg }}</p>
                                 </a>
-                                <p class="text-slate-600">{{ $testimonial->order->date->format('d M Y') }}</p>
+                                <p class="text-slate-600">{{ $testimonial-> order->start_datetime->format('d M Y') }}</p>
                             </td>
                             <td class="w-32 p-3 align-top ">
                                 <p class="font-semibold text-slate-800">{{ $testimonial->order->midwife->name }}</p>

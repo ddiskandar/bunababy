@@ -96,7 +96,7 @@
                                         {{ $payment->order->no_reg }}
                                     </p>
                                 </a>
-                                <p class="text-slate-600">{{ $payment->order->date->format('d M Y') }}</p>
+                                <p class="text-slate-600">{{ $payment-> order->start_datetime->format('d M Y') }}</p>
                             </td>
                             <td class="p-3 ">
                                 <p class="text-slate-800">{{ rupiah($payment->order->getGrandTotal()) }}</p>
@@ -136,7 +136,7 @@
                             </td>
                             <td class="p-3 ">
                                 <p class="text-slate-800">
-                                    {{ $payment->verificator->name }}
+                                    {{ $payment->verificator->name ?? '-' }}
                                 </p>
                             </td>
                             <td class="p-3 ">

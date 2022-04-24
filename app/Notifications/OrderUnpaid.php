@@ -60,7 +60,7 @@ class OrderUnpaid extends Notification
         return [
             'type' => 'unpaid',
             'order_id' => $this->order->id,
-            'order_date' => $this->order->date->isoFormat('d/M/Y'),
+            'order_date' => $this-> order->start_datetime->isoFormat('d/M/Y'),
             'order_start_time' => $this->order->start_time,
             'order_client_name' => $this->order->client->name,
             'order_client_address_name' => $this->order->client->address,

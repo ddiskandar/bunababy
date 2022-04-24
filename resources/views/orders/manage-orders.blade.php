@@ -103,8 +103,8 @@
                             ])>
                                 <td class="p-3 pl-6 align-top whitespace-nowrap">
                                     <p class="font-medium text-bunababy-200">{{ $order->place() }}</p>
-                                    <p class="font-semibold">{{ $order->date->isoFormat('ddd, DD MMM') }}</p>
-                                    <p class="text-slate-600">{{\Carbon\Carbon::createFromFormat('H:i:s',$order->start_time)->format('h:i')}} - {{\Carbon\Carbon::createFromFormat('H:i:s',$order->end_time)->format('h:i')}}</p>
+                                    <p class="font-semibold">{{ $order->start_datetime->isoFormat('ddd, DD MMM') }}</p>
+                                    {{-- <p class="text-slate-600">{{\Carbon\Carbon::createFromFormat('H:i:s',$order->start_datetime)->format('h:i')}} - {{\Carbon\Carbon::createFromFormat('H:i:s',$order->end_time)->format('h:i')}}</p> --}}
                                 </td>
                                 <td class="p-3 align-top whitespace-nowrap">
                                     <p class="font-semibold">{{ $order->client->name }}</p>
@@ -125,7 +125,7 @@
                                     <p>{{ rupiah($order->total_transport) }}</p>
                                 </td>
                                 <td class="p-3 align-top whitespace-nowrap">
-                                    <p class="font-semibold">{{ rupiah($order->grand_total()) }}</p>
+                                    <p class="font-semibold">{{ rupiah($order->getGrandTotal()) }}</p>
                                 </td>
                                 <td class="p-3 align-top whitespace-nowrap">
                                     <span

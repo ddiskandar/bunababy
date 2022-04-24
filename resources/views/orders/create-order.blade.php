@@ -101,7 +101,7 @@
                 <x-label   for="date">Jadwal Yang Sudah Dipesan</x-label>
                 @foreach ($orders as $order)
                     <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 border rounded-full text-slate-600 bg-slate-50 border-slate-200">
-                        {{\Carbon\Carbon::createFromFormat('H:i:s',$order->start_time)->format('h:i')}} - {{\Carbon\Carbon::createFromFormat('H:i:s',$order->end_time)->format('h:i')}}
+                        HERE
                     </div>
                 @endforeach
             </div>

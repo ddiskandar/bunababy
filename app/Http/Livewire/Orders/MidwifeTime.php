@@ -26,9 +26,9 @@ class MidwifeTime extends Component
     {
         $this->order = $order;
         $this->state = $order->toArray();
-        $this->date = $order->date->toDateString();
+        $this->date = $order->start_datetime->toDateString();
 
-        // dd($this->order->date);
+        // dd($this-> order->start_datetime);
     }
 
     public function save()

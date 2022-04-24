@@ -55,7 +55,7 @@
                 <li class="py-3 text-sm ">
                     <div class="flex justify-between">
                     <div  >Total Pembayaran</div>
-                    <div  >{{ rupiah($order->payments_verified()) }}</div>
+                    <div  >{{ rupiah($order->getVerifiedPayments()) }}</div>
                     </div>
                 </li>
 
