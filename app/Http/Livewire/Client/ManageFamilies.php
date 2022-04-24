@@ -13,9 +13,15 @@ class ManageFamilies extends Component
     public $showDialog = false;
 
     protected $rules = [
-        'state.name' => 'required',
+        'state.name' => 'required|string|min:2|max:64',
         'state.birth_date' => 'required|date',
-        'state.type' => 'required',
+        'state.type' => 'required|string|in:Anak,Pasangan,Orang Tua,Saudara Kandung,Kerabat,Teman',
+    ];
+
+    protected $validationAttributes = [
+        'state.name' => 'Nama',
+        'state.birth_date' => 'Tanggal lahir',
+        'state.type' => 'Hubungan keluarga',
     ];
 
     public function mount()
@@ -26,6 +32,7 @@ class ManageFamilies extends Component
     public function showEditDialog(Family $family)
     {
         $this->state = $family->toArray();
+        $this->state['birth_date'] = $family->birth_date->toDateString();
         $this->showDialog = true;
     }
 

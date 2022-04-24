@@ -67,6 +67,11 @@
             <x-input-error for="state.email" class="mt-2" />
         </div>
         <div class="mt-4">
+            <x-label for="state.birth_date" :value="__('Tanggal Lahir')" />
+            <x-input wire:model="state.birth_date" id="birth_date" class="block w-full mt-1" type="date" name="birth_date" required />
+            <x-input-error for="state.birth_date" class="mt-2" />
+        </div>
+        <div class="mt-4">
             <x-label for="state.phone" :value="__('Nomor WA')" />
             <x-input wire:model="state.phone" id="phone" class="block w-full mt-1" type="number" name="phone" required />
             <x-input-error for="state.phone" class="mt-2" />

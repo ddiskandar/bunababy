@@ -26,6 +26,7 @@ class UpdateProfileInformation extends Component
                 'email',
                 Rule::unique('users', 'email')->ignore(auth()->id())
             ],
+            'state.birth_date' => 'required|date',
             'state.phone' => 'required|string|min:11|max:13',
             'photo' => 'nullable|image|max:1024',
         ];
@@ -34,6 +35,7 @@ class UpdateProfileInformation extends Component
     protected $validationAttributes = [
         'state.name' => 'Nama',
         'state.email' => 'Email',
+        'state.birth_date' => 'Tanggal lahir',
         'state.phone' => 'Nomor WA',
         'photo' => 'Photo',
     ];
@@ -45,6 +47,7 @@ class UpdateProfileInformation extends Component
         $this->state['name'] = $user->name;
         $this->state['email'] = $user->email;
         $this->state['phone'] = $user->profile->phone;
+        $this->state['birth_date'] = $user->profile->birth_date ? $user->profile->birth_date->toDateString() : '';
     }
 
     public function save()
@@ -57,6 +60,7 @@ class UpdateProfileInformation extends Component
         ]);
 
         $this->user->profile->update([
+            'birth_date' => $this->state['birth_date'],
             'phone' => $this->state['phone'],
         ]);
 

@@ -1,19 +1,18 @@
 <div x-data="{ showDialog: @entangle('showDialog') }">
-    <div class="py-4 px-4 md:px-6 flex items-center justify-between sticky shadow shadow-bunababy-50">
+    <div class="sticky flex items-center justify-between px-4 py-4 shadow md:px-6 shadow-bunababy-50">
         <a href="{{ route('client.profile') }}">
-            <svg class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24">
+            <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
             </svg>
         </a>
         <h1 class="flex-1 font-semibold md:text-center">Daftar Anggota Keluarga</h1>
-        <a
+        <button
             wire:click="addNewFamily"
-            href="#"
             class="text-sm text-bunababy-100"
             >
             Tambah Anggota
-        </a>
+        </but>
     </div>
 
     <div class="max-w-xl px-4 py-6 mx-auto ">
@@ -25,20 +24,29 @@
                         <div class="text-xl font-semibold">{{ $family->name }}</div>
                     </div>
                 </div>
-                <div>
-                    {{ $family->birth_date }}
+                <div class="py-1">
+                    <div class="text-sm text-slate-500">
+                        Tanggal Lahir
+                    </div>
+                    <div>
+                        {{ $family->birth_date->isoFormat('DD MMMM YYYY') }}
+                    </div>
                 </div>
-                <div>
-                    {{ $family->type }}
+                <div class="py-1">
+                    <div class="text-sm text-slate-500">
+                        Hubungan Keluarga
+                    </div>
+                    <div>
+                        {{ $family->type }}
+                    </div>
                 </div>
                 <div class="py-2">
-                    <a
+                    <button
                         wire:click="showEditDialog({{ $family->id }})"
-                        href="#"
-                        class="text-sm text-bunababy-100"
+                        class="text-sm font-semibold text-bunababy-200"
                         >
                         Ubah Data
-                    </a>
+                    </button>
                 </div>
 
             </li>
@@ -59,8 +67,8 @@
         x-transition:leave-start="opacity-100 transform translate-x-0"
         x-transition:leave-end="opacity-0 transform translate-x-8"
         style="display: none !important"
-        class="fixed inset-x-0 w-72 mx-auto bottom-0 right-0 z-60 flex justify-between items-center rounded-full mb-24 py-2 px-8 shadow-lg bg-bunababy-200">
-        <div class="inline-flex items-center text-pink-100 text-sm">
+        class="fixed inset-x-0 bottom-0 right-0 flex items-center justify-between px-8 py-2 mx-auto mb-24 rounded-full shadow-lg w-72 z-60 bg-bunababy-200">
+        <div class="inline-flex items-center text-sm text-pink-100">
             <p>
                 Data berhasil diperbaharui
             </p>
@@ -68,8 +76,8 @@
         <div class="flex items-center ml-2">
             <button
                 wire:click="$set('successMessage', false)"
-                type="button" class="p-1 rounded inline-flex justify-center items-center focus:outline-none text-white opacity-75 hover:opacity-100  active:opacity-75">
-                <svg class="hi-outline hi-x inline-block w-4 h-4" stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                type="button" class="inline-flex items-center justify-center p-1 text-white rounded opacity-75 focus:outline-none hover:opacity-100 active:opacity-75">
+                <svg class="inline-block w-4 h-4 hi-outline hi-x" stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
     </div>
@@ -122,27 +130,28 @@
                 </button>
 
                 <div class="px-4 pt-5 pb-4 overflow-hidden bg-white rounded-lg shadow-xl sm:p-6 sm:pb-4">
-                    <x-title>Ubah Data Anggota Keluarga</x-title>
+                    <form wire:submit.prevent="save">
+
+                        <x-title>Data Anggota Keluarga</x-title>
                     <div class="h-64 mt-2 space-y-3 overflow-y-auto">
                         <div class="space-y-1">
                             <x-label class="" for="state.name">Nama</x-label>
-                            <x-input wire:model="state.name" class="w-full" type="text" id="state.name" />
+                            <x-input wire:model.defer="state.name" class="w-full" type="text" id="state.name" />
                             <x-input-error for="state.name" class="mt-2" />
                         </div>
                         <div class="space-y-1">
                             <x-label class="" for="state.birth_date">Tanggal lahir</x-label>
-                            <x-input wire:model="state.birth_date" class="w-full" type="date" id="state.birth_date" />
+                            <x-input wire:model.defer="state.birth_date" class="w-full" type="date" id="state.birth_date" />
                             <x-input-error for="state.birth_date" class="mt-2" />
                         </div>
 
                         <div class="space-y-1">
                             <x-label class="" for="state.type">Hubungan keluarga</x-label>
-                            <select wire:model="state.type" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.type">
+                            <select wire:model.defer="state.type" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.type">
                                 <option value="" selected>-- Pilih salah satu</option>
-                                <option value="Diri Sendiri">Diri Sendiri</option>
                                 <option value="Anak">Anak</option>
                                 <option value="Pasangan">Pasangan</option>
-                                <option value="Orang tua">Orang tua</option>
+                                <option value="Orang Tua">Orang Tua</option>
                                 <option value="Saudara Kandung">Saudara Kandung</option>
                                 <option value="Kerabat">Kerabat</option>
                                 <option value="Teman">Teman</option>
@@ -154,11 +163,11 @@
 
                     <div class="py-4">
                         <button
-                            wire:click="save"
-                            type="button"
+                            type="submit"
                             class="block w-full py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
                         >Simpan</button>
                     </div>
+                    </form>
 
                 </div>
             </div>
