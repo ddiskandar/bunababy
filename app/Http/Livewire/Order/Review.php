@@ -29,8 +29,8 @@ class Review extends Component
     public function save()
     {
         $this->validate([
-            'rate' => 'required',
-            'description' => 'required',
+            'rate' => 'required|in:1,2,3,4,5',
+            'description' => 'required|min:4|max:512',
         ]);
 
         $this->order->testimonial()->updateOrCreate(
