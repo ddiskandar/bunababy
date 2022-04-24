@@ -105,7 +105,7 @@ class Order extends Model
         return ($this->total_price + $this->total_transport + $this->additional);
     }
 
-    public function payments_verified()
+    public function getVerifiedPayments()
     {
         return $this->payments()->verified()->pluck('value')->sum();
     }
