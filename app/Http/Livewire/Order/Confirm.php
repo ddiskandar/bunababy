@@ -35,7 +35,10 @@ class Confirm extends Component
 
             foreach ( collect(session('order.treatments')) as $treatment ) {
                 $order->treatments()->attach(
-                    $treatment['treatment_id']
+                    $treatment['treatment_id'],
+                    [
+                        'name' => $treatment['family_name']
+                    ]
                 );
             }
 

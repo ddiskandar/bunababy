@@ -57,7 +57,7 @@ class Order extends Model
 
     public function treatments(): BelongsToMany
     {
-        return $this->belongsToMany(Treatment::class);
+        return $this->belongsToMany(Treatment::class)->withPivot('name');
     }
 
     public function scopeInClient($query)

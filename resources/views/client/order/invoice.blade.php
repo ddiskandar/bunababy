@@ -7,13 +7,13 @@
             <!-- Invoice Header -->
             <div class="flex flex-col py-3 border-b border-gray-100 md:flex-row md:justify-between md:items-center print:pt-0 print:pb-1">
                 <!-- Company Info -->
-                <div  >
+                <div>
                     <img class="mb-2" src="/images/logo.svg" alt="Logo Bunababy">
-                    <div class="text-base font-semibold">Bunababy Care</div>
-                    <div  >Baby and Maternity Care</div>
+                    <div class="text-base font-semibold">{{ $options->site_name }}</div>
+                    <div>{{ $options->site_desc }}</div>
                     <div class="text-gray-500 ">
-                        <div>Komplek Nataendah Blok N No 170 Cibabat, Cimahi</div>
-                        <div>IG : @bunababy_care WA : 08997897991</div>
+                        <div>{{ $options->site_location }}</div>
+                        <div>IG : {{ $options->ig }} WA : {{ $options->wa_admin }}</div>
                     </div>
                 </div>
                 <!-- END Company Info -->
@@ -39,7 +39,7 @@
 
             <!-- Invoice Info -->
             <div class="grid grid-cols-1 gap-4 py-3 md:grid-cols-2 lg:gap-8 print:grid-cols-2">
-                <div  >
+                <div>
                     <div class="flex items-center py-1">
                         <h3 class="text-sm font-semibold">
                             Invoice {{ $order->invoice }}
@@ -51,13 +51,6 @@
                     <div class="text-slate-600">
                         Terbit : {{ $order->created_at->isoFormat('DD MMMM Y H:mm') }} WIB
                     </div>
-                    <div class="text-slate-600">
-                        Besar DP : <span class="font-semibold">{{ rupiah($order->getDpAmount()) }}</span>
-                     </div>
-                    <div class="text-slate-600">
-                        Bayar sebelum : {{ $order->created_at->addMinutes(30)->isoFormat('DD MMMM Y H:mm') }} WIB
-                    </div>
-
                 </div>
 
                 <!-- Client Info -->
@@ -76,11 +69,11 @@
             {{-- <h3 class="mb-2 font-semibold">Treatment</h3> --}}
             <div class=" text-slate-600">
                 <div class="font-semibold text-slate-700">{{ $order->place() }}</div>
-                <div  >{{ $order->address->fullAddress }}</div>
-                <div  >
-                    {{ $order->start_datetime->isoFormat('dddd, DD MMMM Y') }}, pukul {{ $order->start_datetime }} - {{ $order->end_datetime }} WIB
+                <div>{{ $order->address->fullAddress }}</div>
+                <div>
+                    {{ $order->start_datetime->isoFormat('dddd, DD MMMM Y') }}, pukul {{ $order->start_datetime->isoFormat('HH:mm') }} - {{ $order->end_datetime->isoFormat('HH:mm') }} WIB
                 </div>
-                <div  >{{ $order->midwife->name }}</div>
+                <div>{{ $order->midwife->name }}</div>
             </div>
 
             <!-- Responsive Table Container -->
@@ -112,7 +105,7 @@
                     <tr class="border-b border-gray-100">
                         <td class="py-1">
                             <p class="font-semibold">
-                                {{ $treatment->name }}
+                                {{ $treatment->name }} ({{ $treatment->pivot->name }})
                             </p>
                         </td>
                         <td class="py-1 text-center">
@@ -171,11 +164,8 @@
                         <th class="py-2 font-semibold tracking-wider text-left uppercase text-slate-400">
                         Tanggal Transaksi
                         </th>
-                        <th class="py-2 font-semibold tracking-wider text-center uppercase text-slate-400">
-                        Gateway
-                        </th>
                         <th class="py-2 font-semibold tracking-wider text-right uppercase text-slate-400">
-                        Transaction ID
+                        Status
                         </th>
                         <th class="py-2 font-semibold tracking-wider text-right uppercase text-slate-400">
                         Jumlah
@@ -191,11 +181,8 @@
                         <td class="py-3">
                             {{ $payment->created_at}}
                         </td>
-                        <td class="py-2 text-center">
-                            -
-                        </td>
                         <td class="py-2 text-right">
-                            {{ $order->no_reg }}
+                            {{ $payment->status() }}
                         </td>
                         <td class="py-2 text-right">
                             {{ rupiah($payment->value) }}
@@ -211,7 +198,7 @@
                     </tr>
                     @endforelse
                     <tr>
-                        <td colspan="3" class="py-2 font-bold text-right uppercase bg-gray-50">
+                        <td colspan="2" class="py-2 font-bold text-right uppercase bg-gray-50">
                         Sisa Pembayaran
                         </td>
                         <td class="py-2 font-semibold text-right bg-gray-50">
