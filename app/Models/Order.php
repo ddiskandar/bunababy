@@ -177,12 +177,10 @@ class Order extends Model
 
     public function getTotalTransport()
     {
-        if (session('order.kecamatan_distance') !== null) {
-            if(session('order.kecamatan_distance') < 4) {
-                return 40000;
-            } else {
-                return 40000 + ((session('order.kecamatan_distance') - 4) * 5000);
-            }
+        if(session('order.kecamatan_distance') < 4) {
+            return 40000;
+        } else {
+            return 40000 + ((session('order.kecamatan_distance') - 4) * 5000);
         }
 
     }
