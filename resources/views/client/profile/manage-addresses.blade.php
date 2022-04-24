@@ -7,27 +7,34 @@
             </svg>
         </a>
         <h1 class="flex-1 font-semibold md:text-center">Daftar Alamat</h1>
-        <a
+        <button
             wire:click="addNewAddress"
-            href="#"
             class="text-sm text-bunababy-100"
             >
             Tambah Alamat
-        </a>
+        </button>
     </div>
 
     <div class="max-w-xl px-4 py-6 mx-auto ">
         <ul class="space-y-4">
-            @forelse ( auth()->user()->addresses as $address)
-            <li class="max-w-lg p-6 border rounded shadow-lg border-bunababy-50 shadow-bunababy-50">
+            @forelse ( $addresses as $address)
+            <li @class([
+                    'max-w-lg p-6 border rounded shadow-lg shadow-bunababy-50',
+                    'border-slate-100' => $address->is_main,
+                    'border-bunababy-100' => $address->is_main == true,
+                ])>
                 <div class="flex items-center mb-2">
                     <div class="">
-                        <div class="text-xl font-semibold">{{ $address->label }}</div>
+                        <div class="text-xl font-semibold capitalize">{{ $address->label }}</div>
                     </div>
                     @if ($address->is_main)
-                        <div class="">
-                            <div class="inline-flex px-4 py-1 ml-2 text-xs font-semibold leading-4 rounded-full text-slate-500 bg-slate-100 ">Utama</div>
-                        </div>
+                        <div class="inline-flex px-4 py-1 ml-2 text-xs font-semibold leading-4 rounded-full text-bunababy-200 bg-bunababy-50 ">Utama</div>
+                    @else
+                        <button class="ml-2 text-sm font-semibold text-bunababy-200"
+                            wire:click="setAsMainAddress({{ $address->id }})"
+                            >
+                            Jadikan Alamat utama
+                        </button>
                     @endif
                 </div>
                 <div>
@@ -37,7 +44,7 @@
                     <a
                         wire:click="showEditDialog({{ $address->id }})"
                         href="#"
-                        class="text-sm text-bunababy-100"
+                        class="text-sm font-semibold text-bunababy-200"
                         >
                         Ubah Alamat
                     </a>
@@ -124,37 +131,38 @@
                 </button>
 
                 <div class="px-4 pt-5 pb-4 overflow-hidden bg-white rounded-lg shadow-xl sm:p-6 sm:pb-4">
-                    <x-title>Ubah Alamat</x-title>
+                    <form wire:submit.prevent="save">
+                    <x-title>Alamat</x-title>
                     <div class="h-64 mt-2 space-y-3 overflow-y-auto">
                         <div class="space-y-1">
                             <x-label class="" for="state.label">Label</x-label>
-                            <x-input wire:model="state.label" class="w-full" type="text" id="state.label" />
+                            <x-input wire:model.defer="state.label" class="w-full" type="text" id="state.label" placeholder="Contoh: Rumah, Kantor" />
                             <x-input-error for="state.label" class="mt-2" />
                         </div>
                         <div class="space-y-1">
-                            <x-label class="" for="state.address">Kampung/ Jalan</x-label>
-                            <x-input wire:model="state.address" class="w-full" type="text" id="state.address" />
+                            <x-label class="" for="state.address">Kampung/Jalan</x-label>
+                            <x-input wire:model.defer="state.address" class="w-full" type="text" id="state.address" />
                             <x-input-error for="state.address" class="mt-2" />
                         </div>
                         <div class="space-y-1">
                             <x-label class="" for="state.rt">Rt</x-label>
-                            <x-input wire:model="state.rt" class="w-full" type="number" id="state.rt" />
+                            <x-input wire:model.defer="state.rt" class="w-full" type="number" id="state.rt" />
                             <x-input-error for="state.rt" class="mt-2" />
                         </div>
                         <div class="space-y-1">
                             <x-label class="" for="state.rw">Rw</x-label>
-                            <x-input wire:model="state.rw" class="w-full" type="number" id="state.rw" />
+                            <x-input wire:model.defer="state.rw" class="w-full" type="number" id="state.rw" />
                             <x-input-error for="state.rw" class="mt-2" />
                         </div>
                         <div class="space-y-1">
                             <x-label class="" for="state.desa">Desa</x-label>
-                            <x-input wire:model="state.desa" class="w-full" type="text" id="state.desa" />
+                            <x-input wire:model.defer="state.desa" class="w-full" type="text" id="state.desa" />
                             <x-input-error for="state.desa" class="mt-2" />
                         </div>
 
                         <div class="space-y-1">
                             <x-label class="" for="state.kecamatan_id">Kecamatan</x-label>
-                            <select @if ($dialogEditMode) disabled @endif wire:model="state.kecamatan_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.kecamatan_id">
+                            <select @if ($dialogEditMode) disabled @endif wire:model.defer="state.kecamatan_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.kecamatan_id">
                                 <option value="" selected>-- Pilih salah satu</option>
                                 @foreach (\DB::table('kecamatans')->orderBy('name')->get(['id', 'name']) as $kecamatan)
                                     <option value="{{ $kecamatan->id }}">{{ $kecamatan->name }}</option>
@@ -164,8 +172,8 @@
                         </div>
 
                         <div class="space-y-1">
-                            <x-label class="" for="state.note">Catatan</x-label>
-                            <x-textarea wire:model="state.note" class="w-full" type="text" id="state.note" />
+                            <x-label class="" for="state.note">Catatan Petunjuk</x-label>
+                            <x-textarea wire:model.defer="state.note" class="w-full" type="text" id="state.note" placeholder="Patokan alamat atau petunjuk menuju lokasi" />
                             <x-input-error for="state.note" class="mt-2" />
                         </div>
 
@@ -173,12 +181,12 @@
 
                     <div class="py-4">
                         <button
-                            wire:click="save"
-                            type="button"
+                            type="submit"
                             class="block w-full py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
                         >Simpan</button>
                     </div>
 
+                    </form>
                 </div>
             </div>
         </div>

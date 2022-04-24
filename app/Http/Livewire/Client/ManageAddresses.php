@@ -9,23 +9,41 @@ class ManageAddresses extends Component
 {
     public $state = [];
 
+    public $addresses;
     public $successMessage = false;
     public $showDialog = false;
     public $dialogEditMode = false;
 
     protected $rules = [
-        'state.label' => 'required|string',
-        'state.address' => 'required|string',
-        'state.rt' => 'required|string',
-        'state.rw' => 'required|string',
-        'state.desa' => 'required|string',
-        'state.note' => 'nullable|string',
-        'state.kecamatan_id' => 'required',
+        'state.label' => 'required|string|min:3|max:32',
+        'state.address' => 'required|string|min:3|max:255',
+        'state.rt' => 'required|numeric|min:1|max:255',
+        'state.rw' => 'required|numeric|min:1|max:255',
+        'state.desa' => 'required|string|min:2|max:32',
+        'state.note' => 'nullable|string|min:2|max:255',
+        'state.kecamatan_id' => 'required|exists:kecamatans,id',
+    ];
+
+    protected $validationAttributes = [
+        'state.label' => 'Label alamat',
+        'state.address' => 'Kampung / Jalan',
+        'state.rt' => 'Rt',
+        'state.rw' => 'Rw',
+        'state.desa' => 'Desa/Kelurahan',
+        'state.note' => 'Catatan',
+        'state.kecamatan_id' => 'Kecamatan',
+    ];
+
+    protected $listeners = [
+        'saved' => '$refresh'
     ];
 
     public function mount()
     {
-        //
+        $this->addresses = Address::query()
+            ->where('client_user_id', auth()->id())
+            ->with('kecamatan', 'kecamatan.kabupaten')
+            ->get();
     }
 
     public function hydrate()
@@ -39,7 +57,6 @@ class ManageAddresses extends Component
         $this->state = $address->toArray();
         $this->showDialog = true;
         $this->dialogEditMode = true;
-
     }
 
     public function addNewAddress()
@@ -47,6 +64,17 @@ class ManageAddresses extends Component
         $this->state = [];
         $this->showDialog = true;
         $this->dialogEditMode = false;
+    }
+
+    public function setAsMainAddress($id)
+    {
+        foreach($this->addresses as $address){
+            $address->update(['is_main' => false]);
+
+            if($address->id == $id){
+                $address->update(['is_main' => true]);
+            }
+        }
     }
 
     public function save()
@@ -71,7 +99,7 @@ class ManageAddresses extends Component
 
         $this->showDialog = false;
 
-        $this->successMessage = true;
+        return to_route('client.addresses');
     }
 
     public function render()
