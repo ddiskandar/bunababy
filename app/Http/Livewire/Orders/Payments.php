@@ -4,19 +4,18 @@ namespace App\Http\Livewire\Orders;
 
 use App\Models\Order;
 use App\Models\Payment;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Payments extends Component
 {
     public $order;
+    public $additional;
+    public $state = [];
 
     public $showDialog = false;
     public $showSetAdditionalDialog = false;
     public $successMessage = false;
-
-    public $additional;
-
-    public $state = [];
 
     protected $listeners = [
         'saved' => '$refresh',
@@ -39,7 +38,6 @@ class Payments extends Component
         $this->showDialog = true;
         $this->state = [];
         $this->state['status'] = Payment::STATUS_VERIFIED;
-
     }
 
     public function showEditPaymentDialog(Payment $payment)
@@ -61,23 +59,25 @@ class Payments extends Component
     {
         $this->validate();
 
-        Payment::updateOrCreate(
-            [
-                'id' => $this->state['id'] ?? Payment::max('id') + 1,
-                'order_id' => $this->order->id,
-            ],
-            [
-                'value' => $this->state['value'],
-                'status' => $this->state['status'] ?? Payment::STATUS_VERIFIED,
-                'verified_at' => now(),
-                'note' => $this->state['note'] ?? '',
-                'verified_by_id' => auth()->id(),
-            ]
-        );
+        DB::transaction(function () {
+            Payment::updateOrCreate(
+                [
+                    'id' => $this->state['id'] ?? Payment::max('id') + 1,
+                    'order_id' => $this->order->id,
+                ],
+                [
+                    'value' => $this->state['value'],
+                    'status' => $this->state['status'] ?? Payment::STATUS_VERIFIED,
+                    'verified_at' => now(),
+                    'note' => $this->state['note'] ?? '',
+                    'verified_by_id' => auth()->id(),
+                ]
+            );
 
-        $this->order->update([
-            'status' => Order::STATUS_LOCKED,
-        ]);
+            $this->order->update([
+                'status' => Order::STATUS_LOCKED,
+            ]);
+        });
 
         $this->showDialog = false;
         $this->successMessage = true;

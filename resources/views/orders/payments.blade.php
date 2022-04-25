@@ -10,7 +10,7 @@
                 </p>
             </div>
             <div class="space-y-6 md:w-2/3 md:pl-24">
-                <ul class="divide-y divide-bunababy-50">
+                <ul class="divide-y divide-slate-50">
                     <li class="py-3 text-sm ">
                         <div class="flex justify-between">
                         <div>Subtotal</div>
@@ -62,47 +62,36 @@
 
                 </ul>
 
-                <div class="space-y-3">
-                    <div class="text-sm font-medium text-gray-500">Riwayat Pembayaran</div>
-                    <div class="divide-y divide-bunababy-50">
+                <div class="py-4 border-t border-bunababy-50">
+                    <div class="mb-2 text-sm font-medium text-bunababy-400">Riwayat Pembayaran</div>
+                    <div class="divide-y divide-slate-50 ">
                         @forelse ($order->payments as $payment)
-                        <div class="flex items-center justify-between py-3 text-sm">
-                            <div>
-                                <div class="font-semibold">
-                                    {{ rupiah($payment->value) }}
-                                </div>
-                                <div>{{ $payment->created_at }}</div>
-                            </div>
-                            <div>
-                                <div
-                                    @class([
-                                        'inline-flex px-3 py-1 ml-2 text-xs border font-semibold leading-4 rounded-full',
-                                        'text-orange-500 bg-orange-100 border-orange-400' => $payment->status() == 'Waiting',
-                                        'text-red-500 bg-red-100 border-red-400' => $payment->status() == 'Rejected',
-                                        'text-green-500 bg-green-100 border-green-400' => $payment->status() == 'Verified',
-                                    ])>
-                                    {{ $payment->status() }}
-                                </div>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <div class="flex items-center justify-center space-x-2 text-gray-400">
+                        <div class="flex items-center justify-between py-2 text-sm">
+                            <div class="flex items-center justify-center ">
+                                <div class="font-semibold">{{ $payment->created_at->isoFormat('DD/MM/YYYY HH:mm') }}</div>
+                                <div class="flex items-center justify-center ml-4 ">
+                                    <div class="mr-4">{{ $payment->status() }}</div>
                                     <x-button-icon wire:click="showEditPaymentDialog({{ $payment->id }})">
                                         <x-icon-pencil-alt />
                                     </x-button-icon>
                                 </div>
                             </div>
+
+                            <div class="font-semibold">
+                                {{ rupiah($payment->value) }}
+                            </div>
                         </div>
                         @empty
-                            <div>Belum ada pembayaran</div>
+                            <div class="py-4 text-sm text-red-600">Belum ada riwayat bukti pembayaran</div>
                         @endforelse
                     </div>
-                    <x-button
+                    <x-secondary-button
                         wire:click="showAddNewPaymentDialog"
-                        class="mt-2 mr-2"
+                        class="mt-4"
                         type="button"
                     >
                         {{ __('Tambah Pembayaran') }}
-                    </x-button>
+                    </x-secondary-button>
                 </div>
             </div>
         </div>
