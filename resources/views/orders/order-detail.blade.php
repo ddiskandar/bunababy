@@ -1,9 +1,9 @@
 <div>
-    <div class="overflow-hidden bg-white shadow-sm md:-mt-8 md:-mx-8 ">
+    <div class="overflow-hidden bg-white rounded">
         <!-- Card Body: User Profile -->
-        <div class="items-center justify-between w-full p-5 border-b lg:p-8 md:flex border-slate-200">
+        <div class="items-center justify-between w-full px-8 py-5 border-b md:flex border-slate-200">
             <div class="space-y-2 md:space-y-0 md:space-x-3 md:items-center md:flex">
-                <a href="{{ url()->previous() }}">
+                <a href="{{ route('orders') }}">
                     <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
@@ -11,10 +11,13 @@
                 </a>
                 <div class="text-xl font-semibold">{{ $order->midwife->name }}</div>
                 <div class="hidden md:block">•</div>
-                <div class="flex justify-between gap-2">
-                    <div class="flex items-center gap-2">
+                <div class="flex items-center justify-start gap-2 md:gap-4 md:justify-between">
+                    <div>
                         {{ $order->no_reg }}
                     </div>
+                    <a href="{{ route('order.invoice', $order->no_reg) }}" target="_blank" class="text-sm font-semibold text-bunababy-200">
+                        Lihat Invoice
+                    </a>
                 </div>
             </div>
             <div class="flex items-center justify-between mt-4 space-x-4 md:mt-0 md:justify-end">
@@ -36,7 +39,7 @@
                 </span>
             </div>
         </div>
-        <div class="grid w-full grid-cols-1 p-5 gap-x-4 gap-y-8 sm:grid-cols-2 lg:p-8">
+        <div class="grid w-full grid-cols-1 p-5 gap-x-4 gap-y-8 sm:grid-cols-3 lg:p-8">
             <div class="sm:col-span-1">
                 <dt class="text-sm font-medium text-gray-500">
                     Tempat
@@ -55,19 +58,45 @@
             </div>
             <div class="sm:col-span-1">
                 <dt class="text-sm font-medium text-gray-500">
-                    Alamat Lengkap
+                    Usia
                 </dt>
                 <dd class="mt-1 text-gray-900">
-                    {{ $order->address->full_address ?? '-' }}
+                    {{ $order->client->profile->birth_date ? $order->client->profile->birth_date->age() : '-' }}
                 </dd>
             </div>
+            @if ($baby)
+            <div class="sm:col-span-1">
+                <dt class="text-sm font-medium text-gray-500">
+                    Nama Baby
+                </dt>
+                <dd class="mt-1 text-gray-900">
+                    {{ $baby->name }}
+                </dd>
+            </div>
+            <div class="sm:col-span-1">
+                <dt class="text-sm font-medium text-gray-500">
+                    Tanggal Lahir Baby
+                </dt>
+                <dd class="mt-1 text-gray-900">
+                    {{ $baby->birth_date }}
+                </dd>
+            </div>
+            @endif
             <div class="sm:col-span-1">
                 <dt class="text-sm font-medium text-gray-500">
                     Waktu
                 </dt>
                 <dd class="mt-1 text-gray-900">
-                    <span  >{{ $order->start_datetime->isoFormat('dddd, DD MMMM gggg') }}</span>
-                    {{-- <span  >{{\Carbon\Carbon::createFromFormat('H:i:s',$order->start_datetime)->format('h:i')}} - {{\Carbon\Carbon::createFromFormat('H:i:s',$order->end_time)->format('h:i')}}</span> --}}
+                    <span>{{ $order->start_datetime->isoFormat('dddd, DD MMM YYYY HH:mm -') }}</span>
+                    <span>{{ $order->end_datetime->isoFormat('HH:mm') }} WIB</span>
+                </dd>
+            </div>
+            <div class="sm:col-span-2">
+                <dt class="text-sm font-medium text-gray-500">
+                    Alamat
+                </dt>
+                <dd class="mt-1 text-gray-900">
+                    {{ $order->address->full_address ?? '-' }}
                 </dd>
             </div>
 

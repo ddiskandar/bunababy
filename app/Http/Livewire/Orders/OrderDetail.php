@@ -8,12 +8,14 @@ use Livewire\Component;
 class OrderDetail extends Component
 {
     public $order;
+    public $baby;
 
     protected $listeners = ['saved' => '$refresh'];
 
     public function mount(Order $order)
     {
         $this->order = $order;
+        $this->baby = auth()->user()->families->where('type', 'Anak')->first();
 
         if(substr($this->order->client->profile->phone, 0, 2) == '08'){
             $this->order->client->profile->update([
