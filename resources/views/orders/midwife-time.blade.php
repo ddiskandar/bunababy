@@ -36,11 +36,8 @@
 
                     <div class="flex items-center">
                         <div  >
-                            <x-button wire:click="save">Simpan</x-button>
+                            <x-button wire:loading.attr="disabled" wire:click="save">Simpan</x-button>
                         </div>
-                        <x-dirty-message class="ml-3" target="state.midwife_user_id, date, state.start_time">
-                            {{ __('Belum disimpan!') }}
-                        </x-dirty-message>
 
                         <x-action-message class="ml-3" on="saved">
                             {{ __('Berhasil disimpan') }}

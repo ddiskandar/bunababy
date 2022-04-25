@@ -33,6 +33,7 @@ class SelectTreatments extends Component
         ]);
 
         $this->order->treatments()->attach($this->treatmentId);
+        $this->treatmentId = '';
         $this->updateTotalPrice();
     }
 

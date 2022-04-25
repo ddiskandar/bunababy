@@ -42,8 +42,8 @@
                     </div>
 
                     <div class="flex items-center mt-4">
-                        <div  >
-                            <x-button wire:click="save">Tambah</x-button>
+                        <div>
+                            <x-button wire:loading.attr="disabled" wire:click="save">Tambah</x-button>
                         </div>
 
                         <x-action-message class="ml-3" on="saved">

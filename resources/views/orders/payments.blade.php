@@ -96,13 +96,13 @@
                             <div>Belum ada pembayaran</div>
                         @endforelse
                     </div>
-                    <x-secondary-button
+                    <x-button
                         wire:click="showAddNewPaymentDialog"
                         class="mt-2 mr-2"
                         type="button"
                     >
                         {{ __('Tambah Pembayaran') }}
-                    </x-secondary-button>
+                    </x-button>
                 </div>
             </div>
         </div>
