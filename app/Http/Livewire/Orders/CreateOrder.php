@@ -94,8 +94,9 @@ class CreateOrder extends Component
 
         $date = session('order.date')->toDateString();
 
+        // TODO Cek
         foreach($orders as $order) {
-            if ($order->activeBetween($date . ' ' . $order->getStartTime(), $date . ' ' . $order->getEndTime())->exists()) {
+            if ($order->activeBetween($date . ' ' . session('order.start_time'), Carbon::parse($date . ' ' . session('order.start_time'))->addMinutes(session('order.addMinutes')))->exists()) {
                 session()->flash('treatments', 'Tidak dapat membuat reservasi pada pilihan dan rentang waktu ini, silahkan pilih slot waktu yang kosong.');
                 return back();
             }
@@ -106,9 +107,22 @@ class CreateOrder extends Component
     {
         $this->validate();
 
-        DB::transaction(function () {
+        $orders = Order::query()
+            ->where('midwife_user_id', session('order.midwife_user_id'))
+            ->whereDate('start_datetime', session('order.date'))
+            ->locked()
+            ->get();
 
-            $this->checkAvailability();
+        $date = session('order.date')->toDateString();
+
+        foreach($orders as $order) {
+            if ($order->activeBetween($date . ' ' . session('order.start_time'), Carbon::parse($date . ' ' . session('order.start_time'))->addMinutes(session('order.addMinutes')))->exists()) {
+                session()->flash('treatments', 'Tidak dapat membuat reservasi pada pilihan dan rentang waktu ini, silahkan pilih pada slot waktu yang kosong.');
+                return back();
+            }
+        }
+
+        DB::transaction(function () {
 
             $order = new Order();
             $order->no_reg = $order->getNoReg();

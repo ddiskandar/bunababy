@@ -101,7 +101,7 @@
                     <x-label>Jadwal Yang Sudah Dipesan</x-label>
                     @foreach ($orders as $order)
                         <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 border rounded-full text-slate-600 bg-slate-50 border-slate-200">
-                            HERE
+                            {{ $order->start_datetime->isoFormat('HH:mm') }} - {{ $order->end_datetime->isoFormat('HH:mm') }}
                         </div>
                     @endforeach
                 </div>
@@ -109,9 +109,13 @@
                     @if ($midwifeId)
                     <div class="space-y-1">
                         <x-label for="time">Waktu Treatment</x-label>
-                        <x-input wire:model="time" class="w-full" type="time" id="time" />
+                        <x-input wire:model="time" class="w-full" type="time" id="time"/>
                         <x-input-error for="time" class="mt-2" />
                     </div>
+
+                    @if (session()->has('treatments'))
+                        <div class="mb-4 text-sm text-red-600">{{ session('treatments') }}</div>
+                    @endif
 
                     <div class="flex items-center">
                         <div>
