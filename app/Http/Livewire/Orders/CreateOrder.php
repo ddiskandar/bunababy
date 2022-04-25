@@ -6,62 +6,127 @@ use App\Models\Address;
 use App\Models\Kecamatan;
 use App\Models\Order;
 use App\Models\User;
+use App\Notifications\NewOrder;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
 class CreateOrder extends Component
 {
+    public $place;
     public $clientId;
     public $kecamatanId;
     public $midwifeId;
     public $date;
-    public $orders;
     public $time;
-    public $place = 1;
+
+    public $orders;
 
     public $kecamatan;
     public $client;
     public $showAllMidwives = false;
 
-    public $rules = [];
+    protected $rules = [
+        'time' => 'required',
+    ];
+
+    protected $validationAttributes = [
+        'time' => 'Waktu mulai'
+    ];
+
+    public function mount()
+    {
+        if (session()->missing('order.place')) {
+            session()->put('order.place', 1);
+        }
+        session()->put('order.addMinutes', 40);
+
+        $this->place = session('order.place') ;
+    }
+
+    public function updatedPlace()
+    {
+        session()->put('order.place', $this->place);
+    }
 
     public function updatedClientId()
     {
         $this->client = User::find($this->clientId);
     }
 
+    public function updatedKecamatanId()
+    {
+        $kecamatan = DB::table('kecamatans')->where('id', $this->kecamatanId )->first();
+
+        session()->put('order.kecamatan_id', $kecamatan->id);
+        session()->put('order.kecamatan_distance', $kecamatan->distance);
+    }
+
+    public function updatedMidwifeId()
+    {
+        session()->put('order.midwife_user_id', $this->midwifeId);
+    }
+
     public function updatedDate()
     {
+        session()->put('order.date', Carbon::parse($this->date));
+
         $this->orders = Order::query()
             ->where('midwife_user_id', $this->midwifeId)
-            ->where('date', $this->date)
+            ->whereDate('start_datetime', $this->date)
             ->get();
+    }
+
+    public function updatedTime()
+    {
+        session()->put('order.start_time', $this->time);
+    }
+
+    public function checkAvailability()
+    {
+        $orders = Order::query()
+            ->where('midwife_user_id', session('order.midwife_user_id'))
+            ->whereDate('start_datetime', session('order.date'))
+            ->locked()
+            ->get();
+
+        $date = session('order.date')->toDateString();
+
+        foreach($orders as $order) {
+            if ($order->activeBetween($date . ' ' . $order->getStartTime(), $date . ' ' . $order->getEndTime())->exists()) {
+                session()->flash('treatments', 'Tidak dapat membuat reservasi pada pilihan dan rentang waktu ini, silahkan pilih slot waktu yang kosong.');
+                return back();
+            }
+        }
     }
 
     public function save()
     {
-        $addressId = Address::query()
-            ->where('client_user_id', $this->clientId)
-            ->where('kecamatan_id', $this->kecamatanId)
-            ->value('id');
+        $this->validate();
 
-        $order = Order::create([
-            'no_reg' => Str::random(10),
-            'invoice' => Str::random(10),
-            'place' => $this->place,
-            'client_user_id' => $this->clientId,
-            'midwife_user_id' => $this->midwifeId,
-            'address_id' => $addressId,
-            'total_price' => 0,
-            'total_duration' => 0,
-            'total_transport' => 0,
-            'additional' => 0,
-            'date' => $this->date,
-            'start_time' => $this->time,
-            'end_time' => $this->time,
-        ]);
+        DB::transaction(function () {
 
-        return redirect()->route('orders.show', $order->id);
+            $this->checkAvailability();
+
+            $order = new Order();
+            $order->no_reg = $order->getNoReg();
+            $order->invoice = $order->getInvoice();
+            $order->place = session('order.place');
+            $order->client_user_id = $this->clientId;
+            $order->midwife_user_id = session('order.midwife_user_id');
+            $order->total_price = 0;
+            $order->total_duration = 0;
+            $order->total_transport = 0;
+            $order->start_datetime = Carbon::parse(session('order.date')->toDateString() . ' ' . session('order.start_time'));
+            $order->status = Order::STATUS_LOCKED;
+            $order->save();
+
+            session()->forget('order');
+
+            return redirect()->route('orders.show', $order->id);
+        });
     }
 
     public function render()

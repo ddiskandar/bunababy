@@ -100,6 +100,26 @@ class Order extends Model
             );
     }
 
+    public function scopeActiveBetween($query, $from, $to)
+    {
+        $query->whereStatus(Order::STATUS_LOCKED)
+            ->betweenTimes($from, $to);
+    }
+
+    public function scopeBetweenTimes($query, $from, $to)
+    {
+        $query->where(function ($query) use ($to, $from) {
+            $query
+                ->whereBetween('start_datetime', [$from, $to])
+                ->orWhereBetween('end_datetime', [$from, $to])
+                ->orWhere(function ($query) use ($to, $from) {
+                    $query
+                        ->where('start_datetime', '<', $from)
+                        ->where('end_datetime', '>', $to);
+                });
+        });
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
@@ -113,11 +133,6 @@ class Order extends Model
     public function verifiedPayments(): HasMany
     {
         return $this->hasMany(Payment::class)->where('status', Payment::STATUS_VERIFIED);
-    }
-
-    public function getGrandTotal()
-    {
-        return ($this->total_price + $this->total_transport + $this->additional);
     }
 
     public function getVerifiedPayments()
@@ -145,6 +160,13 @@ class Order extends Model
         return $this->getGrandTotal() - $this->verifiedPayments->pluck('value')->sum();
     }
 
+    public function getGrandTotal()
+    {
+        return ($this->total_price + $this->total_transport + $this->additional);
+    }
+
+    // Create Order
+
     public function numberStartTime()
     {
         return session('order.place') . session('order.midwife_user_id') . session('order.start_time')[0] . session('order.start_time')[1];
@@ -160,26 +182,6 @@ class Order extends Model
         return 'INV/' . session('order.date')->isoFormat('YYMMDD') . '/BBC/' . $this->numberStartTime();
     }
 
-    public function scopeActiveBetween($query, $from, $to)
-    {
-        $query->whereStatus(Order::STATUS_LOCKED)
-            ->betweenTimes($from, $to);
-    }
-
-    public function scopeBetweenTimes($query, $from, $to)
-    {
-        $query->where(function ($query) use ($to, $from) {
-            $query
-                ->whereBetween('start_datetime', [$from, $to])
-                ->orWhereBetween('end_datetime', [$from, $to])
-                ->orWhere(function ($query) use ($to, $from) {
-                    $query
-                        ->where('start_datetime', '<', $from)
-                        ->where('end_datetime', '>', $to);
-                });
-        });
-    }
-
     public function getTotalTransport()
     {
         if(session('order.kecamatan_distance') < 4) {
@@ -187,12 +189,16 @@ class Order extends Model
         } else {
             return 40000 + ((session('order.kecamatan_distance') - 4) * 5000);
         }
-
     }
 
     public function getTotalPrice()
     {
         return collect(session('order.treatments'))->sum('treatment_price') ?? 0;
+    }
+
+    public function getTotalDuation()
+    {
+        return collect(session('order.treatments'))->sum('treatment_duration') + 40;
     }
 
     public function getStartTime()
@@ -203,11 +209,6 @@ class Order extends Model
     public function getEndTime()
     {
         return Carbon::parse($this->getStartTime())->addMinutes(session('order.addMinutes'))->toTimeString();
-    }
-
-    public function getTotalDuation()
-    {
-        return collect(session('order.treatments'))->sum('treatment_duration') + 40;
     }
 
 }

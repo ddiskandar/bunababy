@@ -58,7 +58,7 @@
                     Alamat Lengkap
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900">
-                    {{ $order->address->full_address }}
+                    {{ $order->address->full_address ?? '-' }}
                 </dd>
             </div>
             <div class="sm:col-span-1">

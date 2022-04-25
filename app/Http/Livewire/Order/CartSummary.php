@@ -40,16 +40,15 @@ class CartSummary extends Component
 
         $orders = Order::query()
             ->where('midwife_user_id', session('order.midwife_user_id'))
+            ->locked()
             ->whereDate('start_datetime', session('order.date'))
             ->get();
 
         $date = session('order.date')->toDateString();
 
-        // dd($date);
-
         foreach($orders as $order) {
             if ($order->activeBetween($date . ' ' . $order->getStartTime(), $date . ' ' . $order->getEndTime())->exists()) {
-                session()->flash('treatments', 'Anda tidak dapat membuat reservasi pada pilihan dan rentang waktu ini, silahkan pilih slot waktu yang kosong.');
+                session()->flash('treatments', 'Tidak dapat membuat reservasi pada pilihan dan rentang waktu ini, silahkan pilih slot waktu yang kosong.');
                 return back();
             }
         }

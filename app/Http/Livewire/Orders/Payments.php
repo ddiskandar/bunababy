@@ -24,7 +24,6 @@ class Payments extends Component
 
     protected $rules = [
         'state.value' => 'required',
-        // 'state.status' => 'required',
         'state.attachment' => 'nullable',
         'state.note' => 'nullable',
     ];

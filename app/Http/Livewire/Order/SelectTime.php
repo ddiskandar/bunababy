@@ -16,7 +16,6 @@ class SelectTime extends Component
         'newUser'
     ];
 
-
     public function newUser()
     {
         session()->put('order.status', 'newUser');

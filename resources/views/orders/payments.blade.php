@@ -21,48 +21,50 @@
             <ul class="divide-y divide-bunababy-50">
                 <li class="py-3 text-sm ">
                     <div class="flex justify-between">
-                    <div  >Harga</div>
-                    <div  >{{ rupiah($order->total_price) }}</div>
+                    <div>Subtotal</div>
+                    <div>{{ rupiah($order->total_price) }}</div>
                     </div>
                 </li>
 
                 <li class="py-3 text-sm ">
                     <div class="flex justify-between">
-                    <div  >Transport</div>
-                    <div  >{{ rupiah($order->total_transport) }}</div>
+                    <div>Transport</div>
+                    <div>{{ rupiah($order->total_transport) }}</div>
                     </div>
                 </li>
 
                 <li class="py-3 text-sm ">
                     <div class="flex justify-between">
-                    <div class="flex items-center gap-2">
+                    <div>
                         <div>Additional</div>
+                    </div>
+                    <div class="flex items-center gap-2">
                         <x-button-icon wire:click="$set('showSetAdditionalDialog', true)">
                             <x-icon-pencil-alt />
                         </x-button-icon>
+                        <div>{{ rupiah($order->additional) }}</div>
                     </div>
-                    <div  >{{ rupiah($order->additional) }}</div>
                     </div>
                 </li>
 
                 <li class="py-3 text-sm font-semibold">
                     <div class="flex justify-between">
-                    <div  >Total Tagihan</div>
-                    <div  >{{ rupiah($order->getGrandTotal()) }}</div>
+                    <div>Total Tagihan</div>
+                    <div>{{ rupiah($order->getGrandTotal()) }}</div>
                     </div>
                 </li>
 
                 <li class="py-3 text-sm ">
                     <div class="flex justify-between">
-                    <div  >Total Pembayaran</div>
-                    <div  >{{ rupiah($order->getVerifiedPayments()) }}</div>
+                    <div>Total Pembayaran</div>
+                    <div>{{ rupiah($order->getVerifiedPayments()) }}</div>
                     </div>
                 </li>
 
                 <li class="py-3 text-sm ">
                     <div class="flex justify-between">
-                    <div  >Sisa Pembayaran</div>
-                    <div  >{{ rupiah($order->getRemainingPayment()) }}</div>
+                    <div>Sisa Pembayaran</div>
+                    <div>{{ rupiah($order->getRemainingPayment()) }}</div>
                     </div>
                 </li>
 
@@ -77,7 +79,7 @@
                             <div class="font-semibold">
                                 {{ rupiah($payment->value) }}
                             </div>
-                            <div  >{{ $payment->created_at }}</div>
+                            <div>{{ $payment->created_at }}</div>
                         </div>
                         <div>
                             <div

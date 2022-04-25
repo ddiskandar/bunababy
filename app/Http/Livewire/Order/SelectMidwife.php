@@ -53,6 +53,10 @@ class SelectMidwife extends Component
 
         $date = Carbon::create($y, $m, $d);
 
+        if($date->lt(today())) {
+            return back();
+        }
+
         session()->put('order.date', $date);
         session()->put('order.midwife_user_id', $this->midwife->id);
 

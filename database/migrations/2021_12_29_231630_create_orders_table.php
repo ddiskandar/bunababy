@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->tinyInteger('place')->default(1);
             $table->foreignId('client_user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('midwife_user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('address_id')->constrained()->nullable();
+            $table->foreignId('address_id')->nullable();
             $table->integer('total_price');
             $table->integer('total_duration');
             $table->integer('total_transport');

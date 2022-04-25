@@ -55,7 +55,6 @@ class Confirm extends Component
 
             return redirect()->route('me');
         });
-
     }
 
     public function render()
