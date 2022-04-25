@@ -198,7 +198,7 @@ class Order extends Model
 
     public function getTotalDuation()
     {
-        return collect(session('order.treatments'))->sum('treatment_duration') + 40;
+        return collect(session('order.treatments'))->sum('treatment_duration') + DB::table('options')->select('transport_duration')->first()->transport_duration;
     }
 
     public function getStartTime()

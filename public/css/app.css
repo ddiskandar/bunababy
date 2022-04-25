@@ -1998,6 +1998,10 @@ select {
   --tw-border-opacity: 1;
   border-color: rgb(129 140 248 / var(--tw-border-opacity));
 }
+.border-indigo-700 {
+  --tw-border-opacity: 1;
+  border-color: rgb(67 56 202 / var(--tw-border-opacity));
+}
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
@@ -2191,6 +2195,10 @@ select {
 .bg-indigo-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(238 242 255 / var(--tw-bg-opacity));
+}
+.bg-indigo-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(67 56 202 / var(--tw-bg-opacity));
 }
 .bg-opacity-75 {
   --tw-bg-opacity: 0.75;
@@ -2731,6 +2739,18 @@ select {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.placeholder-gray-400::-moz-placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-placeholder-opacity));
+}
+.placeholder-gray-400:-ms-input-placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-placeholder-opacity));
+}
+.placeholder-gray-400::placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-placeholder-opacity));
+}
 .opacity-0 {
   opacity: 0;
 }
@@ -3029,6 +3049,11 @@ select {
   border-color: rgb(254 112 197 / var(--tw-border-opacity));
 }
 
+.hover\:border-indigo-800:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(55 48 163 / var(--tw-border-opacity));
+}
+
 .hover\:bg-bunababy-50\/20:hover {
   background-color: rgb(252 231 243 / 0.2);
 }
@@ -3076,6 +3101,11 @@ select {
 .hover\:bg-gray-50:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-indigo-800:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 48 163 / var(--tw-bg-opacity));
 }
 
 .hover\:text-gray-500:hover {
@@ -3390,6 +3420,11 @@ select {
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 
+.active\:border-indigo-700:active {
+  --tw-border-opacity: 1;
+  border-color: rgb(67 56 202 / var(--tw-border-opacity));
+}
+
 .active\:bg-gray-100:active {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
@@ -3428,6 +3463,11 @@ select {
 .active\:bg-gray-50:active {
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
+.active\:bg-indigo-700:active {
+  --tw-bg-opacity: 1;
+  background-color: rgb(67 56 202 / var(--tw-bg-opacity));
 }
 
 .active\:text-gray-700:active {
@@ -3989,6 +4029,10 @@ select {
     margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
   }
 
+  .md\:border-0 {
+    border-width: 0px;
+  }
+
   .md\:p-5 {
     padding: 1.25rem;
   }
@@ -4033,6 +4077,10 @@ select {
 
   .md\:pb-10 {
     padding-bottom: 2.5rem;
+  }
+
+  .md\:pl-24 {
+    padding-left: 6rem;
   }
 
   .md\:text-left {

@@ -41,7 +41,9 @@ class CreateOrder extends Component
         if (session()->missing('order.place')) {
             session()->put('order.place', 1);
         }
-        session()->put('order.addMinutes', 40);
+
+        $addMinutes = DB::table('options')->select('transport_duration')->first()->transport_duration;
+        session()->put('order.addMinutes', $addMinutes);
 
         $this->place = session('order.place') ;
     }
@@ -131,8 +133,8 @@ class CreateOrder extends Component
             $order->client_user_id = $this->clientId;
             $order->midwife_user_id = session('order.midwife_user_id');
             $order->total_price = 0;
-            $order->total_duration = 0;
-            $order->total_transport = 0;
+            $order->total_duration = session('order.addMinutes');
+            $order->total_transport = $order->getTotalTransport();
             $order->start_datetime = Carbon::parse(session('order.date')->toDateString() . ' ' . session('order.start_time'));
             $order->status = Order::STATUS_LOCKED;
             $order->save();

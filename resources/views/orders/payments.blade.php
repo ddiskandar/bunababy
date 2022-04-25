@@ -1,124 +1,112 @@
-<div class="space-y-4">
+<div class="flex flex-col overflow-hidden bg-white rounded shadow-sm">
+    <div class="w-full p-5 lg:p-6 grow">
+        <div class="md:flex">
+            <div class="mb-5 border-b md:flex-none md:w-1/3 md:border-0 md:mb-0">
+                <h3 class="font-semibold">
+                    Pembayaran
+                </h3>
+                <p class="mb-5 text-sm text-gray-500">
 
-    <!-- User Profile -->
-    <div class="md:flex md:space-x-5">
-        <!-- User Profile Info -->
-        <div class="mb-4 md:flex-none md:w-1/3">
-            <h3 class="font-semibold">
-                Pembayaran
-            </h3>
-            <p class="mb-5 text-sm text-gray-500">
-
-            </p>
-        </div>
-        <!-- END User Profile Info -->
-
-        <!-- Card: User Profile -->
-        <div class="flex flex-col overflow-hidden bg-white rounded shadow-sm md:w-2/3">
-        <!-- Card Body: User Profile -->
-        <div class="w-full p-5 space-y-6 lg:p-6 grow">
-
-            <ul class="divide-y divide-bunababy-50">
-                <li class="py-3 text-sm ">
-                    <div class="flex justify-between">
-                    <div>Subtotal</div>
-                    <div>{{ rupiah($order->total_price) }}</div>
-                    </div>
-                </li>
-
-                <li class="py-3 text-sm ">
-                    <div class="flex justify-between">
-                    <div>Transport</div>
-                    <div>{{ rupiah($order->total_transport) }}</div>
-                    </div>
-                </li>
-
-                <li class="py-3 text-sm ">
-                    <div class="flex justify-between">
-                    <div>
-                        <div>Additional</div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <x-button-icon wire:click="$set('showSetAdditionalDialog', true)">
-                            <x-icon-pencil-alt />
-                        </x-button-icon>
-                        <div>{{ rupiah($order->additional) }}</div>
-                    </div>
-                    </div>
-                </li>
-
-                <li class="py-3 text-sm font-semibold">
-                    <div class="flex justify-between">
-                    <div>Total Tagihan</div>
-                    <div>{{ rupiah($order->getGrandTotal()) }}</div>
-                    </div>
-                </li>
-
-                <li class="py-3 text-sm ">
-                    <div class="flex justify-between">
-                    <div>Total Pembayaran</div>
-                    <div>{{ rupiah($order->getVerifiedPayments()) }}</div>
-                    </div>
-                </li>
-
-                <li class="py-3 text-sm ">
-                    <div class="flex justify-between">
-                    <div>Sisa Pembayaran</div>
-                    <div>{{ rupiah($order->getRemainingPayment()) }}</div>
-                    </div>
-                </li>
-
-            </ul>
-
-            <div class="space-y-3">
-                <div class="text-sm font-medium text-gray-500">Riwayat Pembayaran</div>
-                <div class="divide-y divide-bunababy-50">
-                    @forelse ($order->payments as $payment)
-                    <div class="flex items-center justify-between py-3 text-sm">
-                        <div>
-                            <div class="font-semibold">
-                                {{ rupiah($payment->value) }}
-                            </div>
-                            <div>{{ $payment->created_at }}</div>
-                        </div>
-                        <div>
-                            <div
-                                @class([
-                                    'inline-flex px-3 py-1 ml-2 text-xs border font-semibold leading-4 rounded-full',
-                                    'text-orange-500 bg-orange-100 border-orange-400' => $payment->status() == 'Waiting',
-                                    'text-red-500 bg-red-100 border-red-400' => $payment->status() == 'Rejected',
-                                    'text-green-500 bg-green-100 border-green-400' => $payment->status() == 'Verified',
-                                ])>
-                                {{ $payment->status() }}
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <div class="flex items-center justify-center space-x-2 text-gray-400">
-                                <x-button-icon wire:click="showEditPaymentDialog({{ $payment->id }})">
-                                    <x-icon-pencil-alt />
-                                </x-button-icon>
-                            </div>
-                        </div>
-                    </div>
-                    @empty
-                        <div>Belum ada pembayaran</div>
-                    @endforelse
-                </div>
-                <x-secondary-button
-                    wire:click="showAddNewPaymentDialog"
-                    class="mt-2 mr-2"
-                    type="button"
-                >
-                    {{ __('Tambah Pembayaran') }}
-                </x-secondary-button>
+                </p>
             </div>
+            <div class="space-y-6 md:w-2/3 md:pl-24">
+                <ul class="divide-y divide-bunababy-50">
+                    <li class="py-3 text-sm ">
+                        <div class="flex justify-between">
+                        <div>Subtotal</div>
+                        <div>{{ rupiah($order->total_price) }}</div>
+                        </div>
+                    </li>
 
+                    <li class="py-3 text-sm ">
+                        <div class="flex justify-between">
+                        <div>Transport</div>
+                        <div>{{ rupiah($order->total_transport) }}</div>
+                        </div>
+                    </li>
+
+                    <li class="py-3 text-sm ">
+                        <div class="flex justify-between">
+                        <div>
+                            <div>Additional</div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <x-button-icon wire:click="$set('showSetAdditionalDialog', true)">
+                                <x-icon-pencil-alt />
+                            </x-button-icon>
+                            <div>{{ rupiah($order->additional) }}</div>
+                        </div>
+                        </div>
+                    </li>
+
+                    <li class="py-3 text-sm font-semibold">
+                        <div class="flex justify-between">
+                        <div>Total Tagihan</div>
+                        <div>{{ rupiah($order->getGrandTotal()) }}</div>
+                        </div>
+                    </li>
+
+                    <li class="py-3 text-sm ">
+                        <div class="flex justify-between">
+                        <div>Total Pembayaran</div>
+                        <div>{{ rupiah($order->getVerifiedPayments()) }}</div>
+                        </div>
+                    </li>
+
+                    <li class="py-3 text-sm ">
+                        <div class="flex justify-between">
+                        <div>Sisa Pembayaran</div>
+                        <div>{{ rupiah($order->getRemainingPayment()) }}</div>
+                        </div>
+                    </li>
+
+                </ul>
+
+                <div class="space-y-3">
+                    <div class="text-sm font-medium text-gray-500">Riwayat Pembayaran</div>
+                    <div class="divide-y divide-bunababy-50">
+                        @forelse ($order->payments as $payment)
+                        <div class="flex items-center justify-between py-3 text-sm">
+                            <div>
+                                <div class="font-semibold">
+                                    {{ rupiah($payment->value) }}
+                                </div>
+                                <div>{{ $payment->created_at }}</div>
+                            </div>
+                            <div>
+                                <div
+                                    @class([
+                                        'inline-flex px-3 py-1 ml-2 text-xs border font-semibold leading-4 rounded-full',
+                                        'text-orange-500 bg-orange-100 border-orange-400' => $payment->status() == 'Waiting',
+                                        'text-red-500 bg-red-100 border-red-400' => $payment->status() == 'Rejected',
+                                        'text-green-500 bg-green-100 border-green-400' => $payment->status() == 'Verified',
+                                    ])>
+                                    {{ $payment->status() }}
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <div class="flex items-center justify-center space-x-2 text-gray-400">
+                                    <x-button-icon wire:click="showEditPaymentDialog({{ $payment->id }})">
+                                        <x-icon-pencil-alt />
+                                    </x-button-icon>
+                                </div>
+                            </div>
+                        </div>
+                        @empty
+                            <div>Belum ada pembayaran</div>
+                        @endforelse
+                    </div>
+                    <x-secondary-button
+                        wire:click="showAddNewPaymentDialog"
+                        class="mt-2 mr-2"
+                        type="button"
+                    >
+                        {{ __('Tambah Pembayaran') }}
+                    </x-secondary-button>
+                </div>
+            </div>
         </div>
-        <!-- Card Body: User Profile -->
-        </div>
-        <!-- Card: User Profile -->
     </div>
-    <!-- END User Profile -->
 
     <x-dialog wire:model="showDialog">
         <x-title>Status Pembayaran</x-title>
