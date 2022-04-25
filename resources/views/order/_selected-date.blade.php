@@ -6,7 +6,17 @@
         Pilihan Hari/Tanggal
     </div>
 </div>
-<span class="inline-flex items-center px-4 py-1 ml-6 font-semibold leading-5 border rounded-full bg-bunababy-50 border-bunababy-200/50">
+<div class="inline-flex items-center px-4 py-1 ml-6 font-semibold leading-5 border rounded-full bg-bunababy-50 border-bunababy-200/50">
     <span class="w-2 h-2 mr-2 rounded-full bg-bunababy-200"></span>
     <span class="text-sm text-bunababy-200 ">{{ session('order.date')->isoFormat('dddd, D MMMM G') }}</span>
-</span>
+    <div class="ml-2 text-bunababy-200">
+        <a href="{{ route('order.create') }}">
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 8.75C4.75 7.64543 5.64543 6.75 6.75 6.75H17.25C18.3546 6.75 19.25 7.64543 19.25 8.75V17.25C19.25 18.3546 18.3546 19.25 17.25 19.25H6.75C5.64543 19.25 4.75 18.3546 4.75 17.25V8.75Z"></path>
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 4.75V8.25"></path>
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 4.75V8.25"></path>
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7.75 10.75H16.25"></path>
+            </svg>
+        </a>
+    </div>
+</div>

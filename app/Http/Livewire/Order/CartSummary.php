@@ -11,8 +11,15 @@ class CartSummary extends Component
     protected $listeners = [
         'timeChanged' => '$refresh',
         'treatmentAdded' => '$refresh',
-        'treatmentDeleted' => '$refresh'
+        'treatmentDeleted' => '$refresh',
+        'newUser'
     ];
+
+    public function newUser()
+    {
+        session()->put('order.status', 'newUser');
+        return redirect()->route('order.cart');
+    }
 
     public function deleteTreatments($id)
     {

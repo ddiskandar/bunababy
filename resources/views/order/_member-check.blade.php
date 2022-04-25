@@ -17,10 +17,7 @@
                 </x-button>
             </a>
             <button class="inline-flex items-center justify-center px-3 py-2 space-x-2 text-sm font-semibold leading-5 text-bunababy-200 border border-transparent rounded focus:outline-none"
-                x-on:click="
-                    show = false;
-                    Livewire.emit('newUser');
-                "
+                x-on:click="show = false; Livewire.emit('newUser'); "
             >
                 Tidak, Ini pertama kali treatment
             </button>

@@ -6,6 +6,8 @@
         @guest
             @includeWhen(session()->missing('order.status'), 'order._member-check')
         @endguest
+
+        @if (session()->has('order.status'))
         <x-panel>
             <div class="py-4">
                 @include('order._selected-date')
@@ -15,6 +17,7 @@
                 @livewire('order.select-time')
             </div>
         </x-panel>
+        @endif
 
         <div class="py-4">
             @livewire('order.select-treatments')
