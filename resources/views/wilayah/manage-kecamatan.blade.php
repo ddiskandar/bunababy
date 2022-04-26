@@ -1,7 +1,5 @@
 <div>
-    <!-- Card -->
     <div class="flex flex-col overflow-hidden bg-white rounded shadow-sm">
-        <!-- Card Header -->
         <div class="w-full py-3 pl-6 pr-3 bg-gray-50 sm:flex sm:justify-between sm:items-center">
             <div class="flex items-center">
                 <h3 class="font-semibold">
@@ -17,7 +15,7 @@
                     <div class="order-1 w-40 sm:order-2">
                         <select wire:model="filterKabupaten" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
                             <option value="" selected="selected">Semua Kabupaten</option>
-                            @foreach (DB::table('kabupatens')->get() as $kabupaten)
+                            @foreach ($kabupatens as $kabupaten)
                                 <option value="{{ $kabupaten->id }}">{{ $kabupaten->name }}</option>
                             @endforeach
                         </select>
@@ -25,13 +23,11 @@
                 </div>
 
                 <div class="flex space-x-2">
-
-
                     <div class=" w-36">
                         <select wire:model="filterStatus" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
                             <option value="" selected="selected">Semua Status</option>
-                            <option value="0">Aktif</option>
-                            <option value="1">Tidak Aktif</option>
+                            <option value="1">Aktif</option>
+                            <option value="0">Tidak Aktif</option>
                         </select>
                     </div>
 
@@ -157,7 +153,7 @@
                 <x-input-error for="state.name" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label   for="state.distance">Jarak</x-label>
+                <x-label   for="state.distance">Jarak (Km)</x-label>
                 <x-input wire:model.lazy="state.distance" class="w-full" type="number" id="state.distance" />
                 <x-input-error for="state.distance" class="mt-2" />
             </div>
@@ -165,7 +161,7 @@
                 <x-label   for="state.kabupaten_id">Kabupaten</x-label>
                 <select wire:model.lazy="state.kabupaten_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.kabupaten_id">
                     <option value="" selected>-- Pilih salah satu</option>
-                    @foreach (DB::table('kabupatens')->get() as $item)
+                    @foreach ($kabupatens as $item)
                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                     @endforeach
                 </select>
@@ -177,7 +173,7 @@
                         <input wire:model.lazy="state.active" id="active" name="active" type="checkbox" class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
                     </div>
                     <div class="ml-2 ">
-                        <x-label   for="state.active">Aktif</x-label>
+                        <x-label for="state.active">Aktif</x-label>
                     </div>
                 </div>
             </div>
@@ -191,7 +187,5 @@
                 class="block w-full py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
             >Simpan</button>
         </div>
-
     </x-dialog>
-
 </div>

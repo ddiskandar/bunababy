@@ -16,6 +16,7 @@ class Kecamatan extends Model
 
     protected $casts = [
         'distance' => 'integer',
+        'active' => 'boolean'
     ];
 
     public function kabupaten(): BelongsTo

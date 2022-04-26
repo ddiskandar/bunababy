@@ -18,14 +18,14 @@ class ManageKabupaten extends Component
     protected $queryString = [];
 
     protected $rules = [
-        'state.name' => 'required',
-        'state.distance' => 'nullable',
+        'state.name' => 'required|string|min:2|max:64',
         'state.active' => 'required',
     ];
 
-    protected $messages = [];
-
-    protected $validationAttributes = [];
+    protected $validationAttributes = [
+        'state.name' => 'Nama',
+        'state.active' => 'Status',
+    ];
 
     public function showCreateNewKabupatenDialog()
     {

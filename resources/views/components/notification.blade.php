@@ -1,8 +1,6 @@
-
-
 <!-- Banner (bottom bubble) -->
 <div
-x-data="{ show: @entangle($attributes->wire('model')).defer }" x-show="show" x-init="setTimeout(() => show = false, 4000)"
+x-data="{ show: @entangle($attributes->wire('model')).defer }" x-show="show" x-init="setTimeout(() => show = false, 3000)"
 x-transition:enter="transition ease-out duration-300"
 x-transition:enter-start="opacity-0 transform translate-x-8"
 x-transition:enter-end="opacity-100 transform translate-x-0"
@@ -25,4 +23,3 @@ class="fixed inset-x-0 bottom-0 right-0 flex items-center justify-between px-8 p
     </button>
 </div>
 </div>
-<!-- END Banner (bottom bubble) -->

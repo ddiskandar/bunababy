@@ -14,6 +14,10 @@ class Kabupaten extends Model
 
     public $timestamps = false;
 
+    protected $casts = [
+        'active' => 'boolean',
+    ];
+
     public function kecamatans(): HasMany
     {
         return $this->hasMany(Kecamatan::class);

@@ -116,7 +116,7 @@
                         <input wire:model.lazy="state.active" id="active" name="active" type="checkbox" class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
                     </div>
                     <div class="ml-2 ">
-                        <x-label   for="state.active">Aktif</x-label>
+                        <x-label for="state.active">Aktif</x-label>
                     </div>
                 </div>
             </div>

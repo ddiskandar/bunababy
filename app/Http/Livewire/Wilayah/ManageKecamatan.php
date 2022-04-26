@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Wilayah;
 
+use App\Models\Kabupaten;
 use App\Models\Kecamatan;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -24,7 +26,7 @@ class ManageKecamatan extends Component
     protected $queryString = [
         'filterSearch' => ['except' => ''],
         'page' => ['except' => 1],
-        'perPage' => ['except' => 3],
+        'perPage' => ['except' => 8],
         'filterKabupaten' => ['except' => ''],
         'filterStatus' => ['except' => ''],
     ];
@@ -36,15 +38,11 @@ class ManageKecamatan extends Component
         'state.active' => 'required',
     ];
 
-    protected $messages = [
-        //
-    ];
-
     protected $validationAttributes = [
-        'state.kabupaten_id' => 'kabupaten',
-        'state.name' => 'nama',
-        'state.distance' => 'jarak',
-        'state.active' => 'status',
+        'state.kabupaten_id' => 'Kabupaten',
+        'state.name' => 'Nama',
+        'state.distance' => 'Jarak',
+        'state.active' => 'Status',
     ];
 
     public function updatingPerPage()
@@ -115,8 +113,13 @@ class ManageKecamatan extends Component
             ->orderBy('kabupaten_id')->orderBy('name')
             ->paginate($this->perPage);
 
+        $kabupatens = Kabupaten::query()
+            ->active()
+            ->get();
+
         return view('wilayah.manage-kecamatan', [
             'kecamatan' => $kecamatan,
+            'kabupatens' => $kabupatens,
         ]);
     }
 }
