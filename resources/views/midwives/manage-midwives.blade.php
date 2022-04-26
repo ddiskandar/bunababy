@@ -57,12 +57,15 @@
                 <thead>
                     <tr class="bg-slate-50">
                         <th class="p-3 pl-6 text-xs font-medium tracking-wider text-left uppercase text-slate-500">
+                            ID
+                        </th>
+                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500">
                             Nama
                         </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
+                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500">
                             Wilayah
                         </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
+                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500">
                             Rating
                         </th>
                         <th class="p-3 text-xs font-medium tracking-wider text-center uppercase text-slate-500">
@@ -77,7 +80,10 @@
                             'bg-slate-50/30' => $loop->even,
                             'text-slate-400' => ! $midwife->active,
                         ])>
-                            <td class="p-3 pl-6 align-top w-96 whitespace-nowrap">
+                            <td class="p-3 pl-6 align-top whitespace-nowrap ">
+                                <p class="font-semibold mt-2">{{ $midwife->id }}</p>
+                            </td>
+                            <td class="p-3 align-top whitespace-nowrap">
                                 <div class="flex items-center">
                                     <img src="{{ $midwife->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
                                     <div class="ml-3 ">
@@ -86,7 +92,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="w-1/2 p-3 align-top whitespace-nowrap">
+                            <td class="p-3 align-top w-[500px] whitespace-nowrap">
                                 <div class="flex flex-wrap gap-2 whitespace-nowrap">
                                     @forelse ($midwife->kecamatans as $kecamatan)
                                         <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 border rounded-full text-slate-600 bg-slate-50 border-slate-200">

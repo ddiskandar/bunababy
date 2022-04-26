@@ -15,22 +15,6 @@ class ManageMidwives extends Component
     public $filterSearch;
     public $filterStatus;
 
-    public $state = [];
-
-    protected $queryString = [];
-
-    protected $rules = [];
-
-    protected $messages = [];
-
-    protected $validationAttributes = [];
-
-    public function save()
-    {
-        //
-    }
-
-
     public function render()
     {
         $midwives = User::query()
@@ -42,7 +26,7 @@ class ManageMidwives extends Component
                 });
             })
             ->where('active', 'LIKE', '%' . $this->filterStatus . '%')
-            ->with('kecamatans', 'reviews')
+            ->with('kecamatans', 'reviews', 'profile:id,user_id,photo')
             ->paginate($this->perPage);
 
         return view('midwives.manage-midwives', [

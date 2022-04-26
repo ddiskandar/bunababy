@@ -1437,6 +1437,12 @@ select {
 .w-80 {
   width: 20rem;
 }
+.w-\[300px\] {
+  width: 300px;
+}
+.w-\[500px\] {
+  width: 500px;
+}
 .min-w-full {
   min-width: 100%;
 }

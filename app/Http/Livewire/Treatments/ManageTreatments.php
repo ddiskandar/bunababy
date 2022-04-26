@@ -39,18 +39,14 @@ class ManageTreatments extends Component
         'state.active' => 'required',
     ];
 
-    protected $messages = [
-        //
-    ];
-
     protected $validationAttributes = [
-        'state.name' => 'nama',
-        'state.desc' => 'deskripsi',
-        'state.price' => 'harga',
-        'state.duration' => 'durasi',
-        'state.order' => 'urutan',
-        'state.category_id' => 'kategori',
-        'state.active' => 'status aktif',
+        'state.name' => 'Nama',
+        'state.desc' => 'Deskripsi',
+        'state.price' => 'Harga',
+        'state.duration' => 'Durasi',
+        'state.order' => 'Urutan',
+        'state.category_id' => 'Kategori',
+        'state.active' => 'Status',
     ];
 
     public function updatingPerPage()
