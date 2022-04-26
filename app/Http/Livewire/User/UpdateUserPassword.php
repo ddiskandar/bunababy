@@ -18,6 +18,11 @@ class UpdateUserPassword extends Component
         'password' => 'required|string|confirmed|min:4',
     ];
 
+    public $validationAttributes = [
+        'current_password' => 'Password',
+        'password' => 'Password',
+    ];
+
     public function mount()
     {
         $this->user = auth()->user();
