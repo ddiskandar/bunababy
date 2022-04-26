@@ -36,7 +36,7 @@
                     <div class="w-16 text-center sm:text-right">
                         <select wire:model="perPage" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
                             <option value="3">3</option>
-                            <option value="6" selected>6</option>
+                            <option value="8" selected>8</option>
                             <option value="15">15</option>
                             <option value="30">30</option>
                         </select>
@@ -120,7 +120,7 @@
                                 <p class="text-slate-600">instagram.com/{{ $client->profile->ig }}</p>
                             </td>
                             <td class="p-3 whitespace-nowrap">
-                                {{ $client->last_reservation ? $client->last_reservation->start_datetime->diffForHumans() : 'Belum pernah reservasi' }}
+                                {{ $client->latestReservation ? $client->latestReservation->start_datetime->diffForHumans() : 'Belum pernah reservasi' }}
                             </td>
                             <td class="p-3 whitespace-nowrap">
                                 <div class="flex flex-wrap gap-2 whitespace-nowrap">

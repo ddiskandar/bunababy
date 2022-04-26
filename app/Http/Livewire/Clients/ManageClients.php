@@ -10,7 +10,7 @@ class ManageClients extends Component
 {
     use WithPagination;
 
-    public $perPage = 6;
+    public $perPage = 8;
 
     public $filterSearch;
     public $filterStatus;
@@ -51,9 +51,18 @@ class ManageClients extends Component
                     $query->where('name', 'LIKE', '%' . $this->filterTag . '%');
                 });
             })
-            ->with('tags', 'reservations', 'addresses', 'addresses.kecamatan')
+            ->with('tags', 'profile', 'reservations', 'latestReservation', 'addresses', 'addresses.kecamatan')
             ->latest()
             ->paginate($this->perPage);
+
+        foreach($clients as $client)
+        {
+            if(substr($client->profile->phone, 0, 2) == '08'){
+                $client->profile->update([
+                    'phone' => substr_replace($client->profile->phone, '62', 0, 1),
+                ]);
+            }
+        }
 
         return view('clients.manage-clients', [
             'clients' => $clients,

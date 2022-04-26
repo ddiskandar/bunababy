@@ -101,11 +101,6 @@ class User extends Authenticatable
         return $this->hasMany(Order::class, 'client_user_id');
     }
 
-    public function last_reservation()
-    {
-        return $this->hasOne(Order::class, 'client_user_id')->latestOfMany();
-    }
-
     public function latestReservation()
     {
         return $this->hasOne(Order::class, 'client_user_id')->latestOfMany();
