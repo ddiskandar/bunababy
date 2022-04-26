@@ -10,13 +10,31 @@ class Number extends Component
     public $state = [];
 
     public $rules = [
-        'state.wa_admin' => 'required',
-        'state.wa_owner' => 'required',
+        'state.wa_admin' => 'required|string|min:11|max:13',
+        'state.wa_owner' => 'required|string|min:11|max:13',
+    ];
+
+    public $validationAttributes = [
+        'state.wa_admin' => 'WA Admin',
+        'state.wa_owner' => 'WA Owner',
     ];
 
     public function mount()
     {
-        $this->state = Option::first()->toArray();
+        $option = Option::find(1);
+        $this->state = $option->toArray();
+
+        if(substr($this->state['wa_admin'], 0, 2) == '08'){
+            $option->update([
+                'wa_admin' => substr_replace($this->state['wa_admin'], '62', 0, 1),
+            ]);
+        }
+
+        if(substr($this->state['wa_owner'], 0, 2) == '08'){
+            $option->update([
+                'wa_owner' => substr_replace($this->state['wa_owner'], '62', 0, 1),
+            ]);
+        }
     }
 
     public function save()
@@ -29,7 +47,6 @@ class Number extends Component
         ]);
 
         $this->emit('saved');
-
     }
 
     public function render()

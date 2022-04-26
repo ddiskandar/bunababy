@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Setting;
 
 use App\Models\Option;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class General extends Component
@@ -11,10 +10,17 @@ class General extends Component
     public $state = [];
 
     public $rules = [
-        'state.site_name' => 'required',
-        'state.site_location' => 'required',
-        'state.site_desc' => 'required',
-        'state.ig' => 'required',
+        'state.site_name' => 'required|string|min:4|max:64',
+        'state.site_location' => 'required|string|min:4|max:25',
+        'state.site_desc' => 'required|string|min:4|max:255',
+        'state.ig' => 'required|string|min:4|max:64',
+    ];
+
+    protected $validationAttributes = [
+        'state.site_name' => 'Nama',
+        'state.site_location' => 'Lokasi',
+        'state.site_desc' => 'Deskripsi',
+        'state.ig' => 'Username IG',
     ];
 
     public function mount()
@@ -34,7 +40,6 @@ class General extends Component
         ]);
 
         $this->emit('saved');
-
     }
 
     public function render()

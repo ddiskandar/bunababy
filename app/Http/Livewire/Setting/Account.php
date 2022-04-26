@@ -10,8 +10,13 @@ class Account extends Component
     public $state = [];
 
     public $rules = [
-        'state.account' => 'required',
-        'state.account_name' => 'required',
+        'state.account' => 'required|string|min:4|max:64',
+        'state.account_name' => 'required|string|min:4|max:64',
+    ];
+
+    public $validationAttributes = [
+        'state.account' => 'Nomor rekening',
+        'state.account_name' => 'Nama pemilik rekening',
     ];
 
     public function mount()
@@ -29,7 +34,6 @@ class Account extends Component
         ]);
 
         $this->emit('saved');
-
     }
 
     public function render()
