@@ -31,7 +31,7 @@ class UpdateProfileInformation extends Component
             ],
             'state.phone' => 'nullable|string|min:11|max:13',
             'state.ig' => 'nullable',
-            'photo' => 'nullable|image|max:512',
+            'photo' => 'nullable|image|max:128',
         ];
     }
 

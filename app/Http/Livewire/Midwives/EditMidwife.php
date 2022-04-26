@@ -20,7 +20,7 @@ class EditMidwife extends Component
     protected function rules()
     {
         return [
-            'photo' => 'nullable|image|max:512',
+            'photo' => 'nullable|image|max:128',
             'state.name' => 'required|string|min:2|max:64',
             'state.email' => [
                 'required',

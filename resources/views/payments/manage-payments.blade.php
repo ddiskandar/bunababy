@@ -81,11 +81,11 @@
                             'bg-slate-50/30' => $loop->even,
                             'text-slate-400' => ! $payment->active,
                         ])>
-                            <td class="table-cell p-3 pl-6 w-60 whitespace-nowrap">
+                            <td class="table-cell p-3 pl-6 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <img src="{{ $payment->order->client->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
                                     <div class="ml-3 ">
-                                        <p class="font-semibold truncate text-slate-800">{{ $payment->order->client->name }}</p>
+                                        <p class="font-semibold w-52 truncate text-slate-800">{{ $payment->order->client->name }}</p>
                                         <p class="text-slate-600">{{ $payment->order->client->address }}</p>
                                     </div>
                                 </div>

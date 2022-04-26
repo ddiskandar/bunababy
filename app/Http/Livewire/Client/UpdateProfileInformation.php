@@ -28,7 +28,7 @@ class UpdateProfileInformation extends Component
             ],
             'state.birth_date' => 'required|date',
             'state.phone' => 'required|string|min:11|max:13',
-            'photo' => 'nullable|image|max:512',
+            'photo' => 'nullable|image|max:128',
         ];
     }
 
