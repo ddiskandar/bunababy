@@ -73,13 +73,13 @@
                         <th class="p-3 pl-6 text-xs font-medium tracking-wider text-left uppercase text-slate-500">
                             Nama / Alamat
                         </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
+                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500">
                             Phone / Ig
                         </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
+                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500">
                             Order Terakhir
                         </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
+                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500">
                             Tag
                         </th>
                         <th class="p-3 text-xs font-medium tracking-wider text-center uppercase text-slate-500">
@@ -105,10 +105,10 @@
                             </td>
                             <td class="p-3 whitespace-nowrap">
                                 <p class="flex items-center gap-2 ">
-                                    <span class="font-semibold">{{ $client->profile->phone }}</span>
+                                    <span class="font-semibold">{{ $client->profile->phone ?? '-' }}</span>
                                     @isset($client->profile->phone)
-                                    <a href="">
-                                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <a href="https://api.whatsapp.com/send?phone={{ $client->profile->phone }}&text=Halo+Buna+{{ $client->name }}" target="_blank">
+                                        <svg class="text-bunababy-200" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 18.25C15.5 18.25 19.25 16.5 19.25 12C19.25 7.5 15.5 5.75 12 5.75C8.5 5.75 4.75 7.5 4.75 12C4.75 13.0298 4.94639 13.9156 5.29123 14.6693C5.50618 15.1392 5.62675 15.6573 5.53154 16.1651L5.26934 17.5635C5.13974 18.2547 5.74527 18.8603 6.43651 18.7307L9.64388 18.1293C9.896 18.082 10.1545 18.0861 10.4078 18.1263C10.935 18.2099 11.4704 18.25 12 18.25Z"></path>
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M9.5 12C9.5 12.2761 9.27614 12.5 9 12.5C8.72386 12.5 8.5 12.2761 8.5 12C8.5 11.7239 8.72386 11.5 9 11.5C9.27614 11.5 9.5 11.7239 9.5 12Z"></path>
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M12.5 12C12.5 12.2761 12.2761 12.5 12 12.5C11.7239 12.5 11.5 12.2761 11.5 12C11.5 11.7239 11.7239 11.5 12 11.5C12.2761 11.5 12.5 11.7239 12.5 12Z"></path>
@@ -117,7 +117,9 @@
                                     </a>
                                     @endisset
                                 </p>
-                                <p class="text-slate-600">instagram.com/{{ $client->profile->ig }}</p>
+                                <p class="text-slate-600">
+                                    <a href="https://www.instagram.com/{{ $client->profile->ig }}" target="_blank">instagram.com/{{ $client->profile->ig }}</a>
+                                </p>
                             </td>
                             <td class="p-3 whitespace-nowrap">
                                 {{ $client->latestReservation ? $client->latestReservation->start_datetime->diffForHumans() : 'Belum pernah reservasi' }}

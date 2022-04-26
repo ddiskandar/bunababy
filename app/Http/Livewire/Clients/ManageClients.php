@@ -51,7 +51,7 @@ class ManageClients extends Component
                     $query->where('name', 'LIKE', '%' . $this->filterTag . '%');
                 });
             })
-            ->with('tags', 'profile', 'reservations', 'latestReservation', 'addresses', 'addresses.kecamatan')
+            ->with('tags', 'profile', 'reservations', 'latestReservation')
             ->latest()
             ->paginate($this->perPage);
 
