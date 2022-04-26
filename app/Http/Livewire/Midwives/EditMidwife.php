@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Midwives;
 
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -12,15 +14,29 @@ class EditMidwife extends Component
 
     public $photo;
     public $midwife;
-    public $kecamatan_id = '';
 
     public $state = [];
 
-    public $rules = [
-        'state.name' => 'required|string',
-        'state.email' => 'required|string',
-        'state.phone' => 'required|string',
-        'state.active' => 'required',
+    protected function rules()
+    {
+        return [
+            'photo' => 'nullable|image|max:512',
+            'state.name' => 'required|string|min:2|max:64',
+            'state.email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($this->midwife->id)
+            ],
+            'state.phone' => 'required|string|min:11|max:13',
+            'state.active' => 'required',
+        ];
+    }
+
+    protected $validationAttributes = [
+        'state.name' => 'Nama',
+        'state.email' => 'Email',
+        'state.phone' => 'Nomor WA',
+        'state.active' => 'Status',
     ];
 
     protected $listeners = ['saved' => '$refresh'];
@@ -29,58 +45,37 @@ class EditMidwife extends Component
     {
         $this->midwife = $user;
         $this->state = $user->toArray();
-    }
-
-
-    public function addWilayah()
-    {
-
-        $this->validate();
-        $this->midwife->kecamatans()->attach([$this->kecamatan_id]);
-        $this->kecamatan_id = '';
-        $this->emit('saved');
-
-    }
-
-    public function deleteWilayah($id)
-    {
-        $this->midwife->kecamatans()->detach([$id]);
-        $this->emit('saved');
+        $this->state['phone'] = $user->profile->phone;
     }
 
     public function save()
     {
         $this->validate();
 
-        $this->midwife->update([
-            'name' => $this->state['name'],
-            'email' => $this->state['email'],
-            'phone' => $this->state['phone'],
-            'active' => $this->state['active'],
-        ]);
-
-        if($this->photo)
-        {
+        DB::transaction(function () {
             $this->midwife->update([
-                'photo' => $this->photo->store('photos')
+                'name' => $this->state['name'],
+                'email' => $this->state['email'],
+                'active' => $this->state['active'],
             ]);
-        }
 
-        $this->emit('saved');
+            $this->midwife->profile->update([
+                'phone' => $this->state['phone'],
+            ]);
+
+            if($this->photo)
+            {
+                $this->midwife->profile->update([
+                    'photo' => $this->photo->store('photos')
+                ]);
+            }
+
+            $this->emit('saved');
+        });
     }
 
     public function render()
     {
-        $kecamatans = $this->midwife->kecamatans;
-
-        $kecamatansFiltered = \DB::table('kecamatans')
-            ->whereNotIn('id', $this->midwife->kecamatans->pluck('id'))
-            ->orderBy('name')
-            ->get();
-
-        return view('midwives.edit-midwife', [
-            'kecamatans' => $kecamatans,
-            'kecamatansFiltered' => $kecamatansFiltered
-        ]);
+        return view('midwives.edit-midwife');
     }
 }

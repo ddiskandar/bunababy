@@ -11,17 +11,16 @@ class CreateMidwife extends Component
     public $state = [];
 
     public $rules = [
-        'state.name' => 'required|string',
-        'state.email' => 'required|string',
-        'state.phone' => 'required|string',
+        'state.name' => 'required|string|min:4|max:64',
+        'state.email' => 'required|email|unique:users,email',
+        'state.phone' => 'required|string|min:11|max:13',
     ];
 
-    protected $listeners = ['saved' => '$refresh'];
-
-    public function mount()
-    {
-        $this->state['active'] = true;
-    }
+    public $validationAttributes = [
+        'state.name' => 'Nama',
+        'state.email' => 'Email',
+        'state.phone' => 'Nomor WA',
+    ];
 
     public function save()
     {
@@ -32,7 +31,7 @@ class CreateMidwife extends Component
                 'name' => $this->state['name'],
                 'email' => $this->state['email'],
                 'type' => User::MIDWIFE,
-                'password' => bcrypt('password'),
+                'password' => bcrypt('12345678'),
             ]);
 
             $user->profile()->create([
