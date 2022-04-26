@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Orders;
 
+use App\Exports\OrdersExport;
 use App\Models\Order;
 use App\Models\User;
 use Livewire\Component;
@@ -63,9 +64,24 @@ class ManageOrders extends Component
 
     public function mount()
     {
-        $this->filterFromDate = today()->subWeek()->toDateString();
-        $this->filterToDate = today()->addWeeks(2)->toDateString();
+        $this->filterFromDate = today()->startOfMonth()->toDateString();
+        $this->filterToDate = today()->endOfMonth()->toDateString();
 
+    }
+
+    public function export()
+    {
+        $name = 'Semua ';
+
+        if($this->filterMidwife) {
+            $name = User::where('id', $this->filterMidwife)->first()->name;
+        }
+
+        return (new OrdersExport)
+            ->fromDate($this->filterFromDate)
+            ->toDate($this->filterToDate)
+            ->midwife($this->filterMidwife)
+            ->download($name . ' - ' . $this->filterFromDate . ' - ' . $this->filterToDate . '.xlsx');
     }
 
     public function render()

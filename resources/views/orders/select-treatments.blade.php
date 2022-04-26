@@ -6,7 +6,7 @@
                     Pilihan Treatment
                 </h3>
                 <p class="mb-5 text-sm text-gray-500">
-
+                    Pastikan treatment dapat dipilih sesuai dengan slot waktu yang tersedia
                 </p>
             </div>
             <div class="space-y-6 md:w-2/3 md:pl-24">
@@ -19,6 +19,7 @@
                                         <div class="font-semibold">{{ $treatment->name }}</div>
                                         <div>{{ $treatment->category->name }}</div>
                                     </div>
+                                    <div>{{ $treatment->duration }} menit</div>
                                     <div class="font-semibold">{{ rupiah($treatment->price) }}</div>
                                 </div>
                                 <button wire:click="delete({{ $treatment->id }})" class="mt-4 text-sm font-semibold text-red-600">Hapus</button>
@@ -35,11 +36,15 @@
                         <select wire:model="treatmentId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="treatmentId">
                             <option value="" selected>-- Pilih salah satu</option>
                             @foreach ($treatments as $treatment)
-                            <option value="{{ $treatment->id }}">{{ $treatment->category->name }} - {{ $treatment->name }} ({{ rupiah($treatment->price) }})</option>
+                            <option value="{{ $treatment->id }}">{{ $treatment->category_name }} - {{ $treatment->duration }} menit / {{ $treatment->name }}</option>
                             @endforeach
                         </select>
                         <x-input-error for="treatmentId" class="mt-2" />
                     </div>
+
+                    @if (session()->has('treatments'))
+                        <div class="mb-4 text-sm text-red-600">{{ session('treatments') }}</div>
+                    @endif
 
                     <div class="flex items-center mt-4">
                         <div>

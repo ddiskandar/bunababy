@@ -26,7 +26,7 @@ class ManageAddresses extends Component
 
     protected $validationAttributes = [
         'state.label' => 'Label alamat',
-        'state.address' => 'Kampung / Jalan',
+        'state.address' => 'Kampung/Jalan',
         'state.rt' => 'Rt',
         'state.rw' => 'Rw',
         'state.desa' => 'Desa/Kelurahan',

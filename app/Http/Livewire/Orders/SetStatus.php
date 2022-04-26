@@ -16,6 +16,10 @@ class SetStatus extends Component
         'finished_at' => 'required'
     ];
 
+    protected $validationAttributes = [
+        'finished_at' => 'Waktu selesai'
+    ];
+
     public function mount(Order $order)
     {
         $this->order = $order;

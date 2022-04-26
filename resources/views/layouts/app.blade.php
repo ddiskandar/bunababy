@@ -18,9 +18,6 @@
         <!-- Alpine.js -->
         <script defer src="{{ mix('js/app.js') }}"></script>
 
-        <!-- Alpine Plugins -->
-        <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
-
          @livewireStyles
     </head>
     <body class="font-sans antialiased">

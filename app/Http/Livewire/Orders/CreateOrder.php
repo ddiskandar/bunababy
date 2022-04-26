@@ -2,16 +2,12 @@
 
 namespace App\Http\Livewire\Orders;
 
-use App\Models\Address;
 use App\Models\Kecamatan;
 use App\Models\Order;
 use App\Models\User;
-use App\Notifications\NewOrder;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Notification;
 use Livewire\Component;
-use Illuminate\Support\Str;
 
 class CreateOrder extends Component
 {
@@ -86,25 +82,6 @@ class CreateOrder extends Component
         session()->put('order.start_time', $this->time);
     }
 
-    public function checkAvailability()
-    {
-        $orders = Order::query()
-            ->where('midwife_user_id', session('order.midwife_user_id'))
-            ->whereDate('start_datetime', session('order.date'))
-            ->locked()
-            ->get();
-
-        $date = session('order.date')->toDateString();
-
-        // TODO Cek
-        foreach($orders as $order) {
-            if ($order->activeBetween($date . ' ' . session('order.start_time'), Carbon::parse($date . ' ' . session('order.start_time'))->addMinutes(session('order.addMinutes')))->exists()) {
-                session()->flash('treatments', 'Tidak dapat membuat reservasi pada pilihan dan rentang waktu ini, silahkan pilih slot waktu yang kosong.');
-                return back();
-            }
-        }
-    }
-
     public function save()
     {
         $this->validate();
@@ -136,6 +113,7 @@ class CreateOrder extends Component
             $order->total_duration = session('order.addMinutes');
             $order->total_transport = $order->getTotalTransport();
             $order->start_datetime = Carbon::parse(session('order.date')->toDateString() . ' ' . session('order.start_time'));
+            $order->end_datetime = Carbon::parse(session('order.date')->toDateString() . ' ' . session('order.start_time'))->addMinutes(session('order.addMinutes'));
             $order->status = Order::STATUS_LOCKED;
             $order->save();
 

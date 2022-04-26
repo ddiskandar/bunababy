@@ -34,6 +34,10 @@
                         <x-input-error for="state.start_time" class="mt-2" />
                     </div>
 
+                    @if (session()->has('treatments'))
+                        <div class="mb-4 text-sm text-red-600">{{ session('treatments') }}</div>
+                    @endif
+
                     <div class="flex items-center">
                         <div  >
                             <x-button wire:loading.attr="disabled" wire:click="save">Simpan</x-button>

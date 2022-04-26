@@ -22,9 +22,18 @@ class Payments extends Component
     ];
 
     protected $rules = [
-        'state.value' => 'required',
-        'state.attachment' => 'nullable',
-        'state.note' => 'nullable',
+        'state.status' => 'required|in:1,2,3',
+        'state.value' => 'required|numeric',
+        'state.attachment' => 'nullable|image|max:1024',
+        'state.note' => 'nullable|max:64',
+    ];
+
+    protected $validationAttributes = [
+        'state.status' => 'Status pembayaran',
+        'state.value' => 'Besar pembayaran',
+        'state.attachment' => 'lampiran foto',
+        'state.note' => 'Catatan',
+        'additional' => 'Additional'
     ];
 
     public function mount(Order $order)
@@ -48,9 +57,14 @@ class Payments extends Component
 
     public function setAdditional()
     {
+        $this->validate([
+            'additional' => 'required|numeric'
+        ]);
+
         $this->order->update([
             'additional' => $this->additional,
         ]);
+
         $this->showSetAdditionalDialog = false;
         $this->emit('saved');
     }

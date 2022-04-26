@@ -6,7 +6,7 @@
                     <span>Selesai treatment</span>
                 </h3>
                 <p class="mb-5 text-sm text-gray-500">
-                    Pilih waktu selesai treatment
+                    Waktu selesai treatment dengan client
                 </p>
             </div>
             <div class="space-y-6 md:w-2/3 md:pl-24">

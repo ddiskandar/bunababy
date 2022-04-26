@@ -185,8 +185,8 @@
 
         <div class="h-64 mt-2 space-y-3 overflow-y-auto">
             <div class="space-y-1">
-                <x-label   for="state.value">Besar Pembayaran</x-label>
-                <x-input wire:model.lazy="state.value" class="w-full" type="number" id="state.value" />
+                <x-label for="state.value">Besar Pembayaran</x-label>
+                <x-input wire:model.lazy="state.value" class="w-full" type="text" id="state.value"/>
                 <x-input-error for="state.value" class="mt-2" />
             </div>
 
@@ -202,7 +202,7 @@
             @endisset
 
             <div class="space-y-1">
-                <x-label   for="state.status">Status</x-label>
+                <x-label for="state.status">Status</x-label>
                 <select wire:model.lazy="state.status" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.status">
                     <option value="" selected>-- Pilih salah satu</option>
                     <option value="2">Approved</option>

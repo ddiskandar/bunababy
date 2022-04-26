@@ -69,9 +69,9 @@
             {{-- <h3 class="mb-2 font-semibold">Treatment</h3> --}}
             <div class=" text-slate-600">
                 <div class="font-semibold text-slate-700">{{ $order->place() }}</div>
-                <div>{{ $order->address->fullAddress }}</div>
+                <div>{{ $order->address->fullAddress ?? '' }}</div>
                 <div>
-                    {{ $order->start_datetime->isoFormat('dddd, DD MMMM Y') }}, pukul {{ $order->start_datetime->isoFormat('HH:mm') }} - {{ $order->end_datetime->isoFormat('HH:mm') }} WIB
+                    {{ $order->start_datetime->isoFormat('dddd, DD MMMM Y') }}, pukul {{ $order->start_datetime->isoFormat('HH:mm') }} - {{ $order->end_datetime ? $order->end_datetime->isoFormat('HH:mm') : '##:##' }} WIB
                 </div>
                 <div>{{ $order->midwife->name }}</div>
             </div>
@@ -105,7 +105,7 @@
                     <tr class="border-b border-gray-100">
                         <td class="py-1">
                             <p class="font-semibold">
-                                {{ $treatment->name }} ({{ $treatment->pivot->name }})
+                                {{ $treatment->pivot->name ?? '#' }} {{ $treatment->name }}
                             </p>
                         </td>
                         <td class="py-1 text-center">

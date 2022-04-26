@@ -88,7 +88,7 @@
                 </dt>
                 <dd class="mt-1 text-gray-900">
                     <span>{{ $order->start_datetime->isoFormat('dddd, DD MMM YYYY HH:mm -') }}</span>
-                    <span>{{ $order->end_datetime->isoFormat('HH:mm') }} WIB</span>
+                    <span>{{ $order->end_datetime ? $order->end_datetime->isoFormat('HH:mm') : '##:##' }} WIB</span>
                 </dd>
             </div>
             <div class="sm:col-span-2">
@@ -96,7 +96,8 @@
                     Alamat
                 </dt>
                 <dd class="mt-1 text-gray-900">
-                    {{ $order->address->full_address ?? '-' }}
+                    <div>{{ $order->address->full_address ?? '-' }}</div>
+                    <div class="text-sm">{{ $order->address->note ?? '' }}</div>
                 </dd>
             </div>
 
