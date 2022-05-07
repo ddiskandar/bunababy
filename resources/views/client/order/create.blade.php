@@ -13,11 +13,6 @@
             <div>
                 <x-title>Pilih Lokasi</x-title>
                 @livewire('order.select-location')
-                @guest
-                <div class="py-2 text-sm">
-                    <a class="font-semibold text-bunababy-100" href="{{ route('login') }}">Login</a> untuk lihat alamat anda
-                </div>
-                @endguest
             </div>
         </x-panel>
     </div>

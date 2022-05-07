@@ -33,8 +33,11 @@ class User extends Authenticatable
         'phone',
         'photo',
         'ig',
+        'type',
         'active',
-        'type'
+        'google_id',
+        'google_token',
+        'google_refresh_token'
     ];
 
     /**
@@ -113,7 +116,12 @@ class User extends Authenticatable
 
     public function getAddressAttribute()
     {
-        return $this->addresses()->where('is_main', true)->first()->kecamatan->name ?? '-';
+        return $this->addresses()
+            ->where('is_main', true)
+            ->select('id', 'kecamatan_id')
+            ->with('kecamatan:id,name')
+            ->first()
+            ->kecamatan->name ?? '-';
     }
 
     public function families(): HasMany
@@ -128,9 +136,7 @@ class User extends Authenticatable
 
     public function getProfilePhotoUrlAttribute()
     {
-        return $this->profile->photo
-                    ? asset('storage/' . $this->profile->photo)
-                    : $this->defaultProfilePhotoUrl();
+        return $this->google_id ? $this->profile->photo : ( $this->profile->photo ? asset('storage/' . $this->profile->photo) : $this->defaultProfilePhotoUrl());
     }
 
     protected function defaultProfilePhotoUrl()

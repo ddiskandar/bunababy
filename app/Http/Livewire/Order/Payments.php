@@ -35,12 +35,15 @@ class Payments extends Component
     public function mount(Order $order)
     {
         $this->order = $order;
-        if(!$this->order->payments()->exists())
+
+        $isPaymentsExists = $this->order->payments()->exists();
+
+        if(! $isPaymentsExists)
         {
             $this->value = $order->getDpAmount();
         }
 
-        if($this->order->payments()->exists())
+        if($isPaymentsExists)
         {
             $this->value = $order->getRemainingPayment();
         }

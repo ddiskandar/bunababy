@@ -22,11 +22,11 @@
     <div
     x-show="open"
     style="display: none !important;"
-    class="fixed z-30 inset-0 overflow-y-auto " aria-labelledby="modal-title" role="dialog" aria-modal="true"
+    class="fixed inset-0 z-30 overflow-y-auto " aria-labelledby="modal-title" role="dialog" aria-modal="true"
     >
         <div
             x-show = "open"
-            class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             <div
                 x-show="open"
                 x-transition:enter="ease-out duration-300"
@@ -39,7 +39,7 @@
                 role="dialog"
                 aria-labelledby="tk-modal-simple"
                 x-bind:aria-hidden="!open"
-                class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true">
+                class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" aria-hidden="true">
             </div>
 
             <!-- This element is to trick the browser into centering the modal contents. -->
@@ -54,17 +54,23 @@
                 x-transition:leave="ease-in duration-200"
                 x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
                 x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                class="inline-block align-bottom relative w-full text-left transform transition-all sm:mb-8 sm:align-middle sm:max-w-lg sm:w-full"
+                class="relative inline-block w-full text-left align-bottom transition-all transform sm:mb-8 sm:align-middle sm:max-w-lg sm:w-full"
             >
                 <button
                     x-on:click="open = false"
-                    class="bg-white p-2 rounded-full absolute -top-12 right-2 z-30">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-bunababy-200 rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    class="absolute z-30 p-2 bg-white rounded-full -top-12 right-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 rotate-45 stroke-bunababy-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
                 </button>
 
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 overflow-hidden rounded-lg shadow-xl">
+                <div class="px-4 pt-5 pb-4 overflow-hidden bg-white rounded-lg shadow-xl sm:p-6 sm:pb-4">
+                    @guest
+                    <div class="py-2 text-sm">
+                        <a class="font-semibold text-bunababy-100" href="{{ route('login') }}">Login</a> untuk lihat alamat anda
+                    </div>
+                    @endguest
+
                     <x-title>Pilih Lokasi</x-title>
                     <div class="py-3">
                         <input
@@ -76,11 +82,11 @@
                         placeholder="Cari berdasarkan nama kecamatan" />
                     </div>
 
-                    <div class="flex flex-col border divide-y overflow-hidden border-slate-100">
+                    <div class="flex flex-col overflow-hidden border divide-y border-slate-100">
                         <div class="relative w-full mx-auto -my-px overflow-auto bg-white h-80 ring-1 ring-slate-900/5">
                             @foreach ($kabupatens as $kabupaten)
                             <div class="relative">
-                                <div class="sticky top-0 flex items-center px-4 py-3 text-sm font-semibold text-slate-900  bg-slate-50/90  backdrop-blur-sm ring-1 ring-slate-900/10 ">
+                                <div class="sticky top-0 flex items-center px-4 py-3 text-sm font-semibold text-slate-900 bg-slate-50/90 backdrop-blur-sm ring-1 ring-slate-900/10 ">
                                     {{ $kabupaten->name }}
                                 </div>
                                 <div class="divide-y ">

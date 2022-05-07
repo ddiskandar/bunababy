@@ -10,26 +10,19 @@ class ManageClients extends Component
 {
     use WithPagination;
 
-    public $perPage = 8;
+    public $perPage = 3;
 
     public $filterSearch;
     public $filterStatus;
     public $filterTag;
 
-    public $state = [];
-
-    protected $queryString = [];
-
-    protected $rules = [];
-
-    protected $messages = [];
-
-    protected $validationAttributes = [];
-
-    public function save()
-    {
-        //
-    }
+    protected $queryString = [
+        'page' => ['except' => 1],
+        'perPage' => ['except' => 3],
+        'filterSearch' => ['except' => ''],
+        'filterStatus' => ['except' => ''],
+        'filterTag' => ['except' => ''],
+    ];
 
     public function render()
     {
@@ -51,18 +44,18 @@ class ManageClients extends Component
                     $query->where('name', 'LIKE', '%' . $this->filterTag . '%');
                 });
             })
-            ->with('tags', 'profile', 'reservations', 'latestReservation')
+            ->with('tags', 'profile:user_id,photo,phone,ig', 'latestReservation')
             ->latest()
             ->paginate($this->perPage);
 
-        foreach($clients as $client)
-        {
-            if(substr($client->profile->phone, 0, 2) == '08'){
-                $client->profile->update([
-                    'phone' => substr_replace($client->profile->phone, '62', 0, 1),
-                ]);
-            }
-        }
+        // foreach($clients as $client)
+        // {
+        //     if(substr($client->profile->phone, 0, 2) == '08'){
+        //         $client->profile->update([
+        //             'phone' => substr_replace($client->profile->phone, '62', 0, 1),
+        //         ]);
+        //     }
+        // }
 
         return view('clients.manage-clients', [
             'clients' => $clients,

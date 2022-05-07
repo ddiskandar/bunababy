@@ -15,6 +15,13 @@ class ManageMidwives extends Component
     public $filterSearch;
     public $filterStatus;
 
+    protected $queryString = [
+        'filterSearch' => ['except' => ''],
+        'page' => ['except' => 1],
+        'perPage' => ['except' => 3],
+        'filterStatus' => ['except' => ''],
+    ];
+
     public function render()
     {
         $midwives = User::query()

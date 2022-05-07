@@ -12,7 +12,7 @@
             class="text-sm text-bunababy-100"
             >
             Tambah Anggota
-        </but>
+        </button>
     </div>
 
     <div class="max-w-xl px-4 py-6 mx-auto ">

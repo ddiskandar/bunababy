@@ -63,12 +63,6 @@ class ManageFamilies extends Component
         $this->successMessage = true;
     }
 
-    public function hydrate()
-    {
-        $this->resetErrorBag();
-        $this->resetValidation();
-    }
-
     public function render()
     {
         return view('client.profile.manage-families')

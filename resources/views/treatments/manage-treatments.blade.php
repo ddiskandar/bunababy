@@ -139,7 +139,7 @@
 
         <!-- Card Footer: Pagination -->
 
-        <div class="w-full bg-slate-50">
+        <div class="w-full bg-slate-50 p-4">
             {{ $treatments->links() }}
         </div>
 

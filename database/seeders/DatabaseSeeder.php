@@ -141,10 +141,10 @@ class DatabaseSeeder extends Seeder
                 'total_duration' => $order->treatments()->sum('duration')
             ]);
 
-            // $testimonial = Testimonial::factory()
-            //     ->create([
-            //         'order_id' => $order->id,
-            //     ]);
+            $testimonial = Testimonial::factory()
+                ->create([
+                    'order_id' => $order->id,
+                ]);
 
             // $payment = Payment::factory()
             //     ->create([

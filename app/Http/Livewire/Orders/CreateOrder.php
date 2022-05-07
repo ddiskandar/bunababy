@@ -34,6 +34,8 @@ class CreateOrder extends Component
 
     public function mount()
     {
+        session()->forget('order');
+
         if (session()->missing('order.place')) {
             session()->put('order.place', 1);
         }

@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Clients;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
 
 class ClientProfileInformation extends Component
 {
@@ -15,11 +16,27 @@ class ClientProfileInformation extends Component
 
     public $state = [];
 
-    public $rules = [
-        'state.name' => 'required|string',
-        'state.email' => 'required|string',
-        'state.profile.phone' => 'required|string',
-        'state.profile.ig' => 'required|string',
+    protected function rules()
+    {
+        return [
+            'state.name' => 'required|string|min:2|max:64',
+            'state.email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($this->client->id)
+            ],
+            'state.phone' => 'nullable|string|min:11|max:13',
+            'state.ig' => 'nullable',
+            'photo' => 'nullable|image|max:128',
+        ];
+    }
+
+    protected $validationAttributes = [
+        'state.name' => 'Nama',
+        'state.email' => 'Email',
+        'state.phone' => 'Nomor WA',
+        'state.ig' => 'Username IG',
+        'photo' => 'Photo',
     ];
 
     protected $listeners = ['saved' => '$refresh'];
@@ -29,6 +46,8 @@ class ClientProfileInformation extends Component
         $this->client = $user;
         $this->client->load('profile');
         $this->state = $this->client->toArray();
+        $this->state['phone'] = $this->client->profile->phone;
+        $this->state['ig'] = $this->client->profile->ig;
     }
 
     public function save()
@@ -41,8 +60,8 @@ class ClientProfileInformation extends Component
         ]);
 
         $this->client->profile->update([
-            'phone' => $this->state['profile']['phone'],
-            'ig' => $this->state['profile']['ig'],
+            'phone' => $this->state['phone'],
+            'ig' => $this->state['ig'],
         ]);
 
         if (isset($this->photo)) {

@@ -20,8 +20,14 @@ class SelectLocation extends Component
             session()->put('order.kecamatan_id', $kecamatan_id);
         }
 
-        $this->kecamatan = DB::table('kecamatans')
-            ->where('id', session('order.kecamatan_id') ?? $kecamatan_id )->value('name') ?? 'Pilih salah satu';
+        $this->kecamatan = 'Pilih salah satu';
+
+        if(session()->has('order.kecamatan_id') OR $kecamatan_id){
+            $this->kecamatan = DB::table('kecamatans')
+                ->where('id', session('order.kecamatan_id') ?? $kecamatan_id )
+                ->value('name');
+        }
+
     }
 
     public function setLocation($kecamatan_id) {

@@ -16,9 +16,7 @@ class UpdateProfileInformation extends Component
 
     public $state = [];
 
-    protected $listeners = [
-        'saved' => '$refresh'
-    ];
+    protected $listeners = ['saved' => '$refresh'];
 
     protected function rules()
     {

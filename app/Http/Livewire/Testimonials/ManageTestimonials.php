@@ -74,9 +74,15 @@ class ManageTestimonials extends Component
                 $query->whereHas('client', function ($query) {
                     $query->where('name', 'LIKE', '%' . $this->filterSearch . '%');
                 });
-                $query->where('midwife_user_id', 'LIKE', '%' . $this->filterMidwife . '%');
+                $query->where('midwife_user_id', 'LIKE', '%' . $this->filterMidwife . '%')
+                    ->OrWhere('no_reg', 'LIKE', '%' . $this->filterSearch . '%');
             })
-            ->with('order', 'order.client', 'order.client.profile')
+            ->with(
+                'order:id,client_user_id,midwife_user_id,start_datetime,no_reg',
+                'order.midwife',
+                'order.client',
+                'order.client.profile:user_id,photo'
+            )
             ->paginate($this->perPage);
 
         $midwives = \DB::table('users')->where('type', User::MIDWIFE)->get();

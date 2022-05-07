@@ -1,13 +1,13 @@
 <x-client-layout>
 
+@guest
+    @includeWhen(session()->missing('order.status'), 'order._member-check')
+@endguest
+
+@if (session()->has('order.status'))
 <div class="container gap-12 px-4 py-4 mx-auto md:py-10 sm:px-12 lg:flex">
 
     <div class="flex-1 space-y-4 md:mt-0">
-        @guest
-            @includeWhen(session()->missing('order.status'), 'order._member-check')
-        @endguest
-
-        @if (session()->has('order.status'))
         <x-panel>
             <div class="py-4">
                 @include('order._selected-date')
@@ -17,7 +17,6 @@
                 @livewire('order.select-time')
             </div>
         </x-panel>
-        @endif
 
         <div class="py-4">
             @livewire('order.select-treatments')
@@ -28,5 +27,6 @@
         @livewire('order.cart-summary')
     </div>
 </div>
+@endif
 
 </x-client-layout>
