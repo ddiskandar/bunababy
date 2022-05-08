@@ -56,8 +56,13 @@ class UpdateProfileInformation extends Component
 
         $this->user->update([
             'name' => $this->state['name'],
-            'email' => $this->state['email'],
         ]);
+
+        if(is_null(auth()->user()->google_id)){
+            $this->user->update([
+                'email' => $this->state['email'],
+            ]);
+        }
 
         $this->user->profile->update([
             'birth_date' => $this->state['birth_date'],

@@ -7,12 +7,12 @@
         </div>
     </div>
 
-    @include('client._payment-alert')
+    @includeWhen($profileCompleted, 'client._payment-alert')
 
     <div class="container px-4 py-4 mx-auto md:py-6 sm:px-12 ">
         @include('client._user-info')
 
-        @include('client._latest-reservation')
+        @includeWhen($profileCompleted,'client._latest-reservation')
 
         @livewire('treatments-catalog')
 

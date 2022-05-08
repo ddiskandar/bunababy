@@ -7,7 +7,7 @@
         </x-slot>
 
         <a href="/auth/redirect" class="flex w-full px-4 py-2 mt-4 leading-normal text-center align-middle transition-all duration-300 ease-in border border-solid rounded-md cursor-pointer focus:outline-none focus:text-current text-clrSubText5 bg-clrInverse border-clrBorder01 hover:bg-slate-50 hover:text-clrSubText5" id="button-google">
-            <img src="https://assets.kitabisa.cc/images/auth/google.png" alt="google" style="margin: auto 0px; width: 24px; height: 24px;">
+            <img src="{{ asset('images/google.svg') }}" alt="google" style="margin: auto 0px; width: 24px; height: 24px;">
             <span class="m-auto">Daftar dengan Google</span>
         </a>
 
@@ -23,25 +23,27 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
-
             <!-- Name -->
             <div>
-                <x-label for="name" :value="__('Name')" />
-
+                <x-label for="name" :value="__('Nama lengkap')" />
                 <x-input id="name" class="block w-full mt-1" type="text" name="name" :value="old('name')" required autofocus />
+            </div>
+
+            <!-- Phone -->
+            <div class="mt-4">
+                <x-label for="phone" :value="__('Nomor WA')" />
+                <x-input id="phone" class="block w-full mt-1" type="text" name="phone" :value="old('phone')" required />
             </div>
 
             <!-- Email Address -->
             <div class="mt-4">
                 <x-label for="email" :value="__('Email')" />
-
                 <x-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email')" required />
             </div>
 
             <!-- Password -->
             <div class="mt-4">
                 <x-label for="password" :value="__('Password')" />
-
                 <x-input id="password" class="block w-full mt-1"
                                 type="password"
                                 name="password"
@@ -51,7 +53,6 @@
             <!-- Confirm Password -->
             <div class="mt-4">
                 <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
                 <x-input id="password_confirmation" class="block w-full mt-1"
                                 type="password"
                                 name="password_confirmation" required />

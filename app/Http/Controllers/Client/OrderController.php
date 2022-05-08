@@ -11,8 +11,12 @@ class OrderController extends Controller
 {
     public function create()
     {
-        if(auth()->check() AND ! auth()->user()->isClient()) {
+        if( auth()->check() AND ! auth()->user()->isClient()) {
             return redirect()->route('dashboard');
+        }
+
+        if( auth()->check() AND is_null(auth()->user()->address)) {
+            return redirect('/me');
         }
 
         if( auth()->check() AND (auth()->user()->latestReservation AND ! auth()->user()->latestReservation->isPaid())){

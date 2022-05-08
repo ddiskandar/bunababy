@@ -1,5 +1,5 @@
 <div>
-    <div class="sticky flex items-center justify-between px-4 py-4 shadow md:px-6 shadow-bunababy-50">
+    <div class="sticky flex items-center justify-between px-4 py-4 bg-bunababy-200 text-white shadow md:px-6 shadow-bunababy-50">
         <a href="{{ route('client.profile') }}">
             <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
@@ -9,7 +9,6 @@
         <h1 class="flex-1 font-semibold md:text-center">Ganti Kata Sandi</h1>
         <button
             wire:click="save"
-            class="text-bunababy-100"
             >
             Simpan
         </button>

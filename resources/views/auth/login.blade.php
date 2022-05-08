@@ -7,7 +7,7 @@
         </x-slot>
 
         <a href="/auth/redirect" class="flex w-full px-4 py-2 mt-4 leading-normal text-center align-middle transition-all duration-300 ease-in border border-solid rounded-md cursor-pointer focus:outline-none focus:text-current text-clrSubText5 bg-clrInverse border-clrBorder01 hover:bg-slate-50 hover:text-clrSubText5" id="button-google">
-            <img src="https://assets.kitabisa.cc/images/auth/google.png" alt="google" style="margin: auto 0px; width: 24px; height: 24px;">
+            <img src="{{ asset('images/google.svg') }}" alt="google" style="margin: auto 0px; width: 24px; height: 24px;">
             <span class="m-auto">Masuk dengan Google</span>
         </a>
 

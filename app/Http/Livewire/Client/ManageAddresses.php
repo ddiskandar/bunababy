@@ -81,7 +81,7 @@ class ManageAddresses extends Component
     {
         $this->validate();
 
-        Address::updateOrCreate(
+        $address = Address::updateOrCreate(
             [
                 'id' => $this->state['id'] ?? time(),
                 'client_user_id' => auth()->id(),
@@ -96,6 +96,11 @@ class ManageAddresses extends Component
                 'note' => $this->state['note'] ?? '',
             ]
         );
+
+        $addresses = Address::where('client_user_id', auth()->id())->get();
+        if(! $addresses->contains('is_main', 1)){
+            $address->update(['is_main' => true]);
+        }
 
         $this->showDialog = false;
 

@@ -14,14 +14,15 @@ class TreatmentsCatalog extends Component
     {
         $treatments = Treatment::query()
             ->where('category_id', 'LIKE', '%' . $this->filterCategory)
+            ->active()
             ->orderBy('order')
             ->with('category')
             ->get();
 
         $categories = Category::query()
+            ->active()
             ->orderBy('order')
             ->get();
-
 
         return view('treatments-catalog', [
             'treatments' => $treatments,

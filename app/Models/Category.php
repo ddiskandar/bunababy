@@ -16,4 +16,9 @@ class Category extends Model
     {
         return $this->hasMany(Treatment::class);
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', true);
+    }
 }

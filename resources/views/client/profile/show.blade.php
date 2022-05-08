@@ -69,6 +69,7 @@
 
         <!-- List Group with Links and Images -->
         <nav class="mt-6 overflow-hidden bg-white border divide-y rounded border-bunababy-50 divide-bunababy-50">
+            @if (is_null(auth()->user()->google_id))
             <a class="flex items-center justify-between p-6 text-slate-800 hover:bg-bunababy-50/20 active:bg-white"
             href="{{ route('client.change-password') }}"
             >
@@ -84,6 +85,7 @@
                 </div>
                 <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 opacity-50 hi-solid hi-chevron-right"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
             </a>
+            @endif
 
             <div class="flex items-center justify-between p-6 text-slate-800 hover:bg-bunababy-50/20 active:bg-white">
                 <form method="POST" action="{{ route('logout') }}">

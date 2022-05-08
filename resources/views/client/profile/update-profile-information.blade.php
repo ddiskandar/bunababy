@@ -1,5 +1,5 @@
 <div>
-    <div class="sticky flex items-center justify-between px-4 py-4 shadow md:px-6 shadow-bunababy-50">
+    <div class="sticky flex items-center justify-between px-4 py-4 text-white shadow bg-bunababy-200 md:px-6 shadow-bunababy-50">
         <a href="{{ route('client.profile') }}">
             <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
@@ -7,10 +7,7 @@
             </svg>
         </a>
         <h1 class="flex-1 font-semibold md:text-center">Edit Profil</h1>
-        <button
-            wire:click="save"
-            class="text-bunababy-100"
-            >
+        <button wire:click="save">
             Simpan
         </button>
     </div>
@@ -63,7 +60,7 @@
         </div>
         <div class="mt-4">
             <x-label for="state.email" :value="__('Email')" />
-            <x-input wire:model="state.email" id="email" class="block w-full mt-1" type="email" name="email" required />
+            <x-input wire:model="state.email" id="email" class="block w-full mt-1" type="email" name="email" />
             <x-input-error for="state.email" class="mt-2" />
         </div>
         <div class="mt-4">
