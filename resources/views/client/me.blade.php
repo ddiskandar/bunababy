@@ -14,7 +14,7 @@
 
         @includeWhen($profileCompleted,'client._latest-reservation')
 
-        @livewire('treatments-catalog')
+        @livewire('client.treatments-catalog')
 
     </div>
 

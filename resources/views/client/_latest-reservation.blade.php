@@ -91,12 +91,16 @@
 
     @else
         <div class="flex flex-col items-center justify-center max-w-lg border border-dashed rounded py-14 border-bunababy-50">
-            <svg class="w-12 h-12 text-bunababy-400" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 11.25V8.75C19.25 7.64543 18.3546 6.75 17.25 6.75H6.75C5.64543 6.75 4.75 7.64543 4.75 8.75V17.25C4.75 18.3546 5.64543 19.25 6.75 19.25H11.25M17 14.75V19.25M19.25 17H14.75M8 4.75V8.25M16 4.75V8.25M7.75 10.75H16.25"></path>
-            </svg>
-            <div class="font-semibold text-slate-600 mt-2">Belum Ada Riwayat Reservasi</div>
+
+            <div class="font-semibold mb-2 text-slate-600 mt-2">Belum Ada Riwayat Reservasi</div>
+            <div class="text-sm px-12 text-slate-400 text-center">Anda belum memliki riwayat reservasi. Tekan tombol Reservasi Sekarang untuk mulai pesan.</div>
             <a href="{{ route('order.create') }}" class="mt-4">
-                <x-button>+ Reservasi Sekarang</x-button>
+                <div class="flex items-center gap-2 px-8 py-2 bg-bunababy-200 hover:bg-bunababy-100 text-white rounded-full">
+                    <svg class="w-8 h-8 " fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 11.25V8.75C19.25 7.64543 18.3546 6.75 17.25 6.75H6.75C5.64543 6.75 4.75 7.64543 4.75 8.75V17.25C4.75 18.3546 5.64543 19.25 6.75 19.25H11.25M17 14.75V19.25M19.25 17H14.75M8 4.75V8.25M16 4.75V8.25M7.75 10.75H16.25"></path>
+                    </svg>
+                    <span>Reservasi Sekarang</span>
+                </div>
             </a>
         </div>
     @endif

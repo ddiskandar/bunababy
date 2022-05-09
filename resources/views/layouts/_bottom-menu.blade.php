@@ -1,4 +1,4 @@
-<ul class="fixed bottom-0 left-0 right-0 flex justify-around py-3 z-80 bg-slate-50/90 backdrop-blur-sm">
+<ul class="fixed bottom-0 left-0 right-0 flex justify-around py-3 z-80 bg-white border-t border-bunababy-50 backdrop-blur-sm">
     <li >
         <a href="{{ route('me') }}"
             @class([
@@ -29,19 +29,20 @@
             <span class="mt-2 text-xs">Reservasi</span>
         </a>
     </li>
-    {{-- <li >
+    <li>
         <a href="{{ route('order.create') }}"
-            @class([
-                'flex flex-col items-center cursor-pointer hover:text-bunababy-200',
-                'text-bunababy-200' => Route::is('order.create'),
-                'text-gray-400 ' => ! Route::is('order.create'),
-            ])>
-            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24">
+            class="flex flex-col p-2 border-2 bg-bunababy-200 border-bunababy-200 rounded-full items-center cursor-pointer text-bunababy-200 hover:text-bunababy-200"
+        >
+            {{-- <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5.75V18.25"></path>
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.25 12L5.75 12"></path>
+            </svg> --}}
+
+            <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 11.25V8.75C19.25 7.64543 18.3546 6.75 17.25 6.75H6.75C5.64543 6.75 4.75 7.64543 4.75 8.75V17.25C4.75 18.3546 5.64543 19.25 6.75 19.25H11.25M17 14.75V19.25M19.25 17H14.75M8 4.75V8.25M16 4.75V8.25M7.75 10.75H16.25"></path>
             </svg>
-            <span class="mt-2 text-xs">Reservasi Baru</span>
         </a>
-    </li> --}}
+    </li>
     <li>
         <a
             href="https://api.whatsapp.com/send?phone=628997897991&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+%28Isi+Nama%29.+Lokasi+saya+di+%28Sebutkan+alamat+jelas%29.+Ingin+reservasi+treatment+%28sebutkan%29.+Thank+you" target="_blank"

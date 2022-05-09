@@ -1,29 +1,33 @@
-<div class="py-12 bg-white">
-    <div class="container mx-auto md:px-12 px-4">
-        <div class="font-extrabold text-4xl py-3 text-slate-600">Katalog Treatment</div>
-        <div class="flex flex-wrap mt-3 gap-2">
-            <button
-                wire:click="$set('filterCategory', '')"
-                @class([
-                    'py-1 text-xs font-semibold px-4 border hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 rounded-full',
-                    'bg-bunababy-200 text-white' => $filterCategory == '',
-                    'text-bunababy-200' => $filterCategory != '',
-                ])>
-                Semua
-            </button>
-            @foreach ($categories as $category)
-            <button
-                wire:click="$set('filterCategory', {{ $category->id }})"
-                @class([
-                    'py-1 bg-white text-xs font-semibold px-4 border hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 rounded-full',
-                    'bg-bunababy-200 text-white' => $filterCategory == $category->id,
-                    'text-bunababy-200' => $filterCategory != $category->id,
-                ])>
-                {{ $category->name }}
-            </button>
-            @endforeach
+<div class="py-16 bg-white">
+    <div >
+        <div class="container mx-auto md:px-12 px-4">
+            <div class="font-extrabold text-4xl py-3 text-slate-600">Katalog Treatment</div>
+            <div class="flex flex-wrap mt-3 gap-2">
+                <button
+                    wire:click="$set('filterCategory', '')"
+                    @class([
+                        'py-1 text-xs font-semibold px-4 border hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 rounded-full',
+                        'bg-bunababy-200 text-white' => $filterCategory == '',
+                        'text-bunababy-200' => $filterCategory != '',
+                    ])>
+                    Semua
+                </button>
+                @foreach ($categories as $category)
+                <button
+                    wire:click="$set('filterCategory', {{ $category->id }})"
+                    @class([
+                        'py-1 bg-white text-xs font-semibold px-4 border hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 rounded-full',
+                        'bg-bunababy-200 text-white' => $filterCategory == $category->id,
+                        'text-bunababy-200' => $filterCategory != $category->id,
+                    ])>
+                    {{ $category->name }}
+                </button>
+                @endforeach
+            </div>
         </div>
+
         <div class="flex snap-x scroll-pl-4 space-x-4 overflow-x-auto py-6 sm:scroll-pl-6 sm:space-x-8 md:scroll-pl-[calc(50%-20rem)] lg:scroll-pl-[calc(50%-25rem)]">
+            <div class="snap-start w-32 p-6 max-w-lg"></div>
             @foreach ($treatments as $treatment)
             <div class="flex-none flex flex-col gap-1 bg-white justify-between snap-start w-72 p-6 border max-w-lg border-bunababy-50 rounded shadow-lg shadow-bunababy-50">
                 <div class="space-y-1">

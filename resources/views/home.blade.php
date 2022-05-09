@@ -7,10 +7,10 @@
     <!-- Hero -->
     <div class="overflow-hidden bg-white">
         <!-- Header -->
-        <header id="page-header" class="flex items-center flex-none py-10 bg-white">
+        <header id="page-header" class="flex items-center flex-none py-6 bg-white">
             <div class="container flex flex-col px-4 mx-auto space-y-6 text-center md:flex-row md:items-center md:justify-between md:space-y-0 xl:max-w-7xl lg:px-8">
                 <div>
-                    Bunababy.care
+                    BunaBaby.Care
                 </div>
                 <nav class="space-x-4 md:space-x-8">
                     <a href="javascript:void(0)" class="font-medium text-slate-600">
@@ -29,14 +29,14 @@
 
                 <div class="flex items-center justify-center space-x-2 text-bunababy-200 hover:text-bunababy-100">
                     @auth
-                        <a href="/me" class=" px-3 py-2 font-semibold ">
+                        <a href="/me" class=" px-3 py-2 font-medium">
                         <span>Home</span>
                         </a>
                     @else
-                        <a href="/login" class="px-3 py-2 font-semibold ">
+                        <a href="/login" class="px-3 py-2 font-medium">
                             <span>Login</span>
                         </a>
-                        <a href="/login" class="px-6 rounded-full bg-bunababy-200 text-white py-1 font-semibold ">
+                        <a href="/register" class="px-6 rounded-full bg-bunababy-200 text-white py-1 font-medium">
                             <span>Daftar</span>
                         </a>
                     @endauth
@@ -46,11 +46,11 @@
         <!-- END Header -->
 
         <!-- Hero Content -->
-        <div class="container flex flex-col px-4  mx-auto space-y-16 text-center lg:flex-row-reverse lg:space-y-0 lg:text-left xl:max-w-7xl lg:px-8 lg:py-16">
-        <div class="lg:w-1/2 lg:flex">
+        <div class="container flex flex-col px-4 mx-auto space-y-16 text-center lg:flex-row-reverse lg:space-y-0 lg:text-left xl:max-w-7xl lg:px-8 lg:py-16">
+        <div class="lg:w-1/2 lg:flex ">
             <div>
-                <div class="mb-6">
-                    <img src="/images/logo.svg" alt="Logo" width="300">
+                <div class="flex justify-center md:justify-start w-full">
+                    <img class="mb-6" src="/images/logo-full.svg" alt="Logo" width="350">
                 </div>
                 <p class="text-lg  text-gray-600 ">
                     Bagi setiap orang tua, setiap detik yang dilalui dengan hadirnya buah hati adalah moment terindah. Dan perkembangan fisiologis dari hamil, bersalin, nifas, menyusui sejatinya kado berharga bagi wanita.
@@ -61,7 +61,7 @@
                 <div class="mt-6">
                     <a href="{{ route('order.create') }}" class="inline-block" >
                         <div class="flex items-center gap-3 py-3 px-8 text-white transition duration-150 ease-in-out rounded-full shadow-xl disabled:opacity-25 bg-bunababy-200 shadow-bunababy-100/50">
-                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 11.25V8.75C19.25 7.64543 18.3546 6.75 17.25 6.75H6.75C5.64543 6.75 4.75 7.64543 4.75 8.75V17.25C4.75 18.3546 5.64543 19.25 6.75 19.25H11.25M17 14.75V19.25M19.25 17H14.75M8 4.75V8.25M16 4.75V8.25M7.75 10.75H16.25"></path>
                             </svg>
                             <span>Pesan Treatment Sekarang</span>
@@ -145,65 +145,55 @@
     </div>
     <!-- END FAQ Section: To the Side -->
 
-    <!-- CTA Section: Simple Boxed -->
-    <div class="overflow-hidden bg-gray-100">
-        <div class="container px-4 py-16 mx-auto xl:max-w-7xl lg:px-8 lg:py-32">
-        <div class="relative">
-            <div class="absolute top-0 right-0 w-32 h-32 text-gray-300 transform translate-x-12 -translate-y-16 pattern-dots-lg lg:w-48 lg:h-48"></div>
-            <div class="absolute bottom-0 left-0 w-32 h-32 text-gray-300 transform -translate-x-12 translate-y-16 pattern-dots-lg lg:w-48 lg:h-48"></div>
-            <div class="relative p-10 text-center bg-white rounded shadow lg:py-12 lg:px-16">
-            <div class="space-y-10">
-                <!-- Heading -->
-                <div class="text-center">
-                <h2 class="mb-4 text-3xl font-extrabold md:text-4xl">
-                    Ready? <span class="text-pink-600">Let’s do it!</span>
-                </h2>
-                <h3 class="text-lg font-medium text-gray-600 md:text-xl md:leading-relaxed">
-                    Get your own custom dashboard and start building amazing services, always with the most solid and rock steady foundation.
-                </h3>
-                </div>
-                <!-- END Heading -->
-
-                <!-- CTA -->
-                <div class="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-center sm:space-y-0 sm:space-x-2">
-                <a href="javascript:void(0)" class="inline-flex items-center justify-center px-6 py-4 space-x-2 font-semibold leading-6 text-white bg-pink-700 border border-pink-700 rounded focus:outline-none hover:text-white hover:bg-pink-800 hover:border-pink-800 focus:ring focus:ring-pink-500 focus:ring-opacity-50 active:bg-pink-700 active:border-pink-700">
-                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 opacity-50 hi-solid hi-arrow-right"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    <span>Get Started</span>
+    <!-- This example requires Tailwind CSS v2.0+ -->
+    <div class="bg-gray-50">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
+        <h2 class="text-3xl font-extrabold tracking-tight text-gray-600 sm:text-4xl">
+            <span class="block">Mau pesan treatment?</span>
+            <span class="block text-bunababy-400">Langsung klik tombol pesan treatment sekarang.</span>
+        </h2>
+        <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0">
+            <div class="inline-flex">
+                <a href="{{ route('order.create') }}" class="inline-block" >
+                    <div class="flex items-center gap-3 py-3 px-8 text-white transition duration-150 ease-in-out rounded-full shadow-xl disabled:opacity-25 bg-bunababy-200 shadow-bunababy-100/50">
+                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 11.25V8.75C19.25 7.64543 18.3546 6.75 17.25 6.75H6.75C5.64543 6.75 4.75 7.64543 4.75 8.75V17.25C4.75 18.3546 5.64543 19.25 6.75 19.25H11.25M17 14.75V19.25M19.25 17H14.75M8 4.75V8.25M16 4.75V8.25M7.75 10.75H16.25"></path>
+                        </svg>
+                        <span>Pesan Treatment Sekarang</span>
+                    </div>
                 </a>
-                </div>
-                <!-- END CTA -->
-            </div>
             </div>
         </div>
         </div>
     </div>
-    <!-- END CTA Section: Simple Boxed -->
 
     <!-- Footer: Simple With Social -->
     <footer id="page-footer" class="bg-white">
-        <div class="container flex flex-col px-4 py-16 mx-auto space-y-6 text-sm text-center md:flex-row-reverse md:justify-between md:space-y-0 md:text-left lg:text-base xl:max-w-7xl lg:px-8 lg:py-32">
-        <nav class="space-x-4">
-            <a href="javascript:void(0)" class="text-gray-400 hover:text-pink-600">
-            <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 icon-facebook"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.378 14.192 5 15.115 5H18V0h-3.808C10.596 0 9 1.583 9 4.615V8z"></path></svg>
-            </a>
-            <a href="javascript:void(0)" class="text-gray-400 hover:text-pink-600">
-            <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 icon-instagram"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"></path></svg>
-            </a>
-        </nav>
-        <nav class="space-x-2 sm:space-x-4">
-            <a href="javascript:void(0)" class="font-medium text-gray-900 hover:text-gray-500">
-            About
-            </a>
-            <a href="javascript:void(0)" class="font-medium text-gray-900 hover:text-gray-500">
-            Terms of Service
-            </a>
-            <a href="javascript:void(0)" class="font-medium text-gray-900 hover:text-gray-500">
-            Privacy Policy
-            </a>
-        </nav>
-        <div class="text-gray-600">
-            <span class="font-medium">Bunababy.care</span>
-        </div>
+        <div class="container flex flex-col px-4 space-y-6 text-sm md:flex-row-reverse md:justify-between md:px-16 py-16">
+            <div class="text-gray-600">
+                <img class="mb-6 " src="/images/logo-full.svg" alt="Logo" width="300">
+            </div>
+            <div class="text-slate-500 md:w-2/3 space-y-6">
+                <div class="flex items-start gap-2">
+                    <svg class="w-6 h-6 flex-none" class="" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18.25 11C18.25 15 12 19.25 12 19.25C12 19.25 5.75 15 5.75 11C5.75 7.5 8.68629 4.75 12 4.75C15.3137 4.75 18.25 7.5 18.25 11Z"></path>
+                        <circle cx="12" cy="11" r="2.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></circle>
+                    </svg>
+                    <div class="text-sm ">
+                        <div class="font-semibold">Klinik</div>
+                        <div>Komplek Nata Endah Blok N No. 170, Cibabat,  Cimahi</div>
+                    </div>
+                </div>
+                <div class="flex items-start gap-2">
+                    <svg class="w-5 h-5 ml-1" fill="none" viewBox="0 0 24 24" >
+                        <path fill="currentColor"  d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.964 9.964 0 0 0 1.333 4.993L2 22l5.232-1.236a9.981 9.981 0 0 0 4.774 1.215h.004c5.505 0 9.985-4.48 9.988-9.985a9.922 9.922 0 0 0-2.922-7.066A9.923 9.923 0 0 0 12.012 2zm-.002 2a7.95 7.95 0 0 1 5.652 2.342 7.93 7.93 0 0 1 2.336 5.65c-.002 4.404-3.584 7.987-7.99 7.987a7.999 7.999 0 0 1-3.817-.971l-.673-.367-.745.175-1.968.465.48-1.785.217-.8-.414-.72a7.98 7.98 0 0 1-1.067-3.992C4.023 7.582 7.607 4 12.01 4zM8.477 7.375a.917.917 0 0 0-.666.313c-.23.248-.875.852-.875 2.08 0 1.228.894 2.415 1.02 2.582.123.166 1.726 2.765 4.263 3.765 2.108.831 2.536.667 2.994.625.458-.04 1.477-.602 1.685-1.185.208-.583.209-1.085.147-1.188-.062-.104-.229-.166-.479-.29-.249-.126-1.476-.728-1.705-.811-.229-.083-.396-.125-.562.125-.166.25-.643.81-.79.976-.145.167-.29.19-.54.065-.25-.126-1.054-.39-2.008-1.24-.742-.662-1.243-1.477-1.389-1.727-.145-.25-.013-.386.112-.51.112-.112.248-.291.373-.437.124-.146.167-.25.25-.416.083-.166.04-.313-.022-.438s-.547-1.357-.77-1.851c-.186-.415-.384-.425-.562-.432-.145-.006-.31-.006-.476-.006z"/>
+                    </svg>
+                    <div class="text-sm ">
+                        <div class="font-semibold">WhatsApp</div>
+                        <div>+62 899 789 7991</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
     <!-- END Footer: Simple With Social -->
