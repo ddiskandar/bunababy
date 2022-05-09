@@ -8,56 +8,66 @@
     <div class="overflow-hidden bg-white">
         <!-- Header -->
         <header id="page-header" class="flex items-center flex-none py-10 bg-white">
-        <div class="container flex flex-col px-4 mx-auto space-y-6 text-center md:flex-row md:items-center md:justify-between md:space-y-0 xl:max-w-7xl lg:px-8">
-            <div class="flex justify-center">
-            <img src="/images/logo.svg" alt="Logo">
-            </div>
-            <div class="flex flex-col space-y-6 text-center md:flex-row md:items-center md:justify-between md:space-y-0 md:space-x-10">
-            <nav class="space-x-4 md:space-x-6">
-                <a href="javascript:void(0)" class="font-semibold text-gray-900 hover:text-gray-500">
-                <span>Treatment</span>
-                </a>
-                <a href="javascript:void(0)" class="font-semibold text-gray-900 hover:text-gray-500">
-                <span>Team</span>
-                </a>
-                <a href="javascript:void(0)" class="font-semibold text-gray-900 hover:text-gray-500">
-                <span>Testimonial</span>
-                </a>
-                <a href="javascript:void(0)" class="font-semibold text-gray-900 hover:text-gray-500">
-                <span>FAQ</span>
-                </a>
-            </nav>
-
-            <div class="flex items-center justify-center space-x-2">
-                @auth
-                    <a href="/me" class="inline-flex items-center justify-center px-3 py-2 space-x-2 font-semibold leading-6 text-gray-800 bg-white border border-gray-300 rounded shadow-sm focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-white active:border-white active:shadow-none">
-                    <span>Home</span>
-                @else
-                    <a href="/login" class="inline-flex items-center justify-center px-3 py-2 space-x-2 font-semibold leading-6 text-gray-800 bg-white border border-gray-300 rounded shadow-sm focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-white active:border-white active:shadow-none">
-                    <span>Login</span>
-                @endauth
-                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 opacity-50 hi-solid hi-arrow-right"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            <div class="container flex flex-col px-4 mx-auto space-y-6 text-center md:flex-row md:items-center md:justify-between md:space-y-0 xl:max-w-7xl lg:px-8">
+                <div>
+                    Bunababy.care
+                </div>
+                <nav class="space-x-4 md:space-x-8">
+                    <a href="javascript:void(0)" class="font-medium text-slate-600">
+                    <span>Treatment</span>
                     </a>
+                    <a href="javascript:void(0)" class="font-medium text-slate-600">
+                    <span>Testimonial</span>
+                    </a>
+                    <a href="javascript:void(0)" class="font-medium text-slate-600">
+                    <span>FAQ</span>
+                    </a>
+                    <a href="javascript:void(0)" class="font-medium text-slate-600">
+                    <span>About</span>
+                    </a>
+                </nav>
+
+                <div class="flex items-center justify-center space-x-2 text-bunababy-200 hover:text-bunababy-100">
+                    @auth
+                        <a href="/me" class=" px-3 py-2 font-semibold ">
+                        <span>Home</span>
+                        </a>
+                    @else
+                        <a href="/login" class="px-3 py-2 font-semibold ">
+                            <span>Login</span>
+                        </a>
+                        <a href="/login" class="px-6 rounded-full bg-bunababy-200 text-white py-1 font-semibold ">
+                            <span>Daftar</span>
+                        </a>
+                    @endauth
+                </div>
             </div>
-            </div>
-        </div>
         </header>
         <!-- END Header -->
 
         <!-- Hero Content -->
-        <div class="container flex flex-col px-4 py-16 mx-auto space-y-16 text-center lg:flex-row-reverse lg:space-y-0 lg:text-left xl:max-w-7xl lg:px-8 lg:py-32">
-        <div class="lg:w-1/2 lg:flex lg:items-center">
+        <div class="container flex flex-col px-4  mx-auto space-y-16 text-center lg:flex-row-reverse lg:space-y-0 lg:text-left xl:max-w-7xl lg:px-8 lg:py-16">
+        <div class="lg:w-1/2 lg:flex">
             <div>
-            <h2 class="mb-4 text-3xl font-extrabold md:text-4xl">
-                Bunababy care
-            </h2>
-                <p class="text-lg font-medium text-gray-600 ">
-                    Bagi setiap orang tua, setiap detik yang dilalui dengan hadirnya buah hati adalah moment terindah. Dan perkembangan fisiologis dari hamil, bersalin, nifas, menyusuisejatinya kado berharga bagi wanita.
+                <div class="mb-6">
+                    <img src="/images/logo.svg" alt="Logo" width="300">
+                </div>
+                <p class="text-lg  text-gray-600 ">
+                    Bagi setiap orang tua, setiap detik yang dilalui dengan hadirnya buah hati adalah moment terindah. Dan perkembangan fisiologis dari hamil, bersalin, nifas, menyusui sejatinya kado berharga bagi wanita.
                 </p>
-                <p class="text-lg font-medium mt-4 text-gray-600 ">
-                    Kami hadir sebagai solusi Ayah dan Bunda dalam menjadi sahabat kesehatan seputar kebidanan, mempersiapkan diri sedari pra nikah, kehamilan, nifas, perawatan bayi hingga pemantauan pertumbuhan bisa dilakukandengan nyaman dan praktis di rumah.
+                <p class="text-lg  mt-4 text-gray-600 ">
+                    Kami hadir sebagai solusi Ayah dan Bunda dalam menjadi sahabat kesehatan seputar kebidanan, mempersiapkan diri sedari pra nikah, kehamilan, nifas, perawatan bayi hingga pemantauan pertumbuhan bisa dilakukan dengan nyaman dan praktis di rumah.
                 </p>
-
+                <div class="mt-6">
+                    <a href="{{ route('order.create') }}" class="inline-block" >
+                        <div class="flex items-center gap-3 py-3 px-8 text-white transition duration-150 ease-in-out rounded-full shadow-xl disabled:opacity-25 bg-bunababy-200 shadow-bunababy-100/50">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 11.25V8.75C19.25 7.64543 18.3546 6.75 17.25 6.75H6.75C5.64543 6.75 4.75 7.64543 4.75 8.75V17.25C4.75 18.3546 5.64543 19.25 6.75 19.25H11.25M17 14.75V19.25M19.25 17H14.75M8 4.75V8.25M16 4.75V8.25M7.75 10.75H16.25"></path>
+                            </svg>
+                            <span>Pesan Treatment Sekarang</span>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
         <div class="lg:w-1/2 lg:mr-16 lg:flex lg:justify-center lg:items-center">
@@ -73,6 +83,67 @@
         <!-- END Hero Content -->
     </div>
     <!-- END Hero -->
+
+    <div>
+        @livewire('treatments-catalog')
+    </div>
+
+    <!-- FAQ Section: To the Side -->
+    <div class="bg-white">
+        <div class="lg:flex space-y-16 lg:justify-between lg:space-x-8 lg:space-y-0 container xl:max-w-7xl mx-auto px-4 py-16 lg:px-8 lg:py-32">
+        <!-- Heading -->
+        <div class="text-center lg:text-left">
+            <div class="text-sm uppercase font-bold tracking-wider mb-1 text-pink-700">
+            We Answer
+            </div>
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-4">
+            Frequently Asked Questions
+            </h2>
+            <h3 class="text-lg md:text-xl md:leading-relaxed font-medium text-gray-600">
+            Be sure to <a href="javascript:void(0)" class="text-pink-600 hover:text-pink-400">get in touch</a> and let us know if you have any further questions.
+            </h3>
+        </div>
+        <!-- END Heading -->
+
+        <!-- FAQ -->
+        <div class="space-y-8 lg:w-3/5 lg:flex-none">
+            <div class="prose prose-pink">
+            <h4>
+                What features are included?
+            </h4>
+            <p>
+                Etiam egestas fringilla enim, id convallis lectus laoreet at. Fusce purus nisi, gravida sed consectetur ut, interdum quis nisi. Quisque egestas nisl id lectus facilisis scelerisque.
+            </p>
+            </div>
+            <div class="prose prose-pink">
+            <h4>
+                Do I get access to the community?
+            </h4>
+            <p>
+                Etiam egestas fringilla enim, id convallis lectus laoreet at. Fusce purus nisi, gravida sed consectetur ut, interdum quis nisi. Quisque egestas nisl id lectus facilisis scelerisque.
+            </p>
+            </div>
+            <div class="prose prose-pink">
+            <h4>
+                Do you offer email support?
+            </h4>
+            <p>
+                Etiam egestas fringilla enim, id convallis lectus laoreet at. Fusce purus nisi, gravida sed consectetur ut, interdum quis nisi. Quisque egestas nisl id lectus facilisis scelerisque.
+            </p>
+            </div>
+            <div class="prose prose-pink">
+            <h4>
+                Are the updates free for life?
+            </h4>
+            <p>
+                Etiam egestas fringilla enim, id convallis lectus laoreet at. Fusce purus nisi, gravida sed consectetur ut, interdum quis nisi. Quisque egestas nisl id lectus facilisis scelerisque.
+            </p>
+            </div>
+        </div>
+        <!-- END FAQ -->
+        </div>
+    </div>
+    <!-- END FAQ Section: To the Side -->
 
     <!-- CTA Section: Simple Boxed -->
     <div class="overflow-hidden bg-gray-100">
@@ -99,10 +170,6 @@
                     <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 opacity-50 hi-solid hi-arrow-right"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                     <span>Get Started</span>
                 </a>
-                <a href="javascript:void(0)" class="inline-flex items-center justify-center px-6 py-4 space-x-2 font-semibold leading-6 text-gray-700 bg-gray-200 border border-gray-200 rounded focus:outline-none hover:text-gray-700 hover:bg-gray-300 hover:border-gray-300 focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-gray-200 active:border-gray-200">
-                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 opacity-50 hi-solid hi-information-circle"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-                    <span>Learn More</span>
-                </a>
                 </div>
                 <!-- END CTA -->
             </div>
@@ -117,19 +184,10 @@
         <div class="container flex flex-col px-4 py-16 mx-auto space-y-6 text-sm text-center md:flex-row-reverse md:justify-between md:space-y-0 md:text-left lg:text-base xl:max-w-7xl lg:px-8 lg:py-32">
         <nav class="space-x-4">
             <a href="javascript:void(0)" class="text-gray-400 hover:text-pink-600">
-            <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 icon-twitter"><path d="M24 4.557a9.83 9.83 0 01-2.828.775 4.932 4.932 0 002.165-2.724 9.864 9.864 0 01-3.127 1.195 4.916 4.916 0 00-3.594-1.555c-3.179 0-5.515 2.966-4.797 6.045A13.978 13.978 0 011.671 3.149a4.93 4.93 0 001.523 6.574 4.903 4.903 0 01-2.229-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.935 4.935 0 01-2.224.084 4.928 4.928 0 004.6 3.419A9.9 9.9 0 010 19.54a13.94 13.94 0 007.548 2.212c9.142 0 14.307-7.721 13.995-14.646A10.025 10.025 0 0024 4.557z"></path></svg>
-            </a>
-            <a href="javascript:void(0)" class="text-gray-400 hover:text-pink-600">
             <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 icon-facebook"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.378 14.192 5 15.115 5H18V0h-3.808C10.596 0 9 1.583 9 4.615V8z"></path></svg>
             </a>
             <a href="javascript:void(0)" class="text-gray-400 hover:text-pink-600">
             <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 icon-instagram"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"></path></svg>
-            </a>
-            <a href="javascript:void(0)" class="text-gray-400 hover:text-pink-600">
-            <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 icon-github"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"></path></svg>
-            </a>
-            <a href="javascript:void(0)" class="text-gray-400 hover:text-pink-600">
-            <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 icon-github"><path d="M12 0C5.372 0 0 5.373 0 12s5.372 12 12 12 12-5.373 12-12S18.628 0 12 0zm9.885 11.441c-2.575-.422-4.943-.445-7.103-.073a42.153 42.153 0 00-.767-1.68c2.31-1 4.165-2.358 5.548-4.082a9.863 9.863 0 012.322 5.835zm-3.842-7.282c-1.205 1.554-2.868 2.783-4.986 3.68a46.287 46.287 0 00-3.488-5.438A9.894 9.894 0 0112 2.087c2.275 0 4.368.779 6.043 2.072zM7.527 3.166a44.59 44.59 0 013.537 5.381c-2.43.715-5.331 1.082-8.684 1.105a9.931 9.931 0 015.147-6.486zM2.087 12l.013-.256c3.849-.005 7.169-.448 9.95-1.322.233.475.456.952.67 1.432-3.38 1.057-6.165 3.222-8.337 6.48A9.865 9.865 0 012.087 12zm3.829 7.81c1.969-3.088 4.482-5.098 7.598-6.027a39.137 39.137 0 012.043 7.46c-3.349 1.291-6.953.666-9.641-1.433zm11.586.43a41.098 41.098 0 00-1.92-6.897c1.876-.265 3.94-.196 6.199.196a9.923 9.923 0 01-4.279 6.701z"></path></svg>
             </a>
         </nav>
         <nav class="space-x-2 sm:space-x-4">
@@ -144,7 +202,7 @@
             </a>
         </nav>
         <div class="text-gray-600">
-            <span class="font-medium">Company Inc</span> ©
+            <span class="font-medium">Bunababy.care</span>
         </div>
         </div>
     </footer>
