@@ -58,11 +58,13 @@
             <x-input wire:model="state.name" id="name" class="block w-full mt-1" type="text" name="name" required />
             <x-input-error for="state.name" class="mt-2" />
         </div>
+        @if (is_null(auth()->user()->google_id))
         <div class="mt-4">
             <x-label for="state.email" :value="__('Email')" />
             <x-input wire:model="state.email" id="email" class="block w-full mt-1" type="email" name="email" />
             <x-input-error for="state.email" class="mt-2" />
         </div>
+        @endif
         <div class="mt-4">
             <x-label for="state.birth_date" :value="__('Tanggal Lahir')" />
             <x-input wire:model="state.birth_date" id="birth_date" class="block w-full mt-1" type="date" name="birth_date" required />
