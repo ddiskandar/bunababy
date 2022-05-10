@@ -64,6 +64,9 @@ class ShowCalendar extends Component
 
         $users = User::query()
             ->where('type', User::MIDWIFE)
+            ->when(auth()->user()->isMidwife(), function ($query) {
+                $query->where('id', auth()->id());
+            })
             ->active()
             ->select(['id', 'name'])
             ->orderBy('id', 'ASC')
@@ -131,25 +134,28 @@ class ShowCalendar extends Component
         $schedules = collect();
 
         $orders = Order::query()
-        ->whereDate('start_datetime', $this->date)
-        ->with(
-            'client:id,name',
-            'treatments:id,name',
-            'address.kecamatan:id,name'
-        )
-        ->select([
-            'id',
-            'no_reg',
-            'client_user_id',
-            'midwife_user_id',
-            'start_datetime',
-            'end_datetime',
-            'status',
-            'finished_at',
-            'address_id',
-            'place'
-        ])
-        ->get();
+            ->whereDate('start_datetime', $this->date)
+            ->when(auth()->user()->isMidwife(), function ($query) {
+                $query->where('midwife_user_id', auth()->id());
+            })
+            ->with(
+                'client:id,name',
+                'treatments:id,name',
+                'address.kecamatan:id,name'
+            )
+            ->select([
+                'id',
+                'no_reg',
+                'client_user_id',
+                'midwife_user_id',
+                'start_datetime',
+                'end_datetime',
+                'status',
+                'finished_at',
+                'address_id',
+                'place'
+            ])
+            ->get();
 
         foreach($orders as $order){
             $schedules->push([

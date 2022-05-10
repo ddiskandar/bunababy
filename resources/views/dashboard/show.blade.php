@@ -1,5 +1,51 @@
 <x-app-layout>
 
+<div class="pb-6 text-xl font-semibold">Hai, {{ auth()->user()->name }}</div>
+
+@if (auth()->user()->isMidwife())
+<!-- Simple Statistics Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8">
+    <!-- Card: Simple Widget -->
+    <div class="flex flex-col rounded shadow-sm bg-white overflow-hidden">
+    <!-- Card Body: Simple Widget -->
+    <div class="p-5 lg:p-6 grow w-full">
+        <dl>
+        <dt class="text-2xl font-semibold">
+            {{ $data['locked'] }}
+        </dt>
+        <dd class="uppercase font-medium text-sm text-gray-500 tracking-wider">
+            Reservasi Aktif Hari Ini
+        </dd>
+        </dl>
+    </div>
+    <!-- END Card Body: Simple Widget -->
+    </div>
+    <!-- END Card: Simple Widget -->
+
+    <!-- Card: Simple Widget -->
+    <div class="flex flex-col rounded shadow-sm bg-white overflow-hidden">
+    <!-- Card Body: Simple Widget -->
+    <div class="p-5 lg:p-6 grow w-full">
+        <dl>
+        <dt class="text-2xl font-semibold">
+            {{ $data['finished'] }}
+        </dt>
+        <dd class="uppercase font-medium text-sm text-gray-500 tracking-wider">
+            Reservasi Selesai Hari Ini
+        </dd>
+        </dl>
+    </div>
+    <!-- END Card Body: Simple Widget -->
+    </div>
+    <!-- END Card: Simple Widget -->
+
+
+</div>
+<!-- END Simple Statistics Grid -->
+@endif
+
+@if (auth()->user()->isAdmin())
+
 <!-- Simple Statistics Grid -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-8">
     <!-- Card: Simple Widget -->
@@ -8,10 +54,10 @@
     <div class="p-5 lg:p-6 grow w-full">
         <dl>
         <dt class="text-2xl font-semibold">
-            87
+            {{ $data['new_clients'] }}
         </dt>
         <dd class="uppercase font-medium text-sm text-gray-500 tracking-wider">
-            Sales
+            Member Baru Bulan Ini
         </dd>
         </dl>
     </div>
@@ -25,10 +71,10 @@
     <div class="p-5 lg:p-6 grow w-full">
         <dl>
         <dt class="text-2xl font-semibold">
-            $4,570
+            {{ $data['pending'] }}
         </dt>
         <dd class="uppercase font-medium text-sm text-gray-500 tracking-wider">
-            Earnings
+            Reservasi Pending
         </dd>
         </dl>
     </div>
@@ -42,10 +88,10 @@
     <div class="p-5 lg:p-6 grow w-full">
         <dl>
         <dt class="text-2xl font-semibold">
-            $27,910
+            {{ $data['unverified'] }}
         </dt>
         <dd class="uppercase font-medium text-sm text-gray-500 tracking-wider">
-            Wallet
+            Pembayaran belum diverifikasi
         </dd>
         </dl>
     </div>
@@ -57,20 +103,20 @@
 
 <!-- Card -->
 <div class="flex flex-col rounded shadow-sm mt-8 bg-white overflow-hidden">
-    <div class="w-full py-3 pl-6 pr-3 bg-gray-50 sm:flex sm:justify-between sm:items-center">
+    <div class="w-full py-3 px-6 bg-gray-50 sm:flex sm:justify-between sm:items-center">
         <div class="flex items-center">
             <h3 class="font-semibold">
-                Reservasi harian
+                Reservasi hari ini
             </h3>
         </div>
-        <div class="mt-3 text-center sm:mt-0 sm:text-right">
-            <input wire:model="date" type="date" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50"  />
+        <div class="text-sm">
+            {{ today()->isoFormat('dddd, D MMMM YYYY') }}
         </div>
     </div>
 
     <!-- Card Body -->
     <div class="p-5 lg:p-6 grow w-full">
-        <div id="daily" style="height: 300px;"></div>
+        <div id="daily" style="height: 400px;"></div>
     </div>
     <!-- Card Body -->
 </div>
@@ -78,20 +124,20 @@
 
 <!-- Card -->
 <div class="flex flex-col rounded shadow-sm mt-8 bg-white overflow-hidden">
-    <div class="w-full py-3 pl-6 pr-3 bg-gray-50 sm:flex sm:justify-between sm:items-center">
+    <div class="w-full py-3 px-6 bg-gray-50 sm:flex sm:justify-between sm:items-center">
         <div class="flex items-center">
             <h3 class="font-semibold">
-                Reservasi Bulan
+                Reservasi Bulan ini
             </h3>
         </div>
-        <div class="mt-3 text-center sm:mt-0 sm:text-right">
-            <input wire:model="date" type="date" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50"  />
+        <div class="text-sm">
+            {{ today()->isoFormat('MMMM YYYY') }}
         </div>
     </div>
 
     <!-- Card Body -->
     <div class="p-5 lg:p-6 grow w-full">
-        <div id="monthly" style="height: 300px;"></div>
+        <div id="monthly" style="height: 400px;"></div>
     </div>
     <!-- Card Body -->
 </div>
@@ -115,8 +161,9 @@
             text: 'Loading some chart data...',
         },
         hooks: new ChartisanHooks()
-            .colors('#FE70C5')
+            .colors(['#ef4444', '#22c55e', '#0ea5e9'])
             .tooltip()
+            .legend()
             .datasets(['bar'])
     });
 
@@ -131,11 +178,14 @@
             text: 'Loading some chart data...',
         },
         hooks: new ChartisanHooks()
-            .colors('#FE70C5')
+            .colors(['#ef4444', '#22c55e', '#0ea5e9'])
             .tooltip()
+            .legend()
             .datasets(['line'])
     });
 </script>
 @endpush
+
+@endif
 
 </x-app-layout>

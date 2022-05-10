@@ -1,8 +1,8 @@
 <div>
     <div class="overflow-hidden bg-white rounded">
         <!-- Card Body: User Profile -->
-        <div class="items-center justify-between w-full px-8 py-5 border-b md:flex border-slate-200">
-            <div class="space-y-2 md:space-y-0 md:space-x-3 md:items-center md:flex">
+        <div class="items-center justify-between w-full px-4 md:px-8 py-5 border-b md:flex border-slate-200">
+            <div class="space-y-0 space-x-3 items-center flex ">
                 <a href="{{ route('orders') }}">
                     <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
@@ -15,9 +15,11 @@
                     <div>
                         {{ $order->no_reg }}
                     </div>
+                    @if (auth()->user()->isAdmin())
                     <a href="{{ route('order.invoice', $order->no_reg) }}" target="_blank" class="text-sm font-semibold text-bunababy-200">
                         Lihat Invoice
                     </a>
+                    @endif
                 </div>
             </div>
             <div class="flex items-center justify-between mt-4 space-x-4 md:mt-0 md:justify-end">

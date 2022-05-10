@@ -12,7 +12,12 @@
         </div>
 
         <div>
-            <div class="overflow-scroll grid grid-cols-[70px,repeat(6,200px)] grid-rows-[auto,repeat(41,40px)] max-h-[420px]">
+            <div class="
+                overflow-scroll
+                grid grid-cols-[70px,repeat({{ $midwives->count() }},200px)]
+                grid-rows-[auto,repeat(41,40px)]
+                max-h-[420px]
+            ">
                 <!-- Calendar frame -->
                 <div class="row-start-1 col-start-1 sticky top-0 z-10 bg-white border-slate-100 bg-clip-padding text-slate-900 border-b text-sm font-medium py-2"></div>
                 @foreach ($midwives as $midwife)

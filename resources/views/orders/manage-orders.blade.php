@@ -85,12 +85,14 @@
                             <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
                                 Bidan / Treatment
                             </th>
+                            @if (auth()->user()->isAdmin())
                             <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
                                 Harga / Transport
                             </th>
                             <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
                                 Total
                             </th>
+                            @endif
                             <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
                                 Status
                             </th>
@@ -125,6 +127,7 @@
                                         @endforeach
                                     </div>
                                 </td>
+                                @if (auth()->user()->isAdmin())
                                 <td class="p-3 align-top whitespace-nowrap">
                                     <p class="font-semibold">{{ rupiah($order->total_price) }}</p>
                                     <p>{{ rupiah($order->total_transport) }}</p>
@@ -132,6 +135,7 @@
                                 <td class="p-3 align-top whitespace-nowrap">
                                     <p class="font-semibold">{{ rupiah($order->getGrandTotal()) }}</p>
                                 </td>
+                                @endif
                                 <td class="p-3 align-top whitespace-nowrap">
                                     <span
                                         @class([

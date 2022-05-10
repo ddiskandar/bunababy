@@ -29,20 +29,33 @@ class MonthlyOrdersChart extends BaseChart
             );
 
         $label = collect();
-        $dataset = collect();
+        $unpaid = collect();
+        $locked = collect();
+        $finished = collect();
 
         foreach($period as $day){
             $label->push(['date' => $day->isoFormat('D')]);
 
-            $dataset->push(
+            $unpaid->push(
                 Order::whereDate('start_datetime', $day)
-                    ->get()
-                    ->count()
+                    ->unpaid()->get()->count()
+            );
+
+            $locked->push(
+                Order::whereDate('start_datetime', $day)
+                    ->locked()->get()->count()
+            );
+
+            $finished->push(
+                Order::whereDate('start_datetime', $day)
+                    ->finished()->get()->count()
             );
         }
 
         return Chartisan::build()
             ->labels($label->pluck('date')->toArray())
-            ->dataset('Order', $dataset->toArray());
+            ->dataset('Pending', $unpaid->toArray())
+            ->dataset('Aktif', $locked->toArray())
+            ->dataset('Selesai', $finished->toArray());
     }
 }
