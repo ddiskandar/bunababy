@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Orders;
 use App\Exports\OrdersExport;
 use App\Models\Order;
 use App\Models\User;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -94,7 +95,7 @@ class ManageOrders extends Component
                 $query->whereHas('client', function ($query) {
                     $query->where('name', 'LIKE', '%' . $this->filterSearch . '%');
                 });
-            })->whereBetween('start_datetime', [$this->filterFromDate, $this->filterToDate])
+            })->whereBetween('start_datetime', [$this->filterFromDate, Carbon::parse($this->filterToDate)->addDay()->toDateString()])
             ->where('status', 'LIKE', '%' . $this->filterStatus . '%')
             ->where('midwife_user_id', 'LIKE', '%' . $this->filterMidwife . '%')
             ->with('client', 'treatments');
