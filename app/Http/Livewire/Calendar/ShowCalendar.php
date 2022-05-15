@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Calendar;
 
 use App\Models\Order;
 use App\Models\User;
+use Carbon\Carbon;
 use Livewire\Component;
 
 class ShowCalendar extends Component
@@ -13,10 +14,11 @@ class ShowCalendar extends Component
     public $colStart;
     public $rowStart;
     public $times;
+    public $selectedDay;
 
     public function mount(){
 
-        $this->date = today()->format('Y-m-d');
+        $this->selectedDay = today()->toDateString();
 
         $this->times = collect([
             ['time' => '08:00', 'row-start' => '2'],
@@ -129,12 +131,22 @@ class ShowCalendar extends Component
             ])->toArray();
     }
 
+    public function prevDay()
+    {
+        $this->selectedDay = Carbon::parse($this->selectedDay)->subDay()->toDateString();
+    }
+
+    public function nextDay()
+    {
+        $this->selectedDay = Carbon::parse($this->selectedDay)->addDay()->toDateString();
+    }
+
     public function render()
     {
         $schedules = collect();
 
         $orders = Order::query()
-            ->whereDate('start_datetime', $this->date)
+            ->whereDate('start_datetime', $this->selectedDay)
             ->when(auth()->user()->isMidwife(), function ($query) {
                 $query->where('midwife_user_id', auth()->id());
             })

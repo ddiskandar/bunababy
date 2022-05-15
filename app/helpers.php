@@ -27,3 +27,16 @@ if(!function_exists('waktu')) {
         return \Str::substr($value, 0, 5 );
     }
 }
+
+if(!function_exists('to_wa_indo')) {
+    function to_wa_indo($value)
+    {
+        if(substr($value, 0, 2) == '08'){
+            return substr_replace($value, '62', 0, 1);
+        } else {
+            return $value;
+        }
+
+    }
+}
+

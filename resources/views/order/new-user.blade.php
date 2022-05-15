@@ -90,12 +90,7 @@
             <!-- Kabupaten -->
             <div class="col-span-6 lg:col-span-3">
                 <x-label for="kab" :value="__('Nomor WhatsApp')" />
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 flex items-center justify-center w-10 my-px ml-2 text-gray-500 rounded-l pointer-events-none">
-                        +62
-                      </div>
-                    <x-input wire:model.lazy="state.phone" id="kab" class="block w-full pl-12 mt-1" type="text" name="kab" />
-                </div>
+                <x-input wire:model.lazy="state.phone" id="kab" class="block w-full pl-12 mt-1" type="text" name="kab" />
                 <x-input-error for="state.phone" class="mt-2" />
             </div>
 

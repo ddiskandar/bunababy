@@ -6,8 +6,16 @@
                     Kalender Treatment
                 </h3>
             </div>
-            <div class="mt-3 text-center sm:mt-0 sm:text-right">
-                <input wire:model="date" type="date" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50"  />
+            <div class="flex items-center gap-4 mt-3 text-sm text-center sm:mt-0 sm:text-right">
+                <input wire:model="selectedDay" type="date" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50"  />
+                <div class="inline-flex">
+                    <button wire:click="prevDay" type="button" class="inline-flex items-center justify-center px-2 py-1 -mr-px space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded-l shadow-sm focus:outline-none active:z-1 focus:z-1 hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-white active:border-white active:shadow-none">
+                        <svg class="inline-block w-5 h-5 -mx-1 hi-solid hi-chevron-left" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                    </button>
+                    <button wire:click="nextDay" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded-r shadow-sm focus:outline-none active:z-1 focus:z-1 hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-white active:border-white active:shadow-none">
+                        <svg class="inline-block w-5 h-5 -mx-1 hi-solid hi-chevron-right" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -19,7 +27,7 @@
                 max-h-[420px]
             ">
                 <!-- Calendar frame -->
-                <div class="row-start-1 col-start-1 sticky top-0 z-10 bg-white border-slate-100 bg-clip-padding text-slate-900 border-b text-sm font-medium py-2"></div>
+                <div class="sticky top-0 z-10 col-start-1 row-start-1 py-2 text-sm font-medium bg-white border-b border-slate-100 bg-clip-padding text-slate-900"></div>
                 @foreach ($midwives as $midwife)
                     <div class="row-start-1 col-start-{{ $loop->iteration + 1 }} sticky top-0 z-10 bg-white border-slate-100 bg-clip-padding text-slate-900 border-b text-sm font-medium py-2 text-center">
                         {{ $midwife['name'] }}
@@ -51,12 +59,12 @@
                 ">
                     <a href="{{ route('orders.show', $schedule['id']) }}" class="flex flex-col">
                         <span class="text-xs">{{ $schedule['time'] }}</span>
-                        <span class="text-xs mt-4">{{ $schedule['place'] }}</span>
+                        <span class="mt-4 text-xs">{{ $schedule['place'] }}</span>
                         <span class="text-xs ">{{ $schedule['address'] }}</span>
                         <span class="text-xs font-medium">{{ $schedule['client_name'] }}</span>
-                        <span class="text-xs mt-2">{{ $schedule['treatments'] }}</span>
+                        <span class="mt-2 text-xs">{{ $schedule['treatments'] }}</span>
 
-                        <div class="absolute top-1 right-2 flex items-center">
+                        <div class="absolute flex items-center top-1 right-2">
                             @if ($schedule['status'] == 'Selesai')
                             <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 12C4.75 7.99594 7.99594 4.75 12 4.75V4.75C16.0041 4.75 19.25 7.99594 19.25 12V12C19.25 16.0041 16.0041 19.25 12 19.25V19.25C7.99594 19.25 4.75 16.0041 4.75 12V12Z"></path>

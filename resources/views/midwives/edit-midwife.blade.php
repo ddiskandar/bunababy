@@ -9,7 +9,7 @@
                     Informasi bidan digunakan pada aplikasi
                 </p>
             </div>
-            <div class="md:w-2/3 md:pl-24">
+            <div class="md:w-2/3 md:pl-2">
                 <form wire:submit.prevent="save" class="space-y-6">
                     <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
                         <!-- Profile Photo File Input -->

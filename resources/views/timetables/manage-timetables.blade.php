@@ -36,8 +36,8 @@
 
                     <div class="w-16 ">
                         <select wire:model="perPage" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
-                            <option value="3" selected="selected">3</option>
-                            <option value="8">8</option>
+                            <option value="3">3</option>
+                            <option value="8" selected="selected">8</option>
                             <option value="15">15</option>
                             <option value="30">30</option>
                         </select>
@@ -77,12 +77,12 @@
                             Tanggal
                         </th>
                         <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
-                            Type
+                            Tipe
                         </th>
                         <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
                             Catatan
                         </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-center uppercase text-slate-400">
+                        <th class="p-3 sr-only text-xs font-medium tracking-wider text-center uppercase text-slate-400">
                             Actions
                         </th>
                     </tr>
@@ -98,7 +98,7 @@
                                 <p class="font-semibold">{{ $timetable->midwife->name }}</p>
                             </td>
                             <td class="p-3 whitespace-nowrap">
-                                {{ $timetable->date }}
+                                {{ $timetable->date->isoFormat('dddd, DD MMMM YYYY') }}
                             </td>
                             <td class="p-3 whitespace-nowrap">
                                 <p>{{ $timetable->type() }}</p>
@@ -107,11 +107,13 @@
                                 <p>{{ $timetable->note }}</p>
                             </td>
                             <td class="p-3 text-center whitespace-nowrap">
+                                @if (auth()->user()->isAdmin())
                                 <div class="flex justify-center space-x-2">
                                     <button wire:click="ShowEditTimetableDialog({{ $timetable->id }})" class="text-slate-400 hover:text-bunababy-200">
                                         Edit
                                     </button>
                                 </div>
+                                @endif
                             </td>
                         </tr>
                     @empty
@@ -170,6 +172,7 @@
                     <option value="" selected>-- Pilih salah satu</option>
                     <option value="1">Lembur</option>
                     <option value="2">Libur / Cuti</option>
+                    <option value="3">Klinik</option>
                 </select>
                 <x-input-error for="state.type" class="mt-2" />
             </div>

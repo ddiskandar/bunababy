@@ -10,7 +10,7 @@
                     Daftar keluarga client
                 </p>
             </div>
-            <div class="md:w-2/3 md:pl-24">
+            <div class="md:w-2/3 md:pl-2">
                 <ul class="space-y-4">
                     @forelse ($client->families as $family)
                     <li class="max-w-lg p-6 border rounded shadow-lg border-bunababy-50 shadow-bunababy-50">

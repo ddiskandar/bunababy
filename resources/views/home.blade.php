@@ -7,7 +7,7 @@
     <!-- Hero -->
     <div class="overflow-hidden bg-white">
         <!-- Header -->
-        <header id="page-header" class="flex items-center flex-none py-6 bg-white">
+        <header id="page-header" class="flex items-center flex-none py-8 bg-white">
             <div class="container flex flex-col px-4 mx-auto space-y-6 text-center md:flex-row md:items-center md:justify-between md:space-y-0 xl:max-w-7xl lg:px-8">
                 <div>
                     BunaBaby.Care
@@ -46,16 +46,16 @@
         <!-- END Header -->
 
         <!-- Hero Content -->
-        <div class="container flex flex-col px-4 mx-auto space-y-16 text-center lg:flex-row-reverse lg:space-y-0 lg:text-left xl:max-w-7xl lg:px-8 lg:py-16">
+        <div class="container flex flex-col px-4 mx-auto space-y-16 text-center lg:flex-row-reverse lg:space-y-0 lg:text-left xl:max-w-7xl lg:px-8 lg:py-24">
         <div class="lg:w-1/2 lg:flex ">
             <div>
                 <div class="flex justify-center md:justify-start w-full">
                     <img class="mb-6" src="/images/logo-full.svg" alt="Logo" width="350">
                 </div>
-                <p class="text-lg  text-gray-600 ">
+                <p class="text-gray-600 ">
                     Bagi setiap orang tua, setiap detik yang dilalui dengan hadirnya buah hati adalah moment terindah. Dan perkembangan fisiologis dari hamil, bersalin, nifas, menyusui sejatinya kado berharga bagi wanita.
                 </p>
-                <p class="text-lg  mt-4 text-gray-600 ">
+                <p class="mt-4 text-gray-600 ">
                     Kami hadir sebagai solusi Ayah dan Bunda dalam menjadi sahabat kesehatan seputar kebidanan, mempersiapkan diri sedari pra nikah, kehamilan, nifas, perawatan bayi hingga pemantauan pertumbuhan bisa dilakukan dengan nyaman dan praktis di rumah.
                 </p>
                 <div class="mt-6">

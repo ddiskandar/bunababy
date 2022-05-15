@@ -9,10 +9,10 @@
                     Pilihan bidan dengan waktu yang tersedia
                 </p>
             </div>
-            <div class="md:w-2/3 md:pl-24">
+            <div class="md:w-2/3 md:pl-2">
                 <form onsubmit="return false;" enctype="multipart/form-data" class="space-y-6">
                     <div class="space-y-1">
-                        <x-label   for="state.midwife_user_id">Bidan</x-label>
+                        <x-label for="state.midwife_user_id">Bidan</x-label>
                         <select wire:model.defer="state.midwife_user_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.midwife_user_id">
                             <option value="" selected>-- Pilih salah satu</option>
                             @foreach ($midwives as $midwife)

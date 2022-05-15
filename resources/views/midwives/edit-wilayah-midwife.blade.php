@@ -9,7 +9,7 @@
                     Daftar wilayah yang menjadi jangkauan bidan.
                 </p>
             </div>
-            <div class="md:w-2/3 md:pl-24">
+            <div class="md:w-2/3 md:pl-2">
                 <div class="space-y-1">
                     <x-label   >Wilayah</x-label>
                     <div class="flex flex-wrap gap-2 py-2">

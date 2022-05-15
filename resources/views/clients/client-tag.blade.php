@@ -9,7 +9,7 @@
                     Tandai client dengan memberikan tag
                 </p>
             </div>
-            <div class="md:w-2/3 md:pl-24">
+            <div class="md:w-2/3 md:pl-2">
                 <div class="space-y-1">
                     <div class="flex flex-wrap gap-2 py-2">
                         @forelse ($client->tags as $tag)

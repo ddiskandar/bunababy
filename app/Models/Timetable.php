@@ -13,6 +13,11 @@ class Timetable extends Model
 
     const OVERTIME = 1; // kerja lembur
     const LEAVE = 2;    // libur, cuti
+    const CLINIC = 3;    // Tugas di klinik
+
+    protected $casts = [
+        'date' => 'date',
+    ];
 
     public function midwife()
     {
@@ -21,7 +26,7 @@ class Timetable extends Model
 
     public function type()
     {
-        return $this->type == 1 ? 'Lembur' : 'Libur';
+        return $this->type == 1 ? 'Lembur' : ( $this->type == 2 ? 'Libur' : 'Klinik' );
     }
 
 }

@@ -48,8 +48,8 @@
                 </div>
                 @if (auth()->user()->isAdmin())
                 <div>
-                    <button  wire:click="export" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded shadow-sm focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-white active:border-white active:shadow-none">
-                        Export
+                    <button wire:click="export" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded shadow-sm focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:bg-white focus:border-bunababy-100 focus:ring-0">
+                        Export<span wire:loading wire:target="export">ing</span>
                     </button>
                 </div>
                 <div>
@@ -111,21 +111,22 @@
                                 <td class="p-3 pl-6 align-top whitespace-nowrap">
                                     <p class="font-medium text-bunababy-200">{{ $order->place() }}</p>
                                     <p class="font-semibold">{{ $order->start_datetime->isoFormat('ddd, DD MMM') }}</p>
-                                    {{-- <p class="text-slate-600">{{\Carbon\Carbon::createFromFormat('H:i:s',$order->start_datetime)->format('h:i')}} - {{\Carbon\Carbon::createFromFormat('H:i:s',$order->end_time)->format('h:i')}}</p> --}}
+                                    <p class="">{{ $order->getTime() }}</p>
                                 </td>
                                 <td class="p-3 align-top whitespace-nowrap">
                                     <p class="font-semibold">{{ $order->client->name }}</p>
                                     <p class="text-slate-600">{{ $order->client->address }}</p>
                                 </td>
                                 <td class="w-64 p-3 align-top whitespace-nowrap">
-                                    <p class="mb-1 font-semibold">{{ $order->midwife->name }}</p>
-                                    <div class="flex flex-wrap gap-1">
+                                    <p class="font-semibold ">{{ $order->midwife->name }}</p>
+                                    <p class="">{{ $order->treatments->implode('name', ', ') }}</p>
+                                    {{-- <div class="flex flex-wrap gap-1">
                                         @foreach ($order->treatments as $treatment)
                                         <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 border rounded-full text-slate-600 bg-slate-50 border-slate-200">
                                             {{ $treatment->name }}
                                         </div>
                                         @endforeach
-                                    </div>
+                                    </div> --}}
                                 </td>
                                 @if (auth()->user()->isAdmin())
                                 <td class="p-3 align-top whitespace-nowrap">

@@ -9,7 +9,7 @@
                     Pastikan treatment dapat dipilih sesuai dengan slot waktu yang tersedia
                 </p>
             </div>
-            <div class="space-y-6 md:w-2/3 md:pl-24">
+            <div class="space-y-6 md:w-2/3 md:pl-2">
                 <div class="space-y-1">
                     <div class="divide-y divide-bunababy-50">
                         @forelse ($order->treatments as $treatment)

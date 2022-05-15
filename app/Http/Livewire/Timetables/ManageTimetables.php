@@ -11,7 +11,8 @@ class ManageTimetables extends Component
 {
     use WithPagination;
 
-    public $perPage = 3;
+    public $perPage = 8;
+    public $midwives;
 
     public $showDialog = false;
     public $successMessage = false;
@@ -24,7 +25,7 @@ class ManageTimetables extends Component
 
     protected $queryString = [
         'page' => ['except' => 1],
-        'perPage' => ['except' => 3],
+        'perPage' => ['except' => 8],
         'filterSearch' => ['except' => ''],
         'filterType' => ['except' => ''],
         'filterMidwife' => ['except' => ''],
@@ -37,16 +38,17 @@ class ManageTimetables extends Component
         'state.note' => 'nullable',
     ];
 
-    protected $messages = [
-        //
-    ];
-
     protected $validationAttributes = [
         'state.midwife_user_id' => 'bidan',
         'state.date' => 'tanggal',
         'state.type' => 'tipe',
         'state.note' => 'catatan',
     ];
+
+    public function mount()
+    {
+        $this->midwives = User::active()->where('type', User::MIDWIFE)->get();
+    }
 
     public function updatingPerPage()
     {
@@ -77,6 +79,7 @@ class ManageTimetables extends Component
     public function ShowEditTimetableDialog( Timetable $timetable)
     {
         $this->state = $timetable->toArray();
+        $this->state['date'] = $timetable->date->toDateString();
         $this->showDialog = true;
     }
 
@@ -108,11 +111,8 @@ class ManageTimetables extends Component
             })
             ->paginate($this->perPage);
 
-        $midwives = \DB::table('users')->where('type', User::MIDWIFE)->get();
-
         return view('timetables.manage-timetables', [
             'timetables' => $timetables,
-            'midwives' => $midwives,
         ]);
     }
 }

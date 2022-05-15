@@ -9,6 +9,13 @@ module.exports = {
         './resources/**/*.blade.php',
     ],
     safelist: [
+        'grid-cols-[70px,repeat(6,200px)]',
+        'grid-cols-[70px,repeat(7,200px)]',
+        'grid-cols-[70px,repeat(8,200px)]',
+        'grid-cols-[70px,repeat(9,200px)]',
+        'grid-cols-[70px,repeat(10,200px)]',
+        'grid-cols-[70px,repeat(11,200px)]',
+        'grid-cols-[70px,repeat(12,200px)]',
         'row-span-1',
         'row-span-2',
         'row-span-3',

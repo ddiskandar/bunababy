@@ -9,7 +9,7 @@
                     Nomor Rekening Pembayaran
                 </p>
             </div>
-            <div class="md:w-2/3 md:pl-24">
+            <div class="md:w-2/3 md:pl-2">
                 <form wire:submit.prevent="save" class="space-y-6">
                     <div class="space-y-1">
                         <x-label   for="state.account">Bank dan Nomor Rekening</x-label>

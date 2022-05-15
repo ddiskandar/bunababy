@@ -25,12 +25,12 @@ $id = $id ?? md5($attributes->wire('model'));
             x-transition:enter-end="opacity-100"
             x-transition:leave="ease-in duration-200"
             x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
+            x-transition:leave-end="opacity-0 "
             tabindex="-1"
             role="dialog"
             aria-labelledby="tk-modal-simple"
             x-bind:aria-hidden="!show"
-            class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" aria-hidden="true">
+            class="fixed inset-0 backdrop-blur backdrop-brightness-75 transition" aria-hidden="true">
         </div>
 
         <!-- This element is to trick the browser into centering the modal contents. -->

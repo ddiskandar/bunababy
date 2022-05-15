@@ -9,7 +9,7 @@
                     Alamat Client
                 </p>
             </div>
-            <div class="md:w-2/3 md:pl-24">
+            <div class="md:w-2/3 md:pl-2">
                 <div class="space-y-1">
                     <div>
                         <div class="relative z-0 mt-1 border border-gray-200 rounded-lg cursor-pointer">
