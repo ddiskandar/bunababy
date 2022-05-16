@@ -3,6 +3,8 @@
 namespace App\Exports;
 
 use App\Models\Order;
+use App\Models\Timetable;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -41,6 +43,7 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
                 $query->where('midwife_user_id', $this->midwifeId);
             })
             ->whereBetween('start_datetime', [$this->from, $this->to]);
+
         return $order;
     }
 
@@ -64,11 +67,33 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
             'Harga Treatment',
             'Transport',
             'Total',
+            'Keterangan',
         ];
     }
 
     public function map($order): array
     {
+        $timetables = Timetable::query()
+            ->when($this->midwifeId, function($query){
+                $query->where('midwife_user_id', $this->midwifeId);
+            })
+            ->orWhere('type', Timetable::OVERTIME)
+            ->whereBetween('date', [$this->from, $this->to])
+            ->get();
+
+        $status = '';
+
+        if($timetables->contains('date', Carbon::parse($order->start_datetime->toDateString())))
+        {
+            foreach($timetables as $timetable)
+            {
+                if($timetable->midwife_user_id == $order->midwife_user_id)
+                {
+                    $status = $timetable->type();
+                }
+            }
+        }
+
         return [
             $order->no_reg,
             $order->start_datetime->isoFormat('DD/MM/YYYY'),
@@ -78,8 +103,8 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
             $order->total_price,
             $order->total_transport,
             $order->getGrandTotal(),
+            $status,
         ];
     }
-
 
 }

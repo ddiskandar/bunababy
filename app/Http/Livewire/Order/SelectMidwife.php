@@ -55,8 +55,10 @@ class SelectMidwife extends Component
         $timetable = Timetable::query()
             ->where('midwife_user_id', $this->midwife->id)
             ->whereDate('date', $date)
-            ->where('type', Timetable::LEAVE)
-            ->orWhere('type', Timetable::CLINIC)
+            ->where(function($query){
+                $query->where('type', Timetable::LEAVE)
+                ->orWhere('type', Timetable::CLINIC);
+            })
             ->first();
 
         if(isset($timetable) AND $date->eq($timetable->date) ){
@@ -82,15 +84,17 @@ class SelectMidwife extends Component
 
         $schedules = Order::query()
             ->where('midwife_user_id', $this->midwife->id)
-            ->whereMonth('start_datetime', Carbon::parse($this->selectedMonth)->month)
+            ->whereBetween('start_datetime', [Carbon::parse($this->selectedMonth)->startOfMonth()->startOfWeek(), Carbon::parse($this->selectedMonth)->endOfMonth()->endOfWeek()])
             ->locked()
             ->get();
 
         $timetables = Timetable::query()
             ->where('midwife_user_id', $this->midwife->id)
-            ->whereMonth('date', Carbon::parse($this->selectedMonth)->month)
-            ->where('type', Timetable::LEAVE)
-            ->orWhere('type', Timetable::CLINIC)
+            ->whereBetween('date', [Carbon::parse($this->selectedMonth)->startOfMonth()->startOfWeek(), Carbon::parse($this->selectedMonth)->endOfMonth()->endOfWeek()])
+            ->where(function($query){
+                $query->where('type', Timetable::LEAVE)
+                ->orWhere('type', Timetable::CLINIC);
+            })
             ->get();
 
         $data = collect();

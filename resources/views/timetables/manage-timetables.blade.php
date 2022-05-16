@@ -38,8 +38,8 @@
                     <div class=" w-36">
                         <select wire:model="filterType" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
                             <option value="" selected="selected">Semua Type</option>
-                            <option value="1">Lembur</option>
-                            <option value="2">Libur</option>
+                            <option value="1">Libur</option>
+                            <option value="2">Lembur</option>
                             <option value="3">Klinik</option>
                         </select>
                     </div>
@@ -80,10 +80,12 @@
                 <table class="min-w-full text-sm align-middle">
                 <thead>
                     <tr class="bg-slate-50">
+                        @if (auth()->user()->isAdmin())
                         <th class="p-3 pl-6 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
                             Nama
                         </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
+                        @endif
+                        <th class="p-3 pl-6 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
                             Tanggal
                         </th>
                         <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
@@ -104,10 +106,12 @@
                             'bg-slate-50/30' => $loop->even,
                             'text-slate-400' => ! $timetable->active,
                         ])>
+                            @if (auth()->user()->isAdmin())
                             <td class="p-3 pl-6 whitespace-nowrap">
                                 <p class="font-semibold">{{ $timetable->midwife->name }}</p>
                             </td>
-                            <td class="p-3 whitespace-nowrap">
+                            @endif
+                            <td class="p-3 pl-6 whitespace-nowrap">
                                 {{ $timetable->date->isoFormat('dddd, DD MMMM YYYY') }}
                             </td>
                             <td class="p-3 whitespace-nowrap">
@@ -202,8 +206,8 @@
                 <x-label   for="state.type">Tipe</x-label>
                 <select wire:model.lazy="state.type" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.type">
                     <option value="" selected>-- Pilih salah satu</option>
-                    <option value="1">Lembur</option>
-                    <option value="2">Libur / Cuti</option>
+                    <option value="1">Libur</option>
+                    <option value="2">Lembur</option>
                     <option value="3">Klinik</option>
                 </select>
                 <x-input-error for="state.type" class="mt-2" />

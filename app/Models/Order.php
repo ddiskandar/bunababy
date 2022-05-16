@@ -216,4 +216,9 @@ class Order extends Model
         return $this->start_datetime->isoFormat('HH:mm') . ' - ' . $this->end_datetime->isoFormat('HH:mm');
     }
 
+    public function getStatusTimeline()
+    {
+        return "yeay";
+    }
+
 }
