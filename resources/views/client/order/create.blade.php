@@ -16,9 +16,15 @@
             </div>
         </x-panel>
     </div>
+    @if (session('order.place') == 1)
     <div class="flex-1 mt-6 md:mt-0">
         @livewire('order.list-midwife')
     </div>
+    @else
+    <div class="flex-1 mt-6 md:mt-0">
+        @livewire('order.clinic')
+    </div>
+    @endif
 </div>
 
 </x-client-layout>

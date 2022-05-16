@@ -32,11 +32,21 @@ class OrderController extends Controller
             return redirect()->route('dashboard');
         }
 
-        if( session()->missing('order.midwife_user_id') OR session()->missing('order.place') OR session()->missing('order.kecamatan_id') OR session()->missing('order.date')) {
+        if(auth()->check() ) {
+            session()->put('order.status', 'AuthUser');
+        }
+
+        if( session()->missing('order.kecamatan_id') OR session()->missing('order.place') OR session()->missing('order.date')) {
             return redirect()->route('order.create');
         }
 
         return view('client.order.cart');
+    }
+
+    public function check()
+    {
+        session()->put('order.status', 'newUser');
+        return to_route('order.cart');
     }
 
     public function checkout()
@@ -45,7 +55,7 @@ class OrderController extends Controller
             return to_route('dashboard');
         }
 
-        if( session()->missing('order.midwife_user_id') OR session()->missing('order.place') OR session()->missing('order.kecamatan_id') OR session()->missing('order.date') OR session()->missing('order.start_time_id') OR session()->missing('order.treatments') ) {
+        if( session()->missing('order.kecamatan_id') OR session()->missing('order.place') OR session()->missing('order.date') OR session()->missing('order.start_time_id') OR session()->missing('order.treatments') ) {
             return to_route('order.cart');
         }
 

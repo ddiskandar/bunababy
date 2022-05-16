@@ -36,7 +36,7 @@ class NewUser extends Component
 
     protected $rules = [
         'state.families.*.name' => 'required|min:2|max:64',
-        'state.families.*.birthdate' => 'required',
+        'state.families.*.birth_date' => 'required',
         'state.address' => 'required|string|min:4|max:124',
         'state.rt' => 'required|min:1|max:99',
         'state.rw' => 'required|min:1|max:99',
@@ -49,7 +49,7 @@ class NewUser extends Component
 
     protected $validationAttributes = [
         'state.families.*.name' => 'Nama',
-        'state.families.*.birthdate' => 'Tanggal Lahir',
+        'state.families.*.birth_date' => 'Tanggal Lahir',
         'state.address' => 'Alamat',
         'state.rt' => 'Rt',
         'state.rw' => 'Rw',
@@ -86,7 +86,7 @@ class NewUser extends Component
             $user->profile()->create([
                 'phone' => '62' . $this->state['phone'],
                 'ig' => $this->state['ig'],
-                'birthdate' => $newUser['birthdate'],
+                'birth_date' => $newUser['birth_date'],
             ]);
 
             $address = Address::create([
@@ -110,7 +110,7 @@ class NewUser extends Component
                     'id' => $family['id'],
                     'client_user_id' => $user->id,
                     'name' => $family['name'],
-                    'birth_date' => $family['birthdate'],
+                    'birth_date' => $family['birth_date'],
                     'type' => $family['type'],
                 ]);
             }

@@ -8,6 +8,7 @@
                     <span  >{{ $order->start_datetime->isoFormat('HH:mm') . ' - ' . $order->end_datetime->isoFormat('HH:mm') }} WIB</span>
                 </div>
             </div>
+            @if ($order->place == 1)
             <div class="flex-1 mt-6 md:mt-0">
                 <x-title>Bidan </x-title>
                 <div class="flex items-center">
@@ -15,6 +16,7 @@
                     <div class="ml-2 font-semibold">{{ $order->midwife->name }}</div>
                 </div>
             </div>
+            @endif
         </div>
 
         <div class="py-4">

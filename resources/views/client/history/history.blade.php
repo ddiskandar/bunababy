@@ -1,5 +1,5 @@
 <div>
-    <div class="sticky flex items-center justify-between px-4 py-4 bg-bunababy-200 text-white shadow md:px-6 shadow-bunababy-50">
+    <div class="sticky flex items-center justify-between px-4 py-4 text-white shadow bg-bunababy-200 md:px-6 shadow-bunababy-50">
         <a href="{{ route('client.profile') }}">
             <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
@@ -43,7 +43,7 @@
 
                         <div class="text-sm font-medium">
                             <span>{{ $reservation->start_datetime->isoFormat('dddd, DD MMMM Y') }}</span>
-                            <span  >{{ $reservation->start_datetime->isoFormat('HH:mm') . ' - ' . $reservation->end_datetime->isoFormat('HH:mm') }} WIB</span>
+                            <span>{{ $reservation->start_datetime->isoFormat('HH:mm') . ' - ' . $reservation->end_datetime->isoFormat('HH:mm') }} WIB</span>
                         </div>
                     </div>
                     <div>
@@ -59,13 +59,13 @@
                     <div class="text-lg font-semibold hover:underline">
                         <a href="{{ route('order.show', $reservation->no_reg) }}">
                             @foreach ($reservation->treatments as $treatment)
-                                <span  >{{ $treatment->name }}</span>@if(!$loop->last)<span>, </span>@endif
+                                <span>{{ $treatment->name }}</span>@if(!$loop->last)<span>, </span>@endif
                             @endforeach
                         </a>
                     </div>
                     <div>
-                        <span  >{{ $reservation->place() }}</span>
-                        <span  >{{ $reservation->midwife->name }}</span>
+                        <span>{{ $reservation->place() }}</span>
+                        <span>{{ $reservation->midwife->name ?? '' }}</span>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 mt-4">

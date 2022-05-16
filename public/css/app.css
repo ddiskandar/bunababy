@@ -2295,6 +2295,10 @@ select {
   --tw-border-opacity: 1;
   border-color: rgb(254 112 197 / var(--tw-border-opacity));
 }
+.border-white {
+  --tw-border-opacity: 1;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity));
+}
 .border-green-700\/10 {
   border-color: rgb(21 128 61 / 0.1);
 }
@@ -2303,10 +2307,6 @@ select {
 }
 .border-red-700\/10 {
   border-color: rgb(185 28 28 / 0.1);
-}
-.border-white {
-  --tw-border-opacity: 1;
-  border-color: rgb(255 255 255 / var(--tw-border-opacity));
 }
 .border-bunababy-400 {
   --tw-border-opacity: 1;
@@ -2412,15 +2412,6 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(203 213 225 / var(--tw-bg-opacity));
 }
-.bg-green-400\/20 {
-  background-color: rgb(74 222 128 / 0.2);
-}
-.bg-slate-400\/20 {
-  background-color: rgb(148 163 184 / 0.2);
-}
-.bg-red-400\/20 {
-  background-color: rgb(248 113 113 / 0.2);
-}
 .bg-red-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(248 113 113 / var(--tw-bg-opacity));
@@ -2432,6 +2423,15 @@ select {
 .bg-green-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(74 222 128 / var(--tw-bg-opacity));
+}
+.bg-green-400\/20 {
+  background-color: rgb(74 222 128 / 0.2);
+}
+.bg-slate-400\/20 {
+  background-color: rgb(148 163 184 / 0.2);
+}
+.bg-red-400\/20 {
+  background-color: rgb(248 113 113 / 0.2);
 }
 .bg-orange-400 {
   --tw-bg-opacity: 1;
@@ -2933,13 +2933,13 @@ select {
   --tw-text-opacity: 1;
   color: rgb(234 179 8 / var(--tw-text-opacity));
 }
-.text-slate-900 {
-  --tw-text-opacity: 1;
-  color: rgb(15 23 42 / var(--tw-text-opacity));
-}
 .text-gray-300 {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity));
+}
+.text-slate-900 {
+  --tw-text-opacity: 1;
+  color: rgb(15 23 42 / var(--tw-text-opacity));
 }
 .text-bunababy-300\/70 {
   color: rgb(215 164 223 / 0.7);
@@ -4074,16 +4074,16 @@ select {
     padding-left: 0.5rem;
   }
 
-  .md\:pl-24 {
-    padding-left: 6rem;
-  }
-
   .md\:pb-4 {
     padding-bottom: 1rem;
   }
 
   .md\:pt-4 {
     padding-top: 1rem;
+  }
+
+  .md\:pl-24 {
+    padding-left: 6rem;
   }
 
   .md\:text-left {

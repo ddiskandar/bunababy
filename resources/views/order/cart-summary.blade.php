@@ -8,6 +8,7 @@
 
     <div class="rounded shadow-xl shadow-bunababy-100/20">
         <x-panel>
+            @if (session('order.place') == 1)
             <div class="py-4">
                 <x-title>Bidan </x-title>
                 <div class="flex items-center">
@@ -15,6 +16,7 @@
                     <div class="ml-2 font-semibold">{{ $data['bidan'] }}</div>
                 </div>
             </div>
+            @endif
 
             <div class="py-4">
                 <x-title>Tempat</x-title>

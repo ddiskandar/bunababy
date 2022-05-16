@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Timetables;
 
 use App\Models\Timetable;
 use App\Models\User;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -20,6 +21,7 @@ class ManageTimetables extends Component
     public $filterSearch;
     public $filterType;
     public $filterMidwife;
+    public $selectedMonth;
 
     public $state = [];
 
@@ -48,6 +50,15 @@ class ManageTimetables extends Component
     public function mount()
     {
         $this->midwives = User::active()->where('type', User::MIDWIFE)->get();
+        $this->selectedMonth = today();
+    }
+
+    public function prevMonth() {
+        $this->selectedMonth = Carbon::parse($this->selectedMonth)->subMonth();
+    }
+
+    public function nextMonth() {
+        $this->selectedMonth = Carbon::parse($this->selectedMonth)->addMonth();
     }
 
     public function updatingPerPage()
@@ -103,12 +114,23 @@ class ManageTimetables extends Component
         $this->successMessage = true;
     }
 
+    public function delete(Timetable $timetable)
+    {
+        $timetable->delete();
+    }
+
     public function render()
     {
         $timetables = Timetable::query()
+            ->where('note', 'LIKE', '%' . $this->filterSearch . '%')
+            ->where('midwife_user_id', 'LIKE', '%' . $this->filterMidwife . '%')
+            ->where('type', 'LIKE', '%' . $this->filterType . '%')
             ->when(auth()->user()->isMidwife(), function ($query){
                 $query->where('midwife_user_id', auth()->id());
             })
+            ->whereMonth('date', Carbon::parse($this->selectedMonth)->month)
+            ->with('midwife')
+            ->orderBy('date', 'ASC')
             ->paginate($this->perPage);
 
         return view('timetables.manage-timetables', [

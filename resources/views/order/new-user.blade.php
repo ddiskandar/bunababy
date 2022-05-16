@@ -39,9 +39,9 @@
 
                 <!-- Tanggal Lahir -->
                 <div class="col-span-6 xl:col-span-2">
-                    <x-label for="birthdate" :value="__('Tanggal Lahir')" />
-                    <x-input id="birthdate" wire:model.lazy="state.families.{{ $index }}.birthdate" class="block w-full mt-1" type="date" name="birthdate" />
-                    <x-input-error for="state.families.{{ $index }}.birthdate" class="mt-2" />
+                    <x-label for="birth_date" :value="__('Tanggal Lahir')" />
+                    <x-input id="birth_date" wire:model.lazy="state.families.{{ $index }}.birth_date" class="block w-full mt-1" type="date" name="birth_date" />
+                    <x-input-error for="state.families.{{ $index }}.birth_date" class="mt-2" />
                 </div>
 
                 <div class="col-span-6 border-b border-bunababy-50"></div>
@@ -90,7 +90,7 @@
             <!-- Kabupaten -->
             <div class="col-span-6 lg:col-span-3">
                 <x-label for="kab" :value="__('Nomor WhatsApp')" />
-                <x-input wire:model.lazy="state.phone" id="kab" class="block w-full pl-12 mt-1" type="text" name="kab" />
+                <x-input wire:model.lazy="state.phone" id="kab" class="block w-full mt-1" type="text" name="kab" />
                 <x-input-error for="state.phone" class="mt-2" />
             </div>
 

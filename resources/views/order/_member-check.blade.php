@@ -1,11 +1,6 @@
-<div x-data="{ show : true}"
-    class="container px-4 mx-auto sm:px-12"
->
+<div class="container px-4 mx-auto sm:px-12">
     <!-- Alternate Alert -->
-    <div class="py-6"
-        x-show="show"
-        x-transition.opacity.duration.300ms
-    >
+    <div class="py-6">
         <h4 class="mb-1 font-semibold">
             Login
         </h4>
@@ -18,11 +13,9 @@
                     Login sekarang
                 </x-button>
             </a>
-            <button class="inline-flex items-center justify-center px-3 py-2 space-x-2 text-sm font-semibold leading-5 border border-transparent rounded text-bunababy-200 focus:outline-none"
-                x-on:click="show = false; Livewire.emit('newUser'); "
-            >
+            <a href="{{ route('order.check') }}" class="inline-flex items-center justify-center px-3 py-2 space-x-2 text-sm font-semibold leading-5 border border-transparent rounded text-bunababy-200 focus:outline-none" >
                 Tidak, Ini pertama kali treatment
-            </button>
+            </a>
         </div>
     </div>
     <!-- END Alternate Alert -->

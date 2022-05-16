@@ -19,8 +19,7 @@ class CreateOptionsTable extends Migration
             $table->string('site_location');
             $table->text('site_desc');
             $table->string('ig');
-            $table->string('wa_admin');
-            $table->string('wa_owner');
+            $table->string('phone');
             $table->string('account');
             $table->string('account_name');
             $table->integer('transport_duration')->default(40);

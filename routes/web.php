@@ -8,11 +8,13 @@ Route::view('/', 'home')->name('home');
 // make an order
 Route::get('/order/create', [App\Http\Controllers\Client\OrderController::class, 'create'])->name('order.create');
 Route::get('/order/cart', [App\Http\Controllers\Client\OrderController::class, 'cart'])->name('order.cart');
+Route::get('/order/check', [App\Http\Controllers\Client\OrderController::class, 'check'])->name('order.check');
 Route::get('/order/checkout', [App\Http\Controllers\Client\OrderController::class, 'checkout'])->name('order.checkout');
-Route::get('/invoice/{order:no_reg}', App\Http\Controllers\OrderInvoiceController::class)->name('order.invoice');
-Route::get('/reservation/{order:no_reg}', [App\Http\Controllers\Client\OrderController::class, 'show'])->name('order.show');
 
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/invoice/{order:no_reg}', App\Http\Controllers\OrderInvoiceController::class)->name('order.invoice');
+    Route::get('/reservation/{order:no_reg}', [App\Http\Controllers\Client\OrderController::class, 'show'])->name('order.show');
 
     // Client...
     Route::middleware(['client'])->group(function () {

@@ -26,22 +26,25 @@ class Confirm extends Component
             $order->invoice = $order->getInvoice();
             $order->place = session('order.place');
             $order->client_user_id = auth()->id();
-            $order->midwife_user_id = session('order.midwife_user_id');
-            $order->address_id = session('order.address_id');
             $order->total_price = $order->getTotalPrice();
             $order->total_duration = $order->getTotalDuation();
             $order->total_transport = $order->getTotalTransport();
             $order->start_datetime = Carbon::parse(session('order.date')->toDateString() . ' ' . session('order.start_time'));
             $order->end_datetime = $order->start_datetime->addMinutes(session('order.addMinutes'));
             $order->status = Order::STATUS_LOCKED;
+
+            if(session('order.place' == Order::PLACE_CLIENT))
+            {
+                $order->midwife_user_id = session('order.midwife_user_id');
+                $order->address_id = session('order.address_id');
+            }
+
             $order->save();
 
             foreach ( collect(session('order.treatments')) as $treatment ) {
                 $order->treatments()->attach(
                     $treatment['treatment_id'],
-                    [
-                        'name' => $treatment['family_name']
-                    ]
+                    ['name' => $treatment['family_name']]
                 );
             }
 

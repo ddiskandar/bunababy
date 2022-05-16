@@ -4,29 +4,17 @@ namespace App\Http\Livewire\Order;
 
 use App\Models\Order;
 use App\Models\Slot;
-use App\Models\Timetable;
-use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Component;
 
-class SelectMidwife extends Component
+class Clinic extends Component
 {
     public $selectedMonth;
     public $slots;
-    public $midwife;
 
-    public function mount($midwife_user_id) {
-
+    public function mount() {
         $this->selectedMonth = now()->format('Y-M');
-
         $this->slots = Slot::all();
-
-        $this->midwife = User::query()
-            ->where('id', $midwife_user_id)
-            ->select('id', 'name', 'email')
-            ->with('profile')
-            ->first();
-
     }
 
     public function prevMonth() {
@@ -48,23 +36,12 @@ class SelectMidwife extends Component
 
         $date = Carbon::create($y, $m, $d);
 
-        if($date->lt(today())){
-            return back();
-        }
-
-        $timetable = Timetable::query()
-            ->where('midwife_user_id', $this->midwife->id)
-            ->whereDate('date', $date)
-            ->where('type', Timetable::LEAVE)
-            ->orWhere('type', Timetable::CLINIC)
-            ->first();
-
-        if(isset($timetable) AND $date->eq($timetable->date) ){
+        if($date->lt(today())) {
             return back();
         }
 
         session()->put('order.date', $date);
-        session()->put('order.midwife_user_id', $this->midwife->id);
+        session()->forget('order.midwife_user_id');
 
         return to_route('order.cart');
     }
@@ -74,40 +51,19 @@ class SelectMidwife extends Component
         $period = Carbon::parse($this->selectedMonth)
             ->startOfMonth()
             ->startOfWeek()
-            ->DaysUntil(
-                Carbon::parse($this->selectedMonth)
-                    ->endOfMonth()
-                    ->endOfWeek()
-            );
+            ->DaysUntil(Carbon::parse($this->selectedMonth)->endOfMonth()->endOfWeek());
 
         $schedules = Order::query()
-            ->where('midwife_user_id', $this->midwife->id)
+            ->where('place', Order::PLACE_CLINIC)
             ->whereMonth('start_datetime', Carbon::parse($this->selectedMonth)->month)
             ->locked()
-            ->get();
-
-        $timetables = Timetable::query()
-            ->where('midwife_user_id', $this->midwife->id)
-            ->whereMonth('date', Carbon::parse($this->selectedMonth)->month)
-            ->where('type', Timetable::LEAVE)
-            ->orWhere('type', Timetable::CLINIC)
             ->get();
 
         $data = collect();
 
         foreach ($period as $date) {
             $new = collect(['date' => $date]);
-
-            foreach($timetables as $timetable) {
-                if ( $timetable->date->format('m-d') == $date->format('m-d') ) {
-                    foreach($this->slots as $slot){
-                        $new->put($slot->time, 'booked');
-                    }
-                }
-            }
-
             foreach($schedules as $order) {
-
                 if ( $order->start_datetime->format('m-d') == $date->format('m-d') ) {
                     foreach($this->slots as $slot){
                         if ( Carbon::parse($date->toDateString().$slot->time)->between($order->start_datetime, $order->end_datetime) ) {
@@ -130,7 +86,7 @@ class SelectMidwife extends Component
             $data->push($new);
         }
 
-        return view('order.select-midwife', [
+        return view('order.clinic', [
             'data' => $data,
         ]);
     }

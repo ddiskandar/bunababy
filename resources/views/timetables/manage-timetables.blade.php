@@ -10,8 +10,18 @@
             </div>
             <div class="flex flex-col gap-2 mt-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-end">
 
-                <div class="flex items-center space-x-2 space-x-reverse sm:space-x-2">
-
+                <div class="flex items-center gap-4 text-sm">
+                    <div>
+                        {{ $selectedMonth->isoFormat('MMMM YYYY') }}
+                    </div>
+                    <div class="inline-flex">
+                        <button wire:click="prevMonth" type="button" class="inline-flex items-center justify-center px-2 py-1 -mr-px space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded-l shadow-sm focus:outline-none active:z-1 focus:z-1 hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-white active:border-white active:shadow-none">
+                            <svg class="inline-block w-5 h-5 -mx-1 hi-solid hi-chevron-left" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        </button>
+                        <button wire:click="nextMonth" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded-r shadow-sm focus:outline-none active:z-1 focus:z-1 hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-white active:border-white active:shadow-none">
+                            <svg class="inline-block w-5 h-5 -mx-1 hi-solid hi-chevron-right" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="flex space-x-2">
@@ -28,9 +38,9 @@
                     <div class=" w-36">
                         <select wire:model="filterType" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
                             <option value="" selected="selected">Semua Type</option>
-                            <option value="1">Klinik</option>
-                            <option value="2">Lembur</option>
-                            <option value="3">Libur</option>
+                            <option value="1">Lembur</option>
+                            <option value="2">Libur</option>
+                            <option value="3">Klinik</option>
                         </select>
                     </div>
 
@@ -57,7 +67,7 @@
                 <div class="absolute inset-y-0 left-0 flex items-center justify-center w-10 my-px ml-px text-gray-500 rounded-l pointer-events-none">
                     <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 hi-solid hi-search"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                 </div>
-                <input wire:model="filterSearch" class="block w-full py-1 pl-10 pr-3 text-sm leading-6 border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="text" placeholder="Mencari berdasarkan nama, deskripsi, harga, atau durasi ..." />
+                <input wire:model="filterSearch" class="block w-full py-1 pl-10 pr-3 text-sm leading-6 border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="text" placeholder="Mencari berdasarkan catatan ..." />
             </div>
         </div>
         <!-- END Card Header -->
@@ -82,7 +92,7 @@
                         <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
                             Catatan
                         </th>
-                        <th class="p-3 sr-only text-xs font-medium tracking-wider text-center uppercase text-slate-400">
+                        <th class="p-3 text-xs font-medium tracking-wider text-center uppercase sr-only text-slate-400">
                             Actions
                         </th>
                     </tr>
@@ -101,16 +111,38 @@
                                 {{ $timetable->date->isoFormat('dddd, DD MMMM YYYY') }}
                             </td>
                             <td class="p-3 whitespace-nowrap">
-                                <p>{{ $timetable->type() }}</p>
+                                <span
+                                    @class([
+                                        'inline-flex items-center pl-2 pr-4 text-xs font-semibold leading-5  rounded-full',
+                                        'text-green-800 bg-green-100' => $timetable->type() == 'Lembur',
+                                        'text-red-800 bg-red-100' => $timetable->type() == 'Libur',
+                                        'text-yellow-800 bg-yellow-100' => $timetable->type() == 'Klinik',
+                                    ])>
+                                    <span
+                                        @class([
+                                            'w-2 h-2 mr-2 rounded-full',
+                                            'bg-green-600 ' => $timetable->type() == 'Lembur',
+                                            'bg-red-600 ' => $timetable->type() == 'Libur',
+                                            'bg-yellow-600 ' => $timetable->type() == 'Klinik',
+                                        ])></span>
+                                    <span>{{ $timetable->type() }}</span>
+                                </span>
                             </td>
                             <td class="p-3 whitespace-nowrap">
                                 <p>{{ $timetable->note }}</p>
                             </td>
                             <td class="p-3 text-center whitespace-nowrap">
                                 @if (auth()->user()->isAdmin())
-                                <div class="flex justify-center space-x-2">
+                                <div class="flex items-center justify-center space-x-2">
                                     <button wire:click="ShowEditTimetableDialog({{ $timetable->id }})" class="text-slate-400 hover:text-bunababy-200">
-                                        Edit
+                                        <x-icon-pencil />
+                                    </button>
+                                    <button wire:click="delete('{{ $timetable->id }}')" onclick="confirm('Yakin mau dihapus?') || event.stopImmediatePropagation()" class="text-slate-400 hover:text-bunababy-200">
+                                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.75 7.75L7.59115 17.4233C7.68102 18.4568 8.54622 19.25 9.58363 19.25H14.4164C15.4538 19.25 16.319 18.4568 16.4088 17.4233L17.25 7.75"></path>
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 7.5V6.75C9.75 5.64543 10.6454 4.75 11.75 4.75H12.25C13.3546 4.75 14.25 5.64543 14.25 6.75V7.5"></path>
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 7.75H19"></path>
+                                        </svg>
                                     </button>
                                 </div>
                                 @endif

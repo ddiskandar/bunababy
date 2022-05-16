@@ -85,7 +85,7 @@ class NewOrder extends Notification
             'order_client_name' => $this->order->client->name,
             'order_client_phone' => to_wa_indo($this->order->client->profile->phone),
             'order_client_address_name' => $this->order->client->address,
-            'order_midwife_name' => $this->order->midwife->name,
+            'order_midwife_name' => $this->order->midwife->name ?? '-',
         ];
     }
 }

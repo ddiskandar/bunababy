@@ -71,9 +71,9 @@
                 <div class="font-semibold text-slate-700">{{ $order->place() }}</div>
                 <div>{{ $order->address->fullAddress ?? '' }}</div>
                 <div>
-                    {{ $order->start_datetime->isoFormat('dddd, DD MMMM Y') }}, pukul {{ $order->start_datetime->isoFormat('HH:mm') }} - {{ $order->end_datetime ? $order->end_datetime->isoFormat('HH:mm') : '##:##' }} WIB
+                    {{ $order->start_datetime->isoFormat('dddd, DD MMMM Y') }}, pukul {{ $order->getTime() }} WIB
                 </div>
-                <div>{{ $order->midwife->name }}</div>
+                <div>{{ $order->midwife->name ?? '' }}</div>
             </div>
 
             <!-- Responsive Table Container -->

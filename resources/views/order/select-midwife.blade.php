@@ -91,7 +91,7 @@
         <div class="flex items-center mt-8 space-x-4 sm:ml-6">
             <div class="flex items-center">
                 <div class="w-3 h-3 bg-red-400 border-2 border-white rounded-full"></div>
-                <span class="ml-2 text-xs">Penuh</span>
+                <span class="ml-2 text-xs">Penuh / Tidak Tersedia</span>
             </div>
             <div class="flex items-center">
                 <div class="w-3 h-3 bg-blue-400 border-2 border-white rounded-full"></div>

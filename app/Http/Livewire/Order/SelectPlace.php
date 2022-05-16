@@ -17,6 +17,7 @@ class SelectPlace extends Component
 
     public function updatedPlace() {
         session()->put('order.place', $this->place);
+        return redirect()->route('order.create');
     }
 
     public function render()

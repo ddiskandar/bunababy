@@ -24,11 +24,15 @@ class CheckoutSummary extends Component
         });
 
         $order = new Order();
-        $bidan = \App\Models\User::where('id', session('order.midwife_user_id'))->first();
 
-        $data['kecamatan'] = DB::table('kecamatans')->where('id', session('order.kecamatan_id'))->value('name');
-        $data['bidan'] = $bidan->name;
-        $data['bidan_photo'] = $bidan->profile_photo_url;
+        if(session('order.place') == Order::PLACE_CLIENT)
+        {
+            $bidan = \App\Models\User::where('id', session('order.midwife_user_id'))->first();
+            $data['bidan'] = $bidan->name;
+            $data['bidan_photo'] = $bidan->profile_photo_url;
+            $data['kecamatan'] = DB::table('kecamatans')->where('id', session('order.kecamatan_id'))->value('name');
+        }
+
         $data['date'] = tanggal(session('order.date'));
         $data['time'] = waktu($order->getStartTime()) . ' - ' . waktu($order->getEndTime()) . ' WIB ';
         $data['total_price'] = rupiah($order->getTotalPrice());
