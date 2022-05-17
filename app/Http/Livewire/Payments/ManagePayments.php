@@ -30,13 +30,8 @@ class ManagePayments extends Component
 
     protected $rules = [
         'state.value' => 'required',
-        // 'state.status' => 'required',
         'state.attachment' => 'nullable',
         'state.note' => 'nullable',
-    ];
-
-    protected $messages = [
-        //
     ];
 
     protected $validationAttributes = [
@@ -97,7 +92,12 @@ class ManagePayments extends Component
                 });
             })
             ->where('status', 'LIKE', '%' . $this->filterStatus)
-            ->with('order', 'order.client', 'verificator')
+            ->with(
+                'order',
+                'order.client',
+                'order.payments',
+                'verificator:id,name'
+            )
             ->paginate($this->perPage);
 
         return view('payments.manage-payments', [

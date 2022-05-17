@@ -82,21 +82,16 @@
                             'text-slate-400' => ! $payment->active,
                         ])>
                             <td class="table-cell p-3 pl-6 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <img src="{{ $payment->order->client->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
-                                    <div class="ml-3 ">
-                                        <p class="font-semibold w-52 truncate text-slate-800">{{ $payment->order->client->name }}</p>
-                                        <p class="text-slate-600">{{ $payment->order->client->address }}</p>
-                                    </div>
-                                </div>
+                                <p class="font-semibold w-52 truncate text-slate-800">{{ $payment->order->client->name }}</p>
+                                <p class="text-slate-600">{{ $payment->order->client->address }}</p>
                             </td>
                             <td class="p-3 ">
                                 <a href="{{ route('orders.show', $payment->order->client->id) }}">
-                                    <p class="font-medium text-slate-800">
+                                    <p class="font-medium text-bunababy-200">
                                         {{ $payment->order->no_reg }}
                                     </p>
                                 </a>
-                                <p class="text-slate-600">{{ $payment-> order->start_datetime->format('d M Y') }}</p>
+                                <p class="text-slate-600">{{ $payment-> order->start_datetime->isoFormat('DD MMM YYYY') }}</p>
                             </td>
                             <td class="p-3 ">
                                 <p class="text-slate-800">{{ rupiah($payment->order->getGrandTotal()) }}</p>
@@ -145,7 +140,7 @@
                             <td class="p-3 text-center whitespace-nowrap">
                                 <div class="flex justify-center space-x-2">
                                     <button wire:click="showEditPaymentDialog({{ $payment->id }})" class="text-slate-400 hover:text-bunababy-200">
-                                        <x-icon-pencil-alt/>
+                                        <x-icon-pencil/>
                                     </button>
                                 </div>
                             </td>

@@ -123,6 +123,7 @@ class DatabaseSeeder extends Seeder
             $order = Order::factory()
                 ->create([
                     'id' => $i,
+                    'place' => Order::PLACE_CLIENT,
                     'no_reg' => 'A' . rand(3,8) . str_replace('-', '', today()->addDays($i)->toDateString()) . rand(11,99),
                     'address_id' => $i,
                     'midwife_user_id' => rand(3,8),
@@ -146,10 +147,10 @@ class DatabaseSeeder extends Seeder
                     'order_id' => $order->id,
                 ]);
 
-            // $payment = Payment::factory()
-            //     ->create([
-            //         'order_id' => $order->id,
-            //     ]);
+            $payment = Payment::factory()
+                ->create([
+                    'order_id' => $order->id,
+                ]);
 
             // $owner->notify( new NewPayment($payment));
 

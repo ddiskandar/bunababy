@@ -91,13 +91,8 @@
                             'text-slate-400' => ! $testimonial->active,
                         ])>
                             <td class="table-cell p-3 pl-6 align-top w-72 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <img src="{{ $testimonial->order->client->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
-                                    <div class="ml-3 ">
-                                        <p class="font-semibold text-slate-800">{{ $testimonial->order->client->name }}</p>
-                                        <p class="text-slate-600">{{ $testimonial->order->client->address }}</p>
-                                    </div>
-                                </div>
+                                <p class="font-semibold text-slate-800">{{ $testimonial->order->client->name }}</p>
+                                <p class="text-slate-600">{{ $testimonial->order->client->address }}</p>
                             </td>
                             <td class="w-16 p-3 align-top ">
                                 <div class="flex items-center">
@@ -115,7 +110,7 @@
                                 <a href="{{ route('orders.show', $testimonial->order->id) }}">
                                     <p class="font-semibold text-bunababy-200">{{ $testimonial->order->no_reg }}</p>
                                 </a>
-                                <p class="text-slate-600">{{ $testimonial->order->start_datetime->isoFormat('DD/MM/YYYY') }}</p>
+                                <p class="text-slate-600">{{ $testimonial->order->start_datetime->isoFormat('DD MMM YYYY') }}</p>
                             </td>
                             <td class="w-32 p-3 align-top ">
                                 <p class="font-semibold text-slate-800">{{ $testimonial->order->midwife->name }}</p>
