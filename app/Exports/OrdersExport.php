@@ -61,6 +61,7 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
         return [
             '#',
             'Tanggal',
+            'Tempat',
             'Client',
             'Bidan',
             'Treatment',
@@ -97,6 +98,7 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
         return [
             $order->no_reg,
             $order->start_datetime->isoFormat('DD/MM/YYYY'),
+            $order->place(),
             $order->client->name,
             $order->midwife->name ?? '-',
             $order->treatments->pluck('name')->implode(', '),
