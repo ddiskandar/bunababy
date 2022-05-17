@@ -78,7 +78,7 @@
                         <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
                             Bidan
                         </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-center uppercase text-slate-400">
+                        <th class="p-3 text-xs sr-only font-medium tracking-wider text-center uppercase text-slate-400">
                             Actions
                         </th>
                     </tr>
@@ -120,7 +120,7 @@
                             <td class="w-32 p-3 align-top ">
                                 <p class="font-semibold text-slate-800">{{ $testimonial->order->midwife->name }}</p>
                             </td>
-                            <td class="p-3 text-center align-top whitespace-nowrap">
+                            <td class="p-3 text-center pr-6 align-top whitespace-nowrap">
                                 <button wire:click="delete('{{ $testimonial->id }}')" onclick="confirm('Yakin mau dihapus?') || event.stopImmediatePropagation()" class="text-slate-400 hover:text-bunababy-200">
                                     <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.75 7.75L7.59115 17.4233C7.68102 18.4568 8.54622 19.25 9.58363 19.25H14.4164C15.4538 19.25 16.319 18.4568 16.4088 17.4233L17.25 7.75"></path>
