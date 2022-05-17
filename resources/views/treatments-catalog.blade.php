@@ -1,8 +1,8 @@
 <div class="py-16 bg-white">
-    <div >
-        <div class="container mx-auto md:px-12 px-4">
-            <div class="font-extrabold text-4xl py-3 text-slate-600">Katalog Treatment</div>
-            <div class="flex flex-wrap mt-3 gap-2">
+    <div>
+        <div class="container px-4 mx-auto md:px-12">
+            <div class="py-3 text-4xl font-extrabold text-slate-600">Katalog Treatment</div>
+            <div class="flex flex-wrap gap-2 mt-3">
                 <button
                     wire:click="$set('filterCategory', '')"
                     @class([
@@ -27,19 +27,19 @@
         </div>
 
         <div class="flex snap-x scroll-pl-4 space-x-4 overflow-x-auto py-6 sm:scroll-pl-6 sm:space-x-8 md:scroll-pl-[calc(50%-20rem)] lg:scroll-pl-[calc(50%-25rem)]">
-            <div class="snap-start w-32 p-6 max-w-lg"></div>
+            <div class="w-32 max-w-lg p-6 snap-start"></div>
             @foreach ($treatments as $treatment)
-            <div class="flex-none flex flex-col gap-1 bg-white justify-between snap-start w-72 p-6 border max-w-lg border-bunababy-50 rounded shadow-lg shadow-bunababy-50">
+            <div class="flex flex-col justify-between flex-none max-w-lg gap-1 p-6 bg-white border rounded shadow-lg snap-start w-72 border-bunababy-50 shadow-bunababy-50">
                 <div class="space-y-1">
                     <p class="text-xs text-bunababy-100">{{ $treatment->category->name }}</p>
-                    <h3 class="font-bold leading-tight text-lg">
+                    <h3 class="text-lg font-bold leading-tight">
                         {{ $treatment->name }}
                     </h3>
                     <p class="text-sm text-slate-600">{{ $treatment->desc }}</p>
-                    <p class="text-slate-600 text-xs font-semibold">{{ $treatment->duration }} menit</p>
+                    <p class="text-xs font-semibold text-slate-600">{{ $treatment->duration }} menit</p>
                 </div>
                 <div>
-                    <span class="text-bunababy-200 font-semibold">{{ rupiah($treatment->price) }}</span>
+                    <span class="font-semibold text-bunababy-200">{{ rupiah($treatment->price) }}</span>
                 </div>
             </div>
             @endforeach
