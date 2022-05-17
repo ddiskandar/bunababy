@@ -30,6 +30,7 @@ class DashboardController extends Controller
 
         if(auth()->user()->isAdmin()){
             $data['new_clients'] = DB::table('users')->where('type', User::CLIENT)->whereMonth('created_at', now()->month)->count();
+            $data['unmidwife'] = DB::table('orders')->where('midwife_user_id', NULL)->count();
             $data['pending'] = DB::table('orders')->where('status', Order::STATUS_UNPAID)->count();
             $data['unverified'] = DB::table('payments')->where('status', Payment::STATUS_UNVERIFIED)->count();
 

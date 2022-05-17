@@ -169,7 +169,7 @@ class Order extends Model
 
     public function numberStartTime()
     {
-        return session('order.place') . session('order.midwife_user_id') . session('order.start_time')[0] . session('order.start_time')[1];
+        return session('order.place') . session('order.midwife_user_id') . session('order.start_time')[0] . session('order.start_time')[1] . session('order.start_time')[3] . session('order.start_time')[4];
     }
 
     public function getNoReg()
@@ -184,10 +184,12 @@ class Order extends Model
 
     public function getTotalTransport()
     {
+        // TRANSPORT ALGO
+
         if(session('order.kecamatan_distance') < 4) {
             return 40000;
         } else {
-            return 40000 + ((session('order.kecamatan_distance') - 4) * 5000);
+            return 40000 + (session('order.kecamatan_distance') * 5000);
         }
     }
 

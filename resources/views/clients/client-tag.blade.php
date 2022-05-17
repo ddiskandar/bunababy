@@ -1,13 +1,10 @@
 <div class="flex flex-col overflow-hidden bg-white rounded shadow-sm">
     <div class="w-full p-5 lg:p-6 grow">
         <div class="md:flex">
-            <div class="mb-5 border-b md:flex-none md:w-1/3 md:border-0 md:mb-0">
-                <h3 class="flex items-center justify-center mb-1 space-x-2 font-semibold md:justify-start">
+            <div class="mb-5 md:w-1/3">
+                <h3 class="mb-2 font-semibold">
                     <span>Tag</span>
                 </h3>
-                <p class="mb-5 text-sm text-gray-500">
-                    Tandai client dengan memberikan tag
-                </p>
             </div>
             <div class="md:w-2/3 md:pl-2">
                 <div class="space-y-1">
@@ -29,7 +26,7 @@
                 </div>
 
                 <form wire:submit.prevent="save" >
-                    <div class="mt-4 space-y-1">
+                    <div class="max-w-sm mt-4 space-y-1">
                         <x-label for="tagId">Tambah Tag</x-label>
                         <select wire:model.defer="tagId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="kecamatan_id">
                             <option value="" selected>-- Pilih salah satu</option>

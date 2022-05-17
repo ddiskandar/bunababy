@@ -20,8 +20,8 @@ class ManageAddresses extends Component
         'state.rt' => 'required|numeric|min:1|max:255',
         'state.rw' => 'required|numeric|min:1|max:255',
         'state.desa' => 'required|string|min:2|max:32',
-        'state.note' => 'nullable|string|min:2|max:255',
         'state.kecamatan_id' => 'required|exists:kecamatans,id',
+        'state.note' => 'nullable|string|min:2|max:255',
     ];
 
     protected $validationAttributes = [
@@ -34,9 +34,7 @@ class ManageAddresses extends Component
         'state.kecamatan_id' => 'Kecamatan',
     ];
 
-    protected $listeners = [
-        'saved' => '$refresh'
-    ];
+    protected $listeners = ['saved' => '$refresh'];
 
     public function mount()
     {

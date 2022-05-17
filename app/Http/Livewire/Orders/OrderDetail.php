@@ -16,7 +16,17 @@ class OrderDetail extends Component
     {
         $this->order = $order;
         $this->baby = auth()->user()->families->where('type', 'Anak')->first();
+    }
 
+    public function activate()
+    {
+        $this->order->update([
+            'status' => Order::STATUS_LOCKED,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $this->emit('saved');
     }
 
     public function render()

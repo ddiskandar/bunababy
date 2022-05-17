@@ -50,7 +50,7 @@
                 <div class="absolute inset-y-0 left-0 flex items-center justify-center w-10 my-px ml-px text-gray-500 rounded-l pointer-events-none">
                     <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 hi-solid hi-search"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                 </div>
-                <input wire:model="filterSearch" class="block w-full py-1 pl-10 pr-3 text-sm leading-6 border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="text" placeholder="Mencari berdasarkan nama client deskripsi, atau nomor order ..." />
+                <input wire:model="filterSearch" class="block w-full py-1 pl-10 pr-3 text-sm leading-6 border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="text" placeholder="Mencari berdasarkan nama client, deskripsi, atau nomor order ..." />
             </div>
         </div>
         <!-- END Card Header -->
@@ -113,7 +113,7 @@
                             </td>
                             <td class="w-32 p-3 align-top ">
                                 <a href="{{ route('orders.show', $testimonial->order->id) }}">
-                                    <p class="font-semibold text-slate-800">{{ $testimonial->order->no_reg }}</p>
+                                    <p class="font-semibold text-bunababy-200">{{ $testimonial->order->no_reg }}</p>
                                 </a>
                                 <p class="text-slate-600">{{ $testimonial->order->start_datetime->isoFormat('DD/MM/YYYY') }}</p>
                             </td>

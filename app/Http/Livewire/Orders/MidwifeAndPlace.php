@@ -4,14 +4,17 @@ namespace App\Http\Livewire\Orders;
 
 use App\Models\Address;
 use App\Models\Order;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class AddressDetail extends Component
+class MidwifeAndPlace extends Component
 {
     public $order;
     public $client;
     public $selectedAddressId;
     public $place;
+    public $midwifeId;
 
     public $state = [];
 
@@ -45,14 +48,20 @@ class AddressDetail extends Component
         $this->order = $order;
         $this->client = $order->client;
         $this->place = $order->place;
+        $this->midwifeId = $order->midwife_user_id;
         $this->selectedAddressId = $order->address_id;
     }
 
-    public function updatedSelectedAddressId()
+    public function updatedMidwifeId()
     {
+        if($this->midwifeId == NULL){
+            return back();
+        }
+
         $this->order->update([
-            'address_id' => $this->selectedAddressId,
+            'midwife_user_id' => $this->midwifeId,
         ]);
+
         $this->emit('saved');
     }
 
@@ -61,6 +70,43 @@ class AddressDetail extends Component
         $this->order->update([
             'address_id' => NULL,
             'place' => $this->place,
+        ]);
+
+        $duration = DB::table('options')->first()->transport_duration;
+
+        if($this->place == Order::PLACE_CLINIC){
+            $this->order->update([
+                'total_transport' => 0,
+                'total_duration' => 0,
+                'end_datetime' => $this->order->end_datetime->subMinutes($duration),
+            ]);
+        }
+
+        if($this->place == Order::PLACE_CLIENT) {
+            $this->order->update([
+                'total_duration' => $duration,
+                'end_datetime' => $this->order->end_datetime->addMinutes($duration),
+            ]);
+        }
+
+        $this->emit('saved');
+    }
+
+    public function updatedSelectedAddressId()
+    {
+        $this->order->update([
+            'address_id' => $this->selectedAddressId,
+        ]);
+
+        // TRANSPORT ALGO
+        if($this->order->address->kecamatan->distance < 4) {
+            $transport = 40000;
+        } else {
+            $transport = 40000 + (session('order.kecamatan_distance') * 5000);
+        }
+
+        $this->order->update([
+            'total_transport' => $transport,
         ]);
 
         $this->emit('saved');
@@ -107,12 +153,18 @@ class AddressDetail extends Component
 
     public function render()
     {
+        $midwives = User::query()
+            ->active()
+            ->orderBy('name')
+            ->where('type', User::MIDWIFE)
+            ->get();
 
         $addresses = Address::query()
             ->where('client_user_id', $this->client->id)
             ->get();
 
-        return view('orders.address-detail', [
+        return view('orders.midwife-and-place', [
+            'midwives' => $midwives,
             'addresses' => $addresses,
         ]);
     }

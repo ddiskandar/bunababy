@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('tag_user', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tag_id')->constrained();
-            $table->foreignId('client_user_id')->constrained('users');
+            $table->foreignId('client_user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -4,13 +4,18 @@
         @livewire('orders.order-detail', [$order->id])
 
         @if (auth()->user()->isAdmin())
-            @livewire('orders.midwife-time', [$order->id])
-            @livewire('orders.address-detail', [$order->id])
+            @livewire('orders.midwife-and-place', [$order->id])
             @livewire('orders.select-treatments', [$order->id])
             @livewire('orders.payments', [$order->id])
         @endif
 
-        @livewire('orders.set-status', [$order->id])
+        @if (now()->isAfter($order->start_datetime))
+            @livewire('orders.set-status', [$order->id])
+        @endif
+
+        @if (auth()->user()->isAdmin())
+            @livewire('orders.delete', [$order->id])
+        @endif
     </div>
 
 </x-app-layout>

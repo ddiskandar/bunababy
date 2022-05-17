@@ -90,7 +90,7 @@
                                 Harga / Transport
                             </th>
                             <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
-                                Total
+                                Total / Sisa
                             </th>
                             @endif
                             <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
@@ -118,7 +118,7 @@
                                     <p class="text-slate-600">{{ $order->client->address }}</p>
                                 </td>
                                 <td class="w-64 p-3 align-top whitespace-nowrap">
-                                    <p class="font-semibold ">{{ $order->midwife->name }}</p>
+                                    <p class="font-semibold ">{{ $order->midwife->name ?? '-' }}</p>
                                     <p class="">{{ $order->treatments->implode('name', ', ') }}</p>
                                     {{-- <div class="flex flex-wrap gap-1">
                                         @foreach ($order->treatments as $treatment)
@@ -135,6 +135,18 @@
                                 </td>
                                 <td class="p-3 align-top whitespace-nowrap">
                                     <p class="font-semibold">{{ rupiah($order->getGrandTotal()) }}</p>
+                                    @if ($order->getRemainingPayment() > 0)
+                                    <p class="text-red-600">{{ rupiah($order->getRemainingPayment()) }}</p>
+                                    @else
+                                    <div class="flex items-center">
+                                        <span class="text-green-800">
+                                            Lunas
+                                        </span>
+                                        <svg class="w-4 h-4 ml-1 text-green-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
+                                    @endif
                                 </td>
                                 @endif
                                 <td class="p-3 align-top whitespace-nowrap">

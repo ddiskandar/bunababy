@@ -66,9 +66,6 @@ class ShowCalendar extends Component
 
         $users = User::query()
             ->where('type', User::MIDWIFE)
-            ->when(auth()->user()->isMidwife(), function ($query) {
-                $query->where('id', auth()->id());
-            })
             ->active()
             ->select(['id', 'name'])
             ->orderBy('id', 'ASC')
@@ -77,7 +74,10 @@ class ShowCalendar extends Component
         $this->midwives = collect();
         $this->colStart = collect();
 
-        $i = 2;
+        $this->colStart->put(1, 2);
+        $this->midwives->push(['col-start' => 2, 'name' => 'Belum ada']);
+
+        $i = 3;
         foreach($users as $midwife) {
             $this->colStart->put($midwife->id, $i);
             $this->midwives->push(['col-start' => $i, 'name' => $midwife->name]);
@@ -147,9 +147,6 @@ class ShowCalendar extends Component
 
         $orders = Order::query()
             ->whereDate('start_datetime', $this->selectedDay)
-            ->when(auth()->user()->isMidwife(), function ($query) {
-                $query->where('midwife_user_id', auth()->id());
-            })
             ->with(
                 'client:id,name',
                 'treatments:id,name',
@@ -172,7 +169,7 @@ class ShowCalendar extends Component
         foreach($orders as $order){
             $schedules->push([
                 'row-start' => $this->rowStart[$order->start_datetime->isoFormat('HH:mm')],
-                'col-start' => $this->colStart[$order->midwife_user_id],
+                'col-start' => $order->midwife_user_id ? $this->colStart[$order->midwife_user_id] : 2,
                 'row-span' => (int) round($order->start_datetime->diffInMinutes($order->end_datetime) / 15),
                 'id' => $order->id,
                 'no_reg' => $order->no_reg,

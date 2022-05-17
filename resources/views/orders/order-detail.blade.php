@@ -1,15 +1,15 @@
 <div>
     <div class="overflow-hidden bg-white rounded">
         <!-- Card Body: User Profile -->
-        <div class="items-center justify-between w-full px-4 md:px-8 py-5 border-b md:flex border-slate-200">
-            <div class="space-y-0 space-x-3 items-center flex ">
+        <div class="items-center justify-between w-full px-4 py-5 border-b md:px-8 md:flex border-slate-200">
+            <div class="flex items-center space-x-3 space-y-0 ">
                 <a href="{{ route('orders') }}">
                     <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
                     </svg>
                 </a>
-                <div class="text-xl font-semibold">{{ $order->midwife->name }}</div>
+                <div class="text-xl font-semibold">{{ $order->midwife->name ?? '' }}</div>
                 <div class="hidden md:block">•</div>
                 <div class="flex items-center justify-start gap-2 md:gap-4 md:justify-between">
                     <div>
@@ -22,7 +22,12 @@
                     @endif
                 </div>
             </div>
-            <div class="flex items-center justify-between mt-4 space-x-4 md:mt-0 md:justify-end">
+            <div class="flex items-center justify-start mt-4 space-x-4 md:mt-0 md:justify-end">
+                @if ($order->status == 1)
+                <button wire:click="activate" class="text-xs font-semibold uppercase text-bunababy-200">
+                    Aktifkan
+                </button>
+                @endif
                 <span
                     @class([
                         'inline-flex items-center pl-2 pr-4 text-xs font-semibold leading-5  rounded-full',

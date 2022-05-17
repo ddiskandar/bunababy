@@ -38,6 +38,6 @@ class Setting extends Component
 
     public function render()
     {
-        return view('setting.setting');
+        return view('settings.setting');
     }
 }

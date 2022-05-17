@@ -3,25 +3,30 @@
 namespace App\Notifications;
 
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class OrderUnpaid extends Notification
+class OrderDeleted extends Notification
 {
     use Queueable;
 
+    public $user;
     public $order;
+    public $note;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Order $order)
+    public function __construct(User $user, Order $order, $note)
     {
+        $this->user = $user;
         $this->order = $order;
+        $this->note = $note;
     }
 
     /**
@@ -58,11 +63,12 @@ class OrderUnpaid extends Notification
     public function toArray($notifiable)
     {
         return [
-            'type' => 'unpaid',
-            'order_id' => $this->order->id,
-            'order_client_name' => $this->order->client->name,
-            'order_client_phone' => to_wa_indo($this->order->client->profile->phone),
+            'type' => 'orderDeleted',
+            'user_name' => $this->user->name,
             'order_no_reg' => $this->order->no_reg,
+            'order_date' => $this->order->start_datetime->isoFormat('DD/MMM/YYYY'),
+            'order_client_name' => $this->order->client->name,
+            'note' => $this->note,
         ];
     }
 }

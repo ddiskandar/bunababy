@@ -17,13 +17,13 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
 {
     use Exportable;
 
-    public function fromDate ($from)
+    public function fromDate($from)
     {
         $this->from = $from;
         return $this;
     }
 
-    public function toDate ($to)
+    public function toDate($to)
     {
         $this->to = $to;
         return $this;
@@ -42,7 +42,7 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
             ->when($this->midwifeId, function($query){
                 $query->where('midwife_user_id', $this->midwifeId);
             })
-            ->whereBetween('start_datetime', [$this->from, $this->to]);
+            ->whereBetween('start_datetime', [$this->from, Carbon::parse($this->to)->addDay()]);
 
         return $order;
     }
@@ -98,7 +98,7 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
             $order->no_reg,
             $order->start_datetime->isoFormat('DD/MM/YYYY'),
             $order->client->name,
-            $order->midwife->name,
+            $order->midwife->name ?? '-',
             $order->treatments->pluck('name')->implode(', '),
             $order->total_price,
             $order->total_transport,

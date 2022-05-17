@@ -1,7 +1,7 @@
 <div class="flex flex-col overflow-hidden bg-white rounded shadow-sm">
     <div class="w-full p-5 lg:p-6 grow">
         <div class="md:flex">
-            <div class="mb-5 border-b md:flex-none md:w-1/3 md:border-0 md:mb-0">
+            <div class="mb-5 md:w-1/3">
                 <h3 class="font-semibold">
                     <span>Selesai treatment</span>
                 </h3>

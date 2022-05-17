@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Wilayah;
 
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 

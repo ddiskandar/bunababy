@@ -4,5 +4,6 @@
     @livewire('clients.client-addresses', [$client->id])
     @livewire('clients.client-families', [$client->id])
     @livewire('clients.client-tag', [$client->id])
+    @livewire('clients.delete-client', [$client->id])
    </div>
 </x-app-layout>

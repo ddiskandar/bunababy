@@ -17,13 +17,13 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->string('no_reg')->unique();
             $table->string('invoice')->unique();
-            $table->tinyInteger('place')->default(1);
+            $table->tinyInteger('place');
             $table->foreignId('client_user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('midwife_user_id')->nullable();
             $table->foreignId('address_id')->nullable();
             $table->integer('total_price');
-            $table->integer('total_duration');
-            $table->integer('total_transport');
+            $table->integer('total_duration')->default(0);
+            $table->integer('total_transport')->default(0);
             $table->integer('additional')->default(0);
             $table->timestamp('start_datetime');
             $table->timestamp('end_datetime')->nullable();

@@ -1,8 +1,8 @@
 <div class="flex flex-col overflow-hidden bg-white rounded shadow-sm">
     <div class="w-full p-5 lg:p-6 grow">
         <div class="md:flex">
-            <div class="mb-5 border-b md:flex-none md:w-1/3 md:border-0 md:mb-0">
-                <h3 class="flex items-center justify-center mb-1 space-x-2 font-semibold md:justify-start">
+            <div class="mb-5 md:w-1/3">
+                <h3 class="mb-2 font-semibold">
                     <span>Profil Bidan</span>
                 </h3>
                 <p class="mb-5 text-sm text-gray-500">

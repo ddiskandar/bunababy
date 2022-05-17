@@ -1,4 +1,4 @@
-<ul class="fixed bottom-0 left-0 right-0 flex justify-around py-3 z-80 bg-white border-t border-bunababy-50 backdrop-blur-sm">
+<ul class="fixed bottom-0 left-0 right-0 flex justify-around py-3 bg-white border-t z-80 border-bunababy-50 backdrop-blur-sm">
     <li >
         <a href="{{ route('me') }}"
             @class([
@@ -31,7 +31,7 @@
     </li>
     <li>
         <a href="{{ route('order.create') }}"
-            class="flex flex-col p-2 border-2 bg-bunababy-200 border-bunababy-200 rounded-full items-center cursor-pointer text-bunababy-200 hover:text-bunababy-200"
+            class="flex flex-col items-center p-2 border-2 rounded-full cursor-pointer bg-bunababy-200 border-bunababy-200 text-bunababy-200 hover:text-bunababy-200"
         >
             {{-- <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5.75V18.25"></path>
@@ -45,7 +45,7 @@
     </li>
     <li>
         <a
-            href="https://api.whatsapp.com/send?phone=628997897991&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+%28Isi+Nama%29.+Lokasi+saya+di+%28Sebutkan+alamat+jelas%29.+Ingin+reservasi+treatment+%28sebutkan%29.+Thank+you" target="_blank"
+            href="https://api.whatsapp.com/send?phone={{ to_wa_indo(\DB::table('options')->select('phone')->first()->phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+%28Isi+Nama%29.+Lokasi+saya+di+%28Sebutkan+alamat+jelas%29.+Ingin+reservasi+treatment+%28sebutkan%29.+Thank+you" target="_blank"
             class="flex flex-col items-center text-gray-400 cursor-pointer hover:text-bunababy-200"
             >
             <svg class="mt-1 w-7 h-7" fill="none" viewBox="0 0 24 24" >

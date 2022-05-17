@@ -3,7 +3,7 @@
 <div class="pb-6 text-xl font-semibold">Hai, {{ auth()->user()->name }}</div>
 
 <!-- Simple Statistics Grid -->
-<div class="grid grid-cols-1 gap-4 md:grid-cols-3 lg:gap-8">
+<div class="grid grid-cols-1 gap-4 md:grid-cols-4 ">
     <!-- Card: Simple Widget -->
     <div class="flex flex-col overflow-hidden bg-white rounded shadow-sm">
     <!-- Card Body: Simple Widget -->
@@ -40,6 +40,23 @@
 
     <!-- Card: Simple Widget -->
     <div class="flex flex-col overflow-hidden bg-white rounded shadow-sm">
+        <!-- Card Body: Simple Widget -->
+        <div class="w-full p-5 lg:p-6 grow">
+            <dl>
+            <dt class="text-2xl font-semibold">
+                {{ $data['unmidwife'] }}
+            </dt>
+            <dd class="text-sm font-medium tracking-wider text-gray-500 uppercase">
+                Belum pilih bidan
+            </dd>
+            </dl>
+        </div>
+        <!-- END Card Body: Simple Widget -->
+        </div>
+        <!-- END Card: Simple Widget -->
+
+    <!-- Card: Simple Widget -->
+    <div class="flex flex-col overflow-hidden bg-white rounded shadow-sm">
     <!-- Card Body: Simple Widget -->
     <div class="w-full p-5 lg:p-6 grow">
         <dl>
@@ -47,7 +64,7 @@
             {{ $data['unverified'] }}
         </dt>
         <dd class="text-sm font-medium tracking-wider text-gray-500 uppercase">
-            Pembayaran belum diverifikasi
+            Pembayaran Unverified
         </dd>
         </dl>
     </div>

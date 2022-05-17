@@ -26,6 +26,8 @@ class ClientFamilies extends Component
         'state.type' => 'Hubungan keluarga',
     ];
 
+    protected $listeners = ['saved' => '$refresh'];
+
     public function mount(User $client)
     {
         $this->client = $client;
@@ -51,7 +53,7 @@ class ClientFamilies extends Component
         Family::updateOrCreate(
             [
                 'id' => $this->state['id'] ?? time(),
-                'client_user_id' => auth()->id(),
+                'client_user_id' => $this->client->id,
             ],
             [
                 'name' => $this->state['name'],
@@ -62,7 +64,8 @@ class ClientFamilies extends Component
         );
         $this->showDialog = false;
 
-        $this->successMessage = true;
+        $this->emit('saved');
+
     }
 
     public function render()

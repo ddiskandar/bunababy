@@ -13,7 +13,7 @@
                     <div>{{ $options->site_desc }}</div>
                     <div class="text-gray-500 ">
                         <div>{{ $options->site_location }}</div>
-                        <div>IG : {{ $options->ig }} WA : {{ $options->wa_admin }}</div>
+                        <div>IG : {{ $options->ig }} WA : {{ $options->phone }}</div>
                     </div>
                 </div>
                 <!-- END Company Info -->

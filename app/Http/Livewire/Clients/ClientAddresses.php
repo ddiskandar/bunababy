@@ -18,22 +18,26 @@ class ClientAddresses extends Component
     public $successMessage = false;
 
     protected $rules = [
-        'state.label' => 'required',
-        'state.address' => 'required',
-        'state.rt' => 'required',
-        'state.rw' => 'required',
-        'state.desa' => 'required',
-        'state.kecamatan_id' => 'required',
-        'state.note' => 'nullable',
-        'state.share_location' => 'nullable',
+        'state.label' => 'required|string|min:3|max:32',
+        'state.address' => 'required|string|min:3|max:255',
+        'state.rt' => 'required|numeric|min:1|max:255',
+        'state.rw' => 'required|numeric|min:1|max:255',
+        'state.desa' => 'required|string|min:2|max:32',
+        'state.kecamatan_id' => 'required|exists:kecamatans,id',
+        'state.note' => 'nullable|string|min:2|max:255',
+        'state.share_location' => 'nullable|string|max:255',
     ];
 
-    protected $messages = [
-        //
-    ];
 
     protected $validationAttributes = [
-        //
+        'state.label' => 'Label',
+        'state.address' => 'Kampung/Jalan',
+        'state.rt' => 'Rt',
+        'state.rw' => 'Rw',
+        'state.desa' => 'Desa',
+        'state.kecamatan_id' => 'Kecamatan',
+        'state.note' => 'Catatan',
+        'state.share_location' => 'Share Location',
     ];
 
     protected $listeners = ['saved' => '$refresh'];
@@ -82,8 +86,8 @@ class ClientAddresses extends Component
                 'rw' => $this->state['rw'],
                 'desa' => $this->state['desa'],
                 'kecamatan_id' => $this->state['kecamatan_id'],
-                'note' => $this->state['note'] ?? '',
-                'share_location' => $this->state['share_location'] ?? '',
+                'note' => $this->state['note'] ?? NULL,
+                'share_location' => $this->state['share_location'] ?? NULL,
             ]
         );
 

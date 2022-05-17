@@ -37,6 +37,7 @@ class SelectTreatments extends Component
 
         $this->order->update([
             'total_duration' => $this->order->total_duration - $treatment->duration,
+            'end_datetime' => $this->order->end_datetime->subMinutes($treatment->duration),
             'total_price' => $this->order->treatments()->sum('price'),
         ]);
 
@@ -69,6 +70,7 @@ class SelectTreatments extends Component
         $treatment = Treatment::find($this->treatmentId);
         $this->order->update([
             'total_duration' => $this->order->total_duration + $treatment->duration,
+            'end_datetime' => $this->order->end_datetime->addMinutes($treatment->duration),
             'total_price' => $this->order->treatments()->sum('price'),
         ]);
 

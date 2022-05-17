@@ -24,6 +24,8 @@ class ManageTestimonials extends Component
 
     protected $queryString = [
         'filterSearch' => ['except' => ''],
+        'filterMidwife' => ['except' => ''],
+        'filterRate' => ['except' => ''],
         'page' => ['except' => 1],
         'perPage' => ['except' => 3],
     ];
@@ -38,10 +40,6 @@ class ManageTestimonials extends Component
         'state.active' => 'required',
     ];
 
-    protected $messages = [
-        //
-    ];
-
     protected $validationAttributes = [
         'state.name' => 'nama',
         'state.desc' => 'deskripsi',
@@ -51,6 +49,26 @@ class ManageTestimonials extends Component
         'state.category_id' => 'kategori',
         'state.active' => 'status aktif',
     ];
+
+    public function updatingPerPage()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterRate()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterMidwife()
+    {
+        $this->resetPage();
+    }
 
     public function save()
     {
@@ -68,15 +86,18 @@ class ManageTestimonials extends Component
     public function render()
     {
         $testimonials = Testimonial::query()
-            ->where('description', 'LIKE', '%' . $this->filterSearch . '%')
-            ->orWhere('rate', 'LIKE', '%' . $this->filterRate . '%')
-            ->whereHas('order', function ($query) {
-                $query->whereHas('client', function ($query) {
-                    $query->where('name', 'LIKE', '%' . $this->filterSearch . '%');
-                });
-                $query->where('midwife_user_id', 'LIKE', '%' . $this->filterMidwife . '%')
-                    ->OrWhere('no_reg', 'LIKE', '%' . $this->filterSearch . '%');
+            ->where(function($query){
+                $query->whereHas('order', function ($query) {
+                    $query->whereHas('client', function($query){
+                        $query->where('name', 'LIKE', '%' . $this->filterSearch . '%');
+                    })->orWhere('no_reg', 'LIKE', '%' . $this->filterSearch . '%');
+                })
+                ->orWhere('description', 'LIKE', '%' . $this->filterSearch . '%');
             })
+            ->whereHas('order', function ($query) {
+                $query->where('midwife_user_id', 'LIKE', '%' . $this->filterMidwife . '%');
+            })
+            ->where('rate', 'LIKE', '%' . $this->filterRate . '%')
             ->with(
                 'order:id,client_user_id,midwife_user_id,start_datetime,no_reg',
                 'order.midwife',

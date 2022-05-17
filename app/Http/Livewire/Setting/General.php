@@ -14,6 +14,7 @@ class General extends Component
         'state.site_location' => 'required|string|min:4|max:25',
         'state.site_desc' => 'required|string|min:4|max:255',
         'state.ig' => 'required|string|min:4|max:64',
+        'state.phone' => 'required|string|min:9|max:13',
     ];
 
     protected $validationAttributes = [
@@ -21,6 +22,7 @@ class General extends Component
         'state.site_location' => 'Lokasi',
         'state.site_desc' => 'Deskripsi',
         'state.ig' => 'Username IG',
+        'state.phone' => 'Nomor WA Admin',
     ];
 
     public function mount()
@@ -37,6 +39,7 @@ class General extends Component
             'site_location' => $this->state['site_location'],
             'site_desc' => $this->state['site_desc'],
             'ig' => $this->state['ig'],
+            'phone' => $this->state['phone'],
         ]);
 
         $this->emit('saved');

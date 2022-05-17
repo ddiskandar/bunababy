@@ -33,9 +33,9 @@ class SelectTime extends Component
     public function render()
     {
         $orders = Order::query()
-            ->locked()
             ->where('midwife_user_id', session('order.midwife_user_id'))
             ->whereDate('start_datetime', session('order.date'))
+            ->locked()
             ->select('id', 'start_datetime', 'end_datetime')
             ->get();
 
