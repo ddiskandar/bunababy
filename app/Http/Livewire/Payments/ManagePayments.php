@@ -24,6 +24,7 @@ class ManagePayments extends Component
 
     protected $queryString = [
         'filterSearch' => ['except' => ''],
+        'filterStatus' => ['except' => ''],
         'page' => ['except' => 1],
         'perPage' => ['except' => 8],
     ];
@@ -43,6 +44,21 @@ class ManagePayments extends Component
         'state.category_id' => 'kategori',
         'state.active' => 'status aktif',
     ];
+
+    public function updatingPerPage()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterStatus()
+    {
+        $this->resetPage();
+    }
 
     public function showEditPaymentDialog(Payment $payment)
     {

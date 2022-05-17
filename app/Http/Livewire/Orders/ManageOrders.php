@@ -22,12 +22,14 @@ class ManageOrders extends Component
     public $filterSearch;
     public $filterStatus;
     public $filterMidwife;
+    public $filterPlace;
 
     protected $queryString = [
         'filterSearch' => ['except' => ''],
         'page' => ['except' => 1],
         'perPage' => ['except' => 3],
         'filterStatus' => ['except' => ''],
+        'filterPlace' => ['except' => ''],
         'filterMidwife' => ['except' => ''],
         'filterFromDate',
         'filterToDate',
@@ -63,6 +65,11 @@ class ManageOrders extends Component
         $this->resetPage();
     }
 
+    public function updatingFilterPlace()
+    {
+        $this->resetPage();
+    }
+
     public function mount()
     {
         $this->filterFromDate = today()->startOfMonth()->toDateString();
@@ -93,12 +100,17 @@ class ManageOrders extends Component
             })
             ->where(function($query){
                 $query->whereHas('client', function ($query) {
-                    $query->where('name', 'LIKE', '%' . $this->filterSearch . '%');
+                    $query->where('name', 'LIKE', '%' . $this->filterSearch . '%')
+                    ->orWhereHas('addresses.kecamatan', function ($query) {
+                        $query->where('name', 'like', '%' . $this->filterSearch . '%');
+                    });
                 });
-            })->whereBetween('start_datetime', [$this->filterFromDate, Carbon::parse($this->filterToDate)->addDay()->toDateString()])
+            })
+            ->where('place', 'LIKE', '%' . $this->filterPlace . '%')
             ->where('status', 'LIKE', '%' . $this->filterStatus . '%')
             ->where('midwife_user_id', 'LIKE', '%' . $this->filterMidwife . '%')
             ->orWhere('midwife_user_id', NULL)
+            ->whereBetween('start_datetime', [$this->filterFromDate, Carbon::parse($this->filterToDate)->addDay()->toDateString()])
             ->with('client', 'treatments');
 
         $summary = $query->get();

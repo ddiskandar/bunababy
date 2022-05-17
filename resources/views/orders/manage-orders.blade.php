@@ -9,27 +9,34 @@
                 </h3>
             </div>
             <div class="flex flex-col gap-2 mt-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-end">
-                <div class="flex items-center space-x-2">
-                    <div class="w-40 mt-3 text-center sm:mt-0 sm:text-right">
+                <div class="flex items-center space-x-1">
+                    <div class=" w-32 mt-3 text-center sm:mt-0 sm:text-right">
                         <input wire:model="filterFromDate" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="date" />
                     </div>
-                    <span> - </span>
-                    <div class="w-40 mt-3 text-center sm:mt-0 sm:text-right">
+                    <span>-</span>
+                    <div class=" w-32 mt-3 text-center sm:mt-0 sm:text-right">
                         <input wire:model="filterToDate" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="date" />
                     </div>
                 </div>
+                @if (auth()->user()->isAdmin())
+                <div class="w-32">
+                    <select wire:model="filterMidwife" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
+                        <option value="" selected="selected">Semua Bidan</option>
+                        @foreach ($midwives as $midwife)
+                        <option value="{{ $midwife->id }}">{{ $midwife->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                @endif
                 <div class="flex items-center space-x-2">
-                    @if (auth()->user()->isAdmin())
                     <div class="w-36">
-                        <select wire:model="filterMidwife" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
-                            <option value="" selected="selected">Semua Bidan</option>
-                            @foreach ($midwives as $midwife)
-                            <option value="{{ $midwife->id }}">{{ $midwife->name }}</option>
-                            @endforeach
+                        <select wire:model="filterPlace" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
+                            <option value="" selected="selected">Semua Tempat</option>
+                            <option value="1">Homecare</option>
+                            <option value="2">Onsite</option>
                         </select>
                     </div>
-                    @endif
-                    <div class="w-36">
+                    <div class="w-32">
                         <select wire:model="filterStatus" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
                             <option value="" selected="selected">Semua Status</option>
                             <option value="1">Pending</option>
@@ -37,7 +44,7 @@
                             <option value="3">Selesai</option>
                         </select>
                     </div>
-                    <div class="w-16 ">
+                    <div class=" w-12">
                         <select wire:model="perPage" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
                             <option value="3">3</option>
                             <option value="6" selected>6</option>
@@ -47,16 +54,17 @@
                     </div>
                 </div>
                 @if (auth()->user()->isAdmin())
-                <div>
+                <div class="flex items-center space-x-2">
                     <button wire:click="export" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded shadow-sm focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:bg-white focus:border-bunababy-100 focus:ring-0">
                         Export<span wire:loading wire:target="export">ing</span>
                     </button>
+                    <div>
+                        <a href="{{ route('orders.create') }}" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded shadow-sm focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-white active:border-white active:shadow-none">
+                            + Tambah
+                        </a>
+                    </div>
                 </div>
-                <div>
-                    <a href="{{ route('orders.create') }}" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded shadow-sm focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-white active:border-white active:shadow-none">
-                        + Tambah Baru
-                    </a>
-                </div>
+
                 @endif
             </div>
         </div>

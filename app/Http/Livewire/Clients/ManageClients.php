@@ -48,15 +48,6 @@ class ManageClients extends Component
             ->latest()
             ->paginate($this->perPage);
 
-        // foreach($clients as $client)
-        // {
-        //     if(substr($client->profile->phone, 0, 2) == '08'){
-        //         $client->profile->update([
-        //             'phone' => substr_replace($client->profile->phone, '62', 0, 1),
-        //         ]);
-        //     }
-        // }
-
         return view('clients.manage-clients', [
             'clients' => $clients,
         ]);
