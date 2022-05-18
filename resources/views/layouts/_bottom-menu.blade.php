@@ -45,7 +45,7 @@
     </li>
     <li>
         <a
-            href="https://api.whatsapp.com/send?phone={{ to_wa_indo(\DB::table('options')->select('phone')->first()->phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+%28Isi+Nama%29.+Lokasi+saya+di+%28Sebutkan+alamat+jelas%29.+Ingin+reservasi+treatment+%28sebutkan%29.+Thank+you" target="_blank"
+            href="https://api.whatsapp.com/send?phone={{ to_wa_indo(\DB::table('options')->select('phone')->first()->phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+{{ auth()->user()->name }}." target="_blank"
             class="flex flex-col items-center text-gray-400 cursor-pointer hover:text-bunababy-200"
             >
             <svg class="mt-1 w-7 h-7" fill="none" viewBox="0 0 24 24" >

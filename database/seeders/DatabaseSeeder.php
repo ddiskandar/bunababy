@@ -197,22 +197,22 @@ class DatabaseSeeder extends Seeder
                     'kecamatan_id' => rand(1,70),
                 ]);
 
-            $date = today()->subDays($i);
+            $date = today()->subDays($i - 51);
             $midwifeId = rand(3,8);
 
             $order = Order::factory()
                 ->create([
                     'id' => $i,
                     'place' => Order::PLACE_CLIENT,
-                    'no_reg' => $date->isoFormat('YYMMDD') . Order::PLACE_CLIENT . $midwifeId . '0945',
-                    'invoice' => 'INV/' . $date->isoFormat('YYMMDD'). '/BBC/' . Order::PLACE_CLIENT . $midwifeId . '0945',
+                    'no_reg' => $date->isoFormat('YYMMDD') . Order::PLACE_CLIENT . $midwifeId . '13100',
+                    'invoice' => 'INV/' . $date->isoFormat('YYMMDD'). '/BBC/' . Order::PLACE_CLIENT . $midwifeId . '1300',
                     'address_id' => $i,
                     'total_price' => 0,
                     'total_duration' => 40,
                     'total_transport' => 40000,
                     'midwife_user_id' => $midwifeId,
                     'client_user_id' => $i,
-                    'start_datetime' => Carbon::parse($date->toDateString() . ' ' . '09:45'),
+                    'start_datetime' => Carbon::parse($date->toDateString() . ' ' . '13:00'),
                 ]);
 
             $treatment1 = rand(1,21);
@@ -225,6 +225,8 @@ class DatabaseSeeder extends Seeder
                 'total_price' => $order->treatments()->sum('price'),
                 'total_duration' =>  $totalDuration,
                 'end_datetime' => $order->start_datetime->addMinutes($totalDuration),
+                'finished_at' => $order->start_datetime,
+                'status' => Order::STATUS_FINISHED
             ]);
 
             $users = User::where('type', User::OWNER)->orWhere('type', User::ADMIN)->get();
