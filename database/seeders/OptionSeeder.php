@@ -15,11 +15,11 @@ class OptionSeeder extends Seeder
     public function run()
     {
         DB::table('options')->insert([
-            'site_name' => 'Bunababy',
-            'site_location' => 'Cimahi',
+            'site_name' => 'Bunababy Care',
+            'site_location' => 'Komplek Nata Endah Blok N No. 170, Cibabat, Cimahi',
             'site_desc' => 'Mom and Baby Care',
-            'ig' => '/bunababy.care',
-            'phone' => '088296447264',
+            'ig' => '@bunababy.care',
+            'phone' => '08997897991',
             'account' => 'BCA 2810417067',
             'account_name' => 'a/n Febrianti Nur Azizah',
         ]);

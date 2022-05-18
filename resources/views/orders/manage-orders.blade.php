@@ -10,11 +10,11 @@
             </div>
             <div class="flex flex-col gap-2 mt-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-end">
                 <div class="flex items-center space-x-1">
-                    <div class=" w-32 mt-3 text-center sm:mt-0 sm:text-right">
+                    <div class="w-32 mt-3 text-center sm:mt-0 sm:text-right">
                         <input wire:model="filterFromDate" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="date" />
                     </div>
                     <span>-</span>
-                    <div class=" w-32 mt-3 text-center sm:mt-0 sm:text-right">
+                    <div class="w-32 mt-3 text-center sm:mt-0 sm:text-right">
                         <input wire:model="filterToDate" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="date" />
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                             <option value="3">Selesai</option>
                         </select>
                     </div>
-                    <div class=" w-12">
+                    <div class="w-12 ">
                         <select wire:model="perPage" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
                             <option value="3">3</option>
                             <option value="6" selected>6</option>
@@ -73,7 +73,7 @@
                 <div class="absolute inset-y-0 left-0 flex items-center justify-center w-10 my-px ml-px text-gray-500 rounded-l pointer-events-none">
                     <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 hi-solid hi-search"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                 </div>
-                <input wire:model="filterSearch" class="block w-full py-1 pl-10 pr-3 text-sm leading-6 border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="text" placeholder="Mencari berdasarkan nama, atau wilayah ..." />
+                <input wire:model="filterSearch" class="block w-full py-1 pl-10 pr-3 text-sm leading-6 border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="text" placeholder="Mencari berdasarkan ID, nama client, atau alamat ..." />
             </div>
         </div>
         <!-- END Card Header -->
@@ -85,10 +85,10 @@
                     <thead>
                         <tr class="bg-slate-50">
                             <th scope="col" class="p-3 pl-6 text-xs font-medium tracking-wider text-left uppercase text-slate-500">
-                                Tempat / Date
+                                ID / Waktu
                             </th>
                             <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
-                                Client / Alamat
+                                Client / Tempat / Alamat
                             </th>
                             <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
                                 Bidan / Treatment
@@ -117,12 +117,13 @@
                                 'text-slate-400' => ! $order->active,
                             ])>
                                 <td class="p-3 pl-6 align-top whitespace-nowrap">
-                                    <p class="font-medium text-bunababy-200">{{ $order->place() }}</p>
+                                    <p class="font-bold text-bunababy-200">{{ $order->no_reg }}</p>
                                     <p class="font-semibold">{{ $order->start_datetime->isoFormat('ddd, DD MMM') }}</p>
                                     <p class="">{{ $order->getTime() }}</p>
                                 </td>
                                 <td class="p-3 align-top whitespace-nowrap">
                                     <p class="font-semibold">{{ $order->client->name }}</p>
+                                    <p class="font-medium text-bunababy-400">{{ $order->place() }}</p>
                                     <p class="text-slate-600">{{ $order->client->address }}</p>
                                 </td>
                                 <td class="w-64 p-3 align-top whitespace-nowrap">
