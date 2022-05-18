@@ -111,7 +111,7 @@ class DatabaseSeeder extends Seeder
 
         // Order
 
-        for( $i = 26; $i <= 50; $i++ ){
+        for( $i = 31; $i <= 50; $i++ ){
 
             $client = User::factory()->hasProfile()->create([
                 'id' => $i
@@ -129,7 +129,7 @@ class DatabaseSeeder extends Seeder
                     'kecamatan_id' => rand(1,70),
                 ]);
 
-            $date = today()->subDays($i);
+            $date = today()->subDays($i - 31);
             $midwifeId = rand(3,8);
 
             $order = Order::factory()
@@ -179,7 +179,7 @@ class DatabaseSeeder extends Seeder
 
         }
 
-        for( $i = 9; $i <= 25; $i++ ){
+        for( $i = 51; $i <= 75; $i++ ){
 
             $client = User::factory()->hasProfile()->create([
                 'id' => $i
@@ -250,7 +250,7 @@ class DatabaseSeeder extends Seeder
 
         // upcoming order
 
-        for( $i = 51; $i <= 75; $i++ ){
+        for( $i = 9; $i <= 30; $i++ ){
 
             $client = User::factory()->hasProfile()->create([
                 'id' => $i
@@ -268,7 +268,7 @@ class DatabaseSeeder extends Seeder
                     'kecamatan_id' => rand(1,70),
                 ]);
 
-            $date = today()->addDays($i);
+            $date = today()->addDays($i - 9);
             $midwifeId = rand(3,8);
 
             $order = Order::factory()
