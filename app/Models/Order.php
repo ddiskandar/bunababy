@@ -186,6 +186,11 @@ class Order extends Model
     {
         // TRANSPORT ALGO
 
+        if(session('order.place') == Order::PLACE_CLINIC)
+        {
+            return 0;
+        }
+
         if(session('order.kecamatan_distance') < 4) {
             return 40000;
         } else {
@@ -198,9 +203,15 @@ class Order extends Model
         return collect(session('order.treatments'))->sum('treatment_price') ?? 0;
     }
 
-    public function getTotalDuation()
+    public function getTotalDuration()
     {
-        return collect(session('order.treatments'))->sum('treatment_duration') + DB::table('options')->select('transport_duration')->first()->transport_duration;
+        $default = 0;
+
+        if(session('order.place') == Order::PLACE_CLIENT)
+        {
+            $default = DB::table('options')->select('transport_duration')->first()->transport_duration;
+        }
+        return collect(session('order.treatments'))->sum('treatment_duration') + $default;
     }
 
     public function getStartTime()

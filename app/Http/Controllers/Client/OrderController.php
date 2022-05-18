@@ -85,7 +85,7 @@ class OrderController extends Controller
         $dp =  $order->dp();
         $hasPayments = $order->payments()->exists();
         $hasTestimonial = $order->testimonial()->exists();
-        $options = DB::table('options')->select('account', 'account_name')->first();
+        $options = DB::table('options')->select('account', 'account_name', 'site_location')->first();
 
         return view('client.order.show', [
             'order' => $order,

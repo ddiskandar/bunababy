@@ -99,6 +99,12 @@ class MidwifeAndPlace extends Component
         ]);
 
         // TRANSPORT ALGO
+
+        if($this->place == Order::PLACE_CLINIC)
+        {
+            return 0;
+        }
+
         if($this->order->address->kecamatan->distance < 4) {
             $transport = 40000;
         } else {

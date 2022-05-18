@@ -29,7 +29,7 @@
                         <div class="text-sm">{{ $order->address->full_address }}</div>
                     @else
                         <span class="font-semibold">Onsite</span>
-                        <div class="text-sm">Di Klinik bunababy</div>
+                        <div class="text-sm">{{ $options->site_location }}</div>
                     @endif
                 </div>
             </label>
