@@ -75,6 +75,11 @@
             <x-input wire:model="state.phone" id="phone" class="block w-full mt-1" type="number" name="phone" required />
             <x-input-error for="state.phone" class="mt-2" />
         </div>
+        <div class="mt-4">
+            <x-label for="state.ig" :value="__('Username Instagram')" />
+            <x-input wire:model="state.ig" id="ig" class="block w-full mt-1" type="number" name="ig" required />
+            <x-input-error for="state.ig" class="mt-2" />
+        </div>
     </div>
 
     <!-- Banner (bottom bubble) -->

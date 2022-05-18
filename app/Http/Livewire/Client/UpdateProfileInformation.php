@@ -28,6 +28,7 @@ class UpdateProfileInformation extends Component
             ],
             'state.birth_date' => 'required|date',
             'state.phone' => 'required|string|min:11|max:13',
+            'state.ig' => 'nullable',
             'photo' => 'nullable|image|max:128',
         ];
     }
@@ -37,6 +38,7 @@ class UpdateProfileInformation extends Component
         'state.email' => 'Email',
         'state.birth_date' => 'Tanggal lahir',
         'state.phone' => 'Nomor WA',
+        'state.ig' => 'Username IG',
         'photo' => 'Photo',
     ];
 
@@ -47,6 +49,7 @@ class UpdateProfileInformation extends Component
         $this->state['name'] = $user->name;
         $this->state['email'] = $user->email;
         $this->state['phone'] = $user->profile->phone;
+        $this->state['ig'] = $this->user->profile->ig;
         $this->state['birth_date'] = $user->profile->birth_date ? $user->profile->birth_date->toDateString() : '';
     }
 
@@ -67,6 +70,7 @@ class UpdateProfileInformation extends Component
         $this->user->profile->update([
             'birth_date' => $this->state['birth_date'],
             'phone' => $this->state['phone'],
+            'ig' => $this->state['ig'],
         ]);
 
         if(isset($this->photo))
