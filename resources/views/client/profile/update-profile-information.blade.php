@@ -77,7 +77,7 @@
         </div>
         <div class="mt-4">
             <x-label for="state.ig" :value="__('Username Instagram')" />
-            <x-input wire:model="state.ig" id="ig" class="block w-full mt-1" type="number" name="ig" required />
+            <x-input wire:model="state.ig" id="ig" class="block w-full mt-1" type="text" name="ig" required />
             <x-input-error for="state.ig" class="mt-2" />
         </div>
     </div>
