@@ -82,11 +82,11 @@
                             'text-slate-400' => ! $payment->active,
                         ])>
                             <td class="table-cell p-3 pl-6 whitespace-nowrap">
-                                <p class="font-semibold w-52 truncate text-slate-800">{{ $payment->order->client->name }}</p>
+                                <p class="font-semibold truncate w-52 text-slate-800">{{ $payment->order->client->name }}</p>
                                 <p class="text-slate-600">{{ $payment->order->client->address }}</p>
                             </td>
                             <td class="p-3 ">
-                                <a href="{{ route('orders.show', $payment->order->client->id) }}">
+                                <a href="{{ route('orders.show', $payment->order->id) }}">
                                     <p class="font-medium text-bunababy-200">
                                         {{ $payment->order->no_reg }}
                                     </p>
