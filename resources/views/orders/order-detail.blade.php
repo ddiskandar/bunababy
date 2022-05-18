@@ -68,7 +68,7 @@
                     Usia
                 </dt>
                 <dd class="mt-1 text-gray-900">
-                    {{ $order->client->profile->birth_date ? $order->client->profile->birth_date->age() : '-' }}
+                    {{ $order->client->profile->birth_date ? $order->client->profile->birth_date->age : '-' }}
                 </dd>
             </div>
             @if ($baby)
