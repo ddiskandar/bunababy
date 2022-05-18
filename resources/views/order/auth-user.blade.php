@@ -23,7 +23,7 @@
                     Usia Buna
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900">
-                    {{ auth()->user()->profile->birth_date->age }}
+                    {{ auth()->user()->profile->birth_date->age }} tahun
                 </dd>
             </div>
             @isset($baby)
