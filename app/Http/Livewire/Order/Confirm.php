@@ -33,7 +33,7 @@ class Confirm extends Component
             $order->end_datetime = $order->start_datetime->addMinutes(session('order.addMinutes'));
             $order->status = Order::STATUS_LOCKED;
 
-            if(session('order.place' == Order::PLACE_CLIENT))
+            if(session('order.place' == 1))
             {
                 $order->midwife_user_id = session('order.midwife_user_id');
                 $order->address_id = session('order.address_id');

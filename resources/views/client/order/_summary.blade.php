@@ -13,7 +13,7 @@
                 <x-title>Bidan </x-title>
                 <div class="flex items-center">
                     <img src="{{ $order->midwife->profile_photo_url }}" alt="User Avatar" class="inline-block w-10 h-10 rounded-full" />
-                    <div class="ml-2 font-semibold">{{ $order->midwife->name }}</div>
+                    <div class="ml-2 font-semibold">{{ $order->midwife->name ?? }}</div>
                 </div>
             </div>
             @endif
