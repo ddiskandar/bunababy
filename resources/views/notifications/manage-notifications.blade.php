@@ -5,7 +5,7 @@
         <div class="w-full py-3 pl-6 pr-3 bg-gray-50 sm:flex sm:justify-between sm:items-center">
             <div class="flex items-center">
                 <h3 class="font-semibold">
-                    Notifications
+                    Notifikasi
                 </h3>
             </div>
             <div class="flex flex-col gap-2 mt-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-end">
@@ -136,7 +136,7 @@
                                             </div>
                                             <div class="mt-4 mr-4 md:mt-0">
                                                 <a class="px-4 py-2 text-xs font-semibold text-white transition-all rounded-full bg-bunababy-200 hover:bg-bunababy-100"
-                                                    href="https://api.whatsapp.com/send?phone={{ $notification->data['order_client_phone'] }}&text=Halo+Buna+*{{ $notification->data['order_client_name'] }}*.%0aRincian+order+*{{ $notification->data['order_no_reg'] }}*.%0a%0aBidan+:%0a{{ $notification->data['order_midwife_name'] }}%0a%0aWaktu+:%0a{{ $notification->data['order_datetime'] }}%0a%0aTreatment+:%0a{{ $notification->data['order_treatments'] }}%0a%0aTotal+pembayaran+:%0a{{ $notification->data['order_grand_total'] }}%0a%0aJumlah+DP+:%0a{{ $notification->data['order_dp_amount'] }}%0a%0aHarap+segera+bayar+DP+sebelum+:%0a{{ $notification->data['order_dp_timeout'] }}.%0a%0aTerima+kasih" target="_blank"
+                                                    href="https://api.whatsapp.com/send?phone={{ $notification->data['order_client_phone'] }}&text=Halo+Buna+*{{ $notification->data['order_client_name'] }}*.%0aRincian+order+*{{ $notification->data['order_no_reg'] }}*.%0a%0aBidan+:%0a{{ $notification->data['order_midwife_name'] }}%0a%0aWaktu+:%0a{{ $notification->data['order_datetime'] }}%0a%0aTreatment+:%0a{{ $notification->data['order_treatments'] }}%0a%0aTotal+pembayaran+:%0a{{ $notification->data['order_grand_total'] }}%0a%0aJumlah+DP+:%0a{{ $notification->data['order_dp_amount'] }}%0a%0aHarap+segera+bayar+DP+sebelum+:%0a{{ $notification->data['order_dp_timeout'] }}.%0a%0aTerima+kasih.%0a%0aBunaBaby+Care" target="_blank"
                                                 >
                                                     Kirim Pemberitahuan
                                                 </a>
@@ -244,7 +244,7 @@
                                                 </div>
                                                 <div class="mt-4 mr-4 md:mt-0">
                                                     <a class="px-4 py-2 text-xs font-semibold text-white transition-all rounded-full bg-bunababy-200 hover:bg-bunababy-100"
-                                                    href="https://api.whatsapp.com/send?phone={{ $notification->data['order_client_phone'] }}&text=Halo+Buna" target="_blank"
+                                                    href="https://api.whatsapp.com/send?phone={{ $notification->data['order_client_phone'] }}&text=Halo+Buna+*{{ $notification->data['order_client_name'] }}*.%0aDP+untuk+order+{{ $notification->data['order_no_reg'] }}+belum+dibayar+sampai+batas+waktu+{{ $notification->data['order_dp_timeout'] }}.%0a%0aMohon+konfirmasi+dan+segera+lakukan+pembayaran+agar+slot+orger+anda+kami+kunci.%0a%0aTerima+kasih.%0a%0aBunaBaby+Care" target="_blank"
                                                 >
                                                     Kirim Pemberitahuan
                                                 </a>
@@ -297,9 +297,7 @@
                                                         </button>
                                                     </div>
                                                 </div>
-
                                             </div>
-
                                        @endif
                                     </div>
                                 </div>

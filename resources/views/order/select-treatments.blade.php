@@ -141,9 +141,7 @@
                 <div class="px-4 pt-5 pb-4 overflow-hidden bg-white rounded-lg shadow-xl sm:p-6 sm:pb-4">
                     <div class="sm:flex sm:items-start">
                         <div class="w-full">
-                            <div class="flex items-center justify-between">
-                                <x-title>Tambah treatment</x-title>
-                            </div>
+                            <x-title>Tambah treatment berikut</x-title>
                             <div class="p-4 border rounded bg-bunababy-50/10 border-bunababy-50" >
                             <div>
                                 <h3 class="text-xl font-semibold leading-6" id="modal-title">{{ $currentTreatment->name }}</h3>
@@ -155,7 +153,7 @@
                             </div>
 
                             <div class="w-full mt-4">
-                                <x-title>Profil untuk pilihan treatment</x-title>
+                                <x-title>untuk (pilih salah satu)</x-title>
                                 @livewire('order.select-family')
                             </div>
                         </div>

@@ -1,29 +1,31 @@
 <div x-data="{ add : @entangle('showAddNewFamily') }">
     @if (session()->has('order.families'))
-        <nav class="overflow-hidden bg-white border border-gray-200 divide-y divide-gray-200 rounded">
-            @foreach ($families as $family)
-                <button
-                    wire:click="selectFamily({{ $family['id'] }})"
-                    class="flex items-center justify-between w-full p-4 text-gray-700 hover:text-gray-700 hover:bg-bunababy-50/20 active:bg-white" >
-                    <div class="flex items-center space-x-4">
-                        <svg class="w-8 h-8 text-slate-400" fill="none" viewBox="0 0 24 24">
-                            <circle cx="12" cy="8" r="3.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></circle>
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.8475 19.25H17.1525C18.2944 19.25 19.174 18.2681 18.6408 17.2584C17.8563 15.7731 16.068 14 12 14C7.93201 14 6.14367 15.7731 5.35924 17.2584C4.82597 18.2681 5.70558 19.25 6.8475 19.25Z"></path>
-                        </svg>
-                        {{-- <img class="object-cover w-12 h-12 rounded-full" src="https://ui-avatars.com/api/?name={{ urlencode($family['name']) }}&color=7F9CF5&background=EBF4FF" alt="{{ $family['name'] }}" > --}}
-                        <div class="text-left">
-                        <p class="text-sm font-semibold">
-                            {{ $family['name'] }}
-                        </p>
-                        <p class="text-sm font-medium text-gray-500">
-                            {{ $family['type']}}
-                        </p>
+        <div class="h-40 overflow-y-auto ">
+            <nav class="overflow-hidden bg-white border border-gray-200 divide-y divide-gray-200 rounded">
+                @foreach ($families as $family)
+                    <button
+                        wire:click="selectFamily({{ $family['id'] }})"
+                        class="flex items-center justify-between w-full p-2 text-gray-700 hover:text-gray-700 hover:bg-bunababy-50/20 active:bg-white" >
+                        <div class="flex items-center space-x-4">
+                            <svg class="w-8 h-8 text-slate-400" fill="none" viewBox="0 0 24 24">
+                                <circle cx="12" cy="8" r="3.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></circle>
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.8475 19.25H17.1525C18.2944 19.25 19.174 18.2681 18.6408 17.2584C17.8563 15.7731 16.068 14 12 14C7.93201 14 6.14367 15.7731 5.35924 17.2584C4.82597 18.2681 5.70558 19.25 6.8475 19.25Z"></path>
+                            </svg>
+                            {{-- <img class="object-cover w-12 h-12 rounded-full" src="https://ui-avatars.com/api/?name={{ urlencode($family['name']) }}&color=7F9CF5&background=EBF4FF" alt="{{ $family['name'] }}" > --}}
+                            <div class="text-left">
+                            <p class="text-sm font-semibold">
+                                {{ $family['name'] }}
+                            </p>
+                            <p class="text-sm font-medium text-gray-500">
+                                {{ $family['type']}}
+                            </p>
+                            </div>
                         </div>
-                    </div>
-                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 opacity-50 hi-solid hi-chevron-right"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                </button>
-            @endforeach
-        </nav>
+                        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 opacity-50 hi-solid hi-chevron-right"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                    </button>
+                @endforeach
+            </nav>
+        </div>
         <div
             x-show = "! add"
             class="py-4 text-sm text-slate-400">
@@ -39,7 +41,7 @@
             </svg>
         </div>
         <div class="font-semibold leading-loose">Tambah Pofil </div>
-        <div class="text-sm text-slate-400 text-center">Belum ada yang tersimpan, tambahkan nama anda terlebih dahulu</div>
+        <div class="text-sm text-center text-slate-400">Belum ada yang tersimpan, tambahkan nama anda terlebih dahulu</div>
     </div>
     @endif
 

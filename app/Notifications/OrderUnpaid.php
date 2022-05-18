@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\DB;
 
 class OrderUnpaid extends Notification
 {
@@ -57,12 +58,17 @@ class OrderUnpaid extends Notification
      */
     public function toArray($notifiable)
     {
+        $timeout = DB::table('options')->first()->timeout;
+
         return [
             'type' => 'unpaid',
             'order_id' => $this->order->id,
             'order_client_name' => $this->order->client->name,
             'order_client_phone' => to_wa_indo($this->order->client->profile->phone),
             'order_no_reg' => $this->order->no_reg,
+            'order_dp_amount' => rupiah($this->order->getDpAmount()),
+            'order_dp_timeout' => $this->order->created_at->addMinutes($timeout)->isoFormat('dddd, DD MMMM gggg HH:mm'),
+
         ];
     }
 }
