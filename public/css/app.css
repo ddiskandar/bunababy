@@ -1802,6 +1802,9 @@ select {
 .max-w-full {
   max-width: 100%;
 }
+.max-w-md {
+  max-width: 28rem;
+}
 .max-w-7xl {
   max-width: 80rem;
 }
@@ -1813,9 +1816,6 @@ select {
 }
 .max-w-2xl {
   max-width: 42rem;
-}
-.max-w-md {
-  max-width: 28rem;
 }
 .flex-1 {
   flex: 1 1 0%;
@@ -4081,11 +4081,6 @@ select {
     padding-bottom: 3rem;
   }
 
-  .md\:px-16 {
-    padding-left: 4rem;
-    padding-right: 4rem;
-  }
-
   .md\:pl-2 {
     padding-left: 0.5rem;
   }
@@ -4273,11 +4268,6 @@ select {
   .lg\:py-24 {
     padding-top: 6rem;
     padding-bottom: 6rem;
-  }
-
-  .lg\:py-32 {
-    padding-top: 8rem;
-    padding-bottom: 8rem;
   }
 
   .lg\:py-16 {
