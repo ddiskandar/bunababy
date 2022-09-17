@@ -43,6 +43,8 @@ function src_default(Alpine) {
     function processInputValue(el2, shouldRestoreCursor = true) {
       let input = el2.value;
       let template = templateFn(input);
+      if (!template || template === "false")
+        return false;
       if (lastInputValue.length - el2.value.length === 1) {
         return lastInputValue = el2.value;
       }
@@ -142,8 +144,8 @@ function formatMoney(input, delimeter = ".", thousands) {
     }
     return output;
   };
-  let nothousands = input.replaceAll(thousands, "");
-  let template = Array.from({length: nothousands.split(delimeter)[0].length}).fill("9").join("");
+  let strippedInput = input.replaceAll(new RegExp(`[^0-9\\${delimeter}]`, "g"), "");
+  let template = Array.from({length: strippedInput.split(delimeter)[0].length}).fill("9").join("");
   template = addThousands(template, thousands);
   if (input.includes(delimeter))
     template += `${delimeter}99`;
@@ -5235,8 +5237,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
-alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].plugin(_alpinejs_mask__WEBPACK_IMPORTED_MODULE_1__["default"]);
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
+alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].plugin(_alpinejs_mask__WEBPACK_IMPORTED_MODULE_1__["default"]);
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
 
 /***/ }),
