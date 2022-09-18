@@ -25,6 +25,7 @@ class LoginGoogleController extends Controller
         $user = User::updateOrCreate([
             'email' => $googleUser->email,
         ], [
+            'id' => User::max('id') + 1,
             'google_id' => $googleUser->id,
             'name' => $googleUser->name,
             'google_token' => $googleUser->token,
