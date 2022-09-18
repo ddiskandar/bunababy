@@ -8,7 +8,7 @@
         <span class="ml-2 text-lg font-semibold">Katalog Treatment</span>
     </div>
 
-    <div class="w-full mx-auto bg-white border rounded border-bunababy-50" x-data="{selected:1}">
+    <div class="w-full bg-white" x-data="{selected:1}">
         <ul class="shadow-box">
             @foreach ($categories as $category)
                 <li class="relative border-b border-bunababy-50">

@@ -1,16 +1,12 @@
-<div  >
-    <div class="inline-flex items-center mb-4 lg:hidden text-bunababy-400">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
-        </svg>
-        <span class="ml-2 text-lg font-semibold">Ringkasan</span>
-    </div>
+<div>
+    <h3 class="text-lg font-semibold">Order Summary</h3>
 
     <div class="rounded shadow-xl shadow-bunababy-100/20">
-        <x-panel>
-            @if (session('order.place') == 1)
+        @if (session('order.place') == 1)
             <div class="py-4">
-                <x-title>Bidan </x-title>
+                <div class="leading-loose mb-2 text-sm font-semibold">
+                    Bidan
+                </div>
                 <div class="flex items-center">
                     <img src="{{ $data['bidan_photo'] }}" alt="User Avatar" class="inline-block w-10 h-10 rounded-full" />
                     <div class="ml-2 font-semibold">{{ $data['bidan'] }}</div>
@@ -19,39 +15,45 @@
             @endif
 
             <div class="py-4">
-                <x-title>Tempat</x-title>
+                <div class="leading-loose mb-2 text-sm font-semibold">
+                    Tempat
+                </div>
                 <label class="flex items-center">
                     <input type="radio" class="w-4 h-4 border border-bunababy-50 text-bunababy-200 focus:border-bunababy-200 focus:ring focus:ring-bunababy-200 focus:ring-opacity-50" name="tk-form-elements-radios-stacked" checked />
                     <div class="ml-4">
                         @if (session('order.place') == 1)
                             <span class="font-semibold">Homecare</span>
-                            <div class="text-sm">{{ $data['kecamatan'] }}</div>
+                            <div class="text-sm opacity-80">{{ $data['kecamatan'] }}</div>
                         @else
                             <span class="font-semibold">Onsite</span>
-                            <div class="text-sm">Di Klinik bunababy</div>
+                            <div class="text-sm opacity-80">Di Klinik bunababy</div>
                         @endif
                     </div>
                 </label>
             </div>
 
             <div class="py-4">
-                <x-title>Tanggal dan Waktu</x-title>
-                <div  >
+                <div class="leading-loose mb-2 text-sm font-semibold">
+                    Tanggal dan Waktu
+                </div>
+                <div>
                     <div class="font-semibold">{{ $data['date'] }}</div>
                     @if (session()->has('order.treatments'))
-                        <div class="text-sm">{{ $data['time']  }} ( {{ session('order.addMinutes') }} menit )</div>
+                        <div class="text-sm opacity-80">{{ $data['time']  }} ( {{ session('order.addMinutes') }} menit )</div>
                     @endif
                 </div>
             </div>
 
             @if (session()->has('order.treatments'))
             <div class="pt-4">
-                <x-title>Treatment</x-title>
+                <div class="leading-loose mb-2 text-sm font-semibold">
+                    Treatment
+                </div>
                 <ul class="-mt-4 divide-y divide-bunababy-50">
                     @forelse ($treatments as $name => $treatment)
-                        <li class="py-4 text-sm">
+                        <li class="py-4 text-sm opacity-80">
                             <div class="font-semibold">{{ $name }}</div>
-                            <div class="truncate text-slate-400 ">
+                            <div class="truncate">
                                 @foreach ($treatment as $pemesan)
                                     <span>{{ $pemesan['family_name'] }}</span>@if(!$loop->last)<span>, </span>@endif
                                 @endforeach
@@ -62,7 +64,7 @@
                             </div>
                             <button
                                 wire:click="deleteTreatments({{ $treatment[0]['treatment_id'] }})"
-                                class="text-red-500">
+                                class="text-red-700">
                                 Hapus
                             </button>
 
@@ -99,11 +101,16 @@
                 @endif
 
                 <x-button-lg wire:click="checkout" wire:loading.attr="disabled">
-                    Checkout
+                    <div class="flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevrons-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <polyline points="7 7 12 12 7 17"></polyline>
+                            <polyline points="13 7 18 12 13 17"></polyline>
+                         </svg>
+                        <span class="ml-2 font-semibold">Checkout</span>
+                    </div>
                 </x-button-lg>
             </div>
             @endif
-
-        </x-panel>
     </div>
 </div>
