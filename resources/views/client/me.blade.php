@@ -8,27 +8,42 @@
             </div>
         </div>
 
+        @auth
+        <div class="px-6 py-4 my-2 bg-white">
+            @includeWhen($profileCompleted, 'client._payment-alert')
+            @include('client._user-info')
+        </div>
+        @endauth
+
         <div class="px-6 py-4 my-2 bg-white">
             @livewire('select-location')
         </div>
 
+        @auth
         <div class="px-6 py-4 my-2 bg-white">
-            <a href="{{ route('order.create') }}">
-                <button class="flex items-center justify-center w-full gap-3 px-8 py-1 mt-4 text-white transition duration-150 ease-in-out rounded-full bg-bunababy-200 hover:opacity-80 ">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <rect x="4" y="5" width="16" height="16" rx="2"></rect>
-                        <line x1="16" y1="3" x2="16" y2="7"></line>
-                        <line x1="8" y1="3" x2="8" y2="7"></line>
-                        <line x1="4" y1="11" x2="20" y2="11"></line>
-                        <line x1="10" y1="16" x2="14" y2="16"></line>
-                        <line x1="12" y1="14" x2="12" y2="18"></line>
-                    </svg>
-                    <span class="font-semibold">Pesan Treatment</span>
-                </button>
-            </a>
+            @includeWhen($profileCompleted,'client._latest-reservation')
+        </div>
+        @endauth
+
+        <div class="px-6 py-4 my-2 bg-white">
+            @if (! $reservation)
+                <a href="{{ route('order.create') }}">
+                    <button class="flex items-center justify-center w-full gap-3 px-8 py-1 mb-4 text-white transition duration-150 ease-in-out rounded-full bg-bunababy-200 hover:opacity-80 ">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <rect x="4" y="5" width="16" height="16" rx="2"></rect>
+                            <line x1="16" y1="3" x2="16" y2="7"></line>
+                            <line x1="8" y1="3" x2="8" y2="7"></line>
+                            <line x1="4" y1="11" x2="20" y2="11"></line>
+                            <line x1="10" y1="16" x2="14" y2="16"></line>
+                            <line x1="12" y1="14" x2="12" y2="18"></line>
+                        </svg>
+                        <span class="font-semibold">Pesan Treatment</span>
+                    </button>
+                </a>
+            @endif
             <a href="https://api.whatsapp.com/send?phone={{ to_wa_indo(\DB::table('options')->select('phone')->first()->phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+{{ auth()->user()->name ?? '' }}." target="_blank">
-                <button class="flex items-center justify-center w-full gap-3 px-8 py-1 mt-4 transition duration-150 ease-in-out bg-white border-2 rounded-full hover:opacity-80 text-bunababy-200 hover:text-white hover:bg-bunababy-200 border-bunababy-200 ">
+                <button class="flex items-center justify-center w-full gap-3 px-8 py-1 transition duration-150 ease-in-out bg-white border-2 rounded-full hover:opacity-80 text-bunababy-200 hover:text-white hover:bg-bunababy-200 border-bunababy-200 ">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                         <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"></path>
@@ -38,14 +53,6 @@
                 </button>
             </a>
         </div>
-
-        @auth
-        <div class="px-6 py-4">
-            @includeWhen($profileCompleted, 'client._payment-alert')
-            @include('client._user-info')
-            @includeWhen($profileCompleted,'client._latest-reservation')
-        </div>
-        @endauth
 
         <div class="my-2 bg-white">
             @livewire('client.treatments-catalog')

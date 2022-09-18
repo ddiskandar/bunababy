@@ -1,5 +1,5 @@
-<div class="py-4">
-    <div class="mb-4 font-semibold text-bunababy-400">Treatment anda</div>
+<div>
+    <x-title class="mb-4">Treatment anda</x-title>
 
     @if ($reservation)
         <div class="max-w-lg p-6 border rounded shadow-lg border-bunababy-50 shadow-bunababy-50">
@@ -85,7 +85,7 @@
             </div>
 
         </div>
-        <div class="py-4">
+        <div class="mt-4">
             <a href="{{ route('client.history') }}" class="text-sm text-bunababy-200 ">Lihat semua riwayat reservasi</a>
         </div>
 
