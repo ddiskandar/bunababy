@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
             ->has(Profile::factory())
             ->create([
                 'name' => 'Owner',
-                'email' => 'owner@bunababy.com',
+                'email' => 'hr@bunababycare.com',
                 'type' => User::OWNER,
         ]);
 
@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
             ->has(Profile::factory())
             ->create([
                 'name' => 'Admin',
-                'email' => 'admin@bunababy.com',
+                'email' => 'admin@bunababycare.com',
                 'type' => User::ADMIN,
             ]);
 
@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
             ->has(Profile::factory())
             ->create([
                 'name' => 'Bidan Febri',
-                'email' => 'bidan1@bunababy.com',
+                'email' => 'bidan1@bunababycare.com',
                 'type' => User::MIDWIFE,
             ]);
 
@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
             ->has(Profile::factory())
             ->create([
                 'name' => 'Bidan Lina',
-                'email' => 'bidan2@bunababy.com',
+                'email' => 'bidan2@bunababycare.com',
                 'type' => User::MIDWIFE,
             ]);
 
@@ -73,7 +73,7 @@ class DatabaseSeeder extends Seeder
             ->has(Profile::factory())
             ->create([
                 'name' => 'Bidan Dinda',
-                'email' => 'bidan3@bunababy.com',
+                'email' => 'bidan3@bunababycare.com',
                 'type' => User::MIDWIFE,
             ]);
 
@@ -83,7 +83,7 @@ class DatabaseSeeder extends Seeder
             ->has(Profile::factory())
             ->create([
                 'name' => 'Bidan Ririn',
-                'email' => 'bidan4@bunababy.com',
+                'email' => 'bidan4@bunababycare.com',
                 'type' => User::MIDWIFE,
             ]);
 
@@ -93,7 +93,7 @@ class DatabaseSeeder extends Seeder
             ->has(Profile::factory())
             ->create([
                 'name' => 'Bidan Ina',
-                'email' => 'bidan5@bunababy.com',
+                'email' => 'bidan5@bunababycare.com',
                 'type' => User::MIDWIFE,
             ]);
 
@@ -103,7 +103,7 @@ class DatabaseSeeder extends Seeder
             ->has(Profile::factory())
             ->create([
                 'name' => 'Bidan Suci',
-                'email' => 'bidan6@bunababy.com',
+                'email' => 'bidan6@bunababycare.com',
                 'type' => User::MIDWIFE,
             ]);
 
