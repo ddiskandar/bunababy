@@ -7,15 +7,14 @@
 
         <div class="px-6 py-4 my-2 bg-white">
             <div>
-                @livewire('select-location')
+                <x-title>Pilih Tempat</x-title>
+                @livewire('order.select-place')
             </div>
-
         </div>
 
         <div class="px-6 py-4 my-2 bg-white">
             <div>
-                <x-title>Pilih Tempat</x-title>
-                @livewire('order.select-place')
+                @livewire('select-location')
             </div>
         </div>
 
