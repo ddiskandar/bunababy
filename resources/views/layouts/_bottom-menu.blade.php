@@ -1,4 +1,4 @@
-<ul class="fixed bottom-0 flex justify-around w-full max-w-screen-sm py-3 bg-white border-t z-80 border-bunababy-50 backdrop-blur-sm">
+<ul class="fixed bottom-0 flex justify-around w-full max-w-screen-sm py-3 bg-white border-t z-10 border-bunababy-50 backdrop-blur-sm">
     <li>
         <a href="{{ route('me') }}"
             @class([

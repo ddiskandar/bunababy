@@ -1,6 +1,6 @@
-<div class="py-4 my-2 bg-white">
-    <div class="px-6">
-        <div class="font-semibold text-bunababy-400">Katalog Treatment</div>
+<div>
+    <div class="px-6 py-4">
+        <x-title >Katalog Treatment</x-title>
         <div class="flex flex-wrap gap-2 mt-3">
             <button
                 wire:click="$set('filterCategory', '')"
@@ -24,8 +24,8 @@
             @endforeach
         </div>
     </div>
-    <div class="flex snap-x scroll-pl-4 space-x-4 overflow-x-auto py-6 sm:scroll-pl-6 sm:space-x-8 md:scroll-pl-[calc(50%-20rem)] lg:scroll-pl-[calc(50%-25rem)]">
-        <div class=" snap-start w-72">
+    <div class="flex snap-x scroll-pl-4 space-x-4 overflow-x-auto p-6 sm:scroll-pl-6 sm:space-x-8 md:scroll-pl-[calc(50%-20rem)] lg:scroll-pl-[calc(50%-25rem)]">
+        <div class=" snap-start">
         </div>
         @foreach ($treatments as $treatment)
         <div class="flex flex-col justify-between flex-none gap-1 p-6 border rounded shadow-lg snap-start w-72 border-bunababy-50 shadow-bunababy-50">
@@ -42,5 +42,7 @@
             </div>
         </div>
         @endforeach
+        <div class=" snap-start">
+        </div>
     </div>
 </div>

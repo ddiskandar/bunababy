@@ -9,6 +9,10 @@
         </div>
 
         <div class="px-6 py-4 my-2 bg-white">
+            @livewire('select-location')
+        </div>
+
+        <div class="px-6 py-4 my-2 bg-white">
             <a href="{{ route('order.create') }}">
                 <button class="flex items-center justify-center w-full gap-3 px-8 py-1 mt-4 text-white transition duration-150 ease-in-out rounded-full bg-bunababy-200 hover:opacity-80 ">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -43,14 +47,14 @@
         </div>
         @endauth
 
-        <div>
+        <div class="my-2 bg-white">
             @livewire('client.treatments-catalog')
         </div>
 
         <div class="px-6 py-4 mt-2 mb-20 space-y-4 bg-white ">
             <div>
                 <div class="flex flex-col items-center">
-                    <h3 class="font-semibold text-bunababy-400">Klinik</h3>
+                    <x-title class="">Klinik</x-title>
                     <p class="text-center">Jalan Cihanjuang Komplek Nata Endah Blok N No. 170 Cibabat, Kec. Cimahi Utara, Kota Cimahi</p>
                     <a href="https://www.instagram.com/bunababy_care" target="_blank" class="inline-flex items-center px-6 py-1 mt-2 text-white bg-blue-600 rounded-full hover:opacity-80">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -65,7 +69,7 @@
 
             <div>
                 <div class="flex flex-col items-center">
-                    <h3 class="mb-2 font-semibold text-bunababy-400">Ikuti Kami di Instagram</h3>
+                    <x-title class="mb-2 ">Ikuti Kami di Instagram</x-title>
                     <a href="https://www.instagram.com/bunababy_care" target="_blank" class="inline-flex items-center px-6 py-1 text-white bg-purple-700 rounded-full hover:opacity-80">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>

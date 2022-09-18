@@ -1,17 +1,22 @@
 <div x-data="{ open: false }">
     <!-- Modal Toggle Button -->
+    <x-title>Lokasi Anda</x-title>
+
     <button
         type="button"
         class="flex items-center justify-between w-full py-4 "
         x-on:click="open = ! open"
     >
+
         <div class="flex items-center ">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-bunababy-200" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-bunababy-200" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <circle cx="12" cy="11" r="3"></circle>
+                <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
+             </svg>
             <span class="ml-2">{{ $kecamatan }}</span>
         </div>
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-pink-600" viewBox="0 0 20 20" fill="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5  text-bunababy-200" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
         </svg>
 
@@ -71,7 +76,6 @@
                     </div>
                     @endguest
 
-                    <x-title>Pilih Lokasi</x-title>
                     <div class="py-3">
                         <input
                         wire:model="search"

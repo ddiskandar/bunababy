@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Order;
+namespace App\Http\Livewire;
 
 use App\Models\Kabupaten;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +20,7 @@ class SelectLocation extends Component
             session()->put('order.kecamatan_id', $kecamatan_id);
         }
 
-        $this->kecamatan = 'Pilih salah satu';
+        $this->kecamatan = 'Pilih lokasi';
 
         if(session()->has('order.kecamatan_id') OR $kecamatan_id){
             $this->kecamatan = DB::table('kecamatans')
@@ -37,7 +37,7 @@ class SelectLocation extends Component
         session()->put('order.kecamatan_id', $kecamatan_id);
         session()->put('order.kecamatan_distance', $kecamatan->distance);
 
-        return redirect()->route('order.create');
+        // return redirect()->route('order.create');
     }
 
     public function render()
@@ -53,7 +53,7 @@ class SelectLocation extends Component
                 })
                 ->get();
 
-        return view('order.select-location', [
+        return view('select-location', [
             'kabupatens' => $kabupatens
         ]);
     }
