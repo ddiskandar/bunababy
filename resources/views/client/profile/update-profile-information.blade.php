@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <div class="max-w-screen-sm min-h-screen mx-auto my-0">
+    <div class="max-w-screen-sm mx-auto my-0">
         <div class="px-6 py-8 bg-white ">
             <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
                 <!-- Profile Photo File Input -->
