@@ -1,7 +1,7 @@
 <header
     id="page-header"
+    class="flex flex-none items-center h-16 bg-white shadow-sm fixed top-0 right-0 left-0 z-30"
     x-bind:class="{
-        'flex flex-none items-center h-16 bg-white shadow-sm fixed top-0 right-0 left-0 z-30': true,
         'lg:pl-64': desktopSidebarOpen
     }"
     >

@@ -3337,6 +3337,10 @@ select {
   --tw-text-opacity: 1;
   color: rgb(254 112 197 / var(--tw-text-opacity));
 }
+.hover\:text-bunababy-400:hover {
+  --tw-text-opacity: 1;
+  color: rgb(185 92 199 / var(--tw-text-opacity));
+}
 .hover\:underline:hover {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;
