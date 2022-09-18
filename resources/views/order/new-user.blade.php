@@ -1,4 +1,4 @@
-<x-panel>
+<div>
     <form wire:submit.prevent="save">
     <div class="pt-2 pb-6">
         <div class="flex items-center mb-6 text-bunababy-400">
@@ -107,9 +107,11 @@
 
     <div  class="py-6">
         <div class="flex items-center mb-4 text-bunababy-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+                <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+            </svg>
             <div class="ml-2 text-sm font-semibold">
                 Akun Login
             </div>
@@ -136,14 +138,21 @@
                 <x-input wire:model.lazy="state.password_confirmation" id="name" class="block w-full mt-1" type="password" name="password" />
                 <x-input-error for="state.password_confirmation" class="mt-2" />
             </div>
-            <div class="col-span-6 xl:col-span-2">
-                <x-button
-                    wire:loading.attr="disabled"
-                >
-                    Simpan dan Buat Akun
-                </x-button>
-            </div>
+
+        </div>
+
+        <div class="py-6">
+            <button class="flex items-center justify-center w-full py-4 text-center transition duration-150 ease-in-out rounded-full shadow-xl disabled:opacity-25 bg-bunababy-200 text-white shadow-bunababy-100/50"
+                wire:loading.attr="disabled"
+            >
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevrons-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <polyline points="7 7 12 12 7 17"></polyline>
+                <polyline points="13 7 18 12 13 17"></polyline>
+            </svg>
+            <span class="ml-2">Simpan dan Buat Akun</span>
+            </button>
         </div>
     </div>
 
-</x-panel>
+</div>

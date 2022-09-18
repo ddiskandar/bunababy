@@ -1,19 +1,27 @@
 <x-client-layout>
 
-<div class="container gap-12 px-4 py-4 mx-auto md:py-10 sm:px-12 flex flex-col lg:flex-row">
-    <div class="flex-1 space-y-4 md:mt-0 order-2 lg:order-1">
-        @guest
-            @livewire('order.new-user')
-        @endguest
+    <div class="relative max-w-screen-sm min-h-screen mx-auto my-0">
 
-        @auth
-            @livewire('order.auth-user')
-        @endauth
-    </div>
+        @include('layouts._order-step')
 
-    <div class="mt-6 lg:w-96 lg:flex-initial lg:mt-0 order-1 lg:order-2">
-        @livewire('order.checkout-summary')
+        <div class="space-y-2">
+            <div class="px-6 py-4 bg-white">
+                @livewire('order.checkout-summary')
+            </div>
+
+            @guest
+            <div class="px-6 py-4 bg-white">
+                @livewire('order.new-user')
+            </div>
+            @endguest
+
+            @auth
+            <div class="px-6 py-4 bg-white">
+                @livewire('order.auth-user')
+            </div>
+            @endauth
+
+        </div>
     </div>
-</div>
 
 </x-client-layout>

@@ -107,7 +107,7 @@
                             <polyline points="7 7 12 12 7 17"></polyline>
                             <polyline points="13 7 18 12 13 17"></polyline>
                          </svg>
-                        <span class="ml-2 font-semibold">Checkout</span>
+                        <span class="ml-2 font-semibold">Continue</span>
                     </div>
                 </x-button-lg>
             </div>

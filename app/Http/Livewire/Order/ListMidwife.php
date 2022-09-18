@@ -9,7 +9,9 @@ use Livewire\Component;
 
 class ListMidwife extends Component
 {
-    protected $listeners  = [];
+    protected $listeners  = [
+        'locationChanged',
+    ];
     public $kecamatan;
     public $midwives;
 
@@ -34,6 +36,11 @@ class ListMidwife extends Component
                 ->get();
         }
 
+    }
+
+    public function locationChanged()
+    {
+        return redirect()->route('order.create');
     }
 
     public function render()

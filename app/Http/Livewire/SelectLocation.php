@@ -37,7 +37,7 @@ class SelectLocation extends Component
         session()->put('order.kecamatan_id', $kecamatan_id);
         session()->put('order.kecamatan_distance', $kecamatan->distance);
 
-        // return redirect()->route('order.create');
+        $this->emit('locationChanged');
     }
 
     public function render()
