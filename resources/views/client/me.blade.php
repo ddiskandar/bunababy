@@ -10,7 +10,7 @@
 
         <div class="px-6 py-4">
             <a href="{{ route('order.create') }}">
-                <button class="flex items-center justify-center w-full gap-3 px-8 py-2 mt-4 text-white transition duration-150 ease-in-out rounded-full bg-bunababy-200 hover:opacity-80 ">
+                <button class="flex items-center justify-center w-full gap-3 px-8 py-1 mt-4 text-white transition duration-150 ease-in-out rounded-full bg-bunababy-200 hover:opacity-80 ">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                         <rect x="4" y="5" width="16" height="16" rx="2"></rect>
@@ -24,7 +24,7 @@
                 </button>
             </a>
             <a href="https://api.whatsapp.com/send?phone={{ to_wa_indo(\DB::table('options')->select('phone')->first()->phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+{{ auth()->user()->name ?? '' }}." target="_blank">
-                <button class="flex items-center justify-center w-full gap-3 px-8 py-2 mt-4 transition duration-150 ease-in-out bg-white border-2 rounded-full hover:opacity-80 text-bunababy-200 hover:text-white hover:bg-bunababy-200 border-bunababy-200 ">
+                <button class="flex items-center justify-center w-full gap-3 px-8 py-1 mt-4 transition duration-150 ease-in-out bg-white border-2 rounded-full hover:opacity-80 text-bunababy-200 hover:text-white hover:bg-bunababy-200 border-bunababy-200 ">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                         <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"></path>
@@ -51,7 +51,7 @@
             <div class="flex flex-col items-center">
                 <h3 class="font-semibold text-bunababy-400">Klinik</h3>
                 <p class="text-center">Jalan Cihanjuang Komplek Nata Endah Blok N No. 170 Cibabat, Kec. Cimahi Utara, Kota Cimahi</p>
-                <a href="https://www.instagram.com/bunababy_care" target="_blank" class="inline-flex items-center px-6 py-2 mt-2 text-white bg-blue-700 rounded-full hover:opacity-80">
+                <a href="https://www.instagram.com/bunababy_care" target="_blank" class="inline-flex items-center px-6 py-1 mt-2 text-white bg-blue-600 rounded-full hover:opacity-80">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                         <circle cx="12" cy="11" r="3"></circle>
