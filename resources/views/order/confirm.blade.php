@@ -12,7 +12,7 @@
             <polyline points="7 7 12 12 7 17"></polyline>
             <polyline points="13 7 18 12 13 17"></polyline>
         </svg>
-        <span class="ml-2">Simpan dan Buat Akun</span>
+        <span class="ml-2">Checkout</span>
         </button>
     </div>
 </div>
