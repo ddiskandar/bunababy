@@ -88,8 +88,8 @@
         </div>
     </div>
 </div>
-<div class="py-6 md:py-12 bg-bunababy-50">
+<div class="py-6 md:py-12 bg-bunababy-200">
     <div class="container px-4 mx-auto sm:px-12">
-        <h1 class="text-xl font-semibold text-center md:text-left md:text-2xl text-bunababy-400">Online Booking</h1>
+        <h1 class="text-xl font-semibold text-center md:text-left md:text-2xl text-white">Pesan Treatment</h1>
     </div>
 </div>

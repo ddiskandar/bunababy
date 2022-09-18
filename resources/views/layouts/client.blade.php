@@ -31,7 +31,6 @@
     <body class="font-sans antialiased bg-gray-100">
 
         {{ $slot }}
-        {{-- @includeWhen(request()->is('order/*'), 'layouts._order-step') --}}
 
         @livewireScripts
     </body>
