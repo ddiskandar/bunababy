@@ -16,11 +16,11 @@ class OrderController extends Controller
         }
 
         if( auth()->check() AND is_null(auth()->user()->address)) {
-            return redirect('/me');
+            return redirect('/');
         }
 
         if( auth()->check() AND (auth()->user()->latestReservation AND ! auth()->user()->latestReservation->isPaid())){
-            return redirect('/me')->with('status', 'Anda masih punya order aktif yang belum dibayar!');
+            return redirect('/')->with('status', 'Anda masih punya order aktif yang belum dibayar!');
         }
 
         return view('client.order.create');
