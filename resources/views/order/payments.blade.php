@@ -1,4 +1,4 @@
-<x-panel>
+<div>
     <div>
         <x-title>Riwayat Upload Bukti Transfer</x-title>
         <ul class="divide-y divide-bunababy-50">
@@ -131,4 +131,4 @@
             </div>
         @endif
     @endif
-</x-panel>
+</div>

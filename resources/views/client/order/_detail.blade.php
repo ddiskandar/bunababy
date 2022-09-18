@@ -1,4 +1,4 @@
-<x-panel>
+<div>
     <div class="flex items-center justify-between ">
         <div>
             <x-title>ID Transaksi</x-title>
@@ -17,7 +17,7 @@
 
         </div>
     </div>
-</x-panel>
+</div>
 
 @if (! $isPaid)
 <div class="flex flex-col px-4 py-4 border divide-y rounded md:px-8 border-bunababy-100">
@@ -44,12 +44,13 @@
             </div>
         </div>
 
-        <div class="text-sm">Kode Referensi</div>
+        <div class="text-sm">Mohon tuliskan berita / referensi :</div>
         <div class="mb-4 font-semibold">
             <div>
                 {{ $order->no_reg }}
             </div>
         </div>
+        <div class="text-sm">pada kolom berita transfer.</div>
 
         <div class="text-sm">Pastikan untuk segera upload bukti transfer setelah melakukan pembayaran</div>
     </div>
