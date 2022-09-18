@@ -11,7 +11,7 @@
                     Khusus Pelanggan
                 </h4>
                 <p class="mb-5">
-                    Bila sebelumnya sudah pernah pesan treatment, silahkan untuk login. Lupa password silahkan untuk menghubungi <a href="https://api.whatsapp.com/send?phone={{ to_wa_indo(\DB::table('options')->select('phone')->first()->phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+" target="_blank"" class="text-bunababy-200 font-semibold">Admin</a>.
+                    Bila sebelumnya sudah pernah pesan treatment, silahkan untuk login. Lupa password hubungi <a href="https://api.whatsapp.com/send?phone={{ to_wa_indo(\DB::table('options')->select('phone')->first()->phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+" target="_blank" class="text-bunababy-200 font-semibold">Admin</a>.
                 </p>
                 <a href="{{ route('login') }}">
                     <x-button>
@@ -20,7 +20,7 @@
                 </a>
 
             </div>
-            <div class="px-6 py-4 bg-green-600 text-white">
+            <div class="px-6 py-12 bg-green-600 text-white">
                 <a href="{{ route('order.check') }}" class="inline-flex items-center justify-center py-2 leading-5 border border-transparent rounded " >
                     Klik disini bila sekarang treatment pertama
                 </a>
