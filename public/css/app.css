@@ -1623,6 +1623,12 @@ select {
 .-mt-2 {
   margin-top: -0.5rem;
 }
+.ml-24 {
+  margin-left: 6rem;
+}
+.ml-16 {
+  margin-left: 4rem;
+}
 .block {
   display: block;
 }

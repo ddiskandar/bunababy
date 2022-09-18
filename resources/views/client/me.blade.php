@@ -21,11 +21,11 @@
             @livewire('select-location')
         </div>
 
-        @auth
+        @if(auth()->check() && $profileCompleted)
         <div class="px-6 py-4 my-2 bg-white">
-            @includeWhen($profileCompleted,'client._latest-reservation')
+            @include('client._latest-reservation')
         </div>
-        @endauth
+        @endif
 
         <div class="px-6 py-4 my-2 bg-white">
             @if (! $reservation)
@@ -60,7 +60,7 @@
             @livewire('client.treatments-catalog')
         </div>
 
-        <div class="px-6 py-4 mt-2 mb-20 space-y-4 bg-white ">
+        <div class="px-6 py-4 mt-2 space-y-4 bg-white ">
             <div>
                 <div class="flex flex-col items-center">
                     <x-title class="">Klinik</x-title>
@@ -95,7 +95,6 @@
                 <p class="text-sm text-center text-slate-400">Copyright 2022 Bunababycare. All Rights Reserved</p>
             </div>
         </div>
-
 
         @include('layouts._bottom-menu')
     </div>

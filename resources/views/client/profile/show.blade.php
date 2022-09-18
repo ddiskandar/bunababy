@@ -1,6 +1,6 @@
 <x-client-layout>
 
-    <div class="container px-4 py-4 mx-auto md:py-10 sm:px-12 ">
+    <div class="px-4 py-4 mx-auto ">
 
         <div class="flex flex-col max-w-xl mx-auto md:flex-row">
             <img src="{{ asset(auth()->user()->profile_photo_url) }}" alt="User Photo" class="inline-block w-32 h-32 mx-auto mb-6 rounded-full md:mb-0 md:mx-0">
@@ -106,5 +106,7 @@
         </nav>
         <!-- END List Group with Links and Images -->
     </div>
+
+    @include('layouts._bottom-menu')
 
 </x-client-layout>
