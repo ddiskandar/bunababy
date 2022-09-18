@@ -16,8 +16,11 @@ class SelectLocation extends Component
         $kecamatan_id = '';
 
         if( auth()->check() AND auth()->user()->isClient() AND session()->missing('order.kecamatan_id')) {
-            $kecamatan_id = auth()->user()->addresses->where('is_main', true)->first()->kecamatan_id;
-            session()->put('order.kecamatan_id', $kecamatan_id);
+            $kecamatan_id = auth()->user()->addresses->where('is_main', true)->first()->kecamatan_id ?? '';
+            if($kecamatan_id)
+            {
+                session()->put('order.kecamatan_id', $kecamatan_id);
+            }
         }
 
         $this->kecamatan = 'Pilih lokasi';
