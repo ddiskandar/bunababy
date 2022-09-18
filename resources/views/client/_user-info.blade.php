@@ -26,24 +26,24 @@
     </div>
 @else
     <div class="py-4">
-        <div class="bg-white border  border-bunababy-50 overflow-hidden rounded-md">
-            <div class="px-4 py-5 sm:px-6 flex justify-between border-bunababy-50 border-b">
+        <div class="overflow-hidden bg-white border rounded-md border-bunababy-50">
+            <div class="flex justify-between px-4 py-5 border-b sm:px-6 border-bunababy-50">
                 <div>
-                    <h3 class="text-md leading-6 font-semibold text-bunababy-400">
+                    <h3 class="font-semibold leading-6 text-md text-bunababy-400">
                         Sedikit lagi, lengkapi profil
                     </h3>
-                    <p class="mt-1 max-w-2xl text-sm text-gray-900">
+                    <p class="max-w-2xl mt-1 text-sm text-gray-900">
                         agar reservasi treatment bisa menjadi lebih cepat.
                     </p>
                 </div>
             </div>
 
             <nav aria-label="Progress">
-                <ol class=" rounded-md divide-y divide-bunababy-50 md:flex md:divide-y-0">
+                <ol class="divide-y rounded-md divide-bunababy-50 md:flex md:divide-y-0">
                     <li class="relative md:flex-1 md:flex">
-                        <a href="{{ route('client.profile.edit') }}" class="group flex items-center w-full">
-                            <span class="px-6 py-4 flex items-center text-sm font-medium">
-                                <span class="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-bunababy-400 rounded-full group-hover:bg-bunababy-300">
+                        <a href="{{ route('client.profile.edit') }}" class="flex items-center w-full group">
+                            <span class="flex items-center px-6 py-4 text-sm font-medium">
+                                <span class="flex items-center justify-center flex-shrink-0 w-10 h-10 rounded-full bg-bunababy-400 group-hover:bg-bunababy-300">
                                     <svg class="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                                     </svg>
@@ -52,8 +52,8 @@
                             </span>
                         </a>
 
-                        <div class="hidden md:block absolute top-0 right-0 h-full w-5" aria-hidden="true">
-                            <svg class="h-full w-full text-bunababy-50" viewBox="0 0 22 80" fill="none" preserveAspectRatio="none">
+                        <div class="absolute top-0 right-0 hidden w-5 h-full md:block" aria-hidden="true">
+                            <svg class="w-full h-full text-bunababy-50" viewBox="0 0 22 80" fill="none" preserveAspectRatio="none">
                                 <path d="M0 -2L20 40L0 82" vector-effect="non-scaling-stroke" stroke="currentcolor" stroke-linejoin="round"></path>
                             </svg>
                         </div>
@@ -61,8 +61,8 @@
                     </li>
 
                     <li class="relative md:flex-1 md:flex">
-                        <a href="{{ route('client.profile.edit') }}" class="group flex items-center w-full">
-                            <span class="px-6 py-4 flex items-center text-sm font-medium">
+                        <a href="{{ route('client.profile.edit') }}" class="flex items-center w-full group">
+                            <span class="flex items-center px-6 py-4 text-sm font-medium">
                                 <span
                                     @class([
                                         'flex-shrink-0 w-10 h-10 flex items-center justify-center  rounded-full',
@@ -92,8 +92,8 @@
                             </span>
                         </a>
 
-                        <div class="hidden md:block absolute top-0 right-0 h-full w-5" aria-hidden="true">
-                            <svg class="h-full w-full text-bunababy-50" viewBox="0 0 22 80" fill="none" preserveAspectRatio="none">
+                        <div class="absolute top-0 right-0 hidden w-5 h-full md:block" aria-hidden="true">
+                            <svg class="w-full h-full text-bunababy-50" viewBox="0 0 22 80" fill="none" preserveAspectRatio="none">
                                 <path d="M0 -2L20 40L0 82" vector-effect="non-scaling-stroke" stroke="currentcolor" stroke-linejoin="round"></path>
                             </svg>
                         </div>
@@ -101,8 +101,8 @@
                     </li>
 
                     <li class="relative md:flex-1 md:flex">
-                        <a href="{{ route('client.addresses') }}" class="group flex items-center w-full">
-                            <span class="px-6 py-4 flex items-center text-sm font-medium">
+                        <a href="{{ route('client.addresses') }}" class="flex items-center w-full group">
+                            <span class="flex items-center px-6 py-4 text-sm font-medium">
                                 <span
                                     @class([
                                         'flex-shrink-0 w-10 h-10 flex items-center justify-center  rounded-full',

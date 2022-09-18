@@ -28,17 +28,10 @@
 
         @livewireStyles
     </head>
-    <body class="font-sans antialiased">
-
-        @if (request()->is('order/*'))
-            @include('layouts._order-step')
-        @else
-            @include('layouts._bottom-menu')
-        @endif
+    <body class="font-sans antialiased bg-gray-100">
 
         {{ $slot }}
-
-        @include('layouts._margin-bottom')
+        {{-- @includeWhen(request()->is('order/*'), 'layouts._order-step') --}}
 
         @livewireScripts
     </body>

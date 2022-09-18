@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 // Home
-Route::view('/', 'home')->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'show'])->name('me');
 
 // make an order
 Route::get('/order/create', [App\Http\Controllers\Client\OrderController::class, 'create'])->name('order.create');
@@ -18,7 +18,6 @@ Route::middleware(['auth'])->group(function () {
 
     // Client...
     Route::middleware(['client'])->group(function () {
-        Route::get('/me', [App\Http\Controllers\HomeController::class, 'show'])->name('me');
         Route::get('/profile', [App\Http\Controllers\Client\ProfileController::class, 'show'])->name('client.profile');
         Route::get('/profile/edit', [App\Http\Controllers\Client\ProfileController::class, 'edit'])->name('client.profile.edit');
         Route::get('/history', [App\Http\Controllers\Client\OrderHistoryController::class, 'show'])->name('client.history');

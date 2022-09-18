@@ -24,4 +24,4 @@ mix.js('resources/js/app.js', 'public/js')
         require('autoprefixer'),
     ])
     .disableNotifications()
-    .browserSync('bunababy.test');
+    .browserSync('bunababycare.test');
