@@ -77,6 +77,7 @@
                     x-transition:leave-start="transform opacity-100 scale-100"
                     x-transition:leave-end="transform opacity-0 scale-75"
                     x-on:click.outside="userDropdownOpen = false"
+                    style="display: none"
                     role="menu"
                     aria-labelledby="tk-dropdown-layouts-user"
                     class="absolute right-0 w-48 mt-2 origin-top-right rounded shadow-xl z-1"
