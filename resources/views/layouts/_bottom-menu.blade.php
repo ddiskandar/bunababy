@@ -50,11 +50,12 @@
                 'text-bunababy-200' => Route::is('client.profile'),
                 'text-gray-400 ' => ! Route::is('client.profile'),
             ])>
-            <svg  class="w-8 h-8" fill="none" viewBox="0 0 24 24">
-                <circle cx="12" cy="8" r="3.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></circle>
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.8475 19.25H17.1525C18.2944 19.25 19.174 18.2681 18.6408 17.2584C17.8563 15.7731 16.068 14 12 14C7.93201 14 6.14367 15.7731 5.35924 17.2584C4.82597 18.2681 5.70558 19.25 6.8475 19.25Z"></path>
-              </svg>
-            <span class="mt-2 text-xs">Profil</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M10 6h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"></path>
+                <circle cx="17" cy="7" r="3"></circle>
+            </svg>
+            <span class="mt-2 text-xs">Notifikasi</span>
         </a>
     </li>
     <li>

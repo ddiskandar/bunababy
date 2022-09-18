@@ -56,7 +56,7 @@
         </div>
 
         <div class="px-6 py-4 mb-20">
-            <p class="text-center">Copyright 2022 Bunababycare</p>
+            <p class="text-sm text-center text-slate-400">Copyright 2022 Bunababycare. All Rights Reserved</p>
         </div>
 
 
