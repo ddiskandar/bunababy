@@ -1,4 +1,4 @@
-<div class="py-4">
+<div class="py-4 my-2 bg-white">
     <div class="px-6">
         <div class="font-semibold text-bunababy-400">Katalog Treatment</div>
         <div class="flex flex-wrap gap-2 mt-3">

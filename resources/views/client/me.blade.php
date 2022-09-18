@@ -1,5 +1,5 @@
 <x-client-layout>
-    <div class="relative max-w-screen-sm min-h-screen mx-auto my-0 bg-white">
+    <div class="relative max-w-screen-sm min-h-screen mx-auto my-0">
         <div class="sticky top-0 z-20 py-3 bg-white border-b border-bunababy-50 ">
             <div class="flex items-center justify-between px-4 mx-auto sm:px-12">
                 <div>
@@ -8,7 +8,7 @@
             </div>
         </div>
 
-        <div class="px-6 py-4">
+        <div class="px-6 py-4 my-2 bg-white">
             <a href="{{ route('order.create') }}">
                 <button class="flex items-center justify-center w-full gap-3 px-8 py-1 mt-4 text-white transition duration-150 ease-in-out rounded-full bg-bunababy-200 hover:opacity-80 ">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -47,38 +47,40 @@
             @livewire('client.treatments-catalog')
         </div>
 
-        <div class="px-6 py-4">
-            <div class="flex flex-col items-center">
-                <h3 class="font-semibold text-bunababy-400">Klinik</h3>
-                <p class="text-center">Jalan Cihanjuang Komplek Nata Endah Blok N No. 170 Cibabat, Kec. Cimahi Utara, Kota Cimahi</p>
-                <a href="https://www.instagram.com/bunababy_care" target="_blank" class="inline-flex items-center px-6 py-1 mt-2 text-white bg-blue-600 rounded-full hover:opacity-80">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <circle cx="12" cy="11" r="3"></circle>
-                        <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
-                     </svg>
-                    <span class="ml-2 text-sm">Lihat di Google Maps</span>
-                </a>
+        <div class="px-6 py-4 mt-2 mb-20 space-y-4 bg-white ">
+            <div>
+                <div class="flex flex-col items-center">
+                    <h3 class="font-semibold text-bunababy-400">Klinik</h3>
+                    <p class="text-center">Jalan Cihanjuang Komplek Nata Endah Blok N No. 170 Cibabat, Kec. Cimahi Utara, Kota Cimahi</p>
+                    <a href="https://www.instagram.com/bunababy_care" target="_blank" class="inline-flex items-center px-6 py-1 mt-2 text-white bg-blue-600 rounded-full hover:opacity-80">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <circle cx="12" cy="11" r="3"></circle>
+                            <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
+                         </svg>
+                        <span class="ml-2 text-sm">Lihat di Google Maps</span>
+                    </a>
+                </div>
             </div>
-        </div>
 
-        <div class="px-6 py-4">
-            <div class="flex flex-col items-center">
-                <h3 class="mb-2 font-semibold text-bunababy-400">Ikuti Kami di Instagram</h3>
-                <a href="https://www.instagram.com/bunababy_care" target="_blank" class="inline-flex items-center px-6 py-1 text-white bg-purple-700 rounded-full hover:opacity-80">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <rect x="4" y="4" width="16" height="16" rx="4"></rect>
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <line x1="16.5" y1="7.5" x2="16.5" y2="7.501"></line>
-                    </svg>
-                    <span class="ml-2 text-sm">@bunababy_care</span>
-                </a>
+            <div>
+                <div class="flex flex-col items-center">
+                    <h3 class="mb-2 font-semibold text-bunababy-400">Ikuti Kami di Instagram</h3>
+                    <a href="https://www.instagram.com/bunababy_care" target="_blank" class="inline-flex items-center px-6 py-1 text-white bg-purple-700 rounded-full hover:opacity-80">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <rect x="4" y="4" width="16" height="16" rx="4"></rect>
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <line x1="16.5" y1="7.5" x2="16.5" y2="7.501"></line>
+                        </svg>
+                        <span class="ml-2 text-sm">@bunababy_care</span>
+                    </a>
+                </div>
             </div>
-        </div>
 
-        <div class="px-6 py-4 mb-20">
-            <p class="text-sm text-center text-slate-400">Copyright 2022 Bunababycare. All Rights Reserved</p>
+            <div>
+                <p class="text-sm text-center text-slate-400">Copyright 2022 Bunababycare. All Rights Reserved</p>
+            </div>
         </div>
 
 
