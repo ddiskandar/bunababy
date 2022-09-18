@@ -40,6 +40,7 @@
                     <div class="font-semibold">{{ $data['date'] }}</div>
                     @if (session()->has('order.treatments'))
                         <div class="text-sm opacity-80">{{ $data['time']  }} ( {{ session('order.addMinutes') }} menit )</div>
+                        <div class="text-xs opacity-80">*Durasi waktu sudah ditambah dengan mobilisasi bidan 40 menit</div>
                     @endif
                 </div>
             </div>
