@@ -1,5 +1,5 @@
 <div class="relative">
-    <div class="sticky top-0 z-20 px-4 py-4 bg-bunababy-200 text-white shadow shadow-bunababy-50">
+    <div class="sticky top-0 z-20 px-4 py-4 text-white shadow bg-bunababy-200 shadow-bunababy-50">
         <div class="flex items-center justify-between max-w-screen-sm mx-auto">
             <a href="{{ route('client.profile') }}">
                 <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">
@@ -15,7 +15,7 @@
     </div>
 
     <div class="max-w-screen-sm min-h-screen mx-auto my-0">
-        <div class="py-6">
+        <div class="px-6 py-8 bg-white ">
             <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
                 <!-- Profile Photo File Input -->
                 <input type="file" class="hidden"
