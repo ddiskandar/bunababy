@@ -1,15 +1,10 @@
-<div class="sticky top-0 z-20 py-4 bg-white border-b md:py-6 border-bunababy-50 ">
-    <div class="container flex items-center justify-between px-4 mx-auto sm:px-12">
+<div class="sticky top-0 z-20 py-4 bg-white border-b border-bunababy-50 ">
+    <div class=" flex items-center justify-between px-4 mx-auto">
         <div>
-            <div class="hidden text-lg font-semibold lg:block text-bunababy-400">
-                <a href="/"><img src="/images/logo.svg" alt="Logo"></a>
-            </div>
-            <div class="lg:hidden">
-                <a href="/"><img src="/images/logo2.svg" alt="Logo"></a>
-            </div>
+            <a href="/"><img src="/images/logo2.svg" alt="Logo"></a>
         </div>
 
-        <div class="inline-flex items-center w-10/12 lg:w-1/2 ">
+        <div class="inline-flex items-center w-10/12 ">
 
             @if (Route::is('order.create'))
             <div class="inline-flex items-center text-sm text-bunababy-400">
@@ -88,8 +83,8 @@
         </div>
     </div>
 </div>
-<div class="py-6 md:py-12 bg-bunababy-200">
-    <div class="container px-4 mx-auto sm:px-12">
-        <h1 class="text-xl font-semibold text-center md:text-left md:text-2xl text-white">Pesan Treatment</h1>
+<div class="py-6 bg-bunababy-200">
+    <div class="container px-4 mx-auto ">
+        <h1 class="text-xl font-semibold text-center text-white">Pesan Treatment</h1>
     </div>
 </div>
