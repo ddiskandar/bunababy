@@ -39,7 +39,7 @@
         <ul class="divide-y divide-bunababy-50">
             @foreach ($order->treatments as $treatment)
                 <li class="flex justify-between py-2 text-sm">
-                    <div>{{ $treatment->name }} ({{ $treatment->pivot->name }})</div>
+                    <div>{{ $treatment->name }}</div>
                     <div class="truncate text-slate-400 ">
                     </div>
                     <div class="flex justify-between ">

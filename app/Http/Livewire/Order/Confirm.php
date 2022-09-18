@@ -56,7 +56,7 @@ class Confirm extends Component
 
             Notification::send($admin, new NewOrder($order));
 
-            return redirect()->route('me');
+            return redirect()->route('order.show', $order->no_reg);
         });
     }
 
