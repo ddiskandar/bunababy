@@ -2,7 +2,7 @@
     <img src="{{ asset(auth()->user()->profile_photo_url) }}" alt="User Photo" class="inline-block w-12 h-12 rounded-full ">
     <div>
         <div class="text-xl font-semibold leading-tight">
-            Hi, {{ auth()->user()->name }}
+            {{ auth()->user()->name }}
         </div>
         <p class="text-sm text-slate-400">{{ auth()->user()->email }}</p>
     </div>

@@ -1,16 +1,18 @@
 <x-client-layout>
     <div class="relative max-w-screen-sm min-h-screen mx-auto my-0">
-        <div class="sticky top-0 z-20 py-3 bg-white border-b border-bunababy-50 ">
-            <div class="flex items-center justify-between px-4 mx-auto sm:px-12">
-                <div>
-                    <a href="/"><img src="/images/logo.svg" alt="Logo"></a>
+        <div class="sticky top-0 z-20">
+            <div class=" py-3 bg-white border-b border-bunababy-50 ">
+                <div class="flex items-center justify-between px-4 mx-auto sm:px-12">
+                    <div>
+                        <a href="/"><img src="/images/logo.svg" alt="Logo"></a>
+                    </div>
                 </div>
             </div>
+            @includeWhen($profileCompleted, 'client._payment-alert')
         </div>
 
         @auth
         <div class="px-6 py-4 my-2 bg-white">
-            @includeWhen($profileCompleted, 'client._payment-alert')
             @include('client._user-info')
         </div>
         @endauth
