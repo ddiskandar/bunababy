@@ -34,8 +34,8 @@
                 <h3 class="text-lg font-bold leading-tight">
                     {{ $treatment->name }}
                 </h3>
-                <p class="text-sm text-slate-600">{{ $treatment->desc }}</p>
-                <p class="text-xs font-semibold text-slate-600">{{ $treatment->duration }} menit</p>
+                <p class="text-sm text-slate-600 h-24 overflow-y-auto">{{ $treatment->desc }}</p>
+                <p class="text-xs font-semibold text-slate-600">Durasi {{ $treatment->duration }} menit</p>
             </div>
             <div>
                 <span class="font-semibold text-bunababy-200">{{ rupiah($treatment->price) }}</span>

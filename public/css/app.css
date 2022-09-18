@@ -1710,6 +1710,9 @@ select {
 .h-2\.5 {
   height: 0.625rem;
 }
+.h-24 {
+  height: 6rem;
+}
 .max-h-\[420px\] {
   max-height: 420px;
 }
@@ -2344,6 +2347,12 @@ select {
 }
 .border-bunababy-200\/50 {
   border-color: rgb(254 14 156 / 0.5);
+}
+.border-bunababy-200\/80 {
+  border-color: rgb(254 14 156 / 0.8);
+}
+.border-bunababy-200\/40 {
+  border-color: rgb(254 14 156 / 0.4);
 }
 .bg-white {
   --tw-bg-opacity: 1;
