@@ -21,6 +21,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/profile', [App\Http\Controllers\Client\ProfileController::class, 'show'])->name('client.profile');
         Route::get('/profile/edit', [App\Http\Controllers\Client\ProfileController::class, 'edit'])->name('client.profile.edit');
         Route::get('/history', [App\Http\Controllers\Client\OrderHistoryController::class, 'show'])->name('client.history');
+        Route::get('/notification', App\Http\Livewire\Client\ClientNotifications::class)->name('client.notifications');
         Route::get('/addresses', App\Http\Livewire\Client\ManageAddresses::class)->name('client.addresses');
         Route::get('/families', App\Http\Livewire\Client\ManageFamilies::class)->name('client.families');
         Route::get('/change-password', App\Http\Livewire\Client\ChangePassword::class)->name('client.change-password');
@@ -37,7 +38,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/orders/{order}', [App\Http\Controllers\OrdersController::class, 'show'])->name('orders.show');
         Route::get('/orders', [App\Http\Controllers\OrdersController::class, 'index'])->name('orders');
         Route::get('/timetables', [App\Http\Controllers\TimetableController::class, 'index'])->name('timetables');
-        Route::get('/clinic', [App\Http\Controllers\ClinicController::class, 'index'])->name('clinic');
+        // Route::get('/clinic', [App\Http\Controllers\ClinicController::class, 'index'])->name('clinic');
     });
 
     // Admin...

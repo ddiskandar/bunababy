@@ -1,24 +1,26 @@
-<div x-data="{ showDialog: @entangle('showDialog') }">
-    <div class="sticky flex items-center justify-between px-4 py-4 shadow bg-bunababy-200 text-white md:px-6 shadow-bunababy-50">
-        <a href="{{ route('client.profile') }}">
-            <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
-            </svg>
-        </a>
-        <h1 class="flex-1 font-semibold md:text-center">Daftar Anggota Keluarga</h1>
-        <button
-            wire:click="addNewFamily"
-            class="text-sm "
-            >
-            Tambah Anggota
-        </button>
+<div x-data="{ showDialog: @entangle('showDialog') }" class="relative">
+    <div class="sticky top-0 z-20 px-4 py-4 bg-bunababy-200 text-white shadow shadow-bunababy-50">
+        <div class="flex items-center justify-between max-w-screen-sm mx-auto">
+            <a href="{{ route('client.profile') }}">
+                <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
+                </svg>
+            </a>
+            <h1 class="flex-1 font-semibold md:text-center">Daftar Anggota Keluarga</h1>
+            <button
+                wire:click="addNewFamily"
+                class="text-sm "
+                >
+                Tambah Anggota
+            </button>
+        </div>
     </div>
 
-    <div class="max-w-xl px-4 py-6 mx-auto ">
-        <ul class="space-y-4">
+    <div class="max-w-screen-sm min-h-screen mx-auto my-0">
+        <ul class="space-y-4 py-6">
             @forelse ( auth()->user()->families as $family)
-            <li class="max-w-lg p-6 border rounded shadow-lg border-bunababy-50 shadow-bunababy-50">
+            <li class="w-full bg-white p-6 border rounded shadow-lg border-bunababy-50 shadow-bunababy-50">
                 <div class="flex items-center mb-2">
                     <div  >
                         <div class="text-xl font-semibold">{{ $family->name }}</div>
@@ -55,6 +57,9 @@
             @endforelse
 
         </ul>
+
+        @include('layouts._bottom-menu')
+
     </div>
 
     <!-- Banner (bottom bubble) -->
@@ -173,7 +178,4 @@
             </div>
         </div>
     </div>
-
-    @include('layouts._bottom-menu')
-
 </div>

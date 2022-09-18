@@ -1,17 +1,19 @@
-<div>
-    <div class="sticky flex items-center justify-between px-4 py-4 bg-bunababy-200 text-white shadow md:px-6 shadow-bunababy-50">
-        <a href="{{ route('client.profile') }}">
-            <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
-            </svg>
-        </a>
-        <h1 class="flex-1 font-semibold md:text-center">Ganti Kata Sandi</h1>
-        <button
-            wire:click="save"
-            >
-            Simpan
-        </button>
+<div class="relative">
+    <div class="sticky top-0 z-20 px-4 py-4 bg-bunababy-200 text-white shadow shadow-bunababy-50">
+        <div class="flex items-center justify-between max-w-screen-sm mx-auto">
+            <a href="{{ route('client.profile') }}">
+                <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
+                </svg>
+            </a>
+            <h1 class="flex-1 font-semibold md:text-center">Ganti Kata Sandi</h1>
+            <button
+                wire:click="save"
+                >
+                Simpan
+            </button>
+        </div>
     </div>
 
     <div class="max-w-xl px-4 py-6 mx-auto ">
@@ -33,6 +35,9 @@
             <x-input wire:model="password_confirmation" id="password_confirmation" class="block w-full mt-1" type="password" name="password_confirmation" />
             <x-input-error for="password_confirmation" class="mt-2" />
         </div>
+
+        @include('layouts._bottom-menu')
+
     </div>
 
         <!-- Banner (bottom bubble) -->

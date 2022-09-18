@@ -1,16 +1,18 @@
-<div>
-    <div class="sticky flex items-center justify-between px-4 py-4 text-white shadow bg-bunababy-200 md:px-6 shadow-bunababy-50">
-        <a href="{{ route('client.profile') }}">
-            <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
-            </svg>
-        </a>
-        <h1 class="flex-1 font-semibold md:text-center">Riwayat Reservasi</h1>
+<div class="relative">
+    <div class="sticky top-0 z-20 px-4 py-4 bg-bunababy-200 text-white shadow shadow-bunababy-50">
+        <div class="flex items-center justify-between max-w-screen-sm mx-auto">
+            <a href="{{ route('client.profile') }}">
+                <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
+                </svg>
+            </a>
+            <h1 class="flex-1 font-semibold md:text-center">Riwayat Reservasi</h1>
+        </div>
     </div>
 
-    <div class="max-w-xl px-4 py-6 mx-auto">
-        <div class="flex flex-wrap justify-center gap-2">
+    <div class="max-w-screen-sm min-h-screen mx-auto my-0">
+        <div class="flex py-4 flex-wrap justify-center gap-2 ">
             <button wire:click="$set('filterStatus', '')"
                 class="py-1 text-xs font-semibold px-4 border @if($filterStatus == '') bg-bunababy-200 text-white @else text-bunababy-200 @endif hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 rounded-full">
                 Semua
@@ -29,9 +31,9 @@
             </button>
         </div>
 
-        <ul class="py-6">
+        <ul class="px-6 py-4">
             @forelse ($reservations as $reservation)
-            <li class="max-w-lg p-6 border rounded shadow-lg border-bunababy-50 shadow-bunababy-50">
+            <li class="w-full bg-white p-6 border rounded shadow-lg border-bunababy-50 shadow-bunababy-50">
                 <div class="flex flex-col gap-3 mb-4 md:flex-row md:justify-between md:items-center">
                     <div class="flex items-center gap-2">
                         <svg class="w-5 h-5 text-slate-500" fill="none" viewBox="0 0 24 24">
@@ -119,6 +121,9 @@
             @endforelse
 
         </ul>
+
+        @include('layouts._bottom-menu')
+
     </div>
 
 </div>

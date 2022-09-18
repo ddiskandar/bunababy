@@ -2,7 +2,7 @@
     <x-title class="mb-4">Treatment anda</x-title>
 
     @if ($reservation)
-        <div class="max-w-lg p-6 border rounded shadow-lg border-bunababy-50 shadow-bunababy-50">
+        <div class="w-full p-6 border rounded shadow-lg border-bunababy-50 shadow-bunababy-50">
             <div class="flex flex-col gap-3 mb-4 md:flex-row md:justify-between md:items-center">
                 <div class="flex items-center gap-2">
                     <svg class="w-5 h-5 text-slate-500" fill="none" viewBox="0 0 24 24">
