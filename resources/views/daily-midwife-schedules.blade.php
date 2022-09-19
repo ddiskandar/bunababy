@@ -16,9 +16,9 @@
         </div>
     </div>
 
-    <ul>
+    <ul class="space-y-2">
         @forelse ($schedules as $schedule)
-            <li class="w-full text-sm bg-white px-6 py-3 rounded ">
+            <li class="w-full text-sm bg-white px-6 py-3 rounded shadow">
                 <a href="{{ route('orders.show', $schedule->id) }}">
                     <div class="flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
                         <div class="flex justify-between w-full items-start md:items-center">
