@@ -80,7 +80,7 @@
 
         <!-- Card Body -->
         <div class="w-full grow">
-            <div class="min-w-full overflow-x-auto bg-white ">
+            <div class="min-w-full overflow-x-auto bg-white">
                 <table class="min-w-full text-sm">
                     <thead>
                         <tr class="bg-slate-50">

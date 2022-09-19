@@ -1,7 +1,7 @@
 <div>
-    <div class="flex items-center justify-between pt-6 pb-2">
+    <div class="flex flex-col md:flex-row md:items-center justify-between pt-6 pb-2">
         <div class="text-lg font-semibold">Schedules</div>
-        <div class="flex items-center gap-4 text-sm">
+        <div class="flex items-center justify-between gap-4 text-sm">
             <div>
                 {{ $selectedDay->isoFormat('dddd, D MMMM YYYY') }}
             </div>
@@ -16,91 +16,89 @@
         </div>
     </div>
 
-<!-- Card Body -->
-<div class="overflow-hidden rounded shadow">
-    <!-- Responsive Table Container -->
-    <div class="min-w-full overflow-x-auto bg-white ">
-        <!-- Alternate Responsive Table -->
-        <table class="min-w-full text-sm align-middle">
-        <thead>
-            <tr class="bg-slate-50">
-                <th class="p-3 pl-6 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
-                    Tempat
-                </th>
-                <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
-                    Waktu
-                </th>
-                <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
-                    Status
-                </th>
-                <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
-                    Client
-                </th>
-                <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
-                    Alamat
-                </th>
-                <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
-                    Treatment
-                </th>
-                <th class="p-3 text-xs font-medium tracking-wider text-center uppercase sr-only text-slate-400">
-                    Actions
-                </th>
-            </tr>
-        </thead>
-        <tbody class="divide-y divide-slate-100">
-            @forelse ($schedules as $schedule)
-                <tr class="text-slate-800">
-                    <td class="px-3 py-6 pl-6 whitespace-nowrap">
-                        {{ $schedule->place() }}
-                    </td>
-                    <td class="px-3 py-6 whitespace-nowrap">
-                        {{ $schedule->getTime() }}
-                    </td>
-                    <td class="px-3 py-6 whitespace-nowrap">
-                        <span
-                            @class([
-                                'inline-flex items-center pl-2 pr-4 text-xs font-semibold leading-5  rounded-full',
-                                'text-green-800 bg-green-100' => $schedule->status() == 'Aktif',
-                                'text-blue-800 bg-blue-100' => $schedule->status() == 'Selesai',
-                                'text-yellow-800 bg-yellow-100' => $schedule->status() == 'Pending',
-                            ])>
-                            <span
-                                @class([
-                                    'w-2 h-2 mr-2 rounded-full',
-                                    'bg-green-600 ' => $schedule->status() == 'Aktif',
-                                    'bg-blue-600 ' => $schedule->status() == 'Selesai',
-                                    'bg-yellow-600 ' => $schedule->status() == 'Pending',
-                                ])></span>
-                            <span>{{ $schedule->status() }}</span>
-                        </span>
-                    </td>
-                    <td class="px-3 py-6 whitespace-nowrap">
-                        {{ $schedule->client->name }}
-                    </td>
-                    <td class="px-3 py-6 whitespace-nowrap">
-                        {{ $schedule->address->kecamatan->name }}
-                    </td>
-                    <td class="px-3 py-6 whitespace-nowrap">
-                        {{ $schedule->treatments->implode('name', ', ') }}
-                    </td>
-                    <td class="py-6 pl-3 pr-6 text-center whitespace-nowrap">
-                        <div class="flex justify-center space-x-2">
-                            <a href="{{ route('orders.show',$schedule->id) }}"  class="text-slate-400 hover:text-bunababy-200">
-                                Lihat
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="7" class="py-24 text-center">Tidak ada jadwal</td>
-                </tr>
-            @endforelse
-        </tbody>
-        </table>
-        <!-- END Alternate Responsive Table -->
+    <!-- Card Body -->
+    <div class="w-full grow">
+        <div class="min-w-full overflow-x-auto bg-white">
+            <table class="min-w-full text-sm">
+                {{-- <thead>
+                    <tr class="bg-slate-50">
+                        <th scope="col" class="p-3 pl-6 text-xs font-medium tracking-wider text-left uppercase text-slate-500 ">
+                            Tempat
+                        </th>
+                        <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
+                            Waktu
+                        </th>
+                        <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
+                            Status
+                        </th>
+                        <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell ">
+                            Client
+                        </th>
+                        <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell ">
+                            Alamat
+                        </th>
+                        <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell ">
+                            Treatment
+                        </th>
+                        <th scope="col" class="p-3 text-xs font-medium tracking-wider text-center uppercase sr-only text-slate-500">
+                            Actions
+                        </th>
+                    </tr>
+                </thead> --}}
+                <tbody class="divide-y divide-slate-100">
+                    @forelse ($schedules as $schedule)
+                        <tr class="text-slate-800">
+                            <td class="px-3 py-12 align-top pl-6 whitespace-nowrap">
+                                {{ $schedule->place() }}
+                            </td>
+                            <td class="px-3 py-12 align-top whitespace-nowrap">
+                                {{ $schedule->getTime() }}
+                            </td>
+                            <td class="px-3 py-12 align-top whitespace-nowrap">
+                                <span
+                                    @class([
+                                        'inline-flex items-center pl-2 pr-4 text-xs font-semibold leading-5  rounded-full',
+                                        'text-green-800 bg-green-100' => $schedule->status() == 'Aktif',
+                                        'text-blue-800 bg-blue-100' => $schedule->status() == 'Selesai',
+                                        'text-yellow-800 bg-yellow-100' => $schedule->status() == 'Pending',
+                                    ])>
+                                    <span
+                                        @class([
+                                            'w-2 h-2 mr-2 rounded-full',
+                                            'bg-green-600 ' => $schedule->status() == 'Aktif',
+                                            'bg-blue-600 ' => $schedule->status() == 'Selesai',
+                                            'bg-yellow-600 ' => $schedule->status() == 'Pending',
+                                        ])></span>
+                                    <span>{{ $schedule->status() }}</span>
+                                </span>
+                            </td>
+                            <td class="px-3 py-12 align-top whitespace-nowrap">
+                                {{ $schedule->client->name }}
+                            </td>
+                            <td class="px-3 py-12 align-top whitespace-nowrap">
+                                {{ $schedule->address->kecamatan->name }}
+                            </td>
+                            <td class="px-3 py-12 align-top whitespace-nowrap">
+                                {{ $schedule->treatments->implode('name', ', ') }}
+                            </td>
+                            <td class="px-3 py-12 whitespace-nowrap">
+                                <div class="flex justify-center space-x-2">
+                                    <a href="{{ route('orders.show', $schedule->id) }}" class="text-slate-400 hover:text-bunababy-200">
+                                        Lihat
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="7" class="py-12 text-center">
+                                <p class="text-slate-400">Tidak ada jadwal</p>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
-    <!-- END Responsive Table Container -->
-</div>
-<!-- END Card Body -->
+    <!-- END Card Body -->
 </div>
