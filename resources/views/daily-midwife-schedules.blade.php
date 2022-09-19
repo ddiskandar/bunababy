@@ -44,16 +44,44 @@
             </a> --}}
 
             <div class="w-full text-sm bg-white px-6 py-3 rounded ">
-                <div class="flex flex-col gap-1 mb-4 md:flex-row md:justify-between md:items-center">
-                    <div class="flex justify-between items-start">
-                        <div class="text-lg font-semibold hover:underline">
-                            <a href="{{ route('orders.show', $schedule->id) }}">
-                                @foreach ($schedule->treatments as $treatment)
-                                    <span>{{ $treatment->name }}</span>@if(!$loop->last)<span>, </span>@endif
-                                @endforeach
-                            </a>
+                <div class="flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+                    <div class="flex justify-between w-full items-start md:items-center">
+                        <div class="space-y-2 md:flex md:justify-between md:items-center flex-1">
+                            <div>
+                                <div class="text-lg font-semibold hover:underline">
+                                    <a href="{{ route('orders.show', $schedule->id) }}">
+                                        @foreach ($schedule->treatments as $treatment)
+                                            <span>{{ $treatment->name }}</span>@if(!$loop->last)<span>, </span>@endif
+                                        @endforeach
+                                    </a>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <circle cx="12" cy="12" r="9"></circle>
+                                            <polyline points="12 7 12 12 15 15"></polyline>
+                                         </svg>
+                                        <div class="text-sm font-medium">
+                                            <div>{{ $schedule->start_datetime->isoFormat('HH:mm') . ' - ' . $schedule->end_datetime->isoFormat('HH:mm') }} WIB</div>
+                                        </div>
+                                    </div>
+                                    <div class="ml-6">
+                                        {{ $schedule->place() }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div>
+                                    {{ $schedule->client->name }}
+                                </div>
+                                <div>
+                                    {{ $schedule->address->kecamatan->name }}
+                                </div>
+                            </div>
                         </div>
-                        <div @class([
+                        <div class="md:w-1/3 flex justify-end">
+                            <div @class([
                             'inline-flex px-6 py-1 leading-4 font-semibold text-white text-xs rounded-full',
                             'bg-orange-400' => $schedule->status == '1',
                             'bg-bunababy-100' => $schedule->status == '2',
@@ -61,33 +89,15 @@
                         ])>
                             {{ $schedule->status() }}
                         </div>
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <circle cx="12" cy="12" r="9"></circle>
-                            <polyline points="12 7 12 12 15 15"></polyline>
-                         </svg>
-                        <div class="text-sm font-medium">
-                            <div>{{ $schedule->start_datetime->isoFormat('HH:mm') . ' - ' . $schedule->end_datetime->isoFormat('HH:mm') }} WIB</div>
                         </div>
                     </div>
-                    <div>
-                        <div>
-                            {{ $schedule->place() }}
-                        </div>
-                        <div>
-                            {{ $schedule->client->name }}
-                        </div>
-                        <div>
-                            {{ $schedule->address->kecamatan->name }}
-                        </div>
-                    </div>
+
+
                 </div>
             </div>
 
         @empty
-            <div class="py-12 w-full flex flex-col items-center text-gray-400">
+            <div class="py-12 w-full border rounded flex flex-col items-center text-gray-400">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 " width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M19.823 19.824a2 2 0 0 1 -1.823 1.176h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 1.175 -1.823m3.825 -.177h9a2 2 0 0 1 2 2v9"></path>
