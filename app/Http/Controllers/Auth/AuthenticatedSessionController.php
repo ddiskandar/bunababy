@@ -32,7 +32,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        $home = auth()->user()->role == 'client' ? '/me' : '/dashboard';
+        $home = auth()->user()->role == 'client' ? '/' : '/dashboard';
 
         return redirect()->intended($home);
 
