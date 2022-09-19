@@ -16,44 +16,17 @@
         </div>
     </div>
 
-    <!-- List Group with Links and Images -->
-    <div>
+    <ul>
         @forelse ($schedules as $schedule)
-            {{-- {{ $schedule->place() }}
-            {{ $schedule->getTime() }}
-            <span
-                @class([
-                    'inline-flex items-center pl-2 pr-4 text-xs font-semibold leading-5  rounded-full',
-                    'text-green-800 bg-green-100' => $schedule->status() == 'Aktif',
-                    'text-blue-800 bg-blue-100' => $schedule->status() == 'Selesai',
-                    'text-yellow-800 bg-yellow-100' => $schedule->status() == 'Pending',
-                ])>
-                <span
-                    @class([
-                        'w-2 h-2 mr-2 rounded-full',
-                        'bg-green-600 ' => $schedule->status() == 'Aktif',
-                        'bg-blue-600 ' => $schedule->status() == 'Selesai',
-                        'bg-yellow-600 ' => $schedule->status() == 'Pending',
-                    ])></span>
-                <span>{{ $schedule->status() }}</span>
-            </span>
-
-            {{ $schedule->treatments->implode('name', ', ') }}
-            <a href="{{ route('orders.show', $schedule->id) }}" class="text-slate-400 hover:text-bunababy-200">
-                Lihat
-            </a> --}}
-
-            <div class="w-full text-sm bg-white px-6 py-3 rounded ">
-                <div class="flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
-                    <div class="flex justify-between w-full items-start md:items-center">
-                        <div class="space-y-2 md:flex md:justify-between md:items-center flex-1">
-                            <div>
-                                <div class="text-lg font-semibold hover:underline">
-                                    <a href="{{ route('orders.show', $schedule->id) }}">
-                                        @foreach ($schedule->treatments as $treatment)
-                                            <span>{{ $treatment->name }}</span>@if(!$loop->last)<span>, </span>@endif
-                                        @endforeach
-                                    </a>
+            <li class="w-full text-sm bg-white px-6 py-3 rounded ">
+                <a href="{{ route('orders.show', $schedule->id) }}">
+                    <div class="flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+                        <div class="flex justify-between w-full items-start md:items-center">
+                            <div class="space-y-2 md:flex md:justify-between md:items-center flex-1">
+                                <div class="text-lg font-semibold">
+                                    @foreach ($schedule->treatments as $treatment)
+                                        <span>{{ $treatment->name }}</span>@if(!$loop->last)<span>, </span>@endif
+                                    @endforeach
                                 </div>
                                 <div>
                                     <div class="flex items-center gap-1">
@@ -61,7 +34,7 @@
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <circle cx="12" cy="12" r="9"></circle>
                                             <polyline points="12 7 12 12 15 15"></polyline>
-                                         </svg>
+                                        </svg>
                                         <div class="text-sm font-medium">
                                             <div>{{ $schedule->start_datetime->isoFormat('HH:mm') . ' - ' . $schedule->end_datetime->isoFormat('HH:mm') }} WIB</div>
                                         </div>
@@ -70,34 +43,31 @@
                                         {{ $schedule->place() }}
                                     </div>
                                 </div>
-                            </div>
-                            <div>
                                 <div>
-                                    {{ $schedule->client->name }}
-                                </div>
-                                <div>
-                                    {{ $schedule->address->kecamatan->name }}
+                                    <div>
+                                        {{ $schedule->client->name }}
+                                    </div>
+                                    <div>
+                                        {{ $schedule->address->kecamatan->name }}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="md:w-1/3 flex justify-end">
-                            <div @class([
-                            'inline-flex px-6 py-1 leading-4 font-semibold text-white text-xs rounded-full',
-                            'bg-orange-400' => $schedule->status == '1',
-                            'bg-bunababy-100' => $schedule->status == '2',
-                            'bg-blue-400' => $schedule->status == '3',
-                        ])>
-                            {{ $schedule->status() }}
-                        </div>
+                            <div class="md:w-1/3 flex justify-end">
+                                <div @class([
+                                'inline-flex px-6 py-1 leading-4 font-semibold text-white text-xs rounded-full',
+                                'bg-orange-400' => $schedule->status == '1',
+                                'bg-bunababy-100' => $schedule->status == '2',
+                                'bg-blue-400' => $schedule->status == '3',
+                            ])>
+                                {{ $schedule->status() }}
+                            </div>
+                            </div>
                         </div>
                     </div>
-
-
-                </div>
-            </div>
-
+                </a>
+            </li>
         @empty
-            <div class="py-12 w-full border rounded flex flex-col items-center text-gray-400">
+            <li class="py-12 w-full border rounded flex flex-col items-center text-gray-400">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 " width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M19.823 19.824a2 2 0 0 1 -1.823 1.176h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 1.175 -1.823m3.825 -.177h9a2 2 0 0 1 2 2v9"></path>
@@ -113,6 +83,5 @@
                 </p>
             </div>
         @endforelse
-    </div>
-  <!-- END List Group with Links and Images -->
+    </ul>
 </div>
