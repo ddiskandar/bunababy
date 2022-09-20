@@ -6,6 +6,7 @@
         type="button"
         class="flex items-center justify-between w-full py-4 "
         x-on:click="open = ! open"
+        wire:click="load"
     >
 
         <div class="flex items-center ">

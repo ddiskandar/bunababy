@@ -43,18 +43,30 @@ class SelectLocation extends Component
         $this->emit('locationChanged');
     }
 
+    public $readyToLoad = false;
+
+    public function load()
+    {
+        $this->readyToLoad = true;
+    }
+
     public function render()
     {
-        $kabupatens = Kabupaten::query()
-                ->where(function ($query) {
-                    $query->whereHas('Kecamatans', function ($query) {
-                        $query->where('name', 'LIKE', $this->search . '%');
-                    });
-                })
-                ->with('kecamatans', function ($query) {
+        if($this->readyToLoad)
+        {
+            $kabupatens = Kabupaten::query()
+            ->where(function ($query) {
+                $query->whereHas('Kecamatans', function ($query) {
                     $query->where('name', 'LIKE', $this->search . '%');
-                })
-                ->get();
+                });
+            })
+            ->with('kecamatans', function ($query) {
+                $query->where('name', 'LIKE', $this->search . '%');
+            })
+            ->get();
+        } else {
+            $kabupatens = collect();
+        }
 
         return view('select-location', [
             'kabupatens' => $kabupatens
