@@ -23,8 +23,9 @@
     <body class="font-sans antialiased">
         <div
             id="page-container"
-            class="flex flex-col mx-auto w-full min-h-screen bg-gray-100 lg:pl-64"
+            class="flex flex-col mx-auto w-full min-h-screen bg-gray-100"
             x-data="{ userDropdownOpen: false, mobileSidebarOpen: false, desktopSidebarOpen: true }"
+            x-bind:class="{ 'lg:pl-64' : desktopSidebarOpen }"
         >
 
             @include('layouts._sidebar')

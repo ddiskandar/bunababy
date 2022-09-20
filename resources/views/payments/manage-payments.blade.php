@@ -112,7 +112,7 @@
                                 <p class="font-semibold text-slate-800">{{ rupiah($payment->value) }}</p>
                             </td>
                             <td class="p-3 whitespace-nowrap">
-                                <span
+                                {{-- <span
                                     @class([
                                         'inline-flex items-center pl-2 pr-4 text-xs font-semibold leading-5  rounded-full',
                                         'text-green-800 bg-green-100' => $payment->status() == 'Verified',
@@ -126,8 +126,43 @@
                                             'bg-red-600 ' => $payment->status() == 'Rejected',
                                             'bg-yellow-600 ' => $payment->status() == 'Waiting',
                                         ])></span>
-                                    <span>{{ $payment->status() }}</span>
-                                </span>
+                                    </span> --}}
+                                <div
+                                    @class([
+                                        'flex items-center',
+                                        'text-yellow-500' => $payment->status() == 'Waiting',
+                                        'text-green-600' => $payment->status() == 'Verified',
+                                        'text-red-400' => $payment->status() == 'Rejected',
+                                    ])
+                                    >
+                                    @if ($payment->status() == 'Verified')
+                                    <div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-discount-check" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M5 7.2a2.2 2.2 0 0 1 2.2 -2.2h1a2.2 2.2 0 0 0 1.55 -.64l.7 -.7a2.2 2.2 0 0 1 3.12 0l.7 .7c.412 .41 .97 .64 1.55 .64h1a2.2 2.2 0 0 1 2.2 2.2v1c0 .58 .23 1.138 .64 1.55l.7 .7a2.2 2.2 0 0 1 0 3.12l-.7 .7a2.2 2.2 0 0 0 -.64 1.55v1a2.2 2.2 0 0 1 -2.2 2.2h-1a2.2 2.2 0 0 0 -1.55 .64l-.7 .7a2.2 2.2 0 0 1 -3.12 0l-.7 -.7a2.2 2.2 0 0 0 -1.55 -.64h-1a2.2 2.2 0 0 1 -2.2 -2.2v-1a2.2 2.2 0 0 0 -.64 -1.55l-.7 -.7a2.2 2.2 0 0 1 0 -3.12l.7 -.7a2.2 2.2 0 0 0 .64 -1.55v-1"></path>
+                                            <path d="M9 12l2 2l4 -4"></path>
+                                        </svg>
+                                    </div>
+                                    @elseif($payment->status() == 'Waiting')
+                                    <div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <circle cx="12" cy="12" r="9"></circle>
+                                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                         </svg>
+                                    </div>
+                                    @else
+                                    <div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-ban" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <circle cx="12" cy="12" r="9"></circle>
+                                            <line x1="5.7" y1="5.7" x2="18.3" y2="18.3"></line>
+                                         </svg>
+                                    </div>
+                                    @endif
+                                    <div class="ml-1">{{ $payment->status() }}</div>
+                                </div>
                             </td>
                             <td class="p-3 ">
                                 <p class="text-slate-800">
@@ -181,7 +216,7 @@
         <div class="h-64 mt-2 space-y-3 overflow-y-auto">
             <div class="space-y-1">
                 <x-label for="state.value">Besar Pembayaran</x-label>
-                <x-input wire:model.lazy="state.value" class="w-full" type="text" id="state.value"/>
+                <x-input wire:model.lazy="state.value" x-mask:dynamic="$money($input, ',')" class="w-full" type="text" id="state.value"/>
                 <x-input-error for="state.value" class="mt-2" />
             </div>
 

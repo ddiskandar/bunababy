@@ -75,14 +75,17 @@ class Payments extends Component
     {
         $this->validate();
 
+        if(isset($this->value) && ! is_numeric(str_replace('.', '', $this->value))){
+            return $this->setErrorBag(['value' => 'Nominal pembayaran harus berupa nilai angka.']);
+        }
+
         $attachment = $this->attachment->store('attachment');
 
         $payment = Payment::create([
             'order_id' => $this->order->id,
-            'value' => $this->value,
+            'value' => str_replace('.', '', $this->value),
             'attachment' => $attachment,
         ]);
-
 
         $this->showUploadDialog = false;
         $this->isLocked = true;

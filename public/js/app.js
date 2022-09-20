@@ -1,6 +1,1023 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./node_modules/@alpinejs/collapse/dist/module.esm.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@alpinejs/collapse/dist/module.esm.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ module_default)
+/* harmony export */ });
+// packages/collapse/src/index.js
+function src_default(Alpine) {
+  Alpine.directive("collapse", collapse);
+  collapse.inline = (el, {modifiers}) => {
+    if (!modifiers.includes("min"))
+      return;
+    el._x_doShow = () => {
+    };
+    el._x_doHide = () => {
+    };
+  };
+  function collapse(el, {modifiers}) {
+    let duration = modifierValue(modifiers, "duration", 250) / 1e3;
+    let floor = modifierValue(modifiers, "min", 0);
+    let fullyHide = !modifiers.includes("min");
+    if (!el._x_isShown)
+      el.style.height = `${floor}px`;
+    if (!el._x_isShown && fullyHide)
+      el.hidden = true;
+    if (!el._x_isShown)
+      el.style.overflow = "hidden";
+    let setFunction = (el2, styles) => {
+      let revertFunction = Alpine.setStyles(el2, styles);
+      return styles.height ? () => {
+      } : revertFunction;
+    };
+    let transitionStyles = {
+      transitionProperty: "height",
+      transitionDuration: `${duration}s`,
+      transitionTimingFunction: "cubic-bezier(0.4, 0.0, 0.2, 1)"
+    };
+    el._x_transition = {
+      in(before = () => {
+      }, after = () => {
+      }) {
+        if (fullyHide)
+          el.hidden = false;
+        if (fullyHide)
+          el.style.display = null;
+        let current = el.getBoundingClientRect().height;
+        el.style.height = "auto";
+        let full = el.getBoundingClientRect().height;
+        if (current === full) {
+          current = floor;
+        }
+        Alpine.transition(el, Alpine.setStyles, {
+          during: transitionStyles,
+          start: {height: current + "px"},
+          end: {height: full + "px"}
+        }, () => el._x_isShown = true, () => {
+          if (el.style.height == `${full}px`) {
+            el.style.overflow = null;
+          }
+        });
+      },
+      out(before = () => {
+      }, after = () => {
+      }) {
+        let full = el.getBoundingClientRect().height;
+        Alpine.transition(el, setFunction, {
+          during: transitionStyles,
+          start: {height: full + "px"},
+          end: {height: floor + "px"}
+        }, () => el.style.overflow = "hidden", () => {
+          el._x_isShown = false;
+          if (el.style.height == `${floor}px` && fullyHide) {
+            el.style.display = "none";
+            el.hidden = true;
+          }
+        });
+      }
+    };
+  }
+}
+function modifierValue(modifiers, key, fallback) {
+  if (modifiers.indexOf(key) === -1)
+    return fallback;
+  const rawValue = modifiers[modifiers.indexOf(key) + 1];
+  if (!rawValue)
+    return fallback;
+  if (key === "duration") {
+    let match = rawValue.match(/([0-9]+)ms/);
+    if (match)
+      return match[1];
+  }
+  if (key === "min") {
+    let match = rawValue.match(/([0-9]+)px/);
+    if (match)
+      return match[1];
+  }
+  return rawValue;
+}
+
+// packages/collapse/builds/module.js
+var module_default = src_default;
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@alpinejs/focus/dist/module.esm.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/@alpinejs/focus/dist/module.esm.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ module_default)
+/* harmony export */ });
+// node_modules/tabbable/dist/index.esm.js
+/*!
+* tabbable 5.2.1
+* @license MIT, https://github.com/focus-trap/tabbable/blob/master/LICENSE
+*/
+var candidateSelectors = ["input", "select", "textarea", "a[href]", "button", "[tabindex]", "audio[controls]", "video[controls]", '[contenteditable]:not([contenteditable="false"])', "details>summary:first-of-type", "details"];
+var candidateSelector = /* @__PURE__ */ candidateSelectors.join(",");
+var matches = typeof Element === "undefined" ? function() {
+} : Element.prototype.matches || Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+var getCandidates = function getCandidates2(el, includeContainer, filter) {
+  var candidates = Array.prototype.slice.apply(el.querySelectorAll(candidateSelector));
+  if (includeContainer && matches.call(el, candidateSelector)) {
+    candidates.unshift(el);
+  }
+  candidates = candidates.filter(filter);
+  return candidates;
+};
+var isContentEditable = function isContentEditable2(node) {
+  return node.contentEditable === "true";
+};
+var getTabindex = function getTabindex2(node) {
+  var tabindexAttr = parseInt(node.getAttribute("tabindex"), 10);
+  if (!isNaN(tabindexAttr)) {
+    return tabindexAttr;
+  }
+  if (isContentEditable(node)) {
+    return 0;
+  }
+  if ((node.nodeName === "AUDIO" || node.nodeName === "VIDEO" || node.nodeName === "DETAILS") && node.getAttribute("tabindex") === null) {
+    return 0;
+  }
+  return node.tabIndex;
+};
+var sortOrderedTabbables = function sortOrderedTabbables2(a, b) {
+  return a.tabIndex === b.tabIndex ? a.documentOrder - b.documentOrder : a.tabIndex - b.tabIndex;
+};
+var isInput = function isInput2(node) {
+  return node.tagName === "INPUT";
+};
+var isHiddenInput = function isHiddenInput2(node) {
+  return isInput(node) && node.type === "hidden";
+};
+var isDetailsWithSummary = function isDetailsWithSummary2(node) {
+  var r = node.tagName === "DETAILS" && Array.prototype.slice.apply(node.children).some(function(child) {
+    return child.tagName === "SUMMARY";
+  });
+  return r;
+};
+var getCheckedRadio = function getCheckedRadio2(nodes, form) {
+  for (var i = 0; i < nodes.length; i++) {
+    if (nodes[i].checked && nodes[i].form === form) {
+      return nodes[i];
+    }
+  }
+};
+var isTabbableRadio = function isTabbableRadio2(node) {
+  if (!node.name) {
+    return true;
+  }
+  var radioScope = node.form || node.ownerDocument;
+  var queryRadios = function queryRadios2(name) {
+    return radioScope.querySelectorAll('input[type="radio"][name="' + name + '"]');
+  };
+  var radioSet;
+  if (typeof window !== "undefined" && typeof window.CSS !== "undefined" && typeof window.CSS.escape === "function") {
+    radioSet = queryRadios(window.CSS.escape(node.name));
+  } else {
+    try {
+      radioSet = queryRadios(node.name);
+    } catch (err) {
+      console.error("Looks like you have a radio button with a name attribute containing invalid CSS selector characters and need the CSS.escape polyfill: %s", err.message);
+      return false;
+    }
+  }
+  var checked = getCheckedRadio(radioSet, node.form);
+  return !checked || checked === node;
+};
+var isRadio = function isRadio2(node) {
+  return isInput(node) && node.type === "radio";
+};
+var isNonTabbableRadio = function isNonTabbableRadio2(node) {
+  return isRadio(node) && !isTabbableRadio(node);
+};
+var isHidden = function isHidden2(node, displayCheck) {
+  if (getComputedStyle(node).visibility === "hidden") {
+    return true;
+  }
+  var isDirectSummary = matches.call(node, "details>summary:first-of-type");
+  var nodeUnderDetails = isDirectSummary ? node.parentElement : node;
+  if (matches.call(nodeUnderDetails, "details:not([open]) *")) {
+    return true;
+  }
+  if (!displayCheck || displayCheck === "full") {
+    while (node) {
+      if (getComputedStyle(node).display === "none") {
+        return true;
+      }
+      node = node.parentElement;
+    }
+  } else if (displayCheck === "non-zero-area") {
+    var _node$getBoundingClie = node.getBoundingClientRect(), width = _node$getBoundingClie.width, height = _node$getBoundingClie.height;
+    return width === 0 && height === 0;
+  }
+  return false;
+};
+var isDisabledFromFieldset = function isDisabledFromFieldset2(node) {
+  if (isInput(node) || node.tagName === "SELECT" || node.tagName === "TEXTAREA" || node.tagName === "BUTTON") {
+    var parentNode = node.parentElement;
+    while (parentNode) {
+      if (parentNode.tagName === "FIELDSET" && parentNode.disabled) {
+        for (var i = 0; i < parentNode.children.length; i++) {
+          var child = parentNode.children.item(i);
+          if (child.tagName === "LEGEND") {
+            if (child.contains(node)) {
+              return false;
+            }
+            return true;
+          }
+        }
+        return true;
+      }
+      parentNode = parentNode.parentElement;
+    }
+  }
+  return false;
+};
+var isNodeMatchingSelectorFocusable = function isNodeMatchingSelectorFocusable2(options, node) {
+  if (node.disabled || isHiddenInput(node) || isHidden(node, options.displayCheck) || isDetailsWithSummary(node) || isDisabledFromFieldset(node)) {
+    return false;
+  }
+  return true;
+};
+var isNodeMatchingSelectorTabbable = function isNodeMatchingSelectorTabbable2(options, node) {
+  if (!isNodeMatchingSelectorFocusable(options, node) || isNonTabbableRadio(node) || getTabindex(node) < 0) {
+    return false;
+  }
+  return true;
+};
+var tabbable = function tabbable2(el, options) {
+  options = options || {};
+  var regularTabbables = [];
+  var orderedTabbables = [];
+  var candidates = getCandidates(el, options.includeContainer, isNodeMatchingSelectorTabbable.bind(null, options));
+  candidates.forEach(function(candidate, i) {
+    var candidateTabindex = getTabindex(candidate);
+    if (candidateTabindex === 0) {
+      regularTabbables.push(candidate);
+    } else {
+      orderedTabbables.push({
+        documentOrder: i,
+        tabIndex: candidateTabindex,
+        node: candidate
+      });
+    }
+  });
+  var tabbableNodes = orderedTabbables.sort(sortOrderedTabbables).map(function(a) {
+    return a.node;
+  }).concat(regularTabbables);
+  return tabbableNodes;
+};
+var focusable = function focusable2(el, options) {
+  options = options || {};
+  var candidates = getCandidates(el, options.includeContainer, isNodeMatchingSelectorFocusable.bind(null, options));
+  return candidates;
+};
+var focusableCandidateSelector = /* @__PURE__ */ candidateSelectors.concat("iframe").join(",");
+var isFocusable = function isFocusable2(node, options) {
+  options = options || {};
+  if (!node) {
+    throw new Error("No node provided");
+  }
+  if (matches.call(node, focusableCandidateSelector) === false) {
+    return false;
+  }
+  return isNodeMatchingSelectorFocusable(options, node);
+};
+
+// node_modules/focus-trap/dist/focus-trap.esm.js
+/*!
+* focus-trap 6.6.1
+* @license MIT, https://github.com/focus-trap/focus-trap/blob/master/LICENSE
+*/
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) {
+      symbols = symbols.filter(function(sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+    }
+    keys.push.apply(keys, symbols);
+  }
+  return keys;
+}
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function(key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function(key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+  return target;
+}
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
+var activeFocusTraps = function() {
+  var trapQueue = [];
+  return {
+    activateTrap: function activateTrap(trap) {
+      if (trapQueue.length > 0) {
+        var activeTrap = trapQueue[trapQueue.length - 1];
+        if (activeTrap !== trap) {
+          activeTrap.pause();
+        }
+      }
+      var trapIndex = trapQueue.indexOf(trap);
+      if (trapIndex === -1) {
+        trapQueue.push(trap);
+      } else {
+        trapQueue.splice(trapIndex, 1);
+        trapQueue.push(trap);
+      }
+    },
+    deactivateTrap: function deactivateTrap(trap) {
+      var trapIndex = trapQueue.indexOf(trap);
+      if (trapIndex !== -1) {
+        trapQueue.splice(trapIndex, 1);
+      }
+      if (trapQueue.length > 0) {
+        trapQueue[trapQueue.length - 1].unpause();
+      }
+    }
+  };
+}();
+var isSelectableInput = function isSelectableInput2(node) {
+  return node.tagName && node.tagName.toLowerCase() === "input" && typeof node.select === "function";
+};
+var isEscapeEvent = function isEscapeEvent2(e) {
+  return e.key === "Escape" || e.key === "Esc" || e.keyCode === 27;
+};
+var isTabEvent = function isTabEvent2(e) {
+  return e.key === "Tab" || e.keyCode === 9;
+};
+var delay = function delay2(fn) {
+  return setTimeout(fn, 0);
+};
+var findIndex = function findIndex2(arr, fn) {
+  var idx = -1;
+  arr.every(function(value, i) {
+    if (fn(value)) {
+      idx = i;
+      return false;
+    }
+    return true;
+  });
+  return idx;
+};
+var valueOrHandler = function valueOrHandler2(value) {
+  for (var _len = arguments.length, params = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    params[_key - 1] = arguments[_key];
+  }
+  return typeof value === "function" ? value.apply(void 0, params) : value;
+};
+var createFocusTrap = function createFocusTrap2(elements, userOptions) {
+  var doc = document;
+  var config = _objectSpread2({
+    returnFocusOnDeactivate: true,
+    escapeDeactivates: true,
+    delayInitialFocus: true
+  }, userOptions);
+  var state = {
+    containers: [],
+    tabbableGroups: [],
+    nodeFocusedBeforeActivation: null,
+    mostRecentlyFocusedNode: null,
+    active: false,
+    paused: false,
+    delayInitialFocusTimer: void 0
+  };
+  var trap;
+  var getOption = function getOption2(configOverrideOptions, optionName, configOptionName) {
+    return configOverrideOptions && configOverrideOptions[optionName] !== void 0 ? configOverrideOptions[optionName] : config[configOptionName || optionName];
+  };
+  var containersContain = function containersContain2(element) {
+    return state.containers.some(function(container) {
+      return container.contains(element);
+    });
+  };
+  var getNodeForOption = function getNodeForOption2(optionName) {
+    var optionValue = config[optionName];
+    if (!optionValue) {
+      return null;
+    }
+    var node = optionValue;
+    if (typeof optionValue === "string") {
+      node = doc.querySelector(optionValue);
+      if (!node) {
+        throw new Error("`".concat(optionName, "` refers to no known node"));
+      }
+    }
+    if (typeof optionValue === "function") {
+      node = optionValue();
+      if (!node) {
+        throw new Error("`".concat(optionName, "` did not return a node"));
+      }
+    }
+    return node;
+  };
+  var getInitialFocusNode = function getInitialFocusNode2() {
+    var node;
+    if (getOption({}, "initialFocus") === false) {
+      return false;
+    }
+    if (getNodeForOption("initialFocus") !== null) {
+      node = getNodeForOption("initialFocus");
+    } else if (containersContain(doc.activeElement)) {
+      node = doc.activeElement;
+    } else {
+      var firstTabbableGroup = state.tabbableGroups[0];
+      var firstTabbableNode = firstTabbableGroup && firstTabbableGroup.firstTabbableNode;
+      node = firstTabbableNode || getNodeForOption("fallbackFocus");
+    }
+    if (!node) {
+      throw new Error("Your focus-trap needs to have at least one focusable element");
+    }
+    return node;
+  };
+  var updateTabbableNodes = function updateTabbableNodes2() {
+    state.tabbableGroups = state.containers.map(function(container) {
+      var tabbableNodes = tabbable(container);
+      if (tabbableNodes.length > 0) {
+        return {
+          container,
+          firstTabbableNode: tabbableNodes[0],
+          lastTabbableNode: tabbableNodes[tabbableNodes.length - 1]
+        };
+      }
+      return void 0;
+    }).filter(function(group) {
+      return !!group;
+    });
+    if (state.tabbableGroups.length <= 0 && !getNodeForOption("fallbackFocus")) {
+      throw new Error("Your focus-trap must have at least one container with at least one tabbable node in it at all times");
+    }
+  };
+  var tryFocus = function tryFocus2(node) {
+    if (node === false) {
+      return;
+    }
+    if (node === doc.activeElement) {
+      return;
+    }
+    if (!node || !node.focus) {
+      tryFocus2(getInitialFocusNode());
+      return;
+    }
+    node.focus({
+      preventScroll: !!config.preventScroll
+    });
+    state.mostRecentlyFocusedNode = node;
+    if (isSelectableInput(node)) {
+      node.select();
+    }
+  };
+  var getReturnFocusNode = function getReturnFocusNode2(previousActiveElement) {
+    var node = getNodeForOption("setReturnFocus");
+    return node ? node : previousActiveElement;
+  };
+  var checkPointerDown = function checkPointerDown2(e) {
+    if (containersContain(e.target)) {
+      return;
+    }
+    if (valueOrHandler(config.clickOutsideDeactivates, e)) {
+      trap.deactivate({
+        returnFocus: config.returnFocusOnDeactivate && !isFocusable(e.target)
+      });
+      return;
+    }
+    if (valueOrHandler(config.allowOutsideClick, e)) {
+      return;
+    }
+    e.preventDefault();
+  };
+  var checkFocusIn = function checkFocusIn2(e) {
+    var targetContained = containersContain(e.target);
+    if (targetContained || e.target instanceof Document) {
+      if (targetContained) {
+        state.mostRecentlyFocusedNode = e.target;
+      }
+    } else {
+      e.stopImmediatePropagation();
+      tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());
+    }
+  };
+  var checkTab = function checkTab2(e) {
+    updateTabbableNodes();
+    var destinationNode = null;
+    if (state.tabbableGroups.length > 0) {
+      var containerIndex = findIndex(state.tabbableGroups, function(_ref) {
+        var container = _ref.container;
+        return container.contains(e.target);
+      });
+      if (containerIndex < 0) {
+        if (e.shiftKey) {
+          destinationNode = state.tabbableGroups[state.tabbableGroups.length - 1].lastTabbableNode;
+        } else {
+          destinationNode = state.tabbableGroups[0].firstTabbableNode;
+        }
+      } else if (e.shiftKey) {
+        var startOfGroupIndex = findIndex(state.tabbableGroups, function(_ref2) {
+          var firstTabbableNode = _ref2.firstTabbableNode;
+          return e.target === firstTabbableNode;
+        });
+        if (startOfGroupIndex < 0 && state.tabbableGroups[containerIndex].container === e.target) {
+          startOfGroupIndex = containerIndex;
+        }
+        if (startOfGroupIndex >= 0) {
+          var destinationGroupIndex = startOfGroupIndex === 0 ? state.tabbableGroups.length - 1 : startOfGroupIndex - 1;
+          var destinationGroup = state.tabbableGroups[destinationGroupIndex];
+          destinationNode = destinationGroup.lastTabbableNode;
+        }
+      } else {
+        var lastOfGroupIndex = findIndex(state.tabbableGroups, function(_ref3) {
+          var lastTabbableNode = _ref3.lastTabbableNode;
+          return e.target === lastTabbableNode;
+        });
+        if (lastOfGroupIndex < 0 && state.tabbableGroups[containerIndex].container === e.target) {
+          lastOfGroupIndex = containerIndex;
+        }
+        if (lastOfGroupIndex >= 0) {
+          var _destinationGroupIndex = lastOfGroupIndex === state.tabbableGroups.length - 1 ? 0 : lastOfGroupIndex + 1;
+          var _destinationGroup = state.tabbableGroups[_destinationGroupIndex];
+          destinationNode = _destinationGroup.firstTabbableNode;
+        }
+      }
+    } else {
+      destinationNode = getNodeForOption("fallbackFocus");
+    }
+    if (destinationNode) {
+      e.preventDefault();
+      tryFocus(destinationNode);
+    }
+  };
+  var checkKey = function checkKey2(e) {
+    if (isEscapeEvent(e) && valueOrHandler(config.escapeDeactivates) !== false) {
+      e.preventDefault();
+      trap.deactivate();
+      return;
+    }
+    if (isTabEvent(e)) {
+      checkTab(e);
+      return;
+    }
+  };
+  var checkClick = function checkClick2(e) {
+    if (valueOrHandler(config.clickOutsideDeactivates, e)) {
+      return;
+    }
+    if (containersContain(e.target)) {
+      return;
+    }
+    if (valueOrHandler(config.allowOutsideClick, e)) {
+      return;
+    }
+    e.preventDefault();
+    e.stopImmediatePropagation();
+  };
+  var addListeners = function addListeners2() {
+    if (!state.active) {
+      return;
+    }
+    activeFocusTraps.activateTrap(trap);
+    state.delayInitialFocusTimer = config.delayInitialFocus ? delay(function() {
+      tryFocus(getInitialFocusNode());
+    }) : tryFocus(getInitialFocusNode());
+    doc.addEventListener("focusin", checkFocusIn, true);
+    doc.addEventListener("mousedown", checkPointerDown, {
+      capture: true,
+      passive: false
+    });
+    doc.addEventListener("touchstart", checkPointerDown, {
+      capture: true,
+      passive: false
+    });
+    doc.addEventListener("click", checkClick, {
+      capture: true,
+      passive: false
+    });
+    doc.addEventListener("keydown", checkKey, {
+      capture: true,
+      passive: false
+    });
+    return trap;
+  };
+  var removeListeners = function removeListeners2() {
+    if (!state.active) {
+      return;
+    }
+    doc.removeEventListener("focusin", checkFocusIn, true);
+    doc.removeEventListener("mousedown", checkPointerDown, true);
+    doc.removeEventListener("touchstart", checkPointerDown, true);
+    doc.removeEventListener("click", checkClick, true);
+    doc.removeEventListener("keydown", checkKey, true);
+    return trap;
+  };
+  trap = {
+    activate: function activate(activateOptions) {
+      if (state.active) {
+        return this;
+      }
+      var onActivate = getOption(activateOptions, "onActivate");
+      var onPostActivate = getOption(activateOptions, "onPostActivate");
+      var checkCanFocusTrap = getOption(activateOptions, "checkCanFocusTrap");
+      if (!checkCanFocusTrap) {
+        updateTabbableNodes();
+      }
+      state.active = true;
+      state.paused = false;
+      state.nodeFocusedBeforeActivation = doc.activeElement;
+      if (onActivate) {
+        onActivate();
+      }
+      var finishActivation = function finishActivation2() {
+        if (checkCanFocusTrap) {
+          updateTabbableNodes();
+        }
+        addListeners();
+        if (onPostActivate) {
+          onPostActivate();
+        }
+      };
+      if (checkCanFocusTrap) {
+        checkCanFocusTrap(state.containers.concat()).then(finishActivation, finishActivation);
+        return this;
+      }
+      finishActivation();
+      return this;
+    },
+    deactivate: function deactivate(deactivateOptions) {
+      if (!state.active) {
+        return this;
+      }
+      clearTimeout(state.delayInitialFocusTimer);
+      state.delayInitialFocusTimer = void 0;
+      removeListeners();
+      state.active = false;
+      state.paused = false;
+      activeFocusTraps.deactivateTrap(trap);
+      var onDeactivate = getOption(deactivateOptions, "onDeactivate");
+      var onPostDeactivate = getOption(deactivateOptions, "onPostDeactivate");
+      var checkCanReturnFocus = getOption(deactivateOptions, "checkCanReturnFocus");
+      if (onDeactivate) {
+        onDeactivate();
+      }
+      var returnFocus = getOption(deactivateOptions, "returnFocus", "returnFocusOnDeactivate");
+      var finishDeactivation = function finishDeactivation2() {
+        delay(function() {
+          if (returnFocus) {
+            tryFocus(getReturnFocusNode(state.nodeFocusedBeforeActivation));
+          }
+          if (onPostDeactivate) {
+            onPostDeactivate();
+          }
+        });
+      };
+      if (returnFocus && checkCanReturnFocus) {
+        checkCanReturnFocus(getReturnFocusNode(state.nodeFocusedBeforeActivation)).then(finishDeactivation, finishDeactivation);
+        return this;
+      }
+      finishDeactivation();
+      return this;
+    },
+    pause: function pause() {
+      if (state.paused || !state.active) {
+        return this;
+      }
+      state.paused = true;
+      removeListeners();
+      return this;
+    },
+    unpause: function unpause() {
+      if (!state.paused || !state.active) {
+        return this;
+      }
+      state.paused = false;
+      updateTabbableNodes();
+      addListeners();
+      return this;
+    },
+    updateContainerElements: function updateContainerElements(containerElements) {
+      var elementsAsArray = [].concat(containerElements).filter(Boolean);
+      state.containers = elementsAsArray.map(function(element) {
+        return typeof element === "string" ? doc.querySelector(element) : element;
+      });
+      if (state.active) {
+        updateTabbableNodes();
+      }
+      return this;
+    }
+  };
+  trap.updateContainerElements(elements);
+  return trap;
+};
+
+// packages/focus/src/index.js
+function src_default(Alpine) {
+  let lastFocused;
+  let currentFocused;
+  window.addEventListener("focusin", () => {
+    lastFocused = currentFocused;
+    currentFocused = document.activeElement;
+  });
+  Alpine.magic("focus", (el) => {
+    let within = el;
+    return {
+      __noscroll: false,
+      __wrapAround: false,
+      within(el2) {
+        within = el2;
+        return this;
+      },
+      withoutScrolling() {
+        this.__noscroll = true;
+        return this;
+      },
+      noscroll() {
+        this.__noscroll = true;
+        return this;
+      },
+      withWrapAround() {
+        this.__wrapAround = true;
+        return this;
+      },
+      wrap() {
+        return this.withWrapAround();
+      },
+      focusable(el2) {
+        return isFocusable(el2);
+      },
+      previouslyFocused() {
+        return lastFocused;
+      },
+      lastFocused() {
+        return lastFocused;
+      },
+      focused() {
+        return currentFocused;
+      },
+      focusables() {
+        if (Array.isArray(within))
+          return within;
+        return focusable(within, {displayCheck: "none"});
+      },
+      all() {
+        return this.focusables();
+      },
+      isFirst(el2) {
+        let els = this.all();
+        return els[0] && els[0].isSameNode(el2);
+      },
+      isLast(el2) {
+        let els = this.all();
+        return els.length && els.slice(-1)[0].isSameNode(el2);
+      },
+      getFirst() {
+        return this.all()[0];
+      },
+      getLast() {
+        return this.all().slice(-1)[0];
+      },
+      getNext() {
+        let list = this.all();
+        let current = document.activeElement;
+        if (list.indexOf(current) === -1)
+          return;
+        if (this.__wrapAround && list.indexOf(current) === list.length - 1) {
+          return list[0];
+        }
+        return list[list.indexOf(current) + 1];
+      },
+      getPrevious() {
+        let list = this.all();
+        let current = document.activeElement;
+        if (list.indexOf(current) === -1)
+          return;
+        if (this.__wrapAround && list.indexOf(current) === 0) {
+          return list.slice(-1)[0];
+        }
+        return list[list.indexOf(current) - 1];
+      },
+      first() {
+        this.focus(this.getFirst());
+      },
+      last() {
+        this.focus(this.getLast());
+      },
+      next() {
+        this.focus(this.getNext());
+      },
+      previous() {
+        this.focus(this.getPrevious());
+      },
+      prev() {
+        return this.previous();
+      },
+      focus(el2) {
+        if (!el2)
+          return;
+        setTimeout(() => {
+          if (!el2.hasAttribute("tabindex"))
+            el2.setAttribute("tabindex", "0");
+          el2.focus({preventScroll: this._noscroll});
+        });
+      }
+    };
+  });
+  Alpine.directive("trap", Alpine.skipDuringClone((el, {expression, modifiers}, {effect, evaluateLater, cleanup}) => {
+    let evaluator = evaluateLater(expression);
+    let oldValue = false;
+    let trap = createFocusTrap(el, {
+      escapeDeactivates: false,
+      allowOutsideClick: true,
+      fallbackFocus: () => el,
+      initialFocus: el.querySelector("[autofocus]")
+    });
+    let undoInert = () => {
+    };
+    let undoDisableScrolling = () => {
+    };
+    const releaseFocus = () => {
+      undoInert();
+      undoInert = () => {
+      };
+      undoDisableScrolling();
+      undoDisableScrolling = () => {
+      };
+      trap.deactivate({
+        returnFocus: !modifiers.includes("noreturn")
+      });
+    };
+    effect(() => evaluator((value) => {
+      if (oldValue === value)
+        return;
+      if (value && !oldValue) {
+        setTimeout(() => {
+          if (modifiers.includes("inert"))
+            undoInert = setInert(el);
+          if (modifiers.includes("noscroll"))
+            undoDisableScrolling = disableScrolling();
+          trap.activate();
+        });
+      }
+      if (!value && oldValue) {
+        releaseFocus();
+      }
+      oldValue = !!value;
+    }));
+    cleanup(releaseFocus);
+  }, (el, {expression, modifiers}, {evaluate}) => {
+    if (modifiers.includes("inert") && evaluate(expression))
+      setInert(el);
+  }));
+}
+function setInert(el) {
+  let undos = [];
+  crawlSiblingsUp(el, (sibling) => {
+    let cache = sibling.hasAttribute("aria-hidden");
+    sibling.setAttribute("aria-hidden", "true");
+    undos.push(() => cache || sibling.removeAttribute("aria-hidden"));
+  });
+  return () => {
+    while (undos.length)
+      undos.pop()();
+  };
+}
+function crawlSiblingsUp(el, callback) {
+  if (el.isSameNode(document.body) || !el.parentNode)
+    return;
+  Array.from(el.parentNode.children).forEach((sibling) => {
+    if (!sibling.isSameNode(el))
+      callback(sibling);
+    crawlSiblingsUp(el.parentNode, callback);
+  });
+}
+function disableScrolling() {
+  let overflow = document.documentElement.style.overflow;
+  let paddingRight = document.documentElement.style.paddingRight;
+  let scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+  document.documentElement.style.overflow = "hidden";
+  document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
+  return () => {
+    document.documentElement.style.overflow = overflow;
+    document.documentElement.style.paddingRight = paddingRight;
+  };
+}
+
+// packages/focus/builds/module.js
+var module_default = src_default;
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@alpinejs/intersect/dist/module.esm.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@alpinejs/intersect/dist/module.esm.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ module_default)
+/* harmony export */ });
+// packages/intersect/src/index.js
+function src_default(Alpine) {
+  Alpine.directive("intersect", (el, {value, expression, modifiers}, {evaluateLater, cleanup}) => {
+    let evaluate = evaluateLater(expression);
+    let options = {
+      rootMargin: getRootMargin(modifiers),
+      threshold: getThreshhold(modifiers)
+    };
+    let observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting === (value === "leave"))
+          return;
+        evaluate();
+        modifiers.includes("once") && observer.disconnect();
+      });
+    }, options);
+    observer.observe(el);
+    cleanup(() => {
+      observer.disconnect();
+    });
+  });
+}
+function getThreshhold(modifiers) {
+  if (modifiers.includes("full"))
+    return 0.99;
+  if (modifiers.includes("half"))
+    return 0.5;
+  if (!modifiers.includes("threshold"))
+    return 0;
+  let threshold = modifiers[modifiers.indexOf("threshold") + 1];
+  if (threshold === "100")
+    return 1;
+  if (threshold === "0")
+    return 0;
+  return Number(`.${threshold}`);
+}
+function getLengthValue(rawValue) {
+  let match = rawValue.match(/^(-?[0-9]+)(px|%)?$/);
+  return match ? match[1] + (match[2] || "px") : void 0;
+}
+function getRootMargin(modifiers) {
+  const key = "margin";
+  const fallback = "0px 0px 0px 0px";
+  const index = modifiers.indexOf(key);
+  if (index === -1)
+    return fallback;
+  let values = [];
+  for (let i = 1; i < 5; i++) {
+    values.push(getLengthValue(modifiers[index + i] || ""));
+  }
+  values = values.filter((v) => v !== void 0);
+  return values.length ? values.join(" ").trim() : fallback;
+}
+
+// packages/intersect/builds/module.js
+var module_default = src_default;
+
+
+
+/***/ }),
+
 /***/ "./node_modules/@alpinejs/mask/dist/module.esm.js":
 /*!********************************************************!*\
   !*** ./node_modules/@alpinejs/mask/dist/module.esm.js ***!
@@ -703,8 +1720,23 @@ function directive(name, callback) {
   directiveHandlers[name] = callback;
 }
 function directives(el, attributes, originalAttributeOverride) {
+  attributes = Array.from(attributes);
+  if (el._x_virtualDirectives) {
+    let vAttributes = Object.entries(el._x_virtualDirectives).map(([name, value]) => ({name, value}));
+    let staticAttributes = attributesOnly(vAttributes);
+    vAttributes = vAttributes.map((attribute) => {
+      if (staticAttributes.find((attr) => attr.name === attribute.name)) {
+        return {
+          name: `x-bind:${attribute.name}`,
+          value: `"${attribute.value}"`
+        };
+      }
+      return attribute;
+    });
+    attributes = attributes.concat(vAttributes);
+  }
   let transformedAttributeMap = {};
-  let directives2 = Array.from(attributes).map(toTransformedAttributes((newName, oldName) => transformedAttributeMap[newName] = oldName)).filter(outNonAlpineAttributes).map(toParsedDirectives(transformedAttributeMap, originalAttributeOverride)).sort(byPriority);
+  let directives2 = attributes.map(toTransformedAttributes((newName, oldName) => transformedAttributeMap[newName] = oldName)).filter(outNonAlpineAttributes).map(toParsedDirectives(transformedAttributeMap, originalAttributeOverride)).sort(byPriority);
   return directives2.map((directive2) => {
     return getDirectiveHandler(el, directive2);
   });
@@ -819,8 +1851,7 @@ var directiveOrder = [
   "show",
   "if",
   DEFAULT,
-  "teleport",
-  "element"
+  "teleport"
 ];
 function byPriority(a, b) {
   let typeA = directiveOrder.indexOf(a.type) === -1 ? DEFAULT : a.type;
@@ -1165,9 +2196,8 @@ function registerTransitionObject(el, setFunction, defaultValue = {}) {
     };
 }
 window.Element.prototype._x_toggleAndCascadeWithTransitions = function(el, value, show, hide) {
-  let clickAwayCompatibleShow = () => {
-    document.visibilityState === "visible" ? requestAnimationFrame(show) : setTimeout(show);
-  };
+  const nextTick2 = document.visibilityState === "visible" ? requestAnimationFrame : setTimeout;
+  let clickAwayCompatibleShow = () => nextTick2(show);
   if (value) {
     if (el._x_transition && (el._x_transition.enter || el._x_transition.leave)) {
       el._x_transition.enter && (Object.entries(el._x_transition.enter.during).length || Object.entries(el._x_transition.enter.start).length || Object.entries(el._x_transition.enter.end).length) ? el._x_transition.in(show) : clickAwayCompatibleShow();
@@ -1188,7 +2218,7 @@ window.Element.prototype._x_toggleAndCascadeWithTransitions = function(el, value
         closest._x_hideChildren = [];
       closest._x_hideChildren.push(el);
     } else {
-      queueMicrotask(() => {
+      nextTick2(() => {
         let hideAfterChildren = (el2) => {
           let carry = Promise.all([
             el2._x_hidePromise,
@@ -1552,8 +2582,13 @@ function getStores() {
 
 // packages/alpinejs/src/binds.js
 var binds = {};
-function bind2(name, object) {
-  binds[name] = typeof object !== "function" ? () => object : object;
+function bind2(name, bindings) {
+  let getBindings = typeof bindings !== "function" ? () => bindings : bindings;
+  if (name instanceof Element) {
+    applyBindingsObject(name, getBindings());
+  } else {
+    binds[name] = getBindings;
+  }
 }
 function injectBindingProviders(obj) {
   Object.entries(binds).forEach(([name, callback]) => {
@@ -1566,6 +2601,26 @@ function injectBindingProviders(obj) {
     });
   });
   return obj;
+}
+function applyBindingsObject(el, obj, original) {
+  let cleanupRunners = [];
+  while (cleanupRunners.length)
+    cleanupRunners.pop()();
+  let attributes = Object.entries(obj).map(([name, value]) => ({name, value}));
+  let staticAttributes = attributesOnly(attributes);
+  attributes = attributes.map((attribute) => {
+    if (staticAttributes.find((attr) => attr.name === attribute.name)) {
+      return {
+        name: `x-bind:${attribute.name}`,
+        value: `"${attribute.value}"`
+      };
+    }
+    return attribute;
+  });
+  directives(el, attributes, original).map((handle) => {
+    cleanupRunners.push(handle.runCleanups);
+    handle();
+  });
 }
 
 // packages/alpinejs/src/datas.js
@@ -1601,7 +2656,7 @@ var Alpine = {
   get raw() {
     return raw;
   },
-  version: "3.10.0",
+  version: "3.10.3",
   flushAndStopDeferringMutations,
   dontAutoEvaluateFunctions,
   disableEffectScheduling,
@@ -1674,8 +2729,8 @@ var slotFlagsText = {
 };
 var specialBooleanAttrs = `itemscope,allowfullscreen,formnovalidate,ismap,nomodule,novalidate,readonly`;
 var isBooleanAttr2 = /* @__PURE__ */ makeMap(specialBooleanAttrs + `,async,autofocus,autoplay,controls,default,defer,disabled,hidden,loop,open,required,reversed,scoped,seamless,checked,muted,multiple,selected`);
-var EMPTY_OBJ =  false ? 0 : {};
-var EMPTY_ARR =  false ? 0 : [];
+var EMPTY_OBJ =  true ? Object.freeze({}) : 0;
+var EMPTY_ARR =  true ? Object.freeze([]) : 0;
 var extend = Object.assign;
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 var hasOwn = (val, key) => hasOwnProperty.call(val, key);
@@ -1711,8 +2766,8 @@ var hasChanged = (value, oldValue) => value !== oldValue && (value === value || 
 var targetMap = new WeakMap();
 var effectStack = [];
 var activeEffect;
-var ITERATE_KEY = Symbol( false ? 0 : "");
-var MAP_KEY_ITERATE_KEY = Symbol( false ? 0 : "");
+var ITERATE_KEY = Symbol( true ? "iterate" : 0);
+var MAP_KEY_ITERATE_KEY = Symbol( true ? "Map key iterate" : 0);
 function isEffect(fn) {
   return fn && fn._isEffect === true;
 }
@@ -1802,7 +2857,14 @@ function track(target, type, key) {
   if (!dep.has(activeEffect)) {
     dep.add(activeEffect);
     activeEffect.deps.push(dep);
-    if (false) {}
+    if (activeEffect.options.onTrack) {
+      activeEffect.options.onTrack({
+        effect: activeEffect,
+        target,
+        type,
+        key
+      });
+    }
   }
 }
 function trigger(target, type, key, newValue, oldValue, oldTarget) {
@@ -1859,7 +2921,17 @@ function trigger(target, type, key, newValue, oldValue, oldTarget) {
     }
   }
   const run = (effect3) => {
-    if (false) {}
+    if (effect3.options.onTrigger) {
+      effect3.options.onTrigger({
+        effect: effect3,
+        target,
+        key,
+        type,
+        newValue,
+        oldValue,
+        oldTarget
+      });
+    }
     if (effect3.options.scheduler) {
       effect3.options.scheduler(effect3);
     } else {
@@ -1987,11 +3059,15 @@ var mutableHandlers = {
 var readonlyHandlers = {
   get: readonlyGet,
   set(target, key) {
-    if (false) {}
+    if (true) {
+      console.warn(`Set operation on key "${String(key)}" failed: target is readonly.`, target);
+    }
     return true;
   },
   deleteProperty(target, key) {
-    if (false) {}
+    if (true) {
+      console.warn(`Delete operation on key "${String(key)}" failed: target is readonly.`, target);
+    }
     return true;
   }
 };
@@ -2058,7 +3134,9 @@ function set$1(key, value) {
   if (!hadKey) {
     key = toRaw(key);
     hadKey = has2.call(target, key);
-  } else if (false) {}
+  } else if (true) {
+    checkIdentityKeys(target, has2, key);
+  }
   const oldValue = get3.call(target, key);
   target.set(key, value);
   if (!hadKey) {
@@ -2075,7 +3153,9 @@ function deleteEntry(key) {
   if (!hadKey) {
     key = toRaw(key);
     hadKey = has2.call(target, key);
-  } else if (false) {}
+  } else if (true) {
+    checkIdentityKeys(target, has2, key);
+  }
   const oldValue = get3 ? get3.call(target, key) : void 0;
   const result = target.delete(key);
   if (hadKey) {
@@ -2086,7 +3166,7 @@ function deleteEntry(key) {
 function clear() {
   const target = toRaw(this);
   const hadItems = target.size !== 0;
-  const oldTarget =  false ? 0 : void 0;
+  const oldTarget =  true ? isMap(target) ? new Map(target) : new Set(target) : 0;
   const result = target.clear();
   if (hadItems) {
     trigger(target, "clear", void 0, void 0, oldTarget);
@@ -2131,7 +3211,10 @@ function createIterableMethod(method, isReadonly, isShallow) {
 }
 function createReadonlyMethod(type) {
   return function(...args) {
-    if (false) {}
+    if (true) {
+      const key = args[0] ? `on key "${args[0]}" ` : ``;
+      console.warn(`${capitalize(type)} operation ${key}failed: target is readonly.`, toRaw(this));
+    }
     return type === "delete" ? false : this;
   };
 }
@@ -2227,6 +3310,13 @@ var readonlyCollectionHandlers = {
 var shallowReadonlyCollectionHandlers = {
   get: createInstrumentationGetter(true, true)
 };
+function checkIdentityKeys(target, has2, key) {
+  const rawKey = toRaw(key);
+  if (rawKey !== key && has2.call(target, rawKey)) {
+    const type = toRawType(target);
+    console.warn(`Reactive ${type} contains both the raw and reactive versions of the same object${type === `Map` ? ` as keys` : ``}, which can lead to inconsistencies. Avoid differentiating between the raw and reactive versions of an object and only use the reactive version if possible.`);
+  }
+}
 var reactiveMap = new WeakMap();
 var shallowReactiveMap = new WeakMap();
 var readonlyMap = new WeakMap();
@@ -2259,7 +3349,9 @@ function readonly(target) {
 }
 function createReactiveObject(target, isReadonly, baseHandlers, collectionHandlers, proxyMap) {
   if (!isObject(target)) {
-    if (false) {}
+    if (true) {
+      console.warn(`value cannot be made reactive: ${String(target)}`);
+    }
     return target;
   }
   if (target["__v_raw"] && !(isReadonly && target["__v_isReactive"])) {
@@ -2713,7 +3805,13 @@ directive("html", (el, {expression}, {effect: effect3, evaluateLater: evaluateLa
 mapAttributes(startingWith(":", into(prefix("bind:"))));
 directive("bind", (el, {value, modifiers, expression, original}, {effect: effect3}) => {
   if (!value) {
-    return applyBindingsObject(el, expression, original, effect3);
+    let bindingProviders = {};
+    injectBindingProviders(bindingProviders);
+    let getBindings = evaluateLater(el, expression);
+    getBindings((bindings) => {
+      applyBindingsObject(el, bindings, original);
+    }, {scope: bindingProviders});
+    return;
   }
   if (value === "key")
     return storeKeyForXFor(el, expression);
@@ -2724,31 +3822,6 @@ directive("bind", (el, {value, modifiers, expression, original}, {effect: effect
     mutateDom(() => bind(el, value, result, modifiers));
   }));
 });
-function applyBindingsObject(el, expression, original, effect3) {
-  let bindingProviders = {};
-  injectBindingProviders(bindingProviders);
-  let getBindings = evaluateLater(el, expression);
-  let cleanupRunners = [];
-  while (cleanupRunners.length)
-    cleanupRunners.pop()();
-  getBindings((bindings) => {
-    let attributes = Object.entries(bindings).map(([name, value]) => ({name, value}));
-    let staticAttributes = attributesOnly(attributes);
-    attributes = attributes.map((attribute) => {
-      if (staticAttributes.find((attr) => attr.name === attribute.name)) {
-        return {
-          name: `x-bind:${attribute.name}`,
-          value: `"${attribute.value}"`
-        };
-      }
-      return attribute;
-    });
-    directives(el, attributes, original).map((handle) => {
-      cleanupRunners.push(handle.runCleanups);
-      handle();
-    });
-  }, {scope: bindingProviders});
-}
 function storeKeyForXFor(el, expression) {
   el._x_keyExpression = expression;
 }
@@ -2780,7 +3853,9 @@ directive("show", (el, {modifiers, expression}, {effect: effect3}) => {
   let evaluate2 = evaluateLater(el, expression);
   if (!el._x_doHide)
     el._x_doHide = () => {
-      mutateDom(() => el.style.display = "none");
+      mutateDom(() => {
+        el.style.setProperty("display", "none", modifiers.includes("important") ? "important" : void 0);
+      });
     };
   if (!el._x_doShow)
     el._x_doShow = () => {
@@ -5233,12 +6308,21 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
 /* harmony import */ var _alpinejs_mask__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @alpinejs/mask */ "./node_modules/@alpinejs/mask/dist/module.esm.js");
+/* harmony import */ var _alpinejs_focus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @alpinejs/focus */ "./node_modules/@alpinejs/focus/dist/module.esm.js");
+/* harmony import */ var _alpinejs_intersect__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @alpinejs/intersect */ "./node_modules/@alpinejs/intersect/dist/module.esm.js");
+/* harmony import */ var _alpinejs_collapse__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @alpinejs/collapse */ "./node_modules/@alpinejs/collapse/dist/module.esm.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
+
+
 
 
 
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].plugin(_alpinejs_mask__WEBPACK_IMPORTED_MODULE_1__["default"]);
+alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].plugin(_alpinejs_focus__WEBPACK_IMPORTED_MODULE_2__["default"]);
+alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].plugin(_alpinejs_intersect__WEBPACK_IMPORTED_MODULE_3__["default"]);
+alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].plugin(_alpinejs_collapse__WEBPACK_IMPORTED_MODULE_4__["default"]);
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
 
 /***/ }),

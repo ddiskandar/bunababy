@@ -17,9 +17,6 @@
 
         @stack('meta')
 
-        <!-- Alpine Plugins -->
-        <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
-
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
 

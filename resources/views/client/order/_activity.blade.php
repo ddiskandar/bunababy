@@ -6,9 +6,9 @@
     <div class="relative py-5">
         <!-- Vertical Guide -->
         <div class="absolute top-0 bottom-0 left-0 flex flex-col justify-center w-8 ">
-            <div class="mx-auto w-1 h-2.5 grow-0 bg-gradient-to-b from-transparent to-pink-100 rounded-t"></div>
-            <div class="w-1 mx-auto bg-pink-100 grow"></div>
-            <div class="mx-auto w-1 h-2.5 grow-0 bg-gradient-to-t from-transparent to-pink-100 rounded-b"></div>
+            <div class="mx-auto w-1 h-2.5 grow-0 bg-gradient-to-b from-transparent to-gray-200 rounded-t"></div>
+            <div class="w-1 mx-auto bg-gray-200 grow"></div>
+            <div class="mx-auto w-1 h-2.5 grow-0 bg-gradient-to-t from-transparent to-gray-200 rounded-b"></div>
         </div>
         <!-- END Vertical Guide -->
 

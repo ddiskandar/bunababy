@@ -1,6 +1,7 @@
 <header
     id="page-header"
-    class="flex flex-none items-center h-16 bg-white shadow-sm fixed top-0 right-0 left-0 z-30 lg:pl-64"
+    class="fixed top-0 left-0 right-0 z-30 flex items-center flex-none h-16 bg-white shadow-sm"
+    x-bind:class="{ 'lg:pl-64' : desktopSidebarOpen }"
     >
 
     <div class="flex justify-between w-full px-4 mx-auto max-w-10xl lg:px-8">

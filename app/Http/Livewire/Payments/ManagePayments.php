@@ -71,13 +71,17 @@ class ManagePayments extends Component
     {
         $this->validate();
 
+        if(isset($this->state['value']) && ! is_numeric(str_replace('.', '', $this->state['value']))){
+            return $this->setErrorBag(['state.value' => 'Besar pembayaran harus berupa nilai angka.']);
+        }
+
         Payment::updateOrCreate(
             [
                 'id' => $this->state['id'] ?? Payment::max('id') + 1,
                 'order_id' => $this->order->id,
             ],
             [
-                'value' => $this->state['value'],
+                'value' => str_replace('.', '', $this->state['value']),
                 'status' => $this->state['status'] ?? Payment::STATUS_VERIFIED,
                 'verified_at' => now(),
                 'note' => $this->state['note'] ?? '',
