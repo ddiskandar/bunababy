@@ -10,7 +10,6 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 4.75V8.25"></path>
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7.75 10.75H16.25"></path>
                 </svg>
-
                 <div class="text-sm font-medium">
                     <span>{{ $reservation->start_datetime->isoFormat('dddd, DD MMMM Y') }}</span>
                     <span  >{{ $reservation->start_datetime->isoFormat('HH:mm') . ' - ' . $reservation->end_datetime->isoFormat('HH:mm') }} WIB</span>
@@ -64,7 +63,7 @@
                 <a href="{{ route('order.show', $reservation->no_reg) }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-bunababy-100 bg-bunababy-200">
                     Bayar DP
                 </a>
-            @elseif ($reservation->status == '2' && ! $reservation->isPaid())
+            @elseif (! $reservation->isPaid())
                 <a href="{{ route('order.show', $reservation->no_reg) }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-bunababy-100 bg-bunababy-200 ">
                     Lunasi Pembayaran
                 </a>
@@ -72,22 +71,18 @@
                 <a href="{{ route('order.show', $reservation->no_reg) }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-bunababy-100 bg-bunababy-200 ">
                     Lihat Treatment
                 </a>
+            @elseif ($reservation->testimonial()->exists())
+                <a href="{{ route('testimonial.show', $reservation->no_reg) }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-bunababy-100 bg-bunababy-200">
+                    Lihat Ulasan
+                </a>
             @else
-
-                @if ($reservation->testimonial()->exists())
-                    <a href="{{ route('testimonial.show', $reservation->no_reg) }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-bunababy-100 bg-bunababy-200">
-                        Lihat Ulasan
-                    </a>
-                @else
-                    <a href="{{ route('testimonial.create', $reservation->no_reg) }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-bunababy-100 bg-bunababy-200">
-                        Beri Ulasan
-                    </a>
-                @endif
-
+                <a href="{{ route('testimonial.create', $reservation->no_reg) }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-bunababy-100 bg-bunababy-200">
+                    Beri Ulasan
+                </a>
             @endif
         </div>
-
     </div>
+
     <div class="mt-4">
         <a href="{{ route('client.history') }}" class="text-sm text-bunababy-200 ">Lihat semua riwayat reservasi</a>
     </div>

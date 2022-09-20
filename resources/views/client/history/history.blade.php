@@ -96,22 +96,22 @@
                         <a href="{{ route('order.show', $reservation->no_reg) }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-bunababy-100 bg-bunababy-200">
                             Bayar DP
                         </a>
-                    @elseif ($reservation->status == '2')
+                    @elseif (! $reservation->isPaid())
                         <a href="{{ route('order.show', $reservation->no_reg) }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-bunababy-100 bg-bunababy-200 ">
                             Lunasi Pembayaran
                         </a>
+                    @elseif ($reservation->status == '2' && $reservation->isPaid())
+                        <a href="{{ route('order.show', $reservation->no_reg) }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-bunababy-100 bg-bunababy-200 ">
+                            Lihat Treatment
+                        </a>
+                    @elseif ($reservation->testimonial()->exists())
+                        <a href="{{ route('testimonial.show', $reservation->no_reg) }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-bunababy-100 bg-bunababy-200">
+                            Lihat Ulasan
+                        </a>
                     @else
-
-                        @if ($reservation->testimonial()->exists())
-                            <a href="{{ route('testimonial.show', $reservation->no_reg) }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-bunababy-100 bg-bunababy-200">
-                                Lihat Ulasan
-                            </a>
-                        @else
-                            <a href="{{ route('testimonial.create', $reservation->no_reg) }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-bunababy-100 bg-bunababy-200">
-                                Beri Ulasan
-                            </a>
-                        @endif
-
+                        <a href="{{ route('testimonial.create', $reservation->no_reg) }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-bunababy-100 bg-bunababy-200">
+                            Beri Ulasan
+                        </a>
                     @endif
                 </div>
 
