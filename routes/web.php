@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 // Home
-Route::get('/', [App\Http\Controllers\HomeController::class, 'show'])->name('me');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'show'])->name('home');
 
 // make an order
 Route::get('/order/create', [App\Http\Controllers\Client\OrderController::class, 'create'])->name('order.create');
@@ -25,8 +25,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/addresses', App\Http\Livewire\Client\ManageAddresses::class)->name('client.addresses');
         Route::get('/families', App\Http\Livewire\Client\ManageFamilies::class)->name('client.families');
         Route::get('/change-password', App\Http\Livewire\Client\ChangePassword::class)->name('client.change-password');
-        Route::get('/reservation/{order:no_reg}/testimonial/create', [App\Http\Controllers\TestimonialsController::class, 'create'])->name('testimonial.create');
-        Route::get('/reservation/{order:no_reg}/testimonial', [App\Http\Controllers\TestimonialsController::class, 'show'])->name('testimonial.show');
+        Route::get('/reservation/{order:no_reg}/testimonial', [App\Http\Controllers\TestimonialsController::class, 'show'])->name('client.testimonial');
     });
 
     // Dashboard

@@ -2,11 +2,11 @@
     <div class="mb-20"></div>
     <ul class="fixed bottom-0 flex justify-around w-full max-w-screen-sm py-3 bg-white border-t z-10 border-bunababy-50 backdrop-blur-sm">
         <li>
-            <a href="{{ route('me') }}"
+            <a href="{{ route('home') }}"
                 @class([
                     'flex flex-col items-center cursor-pointer hover:text-bunababy-200',
-                    'text-bunababy-200' => Route::is('me'),
-                    'text-gray-400 ' => ! Route::is('me'),
+                    'text-bunababy-200' => Route::is('home'),
+                    'text-gray-400 ' => ! Route::is('home'),
                 ])>
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>

@@ -14,7 +14,7 @@ class DashboardController extends Controller
     {
         if(auth()->user()->isClient())
         {
-            return redirect()->route('me');
+            return redirect()->route('home');
         }
 
         $data = [];

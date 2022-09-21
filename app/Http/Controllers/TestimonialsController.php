@@ -16,27 +16,10 @@ class TestimonialsController extends Controller
     {
         if ($order->client_user_id != auth()->id())
         {
-            return to_route('me');
+            return to_route('home');
         }
 
         return view('testimonials.show', [
-            'reservation' => $order,
-        ]);
-    }
-
-    public function create(Order $order)
-    {
-        if ($order->client_user_id != auth()->id())
-        {
-            return to_route('me');
-        }
-
-        if ($order->testimonial()->exists())
-        {
-            return to_route('testimonial.show', $order->no_reg);
-        }
-
-        return view('testimonials.create', [
             'reservation' => $order,
         ]);
     }

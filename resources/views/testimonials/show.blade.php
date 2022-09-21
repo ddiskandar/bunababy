@@ -72,25 +72,32 @@
                     </div>
                 </div>
 
-                <div class="py-4 border-t border-bunababy-50">
-                    <div>
-                        <x-title>Ulasan anda</x-title>
-                        <div class="py-2">
-                            <div class="flex">
-                                @for ( $i = 1; $i <= 5; $i++ )
-                                    <svg class="h-8 w-8 {{ $i <= $reservation->testimonial->rate ? 'text-yellow-500' : 'text-slate-400' }}"  viewBox="0 0 24 24">
-                                        <path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.75L13.75 10.25H19.25L14.75 13.75L16.25 19.25L12 15.75L7.75 19.25L9.25 13.75L4.75 10.25H10.25L12 4.75Z"></path>
-                                    </svg>
-                                @endfor
+                @if ($reservation->testimonial()->exists())
+                    <div class="py-4 border-t border-bunababy-50">
+                        <div>
+                            <x-title>Ulasan anda</x-title>
+                            <div class="py-2">
+                                <div class="flex">
+                                    @for ( $i = 1; $i <= 5; $i++ )
+                                        <svg class="h-8 w-8 {{ $i <= $reservation->testimonial->rate ? 'text-yellow-500' : 'text-slate-400' }}"  viewBox="0 0 24 24">
+                                            <path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.75L13.75 10.25H19.25L14.75 13.75L16.25 19.25L12 15.75L7.75 19.25L9.25 13.75L4.75 10.25H10.25L12 4.75Z"></path>
+                                        </svg>
+                                    @endfor
+                                </div>
                             </div>
-                        </div>
-                        <div class="py-2">
-                            <div class="text-base">
-                                {{ $reservation->testimonial->description }}
+                            <div class="py-2">
+                                <div class="text-base">
+                                    {{ $reservation->testimonial->description }}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @else
+                    <div class="py-4 border-t border-bunababy-50">
+                        @livewire('order.review', ['reservation' => $reservation])
+                    </div>
+                @endif
+
             </div>
 
             @include('layouts._bottom-menu')

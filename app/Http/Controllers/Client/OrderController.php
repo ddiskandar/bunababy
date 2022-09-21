@@ -78,7 +78,7 @@ class OrderController extends Controller
             ->firstOrFail();
 
         if(! auth()->check() OR $order->client_user_id != auth()->id() ) {
-            return to_route('me');
+            return to_route('home');
         }
 
         $isPaid = $order->isPaid();
