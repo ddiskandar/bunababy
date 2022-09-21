@@ -1,6 +1,6 @@
 <div x-data="
     {
-        rating: @entangle('rate'),
+        rating: @entangle('rate').defer,
         hoverRating: 5,
         ratings: [
             {'amount': 1, 'label':'kecewa', 'placeholder':'Ceritain lebih lengkap apa yang bikin bunda tidak puas dan perlu ditingkatkan.'},

@@ -1,8 +1,8 @@
 <x-client-layout>
     <div class="relative">
-        <div class="sticky top-0 z-20 px-4 py-4 bg-bunababy-200 text-white shadow shadow-bunababy-50">
+        <div class="sticky top-0 z-20 px-4 py-4 text-white shadow bg-bunababy-200 shadow-bunababy-50">
             <div class="flex items-center justify-between max-w-screen-sm mx-auto">
-                <a href="{{ route('me') }}">
+                <a href="{{ route('client.history') }}">
                     <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <div class="max-w-screen-sm min-h-screen bg-white py-6 mx-auto">
+        <div class="max-w-screen-sm min-h-screen py-6 mx-auto bg-white">
             <div class="px-6">
                 <div class="flex flex-col gap-3 mb-4 md:flex-row md:justify-between md:items-center">
                     <div class="flex items-center gap-2">

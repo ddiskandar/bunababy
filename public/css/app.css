@@ -3914,6 +3914,10 @@ select {
     scroll-padding-left: calc(50% - 25rem);
   }
 
+  .lg\:flex-row {
+    flex-direction: row;
+  }
+
   .lg\:flex-row-reverse {
     flex-direction: row-reverse;
   }
