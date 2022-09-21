@@ -7,9 +7,10 @@ use Livewire\Component;
 
 class Review extends Component
 {
-    public $rate;
-    public $description;
     public $order;
+
+    public $rate = 5;
+    public $description;
 
     protected $validationAttributes = [
         'description' => 'Deskripsi ulasan',
