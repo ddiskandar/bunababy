@@ -22,11 +22,6 @@ class AddReview extends Component
         $this->order = $reservation;
     }
 
-    public function rate($i)
-    {
-        $this->rate = $i;
-    }
-
     public function save()
     {
         $this->validate([
@@ -44,7 +39,7 @@ class AddReview extends Component
             ]
         );
 
-        return to_route('testimonial.show', $this->order->no_reg);
+        return to_route('client.testimonial', $this->order->no_reg);
     }
 
     public function render()
