@@ -54,7 +54,7 @@
     </div>
     <div class="py-2">
         <p class="mb-1 text-sm font-semibold">Apa yang bikin bunda <span x-text="currentLabel()"></span>?</p>
-        <x-textarea wire:model.defer="description" name="description" x-bind:placeholder="currentPlaceholder()" class="w-full placeholder:text-sm"></x-textarea>
+        <x-textarea autofocus wire:model.defer="description" name="description" x-bind:placeholder="currentPlaceholder()" class="w-full placeholder:text-sm"></x-textarea>
         <x-input-error for="description" class="mt-2" />
     </div>
     <div class="py-2">
