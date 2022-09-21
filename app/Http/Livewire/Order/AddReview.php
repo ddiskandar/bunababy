@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Order;
 use App\Models\Order;
 use Livewire\Component;
 
-class Review extends Component
+class AddReview extends Component
 {
     public $order;
 
@@ -49,6 +49,6 @@ class Review extends Component
 
     public function render()
     {
-        return view('order.review');
+        return view('order.add-review');
     }
 }

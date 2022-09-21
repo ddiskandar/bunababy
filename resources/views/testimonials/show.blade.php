@@ -94,7 +94,7 @@
                     </div>
                 @else
                     <div class="py-4 border-t border-bunababy-50">
-                        @livewire('order.review', ['reservation' => $reservation])
+                        @livewire('order.add-review', ['reservation' => $reservation])
                     </div>
                 @endif
 
