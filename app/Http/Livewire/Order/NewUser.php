@@ -76,7 +76,7 @@ class NewUser extends Component
             })[0];
 
             $user = User::create([
-                'id' => User::max('id') + 1,
+                // 'id' => User::max('id') + 1,
                 'name' => $newUser['name'],
                 'email' => $this->state['email'],
                 'password' => Hash::make( $this->state['password']),

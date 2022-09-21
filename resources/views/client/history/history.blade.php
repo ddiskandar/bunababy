@@ -1,5 +1,5 @@
 <div class="relative">
-    <div class="sticky top-0 z-20 px-4 py-4 bg-bunababy-200 text-white shadow shadow-bunababy-50">
+    <div class="sticky top-0 z-20 px-4 py-4 text-white shadow bg-bunababy-200 shadow-bunababy-50">
         <div class="flex items-center justify-between max-w-screen-sm mx-auto">
             <a href="{{ route('client.profile') }}">
                 <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">
@@ -12,7 +12,7 @@
     </div>
 
     <div class="max-w-screen-sm min-h-screen mx-auto my-0">
-        <div class="flex py-4 flex-wrap justify-center gap-2 ">
+        <div class="flex flex-wrap justify-center gap-2 py-4 ">
             <button wire:click="$set('filterStatus', '')"
                 class="py-1 text-xs font-semibold px-4 border @if($filterStatus == '') bg-bunababy-200 text-white @else text-bunababy-200 @endif hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 rounded-full">
                 Semua
@@ -33,7 +33,7 @@
 
         <div class="px-6 py-4">
             @forelse ($reservations as $reservation)
-                @livewire('client.card-order', ['reservation' => $reservation])
+                @livewire('client.card-order', ['reservation' => $reservation], key($reservation->id))
             @empty
                 <div class="w-full py-16 font-semibold text-center">Tidak ada Riwayat</div>
             @endforelse
