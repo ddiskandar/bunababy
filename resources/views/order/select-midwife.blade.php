@@ -1,4 +1,4 @@
-<div class="p-4 border rounded border-bunababy-50"
+<div class="px-4 py-2 border rounded border-bunababy-50"
     x-data="{ expanded: false }"
 >
     <div class="flex items-center justify-between ">
@@ -57,19 +57,19 @@
                     >
 
                     @if ($day['status'] == 'penuh')
-                        <div class="flex flex-col items-center p-4 cursor-not-allowed">
+                        <div class="flex flex-col items-center px-4 py-2 cursor-not-allowed">
                             <span>{{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}</span>
                             <div class="w-3 h-3 bg-red-400 border-2 border-white rounded-full"></div>
                         </div>
 
                     @elseif($day['status'] == 'tersedia')
-                        <div class="flex flex-col items-center p-4 rounded cursor-pointer hover:bg-bunababy-50">
+                        <div class="flex flex-col items-center px-4 py-2 rounded cursor-pointer hover:bg-bunababy-50">
                             <span>{{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}</span>
                             <div class="w-3 h-3 bg-blue-400 border-2 border-white rounded-full"></div>
                         </div>
 
                     @else
-                        <div class="flex flex-col items-center p-4 rounded cursor-pointer hover:bg-bunababy-50">
+                        <div class="flex flex-col items-center px-4 py-2 rounded cursor-pointer hover:bg-bunababy-50">
                             <span>{{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}</span>
                             <div class="w-3 h-3 bg-green-400 border-2 border-white rounded-full"></div>
                         </div>
@@ -80,7 +80,7 @@
                 <div class="flex flex-col items-center justify-center text-gray-300 cursor-not-allowed"
                     wire:click="selectDate({!! \Carbon\Carbon::parse($day['date'])->isoFormat('DD') !!}, {!! \Carbon\Carbon::parse($day['date'])->isoFormat('MM') !!}, {!! \Carbon\Carbon::parse($day['date'])->isoFormat('YYYY') !!})"
                 >
-                    <div class="p-4">
+                    <div class="px-4 py-2">
                         {{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}
                     </div>
                 </div>
@@ -88,7 +88,7 @@
             @endforeach
         </div>
 
-        <div class="flex items-center mt-8 space-x-4 sm:ml-6">
+        <div class="flex flex-col gap-2 mt-4 mb-2 md:mt-8 md:items-center md:flex-row sm:ml-6">
             <div class="flex items-center">
                 <div class="w-3 h-3 bg-red-400 border-2 border-white rounded-full"></div>
                 <span class="ml-2 text-xs">Penuh / Tidak Tersedia</span>

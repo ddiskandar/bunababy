@@ -3649,6 +3649,10 @@ select {
     margin-left: 3rem;
   }
 
+  .md\:mt-8 {
+    margin-top: 2rem;
+  }
+
   .md\:block {
     display: block;
   }
