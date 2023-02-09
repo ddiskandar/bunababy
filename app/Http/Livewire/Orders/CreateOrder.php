@@ -32,30 +32,30 @@ class CreateOrder extends Component
 
     public function mount()
     {
-        if(session()->missing('order.place')){
+        if (session()->missing('order.place')) {
             session()->put('order.place', 1);
         }
 
         $this->place = session('order.place');
 
-        if(session()->has('order.client_user_id')){
+        if (session()->has('order.client_user_id')) {
             $this->clientId = session('order.client_user_id');
             $this->client = User::find($this->clientId);
         }
 
-        if(session()->has('order.kecamatan_id')){
+        if (session()->has('order.kecamatan_id')) {
             $this->kecamatanId = session('order.kecamatan_id');
         }
 
-        if(session()->has('order.midwife_user_id')){
+        if (session()->has('order.midwife_user_id')) {
             $this->midwifeId = session('order.midwife_user_id');
         }
 
-        if(session()->has('order.date')){
+        if (session()->has('order.date')) {
             $this->date = session('order.date')->toDateString();
         }
 
-        if(session('order.place') == 1){
+        if (session('order.place') == 1) {
             $addMinutes = DB::table('options')->select('transport_duration')->first()->transport_duration;
             session()->put('order.addMinutes', $addMinutes);
         } else {
@@ -73,14 +73,13 @@ class CreateOrder extends Component
             ->active()
             ->orderBy('name')
             ->get();
-
     }
 
     public function updatedPlace()
     {
         session()->put('order.place', $this->place);
 
-        if(session('order.place') == 1){
+        if (session('order.place') == 1) {
             $addMinutes = DB::table('options')->select('transport_duration')->first()->transport_duration;
             session()->put('order.addMinutes', $addMinutes);
         } else {
@@ -96,7 +95,7 @@ class CreateOrder extends Component
 
     public function updatedKecamatanId()
     {
-        $kecamatan = DB::table('kecamatans')->where('id', $this->kecamatanId )->first();
+        $kecamatan = DB::table('kecamatans')->where('id', $this->kecamatanId)->first();
 
         session()->put('order.kecamatan_id', $kecamatan->id);
         session()->put('order.kecamatan_distance', $kecamatan->distance);
@@ -136,7 +135,7 @@ class CreateOrder extends Component
 
         $date = session('order.date')->toDateString();
 
-        foreach($orders as $order) {
+        foreach ($orders as $order) {
             if ($order->activeBetween($date . ' ' . session('order.start_time'), Carbon::parse($date . ' ' . session('order.start_time'))->addMinutes(session('order.addMinutes')))->exists()) {
                 session()->flash('treatments', 'Tidak dapat membuat reservasi pada pilihan dan rentang waktu ini, silahkan pilih pada slot waktu yang kosong.');
                 return back();
@@ -157,7 +156,7 @@ class CreateOrder extends Component
             $order->end_datetime = Carbon::parse(session('order.date')->toDateString() . ' ' . session('order.start_time'))->addMinutes(session('order.addMinutes'));
             $order->status = Order::STATUS_LOCKED;
 
-            if(session('order.place') == 1){
+            if (session('order.place') == 1) {
                 $order->total_transport = $order->getTotalTransport();
             }
 
@@ -186,9 +185,11 @@ class CreateOrder extends Component
             $new = collect(['id' => $slot->id]);
             $new->put('time', $slot->time);
             foreach ($orders as $order) {
-                if ( Carbon::parse(session('order.date')->toDateString().$slot->time)->between($order->start_datetime, $order->end_datetime)) {
+                if (Carbon::parse(session('order.date')->toDateString() . $slot->time)->between($order->start_datetime, $order->end_datetime)) {
                     $new->put($order->id, 'booked');
-                } else { $new->put($order->id, 'empty'); }
+                } else {
+                    $new->put($order->id, 'empty');
+                }
             }
             $new->put('status', ($new->contains('booked')) ? 'booked' : 'empty');
             $new->put('slot', Carbon::parse($slot->time)->gte(Carbon::parse('12:00:00')) ? 'siang' : 'pagi');
