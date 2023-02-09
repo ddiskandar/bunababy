@@ -10,7 +10,6 @@ use Carbon\Carbon;
 class TodayOrders extends Component
 {
     public $readyToLoad = false;
-    public $todayOrdersData;
     public $selectedDay;
     public $labels;
     public $midwives;
@@ -46,6 +45,12 @@ class TodayOrders extends Component
         }
     }
 
+    public function updatedSelectedDay()
+    {
+        $this->updateData();
+        $this->emit('today-orders-updated');
+    }
+
     public function prevDay()
     {
         $this->selectedDay = Carbon::parse($this->selectedDay)->subDay()->toDateString();
@@ -63,6 +68,7 @@ class TodayOrders extends Component
     public function render()
     {
         if ($this->readyToLoad) {
+            //
         }
 
         return view('admin.chart.today-orders');
