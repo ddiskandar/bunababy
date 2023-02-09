@@ -35,6 +35,11 @@
                         ]
                     },
                     options: {
+                        scale: {
+                            ticks: {
+                              precision: 0
+                            }
+                        },
                         {{-- indexAxis: 'y', --}}
                         scales: {
                             x: {

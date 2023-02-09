@@ -13,7 +13,7 @@ class ThisMonthOrders extends Component
     public $selectedMonth;
     public $labels;
     public $datasets;
-    public $filterStatus;
+    public $filterStatus = '';
     public $midwives;
 
     public function mount()
@@ -27,12 +27,15 @@ class ThisMonthOrders extends Component
     {
         $period = Carbon::parse($this->selectedMonth)->startOfMonth()
             ->DaysUntil(Carbon::parse($this->selectedMonth)->endOfMonth());
+
         foreach ($period as $date) {
             $this->labels[] = $date->isoFormat('D');
         }
 
-        $thisMonthOrders = Order::whereMonth('start_datetime', Carbon::parse($this->selectedMonth))->get();
-
+        $thisMonthOrders = Order::query()
+            ->whereMonth('start_datetime', Carbon::parse($this->selectedMonth))
+            ->where('status', 'LIKE', '%' . $this->filterStatus)
+            ->get();
 
         $this->datasets = [];
 
@@ -55,6 +58,11 @@ class ThisMonthOrders extends Component
     public function loadData()
     {
         $this->readyToLoad = true;
+    }
+
+    public function updatedFilterStatus()
+    {
+        $this->updateData();
     }
 
     public function updatedSelectedMonth()

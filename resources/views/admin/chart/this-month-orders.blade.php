@@ -16,11 +16,16 @@
                         datasets: this.datasets,
                     },
                     options: {
-                    scales: {
-                        y: {
-                        beginAtZero: true
+                        scale: {
+                            ticks: {
+                              precision: 0
+                            }
+                        },
+                        scales: {
+                            y: {
+                            beginAtZero: true
+                            }
                         }
-                    }
                     }
                 }
             );
