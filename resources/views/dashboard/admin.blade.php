@@ -17,7 +17,7 @@
             {{ $data['new_clients'] }}
         </dt>
         <dd class="text-sm font-medium tracking-wider text-gray-500 uppercase">
-            Member Baru Bulan Ini
+            Pelanggan Baru Bulan Ini
         </dd>
         </dl>
     </div>

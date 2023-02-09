@@ -9,44 +9,45 @@
         ordersPending: @entangle('ordersPending'),
 
         init() {
-            const reservationTodayChart = new Chart(this.$refs.reservationToday, {
-                type: 'bar',
-                data: {
-                    labels: this.labels,
-                    datasets: [
-                    {
-                        label: 'Selesai',
-                        data: this.ordersFinished,
-                        backgroundColor: 'lightgray',
-                    },
-                    {
-                        label: 'Aktif',
-                        data: this.ordersActive,
-                        backgroundColor: 'lightgreen'
-                    },
-                    {
-                        label: 'Pending',
-                        data: this.ordersPending,
-                        backgroundColor: 'orange'
-                    },
-
-                    ]
-                },
-                options: {
-                    indexAxis: 'y',
-                    scales: {
-                        x: {
-                            stacked: true
+            const reservationTodayChart = new Chart(
+                this.$refs.reservationToday,
+                {
+                    type: 'bar',
+                    data: {
+                        labels: this.labels,
+                        datasets: [
+                        {
+                            label: 'Selesai',
+                            data: this.ordersFinished,
+                            backgroundColor: 'lightgray',
                         },
-                        y: {
-                            stacked: true
+                        {
+                            label: 'Aktif',
+                            data: this.ordersActive,
+                            backgroundColor: 'lightgreen'
+                        },
+                        {
+                            label: 'Pending',
+                            data: this.ordersPending,
+                            backgroundColor: 'orange'
+                        },
+
+                        ]
+                    },
+                    options: {
+                        {{-- indexAxis: 'y', --}}
+                        scales: {
+                            x: {
+                                stacked: true
+                            },
+                            y: {
+                                stacked: true
+                            }
                         }
                     }
                 }
-            });
+            );
             Livewire.on('today-orders-updated', () => {
-                {{-- console.log('emited today-orders-updated') --}}
-                console.log(this.ordersFinished)
                 reservationTodayChart.data.datasets[0].data = this.ordersFinished;
                 reservationTodayChart.data.datasets[1].data = this.ordersActive;
                 reservationTodayChart.data.datasets[2].data = this.ordersPending;
@@ -77,13 +78,13 @@
 
     <!-- Card Body -->
     <div class="relative w-full p-5 lg:p-6">
-        <div wire:loading.class="opacity-100" wire:loading.class.remove="opacity-0" class="absolute flex items-center justify-center w-full opacity-0 h-96">
+        <div wire:loading.class="opacity-100" wire:loading.class.remove="opacity-0" class="absolute flex items-center justify-center w-full transition opacity-0 h-96">
             <div class="flex flex-col items-center">
                 <img src="{{ asset('images/chart-loading.gif') }}" width="50px" alt="chart loading">
                 <div class="mt-4 font-medium text-gray-500">Mohon tunggu, sedang menyiapkan bagan...</div>
             </div>
         </div>
-        <canvas wire:loading.class="opacity-0" class="relative w-full" x-ref="reservationToday" height="280"></canvas>
+        <canvas wire:loading.class="opacity-0" class="relative w-full transition" x-ref="reservationToday" height="280"></canvas>
     </div>
     <!-- Card Body -->
 </div>

@@ -43,26 +43,24 @@ class TodayOrders extends Component
             $this->ordersActive[] = $ordersOnSelectedDay->where('midwife_user_id', $id)->where('status', Order::STATUS_LOCKED)->count();
             $this->ordersPending[] = $ordersOnSelectedDay->where('midwife_user_id', $id)->where('status', Order::STATUS_UNPAID)->count();
         }
+        $this->emit('today-orders-updated');
     }
 
     public function updatedSelectedDay()
     {
         $this->updateData();
-        $this->emit('today-orders-updated');
     }
 
     public function prevDay()
     {
         $this->selectedDay = Carbon::parse($this->selectedDay)->subDay()->toDateString();
         $this->updateData();
-        $this->emit('today-orders-updated');
     }
 
     public function nextDay()
     {
         $this->selectedDay = Carbon::parse($this->selectedDay)->addDay()->toDateString();
         $this->updateData();
-        $this->emit('today-orders-updated');
     }
 
     public function render()
