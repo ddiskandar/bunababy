@@ -50,15 +50,17 @@ class ManageTimetables extends Component
     public function mount()
     {
         $this->midwives = User::active()->where('type', User::MIDWIFE)->get();
-        $this->selectedMonth = today();
+        $this->selectedMonth = today()->isoFormat('YYYY-MM');
     }
 
-    public function prevMonth() {
-        $this->selectedMonth = Carbon::parse($this->selectedMonth)->subMonth();
+    public function prevMonth()
+    {
+        $this->selectedMonth = Carbon::parse($this->selectedMonth)->subMonth()->isoFormat('YYYY-MM');
     }
 
-    public function nextMonth() {
-        $this->selectedMonth = Carbon::parse($this->selectedMonth)->addMonth();
+    public function nextMonth()
+    {
+        $this->selectedMonth = Carbon::parse($this->selectedMonth)->addMonth()->isoFormat('YYYY-MM');
     }
 
     public function updatingPerPage()
@@ -87,7 +89,7 @@ class ManageTimetables extends Component
         $this->state = [];
     }
 
-    public function ShowEditTimetableDialog( Timetable $timetable)
+    public function ShowEditTimetableDialog(Timetable $timetable)
     {
         $this->state = $timetable->toArray();
         $this->state['date'] = $timetable->date->toDateString();
@@ -125,7 +127,7 @@ class ManageTimetables extends Component
             ->where('note', 'LIKE', '%' . $this->filterSearch . '%')
             ->where('midwife_user_id', 'LIKE', '%' . $this->filterMidwife . '%')
             ->where('type', 'LIKE', '%' . $this->filterType . '%')
-            ->when(auth()->user()->isMidwife(), function ($query){
+            ->when(auth()->user()->isMidwife(), function ($query) {
                 $query->where('midwife_user_id', auth()->id());
             })
             ->whereMonth('date', Carbon::parse($this->selectedMonth)->month)

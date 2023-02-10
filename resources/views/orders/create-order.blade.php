@@ -225,23 +225,4 @@
             </div>
         </div>
     </div>
-
-    <x-dialog wire:model="showDialog">
-
-        <div class="py-4 mt-2 overflow-y-auto">
-            <div class="text-center">
-                Yakin mau dihapus?
-            </div>
-
-        </div>
-
-        <div class="py-4">
-            <button
-                wire:click="delete"
-                type="button"
-                class="block w-full py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
-            >Ya, Hapus Sekarang</button>
-        </div>
-
-    </x-dialog>
 </div>
