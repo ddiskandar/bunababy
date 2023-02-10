@@ -9,7 +9,7 @@
 
                 </p>
             </div>
-            <div class="space-y-6 md:w-2/3 md:pl-2">
+            <div class="max-w-lg space-y-6 md:w-2/3 md:pl-2">
                 <ul class="divide-y divide-slate-50">
                     <li class="py-3 text-sm ">
                         <div class="flex justify-between">

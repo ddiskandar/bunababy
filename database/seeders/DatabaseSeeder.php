@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Owner',
                 'email' => 'hr@bunababycare.com',
                 'type' => User::OWNER,
-        ]);
+            ]);
 
         $admin = User::factory()
             ->has(Profile::factory())
@@ -109,13 +109,13 @@ class DatabaseSeeder extends Seeder
 
         $midwife6->kecamatans()->attach([16, 11, 23, 14, 27, 6, 7, 25, 20, 22, 26, 17, 32, 40, 43]);
 
-        for( $i = 31; $i <= 50; $i++ ){
+        for ($i = 31; $i <= 50; $i++) {
 
             $client = User::factory()->hasProfile()->create([
                 'id' => $i
             ]);
 
-            $tag = rand(1,3);
+            $tag = rand(1, 3);
             $client->tags()->attach($tag);
 
             $address = Address::factory()
@@ -124,18 +124,18 @@ class DatabaseSeeder extends Seeder
                     'client_user_id' => $i,
                     'label' => 'rumah',
                     'is_main' => true,
-                    'kecamatan_id' => rand(1,70),
+                    'kecamatan_id' => rand(1, 70),
                 ]);
 
             $date = today()->subDays($i - 31);
-            $midwifeId = rand(3,8);
+            $midwifeId = 4;
 
             $order = Order::factory()
                 ->create([
                     'id' => $i,
                     'place' => Order::PLACE_CLINIC,
                     'no_reg' => $date->isoFormat('YYMMDD') . Order::PLACE_CLINIC . $midwifeId . '0945',
-                    'invoice' => 'INV/' . $date->isoFormat('YYMMDD'). '/BBC/' . Order::PLACE_CLINIC . $midwifeId . '0945',
+                    'invoice' => 'INV/' . $date->isoFormat('YYMMDD') . '/BBC/' . Order::PLACE_CLINIC . $midwifeId . '0945',
                     'address_id' => $i,
                     'total_price' => 0,
                     'total_duration' => 0,
@@ -145,7 +145,7 @@ class DatabaseSeeder extends Seeder
                     'start_datetime' => Carbon::parse($date->toDateString() . ' ' . '09:45'),
                 ]);
 
-            $treatment1 = rand(1,21);
+            $treatment1 = rand(1, 21);
 
             $order->treatments()->attach([$treatment1]);
 
@@ -159,7 +159,7 @@ class DatabaseSeeder extends Seeder
 
             $users = User::where('type', User::OWNER)->orWhere('type', User::ADMIN)->get();
 
-            Notification::send($users,new NewOrder($order));
+            Notification::send($users, new NewOrder($order));
 
             $testimonial = Testimonial::factory()
                 ->create([
@@ -174,16 +174,15 @@ class DatabaseSeeder extends Seeder
                 ]);
 
             Notification::send($users, new NewPayment($payment));
-
         }
 
-        for( $i = 51; $i <= 75; $i++ ){
+        for ($i = 51; $i <= 75; $i++) {
 
             $client = User::factory()->hasProfile()->create([
                 'id' => $i
             ]);
 
-            $tag = rand(1,3);
+            $tag = rand(1, 3);
             $client->tags()->attach($tag);
 
             $address = Address::factory()
@@ -192,18 +191,18 @@ class DatabaseSeeder extends Seeder
                     'client_user_id' => $i,
                     'label' => 'rumah',
                     'is_main' => true,
-                    'kecamatan_id' => rand(1,70),
+                    'kecamatan_id' => rand(1, 70),
                 ]);
 
             $date = today()->subDays($i - 51);
-            $midwifeId = rand(3,8);
+            $midwifeId = 6;
 
             $order = Order::factory()
                 ->create([
                     'id' => $i,
                     'place' => Order::PLACE_CLIENT,
                     'no_reg' => $date->isoFormat('YYMMDD') . Order::PLACE_CLIENT . $midwifeId . '13100',
-                    'invoice' => 'INV/' . $date->isoFormat('YYMMDD'). '/BBC/' . Order::PLACE_CLIENT . $midwifeId . '1300',
+                    'invoice' => 'INV/' . $date->isoFormat('YYMMDD') . '/BBC/' . Order::PLACE_CLIENT . $midwifeId . '1300',
                     'address_id' => $i,
                     'total_price' => 0,
                     'total_duration' => 40,
@@ -213,7 +212,7 @@ class DatabaseSeeder extends Seeder
                     'start_datetime' => Carbon::parse($date->toDateString() . ' ' . '13:00'),
                 ]);
 
-            $treatment1 = rand(1,21);
+            $treatment1 = rand(1, 21);
 
             $order->treatments()->attach([$treatment1]);
 
@@ -229,7 +228,7 @@ class DatabaseSeeder extends Seeder
 
             $users = User::where('type', User::OWNER)->orWhere('type', User::ADMIN)->get();
 
-            Notification::send($users,new NewOrder($order));
+            Notification::send($users, new NewOrder($order));
 
             $testimonial = Testimonial::factory()
                 ->create([
@@ -243,20 +242,19 @@ class DatabaseSeeder extends Seeder
                 ]);
 
             Notification::send($users, new NewPayment($payment));
-
         }
 
 
 
         // upcoming order
 
-        for( $i = 9; $i <= 30; $i++ ){
+        for ($i = 9; $i <= 30; $i++) {
 
             $client = User::factory()->hasProfile()->create([
                 'id' => $i
             ]);
 
-            $tag = rand(1,3);
+            $tag = rand(1, 3);
             $client->tags()->attach($tag);
 
             $address = Address::factory()
@@ -265,18 +263,18 @@ class DatabaseSeeder extends Seeder
                     'client_user_id' => $i,
                     'label' => 'rumah',
                     'is_main' => true,
-                    'kecamatan_id' => rand(1,70),
+                    'kecamatan_id' => rand(1, 70),
                 ]);
 
             $date = today()->addDays($i - 9);
-            $midwifeId = rand(3,8);
+            $midwifeId = 8;
 
             $order = Order::factory()
                 ->create([
                     'id' => $i,
                     'place' => Order::PLACE_CLIENT,
                     'no_reg' => $date->isoFormat('YYMMDD') . Order::PLACE_CLIENT . $midwifeId . '0945',
-                    'invoice' => 'INV/' . $date->isoFormat('YYMMDD'). '/BBC/' . Order::PLACE_CLIENT . $midwifeId . '0945',
+                    'invoice' => 'INV/' . $date->isoFormat('YYMMDD') . '/BBC/' . Order::PLACE_CLIENT . $midwifeId . '0945',
                     'address_id' => $i,
                     'total_price' => 0,
                     'total_duration' => 40,
@@ -286,7 +284,7 @@ class DatabaseSeeder extends Seeder
                     'start_datetime' => Carbon::parse($date->toDateString() . ' ' . '09:45'),
                 ]);
 
-            $treatment1 = rand(1,21);
+            $treatment1 = rand(1, 21);
 
             $order->treatments()->attach([$treatment1]);
 
@@ -300,7 +298,7 @@ class DatabaseSeeder extends Seeder
 
             $users = User::where('type', User::OWNER)->orWhere('type', User::ADMIN)->get();
 
-            Notification::send($users,new NewOrder($order));
+            Notification::send($users, new NewOrder($order));
 
             // $testimonial = Testimonial::factory()
             //     ->create([

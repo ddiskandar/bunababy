@@ -16,5 +16,4 @@ Alpine.plugin(AlpineFloatingUI)
 Alpine.plugin(NotificationsAlpinePlugin)
 
 window.Alpine = Alpine;
-
 Alpine.start();

@@ -48,11 +48,11 @@
                     row-start-{{ $schedule['row-start'] }}
                     col-start-{{ $schedule['col-start'] }}
                     row-span-{{ $schedule['row-span'] }}
-                    text-slate-800 m-1 p-2 relative
+                    text-slate-800 m-1 p-2 relative overflow-y-scroll
                     @if ($schedule['status'] == 'Aktif')
                         bg-green-400/20 border border-green-700/10
                     @elseif ($schedule['status'] == 'Selesai')
-                        bg-slate-400/20 border border-slate-700/10
+                        bg-blue-400/20 border border-blue-700/10
                     @else
                         bg-red-400/20 border border-red-700/10
                     @endif

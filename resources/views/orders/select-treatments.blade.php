@@ -6,7 +6,7 @@
                     Pilihan Treatment
                 </h3>
             </div>
-            <div class="space-y-6 md:w-2/3 md:pl-2">
+            <div class="max-w-lg space-y-6 md:w-2/3 md:pl-2">
                 <div class="space-y-1">
                     <div class="divide-y divide-bunababy-50">
                         @forelse ($order->treatments as $treatment)
@@ -16,8 +16,10 @@
                                         <div class="font-semibold">{{ $treatment->name }}</div>
                                         <div>{{ $treatment->category->name }}</div>
                                     </div>
-                                    <div>{{ $treatment->duration }} menit</div>
-                                    <div class="font-semibold">{{ rupiah($treatment->price) }}</div>
+                                    <div>
+                                        <div class="font-semibold">{{ rupiah($treatment->price) }}</div>
+                                        <div>{{ $treatment->duration }} menit</div>
+                                    </div>
                                 </div>
                                 <button wire:click="delete({{ $treatment->id }})" class="mt-4 text-sm font-semibold text-red-600">Hapus</button>
                             </div>
@@ -29,7 +31,7 @@
 
                 <form onsubmit="return false;">
                     <div class="space-y-1">
-                        <x-label   for="treatmentId">Tambah Treatment</x-label>
+                        <x-label for="treatmentId">Tambah Treatment</x-label>
                         <select wire:model="treatmentId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="treatmentId">
                             <option value="" selected>-- Pilih salah satu</option>
                             @foreach ($treatments as $treatment)
