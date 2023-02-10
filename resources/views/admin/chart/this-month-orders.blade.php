@@ -39,10 +39,7 @@
 >
     <div class="w-full px-6 py-3 bg-gray-50 sm:flex sm:justify-between sm:items-center">
         <div class="flex items-center">
-            <h3 class="font-semibold">
-                Reservasi
-            </h3>
-            <div class="ml-2 w-36">
+            <div class="w-36">
                 <select wire:model="filterStatus" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
                     <option value="" selected="selected">Semua Status</option>
                     <option value="1">Pending</option>

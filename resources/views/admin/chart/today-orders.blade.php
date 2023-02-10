@@ -16,22 +16,21 @@
                     data: {
                         labels: this.labels,
                         datasets: [
-                        {
-                            label: 'Selesai',
-                            data: this.ordersFinished,
-                            backgroundColor: 'lightgray',
-                        },
-                        {
-                            label: 'Aktif',
-                            data: this.ordersActive,
-                            backgroundColor: 'lightgreen'
-                        },
-                        {
-                            label: 'Pending',
-                            data: this.ordersPending,
-                            backgroundColor: 'orange'
-                        },
-
+                            {
+                                label: 'Selesai',
+                                data: this.ordersFinished,
+                                backgroundColor: '#60a5fa',
+                            },
+                            {
+                                label: 'Aktif',
+                                data: this.ordersActive,
+                                backgroundColor: '#22c55e'
+                            },
+                            {
+                                label: 'Pending',
+                                data: this.ordersPending,
+                                backgroundColor: '#fbbf24'
+                            },
                         ]
                     },
                     options: {

@@ -49,6 +49,8 @@ class ThisMonthOrders extends Component
             $this->datasets[] = [
                 'label' => $midwife,
                 'data' => $data,
+                'cubicInterpolationMode' => 'monotone',
+                'tension' => 0.2
             ];
         }
 
