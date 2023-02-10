@@ -8,6 +8,7 @@ module.exports = {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/**/*.blade.php',
+        './vendor/filament/**/*.blade.php',
     ],
     safelist: [
         'grid-cols-[70px,repeat(6,200px)]',
@@ -165,6 +166,10 @@ module.exports = {
                 'bunababy-400': '#B95CC7',
                 'bunababy-500': '#D9969D',
                 'bunababy-600': '#A5586A',
+                danger: colors.rose,
+                primary: colors.blue,
+                success: colors.green,
+                warning: colors.yellow,
             },
             maxWidth: {
                 '8xl': '90rem',

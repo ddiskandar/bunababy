@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Treatments;
 
 use App\Models\Treatment;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,7 +14,6 @@ class ManageTreatments extends Component
     public $perPage = 3;
 
     public $showDialog = false;
-    public $successMessage = false;
 
     public $filterSearch;
     public $filterCategory;
@@ -107,18 +107,21 @@ class ManageTreatments extends Component
         );
 
         $this->showDialog = false;
-        $this->successMessage = true;
+        Notification::make()
+            ->title('Saved successfully')
+            ->success()
+            ->send();
     }
 
     public function render()
     {
         $treatments = Treatment::query()
-            ->where(function($query){
+            ->where(function ($query) {
                 $query
-                ->where('name', 'LIKE', '%' . $this->filterSearch . '%')
-                ->orWhere('desc', 'LIKE', '%' . $this->filterSearch . '%')
-                ->orWhere('price', 'LIKE', '%' . $this->filterSearch . '%')
-                ->orWhere('duration', 'LIKE', '%' . $this->filterSearch . '%');
+                    ->where('name', 'LIKE', '%' . $this->filterSearch . '%')
+                    ->orWhere('desc', 'LIKE', '%' . $this->filterSearch . '%')
+                    ->orWhere('price', 'LIKE', '%' . $this->filterSearch . '%')
+                    ->orWhere('duration', 'LIKE', '%' . $this->filterSearch . '%');
             })
             ->Where('category_id', 'LIKE', '%' . $this->filterCategory . '%')
             ->Where('active', 'LIKE', '%' . $this->filterStatus . '%')

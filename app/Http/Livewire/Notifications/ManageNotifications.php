@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Notifications;
 
+use Filament\Notifications\Notification as NotificationsNotification;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Notification;
 use Livewire\Component;
@@ -14,7 +15,6 @@ class ManageNotifications extends Component
     public $perPage = 8;
 
     public $showDialog = false;
-    public $successMessage = false;
 
     public $filterStatus;
     public $filterSearch;
@@ -63,7 +63,7 @@ class ManageNotifications extends Component
     public function markAsUnRead($notificationId)
     {
         $notification = DatabaseNotification::findOrFail($notificationId);
-        $notification->update(['read_at' => NULL ]);
+        $notification->update(['read_at' => NULL]);
         $this->emit('refreshSidebar');
     }
 
@@ -76,16 +76,19 @@ class ManageNotifications extends Component
 
     public function deleteSelectedNotificatons()
     {
-        foreach($this->selectedNotifications as $notification => $boolean){
-            if($boolean) {
+        foreach ($this->selectedNotifications as $notification => $boolean) {
+            if ($boolean) {
                 $notification = DatabaseNotification::find($notification);
                 $notification->delete();
             }
         }
 
         $this->selectedNotifications = '';
+        NotificationsNotification::make()
+            ->title('Saved successfully')
+            ->success()
+            ->send();
         $this->emit('refreshSidebar');
-        $this->successMessage = true;
     }
 
     public function save()
@@ -98,7 +101,7 @@ class ManageNotifications extends Component
 
     public function render()
     {
-        if($this->filterStatus == 'unread') {
+        if ($this->filterStatus == 'unread') {
             $query = auth()->user()->unreadNotifications();
         } else if ($this->filterStatus == 'read') {
             $query = auth()->user()->readNotifications();

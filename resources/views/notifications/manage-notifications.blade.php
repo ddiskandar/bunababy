@@ -329,10 +329,6 @@
     </div>
     <!-- END Card -->
 
-    <x-notification wire:model="successMessage">
-        Notifications deleted!
-    </x-notification>
-
     <x-dialog wire:model="showDialog">
 
         <x-title>Data Treatment</x-title>

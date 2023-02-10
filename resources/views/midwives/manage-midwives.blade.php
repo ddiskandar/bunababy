@@ -146,10 +146,6 @@
     </div>
     <!-- END Card -->
 
-    <x-notification wire:model="successMessage">
-        Data berhasil disimpan
-    </x-notification>
-
     <x-dialog wire:model="showDialog">
 
         <x-title>Data Treatment</x-title>

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Payments;
 
 use App\Models\Order;
 use App\Models\Payment;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -71,7 +72,7 @@ class ManagePayments extends Component
     {
         $this->validate();
 
-        if(isset($this->state['value']) && ! is_numeric(str_replace('.', '', $this->state['value']))){
+        if (isset($this->state['value']) && !is_numeric(str_replace('.', '', $this->state['value']))) {
             return $this->setErrorBag(['state.value' => 'Besar pembayaran harus berupa nilai angka.']);
         }
 
@@ -94,7 +95,12 @@ class ManagePayments extends Component
         ]);
 
         $this->showDialog = false;
-        $this->successMessage = true;
+
+        Notification::make()
+            ->title('Saved successfully')
+            ->success()
+            ->send();
+
         $this->emit('saved');
     }
 
@@ -102,14 +108,14 @@ class ManagePayments extends Component
     {
         $payments = Payment::query()
             ->latest()
-            ->where(function($query){
+            ->where(function ($query) {
                 $query->where('value', 'LIKE', '%' . $this->filterSearch . '%')
-                ->orWhereHas('order', function ($query){
-                    $query->where('no_reg', 'LIKE', '%' . $this->filterSearch . '%')
-                    ->orWhereHas('client', function ($query){
-                        $query->where('name', 'LIKE', '%' . $this->filterSearch . '%');
+                    ->orWhereHas('order', function ($query) {
+                        $query->where('no_reg', 'LIKE', '%' . $this->filterSearch . '%')
+                            ->orWhereHas('client', function ($query) {
+                                $query->where('name', 'LIKE', '%' . $this->filterSearch . '%');
+                            });
                     });
-                });
             })
             ->where('status', 'LIKE', '%' . $this->filterStatus)
             ->with(

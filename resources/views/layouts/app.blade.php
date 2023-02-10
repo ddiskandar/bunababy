@@ -23,7 +23,7 @@
     <body class="font-sans antialiased">
         <div
             id="page-container"
-            class="flex flex-col mx-auto w-full min-h-screen bg-gray-100"
+            class="flex flex-col w-full min-h-screen mx-auto bg-gray-100"
             x-data="{ userDropdownOpen: false, mobileSidebarOpen: false, desktopSidebarOpen: true }"
             x-bind:class="{ 'lg:pl-64' : desktopSidebarOpen }"
         >
@@ -43,5 +43,6 @@
 
         @stack('scripts')
         @livewireScripts
+        @livewire('notifications')
     </body>
 </html>

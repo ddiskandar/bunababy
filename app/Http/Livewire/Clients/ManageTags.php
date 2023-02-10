@@ -3,12 +3,12 @@
 namespace App\Http\Livewire\Clients;
 
 use App\Models\Tag;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 
 class ManageTags extends Component
 {
     public $showDialog = false;
-    public $successMessage = false;
 
     public $filterStatus;
 
@@ -32,7 +32,7 @@ class ManageTags extends Component
         $this->state['active'] = true;
     }
 
-    public function showEditTagDialog( Tag $tag)
+    public function showEditTagDialog(Tag $tag)
     {
         $this->state = $tag->toArray();
         $this->showDialog = true;
@@ -54,7 +54,10 @@ class ManageTags extends Component
         );
 
         $this->showDialog = false;
-        $this->successMessage = true;
+        Notification::make()
+            ->title('Saved successfully')
+            ->success()
+            ->send();
     }
 
     public function render()

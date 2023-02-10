@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Timetables;
 use App\Models\Timetable;
 use App\Models\User;
 use Carbon\Carbon;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -16,7 +17,6 @@ class ManageTimetables extends Component
     public $midwives;
 
     public $showDialog = false;
-    public $successMessage = false;
 
     public $filterSearch;
     public $filterType;
@@ -113,7 +113,10 @@ class ManageTimetables extends Component
         );
 
         $this->showDialog = false;
-        $this->successMessage = true;
+        Notification::make()
+            ->title('Saved successfully')
+            ->success()
+            ->send();
     }
 
     public function delete(Timetable $timetable)

@@ -138,10 +138,6 @@
     </div>
     <!-- END Card -->
 
-    <x-notification wire:model="showSuccessMessage">
-        Data berhasil disimpan
-    </x-notification>
-
     <x-dialog wire:model="showDialog">
 
         <x-title>Data Kecamatan</x-title>

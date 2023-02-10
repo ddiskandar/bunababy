@@ -4,12 +4,12 @@ namespace App\Http\Livewire\Treatments;
 
 use App\Models\Category;
 use App\Models\Treatment;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 
 class ManageCategories extends Component
 {
     public $showDialog = false;
-    public $successMessage = false;
 
     public $filterStatus;
 
@@ -36,7 +36,7 @@ class ManageCategories extends Component
         $this->state['active'] = true;
     }
 
-    public function ShowEditCategoryDialog( Category $category)
+    public function ShowEditCategoryDialog(Category $category)
     {
         $this->state = $category->toArray();
         $this->showDialog = true;
@@ -59,7 +59,10 @@ class ManageCategories extends Component
         );
 
         $this->showDialog = false;
-        $this->successMessage = true;
+        Notification::make()
+            ->title('Saved successfully')
+            ->success()
+            ->send();
     }
 
     public function render()

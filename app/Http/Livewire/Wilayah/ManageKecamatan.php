@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Wilayah;
 
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,7 +15,6 @@ class ManageKecamatan extends Component
     public $perPage = 8;
 
     public $showDialog = false;
-    public $showSuccessMessage = false;
 
     public $filterSearch;
     public $filterKabupaten;
@@ -71,7 +71,7 @@ class ManageKecamatan extends Component
         $this->state['active'] = true;
     }
 
-    public function ShowEditKecamatanDialog( Kecamatan $kecamatan )
+    public function ShowEditKecamatanDialog(Kecamatan $kecamatan)
     {
         $this->state = $kecamatan->toArray();
         $this->showDialog = true;
@@ -94,16 +94,19 @@ class ManageKecamatan extends Component
         );
 
         $this->showDialog = false;
-        $this->showSuccessMessage = true;
+        Notification::make()
+            ->title('Saved successfully')
+            ->success()
+            ->send();
     }
 
     public function render()
     {
         $kecamatan = Kecamatan::query()
-            ->where(function($query){
+            ->where(function ($query) {
                 $query
-                ->where('name', 'LIKE', '%' . $this->filterSearch . '%')
-                ->orWhere('distance', 'LIKE', '%' . $this->filterSearch . '%');
+                    ->where('name', 'LIKE', '%' . $this->filterSearch . '%')
+                    ->orWhere('distance', 'LIKE', '%' . $this->filterSearch . '%');
             })
             ->Where('kabupaten_id', 'LIKE', '%' . $this->filterKabupaten . '%')
             ->Where('active', 'LIKE', '%' . $this->filterStatus . '%')

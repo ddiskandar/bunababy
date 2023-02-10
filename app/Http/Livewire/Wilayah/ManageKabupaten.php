@@ -4,12 +4,12 @@ namespace App\Http\Livewire\Wilayah;
 
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 
 class ManageKabupaten extends Component
 {
     public $showDialog = false;
-    public $successMessage = false;
 
     public $filterStatus;
 
@@ -34,7 +34,7 @@ class ManageKabupaten extends Component
         $this->state['active'] = true;
     }
 
-    public function ShowEditKabupatenDialog( Kabupaten $kabupaten)
+    public function ShowEditKabupatenDialog(Kabupaten $kabupaten)
     {
         $this->state = $kabupaten->toArray();
         $this->showDialog = true;
@@ -55,7 +55,10 @@ class ManageKabupaten extends Component
         );
 
         $this->showDialog = false;
-        $this->showSuccessMessage = true;
+        Notification::make()
+            ->title('Saved successfully')
+            ->success()
+            ->send();
     }
 
     public function render()

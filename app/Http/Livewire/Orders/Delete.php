@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Orders;
 use App\Models\Order;
 use App\Models\User;
 use App\Notifications\OrderDeleted;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 
 class Delete extends Component
@@ -37,9 +38,15 @@ class Delete extends Component
 
         $owner = User::where('type', User::OWNER)->first();
 
-        $owner->notify( new OrderDeleted( auth()->user(), $this->order, $this->note));
+        $owner->notify(new OrderDeleted(auth()->user(), $this->order, $this->note));
 
         $this->order->delete();
+
+        Notification::make()
+            ->title('Saved successfully')
+            ->success()
+            ->send();
+
         return to_route('orders');
     }
 
