@@ -11,12 +11,11 @@ $id = $id ?? md5($attributes->wire('model'));
     x-on:keydown.escape.window="show = false"
     x-show="show"
     id="{{ $id }}"
-    x-trap.noscroll="show"
     class="fixed inset-0 overflow-y-auto z-90 " aria-labelledby="modal-title" role="dialog" aria-modal="true"
     style="display: none !important;"
     >
     <div
-        x-show = "show"
+        x-show="show"
         class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
         <div
             x-show="show"
@@ -30,7 +29,7 @@ $id = $id ?? md5($attributes->wire('model'));
             role="dialog"
             aria-labelledby="tk-modal-simple"
             x-bind:aria-hidden="!show"
-            class="fixed inset-0 backdrop-blur backdrop-brightness-75 transition" aria-hidden="true">
+            class="fixed inset-0 transition backdrop-blur backdrop-brightness-75" aria-hidden="true">
         </div>
 
         <!-- This element is to trick the browser into centering the modal contents. -->
