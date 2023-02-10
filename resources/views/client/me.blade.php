@@ -1,7 +1,7 @@
 <x-client-layout>
     <div class="relative max-w-screen-sm min-h-screen mx-auto my-0">
         <div class="sticky top-0 z-20">
-            <div class="py-3 bg-white border-b  border-bunababy-50">
+            <div class="py-3 bg-white border-b border-bunababy-50">
                 <div class="flex items-center justify-between px-6 mx-auto">
                     <div>
                         <a href="/"><img src="/images/logo.svg" alt="Logo"></a>
@@ -90,7 +90,7 @@
             </div>
 
             <div>
-                <p class="text-sm text-center text-slate-400">Copyright 2022 Bunababycare. All Rights Reserved</p>
+                <p class="text-sm text-center text-slate-400">Copyright 2023 Bunababycare. All Rights Reserved</p>
             </div>
         </div>
 

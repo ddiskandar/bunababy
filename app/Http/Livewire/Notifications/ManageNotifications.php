@@ -2,9 +2,8 @@
 
 namespace App\Http\Livewire\Notifications;
 
-use Filament\Notifications\Notification as NotificationsNotification;
+use Filament\Notifications\Notification;
 use Illuminate\Notifications\DatabaseNotification;
-use Illuminate\Support\Facades\Notification;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -71,6 +70,10 @@ class ManageNotifications extends Component
     {
         $notification = DatabaseNotification::findOrFail($notificationId);
         $notification->delete();
+        Notification::make()
+            ->title('Deleted successfully')
+            ->success()
+            ->send();
         $this->emit('refreshSidebar');
     }
 
@@ -84,7 +87,8 @@ class ManageNotifications extends Component
         }
 
         $this->selectedNotifications = '';
-        NotificationsNotification::make()
+
+        Notification::make()
             ->title('Saved successfully')
             ->success()
             ->send();
@@ -96,7 +100,6 @@ class ManageNotifications extends Component
         $this->validate();
 
         $this->showDialog = false;
-        $this->successMessage = true;
     }
 
     public function render()
