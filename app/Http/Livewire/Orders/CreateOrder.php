@@ -20,7 +20,9 @@ class CreateOrder extends Component
     public $date;
     public $time;
     public $kecamatan;
+    public $kecamatans;
     public $client;
+    public $clients;
     public $midwives;
     public $data;
 
@@ -65,11 +67,13 @@ class CreateOrder extends Component
         $this->clients = User::query()
             ->where('type', User::CLIENT)
             ->active()
+            ->with('profile')
             ->orderBy('name')
             ->get();
 
         $this->midwives = User::query()
             ->where('type', User::MIDWIFE)
+            ->with('profile')
             ->active()
             ->orderBy('name')
             ->get();

@@ -95,6 +95,16 @@ class ManageNotifications extends Component
         $this->emit('refreshSidebar');
     }
 
+    public function deleteAllNotifications()
+    {
+        auth()->user()->notifications()->delete();
+        Notification::make()
+            ->title('All Notifications deleted successfully')
+            ->success()
+            ->send();
+        $this->emit('refreshSidebar');
+    }
+
     public function save()
     {
         $this->validate();

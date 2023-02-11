@@ -3,10 +3,17 @@
     <div class="flex flex-col overflow-hidden bg-white rounded shadow-sm">
         <!-- Card Header -->
         <div class="w-full py-3 pl-6 pr-3 bg-gray-50 sm:flex sm:justify-between sm:items-center">
-            <div class="flex items-center">
+            <div class="flex items-center justify-between md:justify-start">
                 <h3 class="font-semibold">
                     Notifikasi
                 </h3>
+                @if (auth()->user()->isOwner())
+                    <button wire:click="deleteAllNotifications" onclick="confirm('Yakin semua notifikasi mau dihapus?') || event.stopImmediatePropagation()"
+                        class="ml-4 text-sm text-gray-400"
+                    >
+                        Hapus Semua
+                    </button>
+                @endif
             </div>
             <div class="flex flex-col gap-2 mt-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-end">
 
