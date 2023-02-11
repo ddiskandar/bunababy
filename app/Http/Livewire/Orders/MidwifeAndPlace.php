@@ -28,6 +28,7 @@ class MidwifeAndPlace extends Component
         'state.rw' => 'required|numeric|min:1|max:255',
         'state.desa' => 'required|string|min:2|max:32',
         'state.note' => 'nullable|string|min:2|max:255',
+        'state.share_location' => 'nullable|string|min:2|max:512',
         'state.kecamatan_id' => 'required|exists:kecamatans,id',
     ];
 
@@ -39,6 +40,7 @@ class MidwifeAndPlace extends Component
         'state.desa' => 'Desa',
         'state.kecamatan_id' => 'Kecamatan',
         'state.note' => 'Catatan',
+        'state.share_location' => 'Google Maps',
     ];
 
     protected $listeners = ['saved' => '$refresh'];
@@ -54,7 +56,7 @@ class MidwifeAndPlace extends Component
 
     public function updatedMidwifeId()
     {
-        if($this->midwifeId == NULL){
+        if ($this->midwifeId == NULL) {
             return back();
         }
 
@@ -74,7 +76,7 @@ class MidwifeAndPlace extends Component
 
         $duration = DB::table('options')->first()->transport_duration;
 
-        if($this->place == Order::PLACE_CLINIC){
+        if ($this->place == Order::PLACE_CLINIC) {
             $this->order->update([
                 'total_transport' => 0,
                 'total_duration' => 0,
@@ -82,7 +84,7 @@ class MidwifeAndPlace extends Component
             ]);
         }
 
-        if($this->place == Order::PLACE_CLIENT) {
+        if ($this->place == Order::PLACE_CLIENT) {
             $this->order->update([
                 'total_duration' => $duration,
                 'end_datetime' => $this->order->end_datetime->addMinutes($duration),
@@ -100,12 +102,11 @@ class MidwifeAndPlace extends Component
 
         // TRANSPORT ALGO
 
-        if($this->place == Order::PLACE_CLINIC)
-        {
+        if ($this->place == Order::PLACE_CLINIC) {
             return 0;
         }
 
-        if($this->order->address->kecamatan->distance < 4) {
+        if ($this->order->address->kecamatan->distance < 4) {
             $transport = 40000;
         } else {
             $transport = 40000 + (session('order.kecamatan_distance') * 5000);
@@ -149,12 +150,12 @@ class MidwifeAndPlace extends Component
                 'rw' => $this->state['rw'],
                 'desa' => $this->state['desa'],
                 'note' => $this->state['note'] ?? '',
+                'share_location' => $this->state['share_location'] ?? '',
             ]
         );
 
         $this->emit('saved');
         $this->showDialog = false;
-
     }
 
     public function render()

@@ -1521,6 +1521,10 @@ select {
 .h-screen {
   height: 100vh;
 }
+.h-fit {
+  height: -moz-fit-content;
+  height: fit-content;
+}
 .max-h-0 {
   max-height: 0px;
 }
@@ -1688,6 +1692,9 @@ select {
 }
 .shrink-0 {
   flex-shrink: 0;
+}
+.flex-grow {
+  flex-grow: 1;
 }
 .grow {
   flex-grow: 1;
@@ -2548,6 +2555,10 @@ select {
 .bg-blue-400\/20 {
   background-color: rgb(96 165 250 / 0.2);
 }
+.bg-black {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
 .bg-opacity-10 {
   --tw-bg-opacity: 0.1;
 }
@@ -2699,6 +2710,10 @@ select {
 .py-8 {
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+.py-24 {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
 }
 .pb-1 {
   padding-bottom: 0.25rem;
