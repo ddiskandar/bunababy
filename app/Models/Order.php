@@ -169,7 +169,7 @@ class Order extends Model
 
     public function numberStartTime()
     {
-        return session('order.place') . session('order.midwife_user_id') . session('order.start_time')[0] . session('order.start_time')[1] . session('order.start_time')[3] . session('order.start_time')[4];
+        return session('order.place') . sprintf('%02d', session('order.midwife_user_id')) . session('order.start_time')[0] . session('order.start_time')[1] . session('order.start_time')[3] . session('order.start_time')[4];
     }
 
     public function getNoReg()
@@ -186,14 +186,16 @@ class Order extends Model
     {
         // TRANSPORT ALGO
 
+        $options = DB::table('options')->select(['transport_base_amount', 'transport_per_km'])->first();
+
         if (session('order.place') == Order::PLACE_CLINIC) {
             return 0;
         }
 
         if (session('order.kecamatan_distance') < 4) {
-            return 40000;
+            return $options->transport_base_amount;
         } else {
-            return 40000 + (session('order.kecamatan_distance') * 5000);
+            return $options->transport_base_amount + (session('order.kecamatan_distance') * $options->transport_per_km);
         }
     }
 
