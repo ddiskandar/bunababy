@@ -3,7 +3,7 @@
         <div class="md:flex">
             <div class="mb-5 md:w-1/3">
                 <h3 class="font-semibold">
-                    <span>Setting</span>
+                    <span>General Settings</span>
                 </h3>
                 <p class="text-sm text-gray-500">
                     {{-- Nomor Rekening Pembayaran --}}
@@ -20,6 +20,16 @@
                         <x-label for="state.transport_duration">Durasi Transport (menit)</x-label>
                         <x-input wire:model.defer="state.transport_duration" class="w-full" type="text" id="state.transport_duration" />
                         <x-input-error for="state.transport_duration" class="mt-2" />
+                    </div>
+                    <div class="space-y-1">
+                        <x-label for="state.transport_base_amount">Transport minimal</x-label>
+                        <x-input wire:model.defer="state.transport_base_amount" class="w-full" type="text" id="state.transport_base_amount" />
+                        <x-input-error for="state.transport_base_amount" class="mt-2" />
+                    </div>
+                    <div class="space-y-1">
+                        <x-label for="state.transport_per_km">Transport Per KM</x-label>
+                        <x-input wire:model.defer="state.transport_per_km" class="w-full" type="text" id="state.transport_per_km" />
+                        <x-input-error for="state.transport_per_km" class="mt-2" />
                     </div>
                     <div class="flex items-center">
                         <div>

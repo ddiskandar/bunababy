@@ -57,7 +57,7 @@ class Order extends Model
 
     public function treatments(): BelongsToMany
     {
-        return $this->belongsToMany(Treatment::class)->withPivot('name');
+        return $this->belongsToMany(Treatment::class)->withPivot('family_name', 'treatment_price', 'treatment_duration');
     }
 
     public function scopeInClient($query)
@@ -94,7 +94,7 @@ class Order extends Model
     {
         return $this->status == self::STATUS_FINISHED
             ? 'Selesai'
-            : ( $this->status == self::STATUS_LOCKED
+            : ($this->status == self::STATUS_LOCKED
                 ? 'Aktif'
                 : 'Pending'
             );
@@ -147,12 +147,12 @@ class Order extends Model
 
     public function dp()
     {
-        return $this->getVerifiedPayments() >= $this->getGrandTotal() * 50/100;
+        return $this->getVerifiedPayments() >= $this->getGrandTotal() * 50 / 100;
     }
 
     public function getDpAmount()
     {
-        return $this-> getGrandTotal() / 2;
+        return $this->getGrandTotal() / 2;
     }
 
     public function getRemainingPayment()
@@ -186,12 +186,11 @@ class Order extends Model
     {
         // TRANSPORT ALGO
 
-        if(session('order.place') == Order::PLACE_CLINIC)
-        {
+        if (session('order.place') == Order::PLACE_CLINIC) {
             return 0;
         }
 
-        if(session('order.kecamatan_distance') < 4) {
+        if (session('order.kecamatan_distance') < 4) {
             return 40000;
         } else {
             return 40000 + (session('order.kecamatan_distance') * 5000);
@@ -207,8 +206,7 @@ class Order extends Model
     {
         $default = 0;
 
-        if(session('order.place') == Order::PLACE_CLIENT)
-        {
+        if (session('order.place') == Order::PLACE_CLIENT) {
             $default = DB::table('options')->select('transport_duration')->first()->transport_duration;
         }
         return collect(session('order.treatments'))->sum('treatment_duration') + $default;
@@ -228,5 +226,4 @@ class Order extends Model
     {
         return $this->start_datetime->isoFormat('HH:mm') . ' - ' . $this->end_datetime->isoFormat('HH:mm');
     }
-
 }

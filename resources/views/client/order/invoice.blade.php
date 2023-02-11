@@ -105,17 +105,17 @@
                     <tr class="border-b border-gray-100">
                         <td class="py-1">
                             <p class="font-semibold">
-                                {{ $treatment->pivot->name ?? '#' }} {{ $treatment->name }}
+                                {{ $treatment->pivot->family_name ?? '#' }} {{ $treatment->name }}
                             </p>
                         </td>
                         <td class="py-1 text-center">
                             1
                         </td>
                         <td class="py-1 text-right">
-                            {{ rupiah($treatment->price) }}
+                            {{ rupiah($treatment->pivot->treatment_price) }}
                         </td>
                         <td class="py-1 text-right">
-                            {{ rupiah($treatment->price) }}
+                            {{ rupiah($treatment->pivot->treatment_price) }}
                         </td>
                     </tr>
                     @endforeach
@@ -125,7 +125,7 @@
                         Subtotal
                         </td>
                         <td class="py-2 text-right">
-                            {{ rupiah($order->treatments->sum('price')) }}
+                            {{ rupiah($order->treatments->sum('pivot.treatment_price')) }}
                         </td>
                     </tr>
                     <tr>

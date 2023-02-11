@@ -11,15 +11,15 @@ class OrderController extends Controller
 {
     public function create()
     {
-        if( auth()->check() AND ! auth()->user()->isClient()) {
+        if (auth()->check() and !auth()->user()->isClient()) {
             return redirect()->route('dashboard');
         }
 
-        if( auth()->check() AND is_null(auth()->user()->address)) {
+        if (auth()->check() and is_null(auth()->user()->address)) {
             return redirect('/');
         }
 
-        if( auth()->check() AND (auth()->user()->latestReservation AND ! auth()->user()->latestReservation->isPaid())){
+        if (auth()->check() and (auth()->user()->latestReservation and !auth()->user()->latestReservation->isPaid())) {
             return redirect('/')->with('status', 'Anda masih punya order aktif yang belum dibayar!');
         }
 
@@ -28,15 +28,15 @@ class OrderController extends Controller
 
     public function cart()
     {
-        if(auth()->check() AND ! auth()->user()->isClient()) {
+        if (auth()->check() and !auth()->user()->isClient()) {
             return redirect()->route('dashboard');
         }
 
-        if(auth()->check() ) {
+        if (auth()->check()) {
             session()->put('order.status', 'AuthUser');
         }
 
-        if( session()->missing('order.kecamatan_id') OR session()->missing('order.place') OR session()->missing('order.date')) {
+        if (session()->missing('order.kecamatan_id') or session()->missing('order.place') or session()->missing('order.date')) {
             return redirect()->route('order.create');
         }
 
@@ -51,15 +51,15 @@ class OrderController extends Controller
 
     public function checkout()
     {
-        if(auth()->check() AND ! auth()->user()->isClient()) {
+        if (auth()->check() and !auth()->user()->isClient()) {
             return to_route('dashboard');
         }
 
-        if( session()->missing('order.kecamatan_id') OR session()->missing('order.place') OR session()->missing('order.date') OR session()->missing('order.start_time_id') OR session()->missing('order.treatments') ) {
+        if (session()->missing('order.kecamatan_id') or session()->missing('order.place') or session()->missing('order.date') or session()->missing('order.start_time_id') or session()->missing('order.treatments')) {
             return to_route('order.cart');
         }
 
-        if(auth()->check()){
+        if (auth()->check()) {
 
             $address = auth()->user()->addresses->where('kecamatan_id', session('order.kecamatan_id'))->first();
 
@@ -74,10 +74,11 @@ class OrderController extends Controller
     public function show($no_reg)
     {
         $order = Order::query()
+            ->with('treatments')
             ->where('no_reg', $no_reg)
             ->firstOrFail();
 
-        if(! auth()->check() OR $order->client_user_id != auth()->id() ) {
+        if (!auth()->check() or $order->client_user_id != auth()->id()) {
             return to_route('home');
         }
 

@@ -26,6 +26,7 @@ class SelectTreatments extends Component
 
     public function mount(Order $order)
     {
+        $order->load('treatments');
         $this->order = $order;
     }
 
@@ -59,16 +60,20 @@ class SelectTreatments extends Component
             ->get()
             ->except($this->order->id);
 
-        foreach($orders as $order) {
+        foreach ($orders as $order) {
             if ($order->activeBetween($this->order->start_datetime, $this->order->end_datetime->addMinutes($treatment->duration))->exists()) {
                 session()->flash('treatments', 'Tidak dapat membuat reservasi pada pilihan dan rentang waktu ini, silahkan pilih pada slot waktu yang kosong.');
                 return back();
             }
         }
 
-        $this->order->treatments()->attach($this->treatmentId);
-
         $treatment = Treatment::find($this->treatmentId);
+
+        $this->order->treatments()->attach($this->treatmentId, [
+            'treatment_price' => $treatment->price,
+            'treatment_duration' => $treatment->duration,
+        ]);
+
         $this->order->update([
             'total_duration' => $this->order->total_duration + $treatment->duration,
             'start_datetime' => $this->order->start_datetime,

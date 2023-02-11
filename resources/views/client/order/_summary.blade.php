@@ -43,7 +43,7 @@
                     <div class="truncate text-slate-400 ">
                     </div>
                     <div class="flex justify-between ">
-                        <div>{{ rupiah($treatment->price) }}</div>
+                        <div>{{ rupiah($treatment->pivot->treatment_price) }}</div>
                     </div>
                 </li>
             @endforeach

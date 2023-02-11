@@ -22,6 +22,10 @@ class OptionSeeder extends Seeder
             'phone' => '08997897991',
             'account' => 'BCA 2810417067',
             'account_name' => 'a/n Febrianti Nur Azizah',
+            'timeout' => 60, // minutes
+            'transport_duration' => 40, // minutes
+            'transport_base_amount' => 40000,
+            'transport_per_km' => 5000,
         ]);
     }
 }

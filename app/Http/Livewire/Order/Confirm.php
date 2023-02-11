@@ -19,7 +19,7 @@ class Confirm extends Component
 
     public function orderNow()
     {
-        DB::transaction(function(){
+        DB::transaction(function () {
 
             $order = new Order();
             $order->no_reg = $order->getNoReg();
@@ -32,8 +32,7 @@ class Confirm extends Component
             $order->end_datetime = $order->start_datetime->addMinutes(session('order.addMinutes'));
             $order->status = Order::STATUS_LOCKED;
 
-            if(session('order.place') == Order::PLACE_CLIENT)
-            {
+            if (session('order.place') == Order::PLACE_CLIENT) {
                 $order->total_transport = $order->getTotalTransport();
                 $order->midwife_user_id = session('order.midwife_user_id');
                 $order->address_id = session('order.address_id');
@@ -41,11 +40,12 @@ class Confirm extends Component
 
             $order->save();
 
-            foreach ( collect(session('order.treatments')) as $treatment ) {
-                $order->treatments()->attach(
-                    $treatment['treatment_id'],
-                    ['name' => $treatment['family_name']]
-                );
+            foreach (collect(session('order.treatments')) as $treatment) {
+                $order->treatments()->attach($treatment['treatment_id'], [
+                    'family_name' => $treatment['family_name'],
+                    'treatment_price' => $treatment['treatment_price'],
+                    'treatment_duration' => $treatment['treatment_duration'],
+                ]);
             }
 
             session()->forget('order');

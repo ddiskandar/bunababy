@@ -9,6 +9,7 @@ class OrderInvoiceController extends Controller
 {
     public function __invoke(Order $order)
     {
+        $order->load('treatments');
         $options = DB::table('options')->first();
 
         return view('client.order.invoice', [

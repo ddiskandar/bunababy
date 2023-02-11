@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Profile;
 use App\Models\Testimonial;
+use App\Models\Treatment;
 use App\Models\User;
 use App\Notifications\NewOrder;
 use App\Notifications\NewPayment;
@@ -147,7 +148,12 @@ class DatabaseSeeder extends Seeder
 
             $treatment1 = rand(1, 21);
 
-            $order->treatments()->attach([$treatment1]);
+            $treatment = Treatment::find($treatment1);
+
+            $order->treatments()->attach([$treatment1], [
+                'treatment_price' => $treatment->price,
+                'treatment_duration' => $treatment->duration,
+            ]);
 
             $totalDuration = $order->total_duration + $order->treatments()->sum('duration');
 
@@ -214,7 +220,12 @@ class DatabaseSeeder extends Seeder
 
             $treatment1 = rand(1, 21);
 
-            $order->treatments()->attach([$treatment1]);
+            $treatment = Treatment::find($treatment1);
+
+            $order->treatments()->attach([$treatment1], [
+                'treatment_price' => $treatment->price,
+                'treatment_duration' => $treatment->duration,
+            ]);
 
             $totalDuration = $order->total_duration + $order->treatments()->sum('duration');
 
@@ -286,7 +297,12 @@ class DatabaseSeeder extends Seeder
 
             $treatment1 = rand(1, 21);
 
-            $order->treatments()->attach([$treatment1]);
+            $treatment = Treatment::find($treatment1);
+
+            $order->treatments()->attach([$treatment1], [
+                'treatment_price' => $treatment->price,
+                'treatment_duration' => $treatment->duration,
+            ]);
 
             $totalDuration = $order->total_duration + $order->treatments()->sum('duration');
 

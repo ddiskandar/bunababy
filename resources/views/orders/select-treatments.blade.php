@@ -17,8 +17,8 @@
                                         <div>{{ $treatment->category->name }}</div>
                                     </div>
                                     <div>
-                                        <div class="font-semibold">{{ rupiah($treatment->price) }}</div>
-                                        <div>{{ $treatment->duration }} menit</div>
+                                        <div class="font-semibold">{{ rupiah($treatment->pivot->treatment_price) }}</div>
+                                        <div>{{ $treatment->pivot->treatment_duration }} menit</div>
                                     </div>
                                 </div>
                                 <button wire:click="delete({{ $treatment->id }})" class="mt-4 text-sm font-semibold text-red-600">Hapus</button>
