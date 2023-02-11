@@ -9,6 +9,8 @@
             @livewire('orders.payments', [$order->id])
         @endif
 
+            @livewire('admin.orders.screening', [$order->id])
+
         @if (now()->isAfter($order->start_datetime))
             @livewire('orders.set-status', [$order->id])
         @endif
