@@ -137,6 +137,14 @@
                         </td>
                     </tr>
                     <tr>
+                        <td colspan="3" class="py-2 font-semibold text-right">
+                            Aditional
+                        </td>
+                        <td class="py-2 text-right">
+                            {{ rupiah($order->additional) }}
+                        </td>
+                    </tr>
+                    <tr>
                         <td colspan="3" class="py-2 font-bold text-right uppercase border-y border-bunababy-50">
                             Total Tagihan
                         </td>

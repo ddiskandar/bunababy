@@ -62,6 +62,13 @@
                 </div>
             </li>
 
+            <li class="py-2 text-sm ">
+                <div class="flex justify-between py-2">
+                    <div>Additional</div>
+                    <div>{{ rupiah($order->additional) }}</div>
+                </div>
+            </li>
+
             <li class="py-2 text-sm font-semibold">
                 <div class="flex justify-between py-2">
                     <div>Total Tagihan</div>
