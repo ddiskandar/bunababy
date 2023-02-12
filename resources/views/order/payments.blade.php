@@ -131,7 +131,7 @@
                                     <div class="py-4">
                                         <label class="block space-y-1">
                                             <x-label  >Pilih file</x-label>
-                                            <input wire:model.defer="attachment" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100" type="file" id="photo" name="photo">
+                                            <input wire:model.defer="attachment" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100" type="file" accept="image/*" id="photo" name="photo">
                                         </label>
                                         <p class="mt-2 text-xs">File Photo Maksimal 1024 Kb.</p>
                                         <x-input-error for="attachment" class="mt-2" />
