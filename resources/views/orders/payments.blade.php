@@ -137,6 +137,7 @@
 
         <div class="py-4">
             <button
+                wire:loading.attr="disabled"
                 wire:click="save"
                 type="button"
                 class="block w-full py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Orders;
 
 use App\Models\Order;
 use App\Models\Payment;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -24,7 +25,7 @@ class Payments extends Component
     protected $rules = [
         'state.status' => 'required|in:1,2,3',
         'state.value' => 'required|numeric',
-        'state.attachment' => 'nullable|image|max:1024',
+        // 'state.attachment' => 'nullable|image|max:1024',
         'state.note' => 'nullable|max:64',
     ];
 
@@ -72,6 +73,7 @@ class Payments extends Component
     public function save()
     {
         $this->validate();
+        // dd('here');
 
         DB::transaction(function () {
             Payment::updateOrCreate(
@@ -94,7 +96,10 @@ class Payments extends Component
         });
 
         $this->showDialog = false;
-        $this->successMessage = true;
+        Notification::make()
+            ->title('Saved successfully')
+            ->success()
+            ->send();
         $this->emit('saved');
     }
 
