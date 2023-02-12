@@ -86,13 +86,13 @@ class ManageTestimonials extends Component
     public function render()
     {
         $testimonials = Testimonial::query()
-            ->where(function($query){
+            ->where(function ($query) {
                 $query->whereHas('order', function ($query) {
-                    $query->whereHas('client', function($query){
+                    $query->whereHas('client', function ($query) {
                         $query->where('name', 'LIKE', '%' . $this->filterSearch . '%');
                     })->orWhere('no_reg', 'LIKE', '%' . $this->filterSearch . '%');
                 })
-                ->orWhere('description', 'LIKE', '%' . $this->filterSearch . '%');
+                    ->orWhere('description', 'LIKE', '%' . $this->filterSearch . '%');
             })
             ->whereHas('order', function ($query) {
                 $query->where('midwife_user_id', 'LIKE', '%' . $this->filterMidwife . '%');
@@ -104,6 +104,7 @@ class ManageTestimonials extends Component
                 'order.client',
                 'order.client.profile:user_id,photo'
             )
+            ->latest()
             ->paginate($this->perPage);
 
         $midwives = \DB::table('users')->where('type', User::MIDWIFE)->get();

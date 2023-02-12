@@ -78,6 +78,10 @@
                         x-on:click="open = ! open"
                     >+ Upload Bukti</button>
 
+                    <div class="py-6 text-xs text-center text-slate-600">
+                        Bila kesulitan upload bukti transfer melalui aplikasi ini, silahkan dapat <a href="https://api.whatsapp.com/send?phone={{ to_wa_indo(\DB::table('options')->select('phone')->first()->phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+{{ auth()->user()->name ?? '' }}.+Mau+mengirim+bukti+transfer." class="font-semibold text-bunababy-200">mengirimkan ke Admin lewat WA.</a>
+                    </div>
+
                     <!-- Modal -->
                     <div
                     x-show="open"
@@ -85,7 +89,7 @@
                     class="fixed inset-0 overflow-y-auto z-90 " aria-labelledby="modal-title" role="dialog" aria-modal="true"
                     >
                         <div
-                            x-show = "open"
+                            x-show="open"
                             class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
                             <div
                                 x-show="open"
@@ -126,14 +130,13 @@
 
                                 <div class="px-4 pt-5 pb-4 overflow-hidden bg-white rounded-lg shadow-xl sm:p-6 sm:pb-4">
                                     <form wire:submit.prevent="upload">
-
-                                        <x-title>Upload bukti transfer</x-title>
+                                    <x-title>Upload bukti transfer</x-title>
                                     <div class="py-4">
                                         <label class="block space-y-1">
-                                            <x-label  >Pilih file</x-label>
+                                            <x-label>Pilih file</x-label>
                                             <input wire:model.defer="attachment" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100" type="file" accept="image/*" id="photo" name="photo">
                                         </label>
-                                        <p class="mt-2 text-xs">File Photo Maksimal 1024 Kb.</p>
+                                        <p class="mt-2 text-xs">File Photo Maksimal 512 Kb.</p>
                                         <x-input-error for="attachment" class="mt-2" />
                                     </div>
                                     <div class="py-4 space-y-1">
@@ -144,8 +147,9 @@
 
                                     <div class="py-4">
                                         <button
+                                            wire:loading.attr="disabled"
                                             type="submit"
-                                            class="block w-full py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
+                                            class="block w-full py-2 text-center text-white rounded-full shadow-xl disabled:opacity-60 bg-bunababy-200 shadow-bunababy-100/50"
                                         >Upload Bukti</button>
                                     </div>
 

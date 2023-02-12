@@ -104,9 +104,9 @@
                 </dt>
                 <dd class="mt-1 text-gray-900">
                     <div>{{ $order->address->full_address ?? '-' }}</div>
-                    <div class="text-sm">{{ $order->address->note ?? '' }}</div>
+                    <div class="py-2">{{ $order->address->note ?? '' }}</div>
                     @if (isset($order->address->share_location))
-                        <a href="{{ $order->address->share_location }}" class="flex items-center  text-bunababy-200" target="_blank">
+                        <a href="{{ $order->address->share_location }}" class="flex items-center text-bunababy-200" target="_blank">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path d="M18 6l0 .01"></path>

@@ -4,7 +4,7 @@
     <div class="rounded shadow-xl shadow-bunababy-100/20">
         @if (session('order.place') == 1)
             <div class="py-4">
-                <div class="leading-loose mb-2 text-sm font-semibold">
+                <div class="mb-2 text-sm font-semibold leading-loose">
                     Bidan
                 </div>
                 <div class="flex items-center">
@@ -15,7 +15,7 @@
             @endif
 
             <div class="py-4">
-                <div class="leading-loose mb-2 text-sm font-semibold">
+                <div class="mb-2 text-sm font-semibold leading-loose">
                     Tempat
                 </div>
                 <label class="flex items-center">
@@ -33,21 +33,21 @@
             </div>
 
             <div class="py-4">
-                <div class="leading-loose mb-2 text-sm font-semibold">
+                <div class="mb-2 text-sm font-semibold leading-loose">
                     Tanggal dan Waktu
                 </div>
                 <div>
                     <div class="font-semibold">{{ $data['date'] }}</div>
                     @if (session()->has('order.treatments'))
                         <div class="text-sm opacity-80">{{ $data['time']  }} ( {{ session('order.addMinutes') }} menit )</div>
-                        <div class="text-xs opacity-80">*Durasi waktu sudah ditambah dengan mobilisasi bidan 40 menit</div>
+                        <div class="text-xs opacity-80">*Durasi waktu sudah ditambah dengan perjalanan bidan 40 menit</div>
                     @endif
                 </div>
             </div>
 
             @if (session()->has('order.treatments'))
             <div class="pt-4">
-                <div class="leading-loose mb-2 text-sm font-semibold">
+                <div class="mb-2 text-sm font-semibold leading-loose">
                     Treatment
                 </div>
                 <ul class="-mt-4 divide-y divide-bunababy-50">
@@ -103,12 +103,12 @@
 
                 <x-button-lg wire:click="checkout" wire:loading.attr="disabled">
                     <div class="flex items-center justify-center">
+                        <span class="ml-2 font-semibold">Continue</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevrons-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <polyline points="7 7 12 12 7 17"></polyline>
                             <polyline points="13 7 18 12 13 17"></polyline>
-                         </svg>
-                        <span class="ml-2 font-semibold">Continue</span>
+                        </svg>
                     </div>
                 </x-button-lg>
             </div>

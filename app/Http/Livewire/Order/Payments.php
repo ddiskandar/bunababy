@@ -23,7 +23,7 @@ class Payments extends Component
     public $isLocked;
 
     protected $rules = [
-        'attachment' => 'required|image|max:1024',
+        'attachment' => 'required|image|max:512',
         'value' => 'required',
     ];
 
@@ -38,13 +38,11 @@ class Payments extends Component
 
         $isPaymentsExists = $this->order->payments()->exists();
 
-        if(! $isPaymentsExists)
-        {
+        if (!$isPaymentsExists) {
             $this->value = $order->getDpAmount();
         }
 
-        if($isPaymentsExists)
-        {
+        if ($isPaymentsExists) {
             $this->value = $order->getRemainingPayment();
         }
 
@@ -75,7 +73,7 @@ class Payments extends Component
     {
         $this->validate();
 
-        if(isset($this->value) && ! is_numeric(str_replace('.', '', $this->value))){
+        if (isset($this->value) && !is_numeric(str_replace('.', '', $this->value))) {
             return $this->setErrorBag(['value' => 'Nominal pembayaran harus berupa nilai angka.']);
         }
 
@@ -91,13 +89,12 @@ class Payments extends Component
         $this->isLocked = true;
 
         $admin = User::where('type', User::ADMIN)
-                ->orWhere('type', User::OWNER)
-                ->get();
+            ->orWhere('type', User::OWNER)
+            ->get();
 
         Notification::send($admin, new NewPayment($payment));
 
         $this->render();
-
     }
 
     public function render()

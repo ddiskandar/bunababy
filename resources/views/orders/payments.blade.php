@@ -70,13 +70,12 @@
                             <div class="flex items-center justify-center ">
                                 <div class="font-semibold">{{ $payment->created_at->isoFormat('DD/MM/YYYY HH:mm') }}</div>
                                 <div class="flex items-center justify-center ml-4 ">
-                                    <div class="mr-4">{{ $payment->status() }}</div>
                                     <x-button-icon wire:click="showEditPaymentDialog({{ $payment->id }})">
                                         <x-icon-pencil-alt />
                                     </x-button-icon>
+                                    <div class="ml-4">{{ $payment->status() }}</div>
                                 </div>
                             </div>
-
                             <div class="font-semibold">
                                 {{ rupiah($payment->value) }}
                             </div>

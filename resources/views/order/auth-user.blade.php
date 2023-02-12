@@ -59,6 +59,7 @@
                 {{ auth()->user()->email }}
             </dd>
         </div>
+        @if (isset(auth()->user()->profile->ig))
         <div class="sm:col-span-1">
             <dt class="text-sm font-medium text-gray-500">
                 Ig
@@ -67,6 +68,7 @@
                 {{ auth()->user()->profile->ig }}
             </dd>
         </div>
+        @endif
         @if (isset($address->full_address))
         <div class="sm:col-span-2">
             <dt class="text-sm font-medium text-gray-500">
