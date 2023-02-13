@@ -17,14 +17,18 @@
                 {{ auth()->user()->name }}
             </dd>
         </div>
+
+        @isset(auth()->user()->profile->birth_date->age)
         <div class="sm:col-span-1">
             <dt class="text-sm font-medium text-gray-500">
                 Usia Buna
             </dt>
             <dd class="mt-1 text-sm text-gray-900">
-                {{ auth()->user()->profile->birth_date->age }} tahun
+                {{ auth()->user()->profile->birth_date->age . 'tahun' }}
             </dd>
         </div>
+        @endisset
+
         @isset($baby)
         <div class="sm:col-span-1">
             <dt class="text-sm font-medium text-gray-500">

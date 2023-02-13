@@ -23,7 +23,7 @@ class Payments extends Component
     public $isLocked;
 
     protected $rules = [
-        'attachment' => 'required|image|max:512',
+        'attachment' => 'required|image|max:750',
         'value' => 'required',
     ];
 

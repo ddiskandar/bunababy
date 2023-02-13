@@ -25,7 +25,7 @@
                     </div>
                     <div class="flex items-center">
                         <div  >
-                            <x-button wire:click="save">Simpan</x-button>
+                            <x-button wire:click="save" wire:loading.attr="disabled">Simpan</x-button>
                         </div>
                         <x-action-message class="ml-3" on="saved">
                             {{ __('Berhasil disimpan') }}

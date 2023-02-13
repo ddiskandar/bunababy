@@ -1266,10 +1266,6 @@ select {
   margin-left: 0.75rem;
   margin-right: 0.75rem;
 }
-.mx-8 {
-  margin-left: 2rem;
-  margin-right: 2rem;
-}
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -3301,7 +3297,31 @@ select {
   opacity: .5;
   cursor: not-allowed;
 }
-[x-cloak] { display: none !important; }
+[x-cloak] {
+    display: none !important;
+}
+.filament-notifications-notification {
+  border-radius: 9999px;
+  border-color: transparent;
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 14 156 / var(--tw-bg-opacity));
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.filament-notifications-icon {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.filament-notifications-title {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.filament-notifications-close-button {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
 ::-webkit-scrollbar {
     width: 5px;
     height: 5px;
@@ -3881,14 +3901,14 @@ select {
 .disabled\:opacity-25:disabled {
   opacity: 0.25;
 }
+.disabled\:opacity-60:disabled {
+  opacity: 0.6;
+}
 .disabled\:opacity-70:disabled {
   opacity: 0.7;
 }
 .disabled\:opacity-75:disabled {
   opacity: 0.75;
-}
-.disabled\:opacity-60:disabled {
-  opacity: 0.6;
 }
 .group:hover .group-hover\:visible {
   visibility: visible;
@@ -5604,4 +5624,3 @@ select {
     grid-template-columns: repeat(9, minmax(0, 1fr));
   }
 }
-

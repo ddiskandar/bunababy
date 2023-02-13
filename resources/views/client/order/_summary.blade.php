@@ -62,12 +62,14 @@
                 </div>
             </li>
 
+            @if ($order->additional !== 0)
             <li class="py-2 text-sm ">
                 <div class="flex justify-between py-2">
-                    <div>Additional</div>
+                    <div>Additional Note</div>
                     <div>{{ rupiah($order->additional) }}</div>
                 </div>
             </li>
+            @endif
 
             <li class="py-2 text-sm font-semibold">
                 <div class="flex justify-between py-2">

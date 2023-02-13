@@ -79,7 +79,10 @@
                     >+ Upload Bukti</button>
 
                     <div class="py-6 text-xs text-center text-slate-600">
-                        Bila kesulitan upload bukti transfer melalui aplikasi ini, silahkan dapat <a href="https://api.whatsapp.com/send?phone={{ to_wa_indo(\DB::table('options')->select('phone')->first()->phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+{{ auth()->user()->name ?? '' }}.+Mau+mengirim+bukti+transfer." class="font-semibold text-bunababy-200">mengirimkan ke Admin lewat WA.</a>
+                        Bila kesulitan upload bukti transfer melalui aplikasi ini, silahkan dapat
+                        <a href="https://api.whatsapp.com/send?phone={{ to_wa_indo(\DB::table('options')->select('phone')->first()->phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+{{ auth()->user()->name ?? '' }}.+Mau+mengirim+bukti+transfer+dengan+ID+transaksi+%2A{{ $order->no_reg }}%2A." class="font-semibold text-bunababy-200">
+                            mengirimkan ke Admin lewat WA.
+                        </a>
                     </div>
 
                     <!-- Modal -->
@@ -136,7 +139,7 @@
                                             <x-label>Pilih file</x-label>
                                             <input wire:model.defer="attachment" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100" type="file" accept="image/*" id="photo" name="photo">
                                         </label>
-                                        <p class="mt-2 text-xs">File Photo Maksimal 512 Kb.</p>
+                                        <p class="mt-2 text-xs">File Photo Maksimal 700 Kb.</p>
                                         <x-input-error for="attachment" class="mt-2" />
                                     </div>
                                     <div class="py-4 space-y-1">

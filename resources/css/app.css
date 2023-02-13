@@ -2,7 +2,25 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-[x-cloak] { display: none !important; }
+[x-cloak] {
+    display: none !important;
+}
+
+.filament-notifications-notification {
+    @apply bg-bunababy-200 text-white rounded-full py-2 border-transparent
+}
+
+.filament-notifications-icon {
+    @apply text-white
+}
+
+.filament-notifications-title {
+    @apply text-white
+}
+
+.filament-notifications-close-button {
+    @apply text-white
+}
 
 ::-webkit-scrollbar {
     width: 5px;

@@ -43,8 +43,8 @@ return [
 
     'layout' => [
         'alignment' => [
-            'horizontal' => 'right',
-            'vertical' => 'top',
+            'horizontal' => 'center',
+            'vertical' => 'bottom',
         ],
     ],
 

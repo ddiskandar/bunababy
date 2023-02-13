@@ -30,5 +30,6 @@
         {{ $slot }}
 
         @livewireScripts
+        @livewire('notifications')
     </body>
 </html>
