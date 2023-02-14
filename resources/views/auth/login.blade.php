@@ -6,7 +6,7 @@
             </a>
         </div>
 
-        <div class="w-full px-6 py-4 mt-6 mb-6 overflow-hidden bg-white shadow-md sm:max-w-md sm:rounded-lg">
+        <div class="w-full px-6 py-4 mt-6 mb-6 overflow-hidden bg-white shadow-md sm:max-w-lg sm:rounded-lg">
             <a href="/auth/redirect" class="flex w-full px-4 py-2 mt-4 leading-normal text-center align-middle transition-all duration-300 ease-in border border-solid rounded-md cursor-pointer focus:outline-none focus:text-current text-clrSubText5 bg-clrInverse border-clrBorder01 hover:bg-slate-50 hover:text-clrSubText5" id="button-google">
                 <img src="{{ asset('images/google.svg') }}" alt="google" style="margin: auto 0px; width: 24px; height: 24px;">
                 <span class="m-auto">Masuk dengan Google</span>
@@ -66,7 +66,7 @@
             </form>
         </div>
 
-        <div class="w-full px-6 py-4 mb-6 overflow-hidden text-sm text-center bg-white shadow-md sm:max-w-md sm:rounded-lg">
+        <div class="w-full px-6 py-4 mb-6 overflow-hidden text-sm text-center bg-white shadow-md sm:max-w-lg sm:rounded-lg">
             Belum punya akun? <a href="/register" class="font-semibold text-bunababy-200">Daftar Sekarang</a>
         </div>
     </div>

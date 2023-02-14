@@ -36,12 +36,13 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'dob' => ['required', 'date'],
             'phone' => ['required', 'string', 'min:9', 'max:13'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        DB::transaction( function () use ($request) {
+        DB::transaction(function () use ($request) {
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -49,13 +50,13 @@ class RegisteredUserController extends Controller
             ]);
 
             $user->profile()->create([
+                'dob' => $request->dob,
                 'phone' => $request->phone,
             ]);
 
             event(new Registered($user));
 
             Auth::login($user);
-
         });
 
         return redirect(RouteServiceProvider::HOME);

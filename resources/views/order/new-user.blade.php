@@ -39,9 +39,9 @@
 
                 <!-- Tanggal Lahir -->
                 <div class="col-span-6 xl:col-span-2">
-                    <x-label for="birth_date" :value="__('Tanggal Lahir')" />
-                    <x-input id="birth_date" wire:model.lazy="state.families.{{ $index }}.birth_date" class="block w-full mt-1" type="date" name="birth_date" />
-                    <x-input-error for="state.families.{{ $index }}.birth_date" class="mt-2" />
+                    <x-label for="dob" :value="__('Tanggal Lahir')" />
+                    <x-input id="dob" wire:model.lazy="state.families.{{ $index }}.dob" class="block w-full mt-1" type="date" name="dob" />
+                    <x-input-error for="state.families.{{ $index }}.dob" class="mt-2" />
                 </div>
 
                 <div class="col-span-6 border-b border-bunababy-50"></div>

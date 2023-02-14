@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Client;
 
 use App\Models\Address;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 
 class ManageAddresses extends Component
@@ -10,15 +11,12 @@ class ManageAddresses extends Component
     public $state = [];
 
     public $addresses;
-    public $successMessage = false;
     public $showDialog = false;
     public $dialogEditMode = false;
 
     protected $rules = [
         'state.label' => 'required|string|min:3|max:32',
         'state.address' => 'required|string|min:3|max:255',
-        'state.rt' => 'required|numeric|min:1|max:255',
-        'state.rw' => 'required|numeric|min:1|max:255',
         'state.desa' => 'required|string|min:2|max:32',
         'state.kecamatan_id' => 'required|exists:kecamatans,id',
         'state.note' => 'nullable|string|min:2|max:255',
@@ -26,12 +24,10 @@ class ManageAddresses extends Component
 
     protected $validationAttributes = [
         'state.label' => 'Label alamat',
-        'state.address' => 'Kampung/Jalan',
-        'state.rt' => 'Rt',
-        'state.rw' => 'Rw',
+        'state.address' => 'Alamat lengkap',
         'state.desa' => 'Desa/Kelurahan',
-        'state.note' => 'Catatan',
         'state.kecamatan_id' => 'Kecamatan',
+        'state.note' => 'Catatan',
     ];
 
     protected $listeners = ['saved' => '$refresh'];
@@ -66,10 +62,10 @@ class ManageAddresses extends Component
 
     public function setAsMainAddress($id)
     {
-        foreach($this->addresses as $address){
+        foreach ($this->addresses as $address) {
             $address->update(['is_main' => false]);
 
-            if($address->id == $id){
+            if ($address->id == $id) {
                 $address->update(['is_main' => true]);
             }
         }
@@ -88,19 +84,22 @@ class ManageAddresses extends Component
             [
                 'label' => $this->state['label'],
                 'address' => $this->state['address'],
-                'rt' => $this->state['rt'],
-                'rw' => $this->state['rw'],
                 'desa' => $this->state['desa'],
                 'note' => $this->state['note'] ?? '',
             ]
         );
 
         $addresses = Address::where('client_user_id', auth()->id())->get();
-        if(! $addresses->contains('is_main', 1)){
+        if (!$addresses->contains('is_main', 1)) {
             $address->update(['is_main' => true]);
         }
 
         $this->showDialog = false;
+
+        Notification::make()
+            ->title('Berhasil disimpan')
+            ->success()
+            ->send();
 
         return to_route('client.addresses');
     }

@@ -18,8 +18,6 @@ class CreateAddressesTable extends Migration
             $table->foreignId('client_user_id')->constrained('users')->onDelete('cascade');
             $table->string('label');
             $table->string('address');
-            $table->string('rt')->nullable();
-            $table->string('rw')->nullable();
             $table->string('desa')->nullable();
             $table->foreignId('kecamatan_id')->constrained();
             $table->text('note')->nullable();

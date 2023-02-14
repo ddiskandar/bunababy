@@ -13,7 +13,7 @@ class Profile extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'birth_date' => 'date'
+        'dob' => 'date'
     ];
 
     public function user(): BelongsTo

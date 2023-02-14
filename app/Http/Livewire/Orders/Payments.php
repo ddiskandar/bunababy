@@ -97,7 +97,7 @@ class Payments extends Component
 
         $this->showDialog = false;
         Notification::make()
-            ->title('Saved successfully')
+            ->title('Berhasil disimpan')
             ->success()
             ->send();
         $this->emit('saved');

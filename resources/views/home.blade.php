@@ -151,22 +151,22 @@
             <p>Pantau terus update informasi di Instagram kami</p>
 
             <div class="flex snap-x scroll-pl-4 space-x-4 overflow-x-auto py-6 sm:scroll-pl-6 sm:space-x-8 md:scroll-pl-[calc(50%-20rem)] lg:scroll-pl-[calc(50%-25rem)]">
-                <div class="flex-none max-w-md bg-white shadow-lg snap-start ring-1 ring-slate-900/5 ">
+                <div class="flex-none max-w-lg bg-white shadow-lg snap-start ring-1 ring-slate-900/5 ">
                     <a href="https://www.instagram.com/stories/highlights/17882618056228625/" target="_blank">
                         <img width="250" loading="lazy" src="{{ asset('images/ig/testimoni.png') }}" alt="Testimonial">
                     </a>
                 </div>
-                <div class="flex-none max-w-md bg-white shadow-lg snap-start ring-1 ring-slate-900/5 ">
+                <div class="flex-none max-w-lg bg-white shadow-lg snap-start ring-1 ring-slate-900/5 ">
                     <a href="https://www.instagram.com/stories/highlights/17937494641868866/ " target="_blank">
                         <img width="250" loading="lazy" src="{{ asset('images/ig/onsite.png') }}" alt="Onsite Treatment">
                     </a>
                 </div>
-                <div class="flex-none max-w-md bg-white shadow-lg snap-start ring-1 ring-slate-900/5 ">
+                <div class="flex-none max-w-lg bg-white shadow-lg snap-start ring-1 ring-slate-900/5 ">
                     <a href="https://www.instagram.com/stories/highlights/17943251740153186/" target="_blank">
                         <img width="250" loading="lazy" src="{{ asset('images/ig/about.png') }}" alt="About Us">
                     </a>
                 </div>
-                <div class="flex-none max-w-md bg-white shadow-lg snap-start ring-1 ring-slate-900/5 ">
+                <div class="flex-none max-w-lg bg-white shadow-lg snap-start ring-1 ring-slate-900/5 ">
                     <a href="https://www.instagram.com/stories/highlights/17873498030058934/" target="_blank">
                         <img width="250" loading="lazy" src="{{ asset('images/ig/oil.png') }}" alt="Baby oil">
                     </a>

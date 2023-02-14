@@ -26,24 +26,28 @@
                                                     <svg class="w-5 h-5 ml-2 text-green-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                                 @endif
 
-                                                @if ($address->share_location)
-                                                    <svg class="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24">
-                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 6.75L9.25 4.75V17.25L4.75 19.25V6.75Z"></path>
-                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.75 6.75L19.25 4.75V17.25L14.75 19.25V6.75Z"></path>
-                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.75 6.75L9.25 4.75V17.25L14.75 19.25V6.75Z"></path>
-                                                    </svg>
-                                                @endif
-
                                             </div>
-                                            <div wire:click="showEditAddressDialog({{ $address->id }})">
-                                                <x-button-icon>
-                                                    <x-icon-pencil-alt/>
-                                                </x-button-icon>
+                                            <div class="py-3 text-sm font-semibold text-bunababy-200" wire:click="showEditAddressDialog({{ $address->id }})">
+                                                Edit Alamat
                                             </div>
                                         </div>
 
                                         <div class="text-sm text-left text-gray-600 ">
                                             {{ $address->full_address }}
+                                            <div class="py-2">{{ $address->note ?? '' }}</div>
+                                            @if (isset($address->share_location))
+                                                <a href="{{ $address->share_location }}" class="flex items-center text-bunababy-200" target="_blank">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                        <path d="M18 6l0 .01"></path>
+                                                        <path d="M18 13l-3.5 -5a4 4 0 1 1 7 0l-3.5 5"></path>
+                                                        <path d="M10.5 4.75l-1.5 -.75l-6 3l0 13l6 -3l6 3l6 -3l0 -2"></path>
+                                                        <path d="M9 4l0 13"></path>
+                                                        <path d="M15 15l0 5"></path>
+                                                    </svg>
+                                                    <span class="ml-2">Lihat Share location</span>
+                                                </a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -65,30 +69,20 @@
     </div>
     <x-dialog wire:model="showDialog">
 
-        <x-title>Data Treatment</x-title>
-        <div class="h-64 mt-2 space-y-3 overflow-y-auto">
+        <x-title>Alamat</x-title>
+        <div class="h-64 px-1 mt-2 space-y-3 overflow-y-auto">
             <div class="space-y-1">
                 <x-label for="state.label">Label</x-label>
-                <x-input wire:model.defer="state.label" class="w-full" type="text" id="state.label" />
+                <x-input wire:model.defer="state.label" class="w-full" type="text" id="state.label" placeholder="Contoh: Rumah, Kantor" />
                 <x-input-error for="state.label" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label for="state.address">Kampung/ Jalan</x-label>
-                <x-input wire:model.defer="state.address" class="w-full" type="text" id="state.address" />
+                <x-label for="state.address">Alamat Lengkap</x-label>
+                <x-input wire:model.defer="state.address" class="w-full" type="text" id="state.address" placeholder="Nama jalan, Nomor Rumah, RT/RW"/>
                 <x-input-error for="state.address" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label for="state.rt">Rt</x-label>
-                <x-input wire:model.defer="state.rt" class="w-full" type="number" id="state.rt" />
-                <x-input-error for="state.rt" class="mt-2" />
-            </div>
-            <div class="space-y-1">
-                <x-label for="state.rw">Rw</x-label>
-                <x-input wire:model.defer="state.rw" class="w-full" type="number" id="state.rw" />
-                <x-input-error for="state.rw" class="mt-2" />
-            </div>
-            <div class="space-y-1">
-                <x-label for="state.desa">Desa</x-label>
+                <x-label for="state.desa">Desa/Kelurahan</x-label>
                 <x-input wire:model.defer="state.desa" class="w-full" type="text" id="state.desa" />
                 <x-input-error for="state.desa" class="mt-2" />
             </div>

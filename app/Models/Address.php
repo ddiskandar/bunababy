@@ -28,6 +28,6 @@ class Address extends Model
 
     public function getFullAddressAttribute()
     {
-        return $this->address . " Rt. " . $this->rt . " Rw. " . $this->rw . " Desa/Kel. " . $this->desa . " Kec. " . $this->kecamatan->name . " " . $this->kecamatan->kabupaten->name;
+        return $this->address . " Desa/Kel. " . $this->desa . " Kec. " . $this->kecamatan->name . " " . $this->kecamatan->kabupaten->name;
     }
 }

@@ -36,7 +36,7 @@ class NewUser extends Component
 
     protected $rules = [
         'state.families.*.name' => 'required|min:2|max:64',
-        'state.families.*.birth_date' => 'required',
+        'state.families.*.dob' => 'required',
         'state.address' => 'required|string|min:4|max:124',
         'state.rt' => 'required|min:1|max:99',
         'state.rw' => 'required|min:1|max:99',
@@ -49,7 +49,7 @@ class NewUser extends Component
 
     protected $validationAttributes = [
         'state.families.*.name' => 'Nama',
-        'state.families.*.birth_date' => 'Tanggal Lahir',
+        'state.families.*.dob' => 'Tanggal Lahir',
         'state.address' => 'Alamat',
         'state.rt' => 'Rt',
         'state.rw' => 'Rw',
@@ -69,9 +69,9 @@ class NewUser extends Component
     {
         $this->validate();
 
-        DB::transaction(function(){
+        DB::transaction(function () {
 
-            $newUser = Arr::where($this->state['families'], function ($item){
+            $newUser = Arr::where($this->state['families'], function ($item) {
                 return $item['type'] == 'Diri Sendiri';
             })[0];
 
@@ -79,7 +79,7 @@ class NewUser extends Component
                 // 'id' => User::max('id') + 1,
                 'name' => $newUser['name'],
                 'email' => $this->state['email'],
-                'password' => Hash::make( $this->state['password']),
+                'password' => Hash::make($this->state['password']),
                 'type' => User::CLIENT,
                 'remember_token' => Str::random(10),
             ]);
@@ -87,7 +87,7 @@ class NewUser extends Component
             $user->profile()->create([
                 'phone' => '62' . $this->state['phone'],
                 'ig' => $this->state['ig'],
-                'birth_date' => $newUser['birth_date'],
+                'dob' => $newUser['dob'],
             ]);
 
             $address = Address::create([
@@ -101,17 +101,16 @@ class NewUser extends Component
                 'is_main' => true,
             ]);
 
-            $families = Arr::where($this->state['families'], function ($item){
+            $families = Arr::where($this->state['families'], function ($item) {
                 return $item['type'] != 'Diri Sendiri';
             });
 
-            foreach ($families as $family)
-            {
+            foreach ($families as $family) {
                 Family::create([
                     'id' => $family['id'],
                     'client_user_id' => $user->id,
                     'name' => $family['name'],
-                    'birth_date' => $family['birth_date'],
+                    'dob' => $family['dob'],
                     'type' => $family['type'],
                 ]);
             }

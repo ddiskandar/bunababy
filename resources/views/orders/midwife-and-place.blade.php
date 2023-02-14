@@ -10,7 +10,7 @@
 
             </div>
             <div class="md:w-2/3 md:pl-2">
-                <div class="max-w-md space-y-4">
+                <div class="max-w-lg space-y-4">
                     <div class="space-y-1">
                         <x-label for="midwifeId">Bidan</x-label>
                         <select wire:model="midwifeId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="midwifeId">
@@ -42,14 +42,24 @@
                                                     wire:click="$set('selectedAddressId', '{{ $address->id }}')">
                                         <div class="{{ isset($selectedAddressId) && $selectedAddressId != $address->id ? 'opacity-50' : '' }}">
                                             <!-- Role Name -->
-                                            <div class="flex items-center">
-                                                <div class="text-sm capitalize text-gray-600 {{ $selectedAddressId == $address->id ? 'font-semibold' : '' }}">
-                                                    {{ $address->label }}
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center space-x-2">
+                                                    <div class="text-sm capitalize text-gray-600 {{ $selectedAddressId == $address->id ? 'font-semibold' : '' }}">
+                                                        {{ $address->label }}
+                                                    </div>
+
+                                                    @if ($selectedAddressId == $address->id)
+                                                        <svg class="w-5 h-5 ml-2 text-green-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                        <span class="ml-1 text-sm text-green-400">Selected</span>
+                                                    @endif
                                                 </div>
 
                                                 @if ($selectedAddressId == $address->id)
-                                                    <svg class="w-5 h-5 ml-2 text-green-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                                    <span class="ml-1 text-sm text-green-400">Selected</span>
+                                                <div class="text-sm font-semibold text-bunababy-200"
+                                                    wire:click="showEditDialog({{ $address->id }})"
+                                                >
+                                                    Edit Alamat
+                                                </div>
                                                 @endif
                                             </div>
 
@@ -57,11 +67,20 @@
                                             <div class="mt-2 text-sm text-left text-gray-600">
                                                 {{ $address->full_address }}
                                                 @if ($selectedAddressId == $address->id)
-                                                <div class="py-3 text-sm font-semibold text-bunababy-200"
-                                                    wire:click="showEditDialog({{ $address->id }})"
-                                                >
-                                                    Ubah Alamat
-                                                </div>
+                                                    <div class="py-2">{{ $address->note ?? '' }}</div>
+                                                    @if (isset($address->share_location))
+                                                        <a href="{{ $address->share_location }}" class="flex items-center text-bunababy-200" target="_blank">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                                <path d="M18 6l0 .01"></path>
+                                                                <path d="M18 13l-3.5 -5a4 4 0 1 1 7 0l-3.5 5"></path>
+                                                                <path d="M10.5 4.75l-1.5 -.75l-6 3l0 13l6 -3l6 3l6 -3l0 -2"></path>
+                                                                <path d="M9 4l0 13"></path>
+                                                                <path d="M15 15l0 5"></path>
+                                                            </svg>
+                                                            <span class="ml-2">Lihat Share location</span>
+                                                        </a>
+                                                    @endif
                                                 @endif
                                             </div>
                                         </div>
@@ -96,22 +115,12 @@
                     <x-input-error for="state.label" class="mt-2" />
                 </div>
                 <div class="space-y-1">
-                    <x-label for="state.address">Kampung/Jalan</x-label>
-                    <x-input wire:model.defer="state.address" class="w-full" type="text" id="state.address" />
+                    <x-label for="state.address">Alamat Lengkap</x-label>
+                    <x-input wire:model.defer="state.address" class="w-full" type="text" id="state.address" placeholder="Nama jalan, Nomor Rumah, RT/RW" />
                     <x-input-error for="state.address" class="mt-2" />
                 </div>
                 <div class="space-y-1">
-                    <x-label for="state.rt">Rt</x-label>
-                    <x-input wire:model.defer="state.rt" class="w-full" type="number" id="state.rt" />
-                    <x-input-error for="state.rt" class="mt-2" />
-                </div>
-                <div class="space-y-1">
-                    <x-label for="state.rw">Rw</x-label>
-                    <x-input wire:model.defer="state.rw" class="w-full" type="number" id="state.rw" />
-                    <x-input-error for="state.rw" class="mt-2" />
-                </div>
-                <div class="space-y-1">
-                    <x-label for="state.desa">Desa</x-label>
+                    <x-label for="state.desa">Desa/Kelurahan</x-label>
                     <x-input wire:model.defer="state.desa" class="w-full" type="text" id="state.desa" />
                     <x-input-error for="state.desa" class="mt-2" />
                 </div>

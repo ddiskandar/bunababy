@@ -6,6 +6,10 @@
     display: none !important;
 }
 
+.filament-notifications {
+    @apply inset-24
+}
+
 .filament-notifications-notification {
     @apply bg-bunababy-200 text-white rounded-full py-2 border-transparent
 }

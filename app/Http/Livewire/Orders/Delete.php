@@ -43,7 +43,7 @@ class Delete extends Component
         $this->order->delete();
 
         Notification::make()
-            ->title('Saved successfully')
+            ->title('Berhasil disimpan')
             ->success()
             ->send();
 

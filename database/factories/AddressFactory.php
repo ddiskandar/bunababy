@@ -19,10 +19,8 @@ class AddressFactory extends Factory
             'client_user_id' => User::factory(),
             'label' => 'rumah',
             'address' => $this->faker->streetAddress(),
-            'rt' => $this->faker->numberBetween(1, 12),
-            'rw' => $this->faker->numberBetween(1, 12),
             'desa' => $this->faker->city(),
-            'kecamatan_id' => rand(1,79),
+            'kecamatan_id' => rand(1, 79),
         ];
     }
 }

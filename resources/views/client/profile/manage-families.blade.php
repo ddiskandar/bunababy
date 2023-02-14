@@ -31,7 +31,7 @@
                         Tanggal Lahir
                     </div>
                     <div>
-                        {{ $family->birth_date->isoFormat('DD MMMM YYYY') }}
+                        {{ $family->dob->isoFormat('DD MMMM YYYY') }}
                     </div>
                 </div>
                 <div class="py-1">
@@ -145,9 +145,9 @@
                             <x-input-error for="state.name" class="mt-2" />
                         </div>
                         <div class="space-y-1">
-                            <x-label   for="state.birth_date">Tanggal lahir</x-label>
-                            <x-input wire:model.defer="state.birth_date" class="w-full" type="date" id="state.birth_date" />
-                            <x-input-error for="state.birth_date" class="mt-2" />
+                            <x-label   for="state.dob">Tanggal lahir</x-label>
+                            <x-input wire:model.defer="state.dob" class="w-full" type="date" id="state.dob" />
+                            <x-input-error for="state.dob" class="mt-2" />
                         </div>
 
                         <div class="space-y-1">

@@ -24,8 +24,6 @@ class MidwifeAndPlace extends Component
     protected $rules = [
         'state.label' => 'required|string|min:3|max:32',
         'state.address' => 'required|string|min:3|max:255',
-        'state.rt' => 'required|numeric|min:1|max:255',
-        'state.rw' => 'required|numeric|min:1|max:255',
         'state.desa' => 'required|string|min:2|max:32',
         'state.note' => 'nullable|string|min:2|max:255',
         'state.share_location' => 'nullable|string|min:2|max:512',
@@ -35,8 +33,6 @@ class MidwifeAndPlace extends Component
     protected $validationAttributes = [
         'state.label' => 'Label alamat',
         'state.address' => 'Kampung/Jalan',
-        'state.rt' => 'Rt',
-        'state.rw' => 'Rw',
         'state.desa' => 'Desa',
         'state.kecamatan_id' => 'Kecamatan',
         'state.note' => 'Catatan',
@@ -146,8 +142,6 @@ class MidwifeAndPlace extends Component
             [
                 'label' => $this->state['label'],
                 'address' => $this->state['address'],
-                'rt' => $this->state['rt'],
-                'rw' => $this->state['rw'],
                 'desa' => $this->state['desa'],
                 'note' => $this->state['note'] ?? '',
                 'share_location' => $this->state['share_location'] ?? '',

@@ -18,7 +18,7 @@ class CreateFamiliesTable extends Migration
             $table->id();
             $table->foreignId('client_user_id')->constrained('users')->onDelete('cascade');
             $table->string('name');
-            $table->date('birth_date')->nullable();
+            $table->date('dob')->nullable();
             $table->string('type');
             $table->timestamps();
         });

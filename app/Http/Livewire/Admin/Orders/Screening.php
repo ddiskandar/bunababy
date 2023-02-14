@@ -37,7 +37,7 @@ class Screening extends Component
         ]);
 
         Notification::make()
-            ->title('Saved successfully')
+            ->title('Berhasil disimpan')
             ->success()
             ->send();
 

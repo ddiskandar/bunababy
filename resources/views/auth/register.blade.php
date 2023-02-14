@@ -29,6 +29,12 @@
                 <x-input id="name" class="block w-full mt-1" type="text" name="name" :value="old('name')" required autofocus />
             </div>
 
+            <!-- Dob -->
+            <div class="mt-4">
+                <x-label for="dob" :value="__('Tanggal Lahir')" />
+                <x-input id="dob" class="block w-full mt-1" type="date" name="dob" :value="old('dob')" required />
+            </div>
+
             <!-- Phone -->
             <div class="mt-4">
                 <x-label for="phone" :value="__('Nomor WA')" />

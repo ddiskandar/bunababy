@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Client;
 
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -15,8 +16,6 @@ class UpdateProfileInformation extends Component
 
     public $photo;
 
-    public $successMessage = false;
-
     protected function rules()
     {
         return [
@@ -26,7 +25,7 @@ class UpdateProfileInformation extends Component
                 'email',
                 Rule::unique('users', 'email')->ignore(auth()->id())
             ],
-            'state.birth_date' => 'required|date',
+            'state.dob' => 'required|date',
             'state.phone' => 'required|string|min:11|max:13',
             'state.ig' => 'nullable',
             'photo' => 'nullable|image|max:128',
@@ -36,7 +35,7 @@ class UpdateProfileInformation extends Component
     protected $validationAttributes = [
         'state.name' => 'Nama',
         'state.email' => 'Email',
-        'state.birth_date' => 'Tanggal lahir',
+        'state.dob' => 'Tanggal lahir',
         'state.phone' => 'Nomor WA',
         'state.ig' => 'Username IG',
         'photo' => 'Photo',
@@ -50,7 +49,7 @@ class UpdateProfileInformation extends Component
         $this->state['email'] = $user->email;
         $this->state['phone'] = $user->profile->phone;
         $this->state['ig'] = $this->user->profile->ig;
-        $this->state['birth_date'] = $user->profile->birth_date ? $user->profile->birth_date->toDateString() : '';
+        $this->state['dob'] = $user->profile->dob ? $user->profile->dob->toDateString() : '';
     }
 
     public function save()
@@ -61,26 +60,29 @@ class UpdateProfileInformation extends Component
             'name' => $this->state['name'],
         ]);
 
-        if(is_null(auth()->user()->google_id)){
+        if (is_null(auth()->user()->google_id)) {
             $this->user->update([
                 'email' => $this->state['email'],
             ]);
         }
 
         $this->user->profile->update([
-            'birth_date' => $this->state['birth_date'],
+            'dob' => $this->state['dob'],
             'phone' => $this->state['phone'],
             'ig' => $this->state['ig'],
         ]);
 
-        if(isset($this->photo))
-        {
+        if (isset($this->photo)) {
             $this->user->profile->update([
                 'photo' => $this->photo->store('photos'),
             ]);
         }
 
-        $this->successMessage = true;
+        Notification::make()
+            ->title('Berhasil disimpan')
+            ->success()
+            ->duration(3000)
+            ->send();
     }
 
     public function getUserProperty()

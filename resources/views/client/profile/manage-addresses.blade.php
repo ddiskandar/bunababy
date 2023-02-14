@@ -1,5 +1,5 @@
 <div x-data="{ showDialog: @entangle('showDialog') }" class="relative">
-    <div class="sticky top-0 z-20 px-4 py-4 bg-bunababy-200 text-white shadow shadow-bunababy-50">
+    <div class="sticky top-0 z-20 px-4 py-4 text-white shadow bg-bunababy-200 shadow-bunababy-50">
         <div class="flex items-center justify-between max-w-screen-sm mx-auto">
             <a href="{{ route('client.profile') }}">
                 <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">
@@ -18,7 +18,7 @@
     </div>
 
     <div class="max-w-screen-sm min-h-screen mx-auto my-0">
-        <ul class="space-y-4 py-4">
+        <ul class="py-4 space-y-4">
             @forelse ( $addresses as $address)
             <li @class([
                     'w-full p-6 bg-white border rounded shadow-lg shadow-bunababy-50',
@@ -94,7 +94,7 @@
     class="fixed inset-0 overflow-y-auto z-90 " aria-labelledby="modal-title" role="dialog" aria-modal="true"
     >
         <div
-            x-show = "showDialog"
+            x-show="showDialog"
             class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             <div
                 x-show="showDialog"
@@ -136,29 +136,19 @@
                 <div class="px-4 pt-5 pb-4 overflow-hidden bg-white rounded-lg shadow-xl sm:p-6 sm:pb-4">
                     <form wire:submit.prevent="save">
                         <x-title>Alamat</x-title>
-                        <div class="h-64 mt-2 space-y-3 overflow-y-auto">
+                        <div class="h-64 px-1 mt-2 space-y-3 overflow-y-auto">
                             <div class="space-y-1">
                                 <x-label for="state.label">Label</x-label>
                                 <x-input wire:model.defer="state.label" class="w-full" type="text" id="state.label" placeholder="Contoh: Rumah, Kantor" />
                                 <x-input-error for="state.label" class="mt-2" />
                             </div>
                             <div class="space-y-1">
-                                <x-label for="state.address">Kampung/Jalan</x-label>
-                                <x-input wire:model.defer="state.address" class="w-full" type="text" id="state.address" />
+                                <x-label for="state.address">Alamat Lengkap</x-label>
+                                <x-input wire:model.defer="state.address" class="w-full" type="text" id="state.address" placeholder="Nama jalan, Nomor Rumah, RT/RW" />
                                 <x-input-error for="state.address" class="mt-2" />
                             </div>
                             <div class="space-y-1">
-                                <x-label for="state.rt">Rt</x-label>
-                                <x-input wire:model.defer="state.rt" class="w-full" type="number" id="state.rt" />
-                                <x-input-error for="state.rt" class="mt-2" />
-                            </div>
-                            <div class="space-y-1">
-                                <x-label for="state.rw">Rw</x-label>
-                                <x-input wire:model.defer="state.rw" class="w-full" type="number" id="state.rw" />
-                                <x-input-error for="state.rw" class="mt-2" />
-                            </div>
-                            <div class="space-y-1">
-                                <x-label for="state.desa">Desa</x-label>
+                                <x-label for="state.desa">Desa/Kelurahan</x-label>
                                 <x-input wire:model.defer="state.desa" class="w-full" type="text" id="state.desa" />
                                 <x-input-error for="state.desa" class="mt-2" />
                             </div>
@@ -176,7 +166,7 @@
 
                             <div class="space-y-1">
                                 <x-label for="state.note">Catatan Petunjuk</x-label>
-                                <x-textarea wire:model.defer="state.note" class="placeholder:text-xs" rows=4 class="w-full" type="text" id="state.note" placeholder="Patokan alamat atau petunjuk menuju lokasi" />
+                                <x-textarea wire:model.defer="state.note" class="placeholder:text-xs" rows=3 class="w-full" type="text" id="state.note" placeholder="Patokan alamat atau petunjuk menuju lokasi" />
                                 <x-input-error for="state.note" class="mt-2" />
                             </div>
 
@@ -185,7 +175,7 @@
                         <div class="py-4">
                             <button type="submit"
                                 wire:loading.attr="disabled"
-                                class="block w-full disabled:opacity-75 py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
+                                class="block w-full py-2 text-center text-white rounded-full shadow-xl disabled:opacity-75 bg-bunababy-200 shadow-bunababy-100/50"
                             >Simpan</button>
                         </div>
 

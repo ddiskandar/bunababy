@@ -16,13 +16,13 @@ class ClientFamilies extends Component
 
     protected $rules = [
         'state.name' => 'required|string|min:2|max:64',
-        'state.birth_date' => 'required|date',
+        'state.dob' => 'required|date',
         'state.type' => 'required|string|in:Anak,Pasangan,Orang Tua,Saudara Kandung,Kerabat,Teman',
     ];
 
     protected $validationAttributes = [
         'state.name' => 'Nama',
-        'state.birth_date' => 'Tanggal lahir',
+        'state.dob' => 'Tanggal lahir',
         'state.type' => 'Hubungan keluarga',
     ];
 
@@ -36,7 +36,7 @@ class ClientFamilies extends Component
     public function showEditDialog(Family $family)
     {
         $this->state = $family->toArray();
-        $this->state['birth_date'] = $family->birth_date->toDateString();
+        $this->state['dob'] = $family->dob->toDateString();
         $this->showDialog = true;
     }
 
@@ -57,7 +57,7 @@ class ClientFamilies extends Component
             ],
             [
                 'name' => $this->state['name'],
-                'birth_date' => $this->state['birth_date'],
+                'dob' => $this->state['dob'],
                 'type' => $this->state['type'],
             ]
 
@@ -65,7 +65,6 @@ class ClientFamilies extends Component
         $this->showDialog = false;
 
         $this->emit('saved');
-
     }
 
     public function render()

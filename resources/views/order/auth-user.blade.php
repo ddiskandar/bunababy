@@ -18,13 +18,13 @@
             </dd>
         </div>
 
-        @isset(auth()->user()->profile->birth_date->age)
+        @isset(auth()->user()->profile->dob->age)
         <div class="sm:col-span-1">
             <dt class="text-sm font-medium text-gray-500">
                 Usia Buna
             </dt>
             <dd class="mt-1 text-sm text-gray-900">
-                {{ auth()->user()->profile->birth_date->age . 'tahun' }}
+                {{ auth()->user()->profile->dob->age . ' tahun' }}
             </dd>
         </div>
         @endisset
@@ -43,7 +43,7 @@
                 Tanggal lahir Baby
             </dt>
             <dd class="mt-1 text-sm text-gray-900">
-                {{ tanggal_indo($baby->birth_date) }}
+                {{ tanggal_indo($baby->dob) }}
             </dd>
         </div>
         @endisset

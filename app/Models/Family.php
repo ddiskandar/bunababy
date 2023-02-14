@@ -12,12 +12,11 @@ class Family extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'birth_date' => 'date'
+        'dob' => 'date'
     ];
 
     public function client()
     {
         return $this->belongsTo(User::class, 'client_user_id');
     }
-
 }

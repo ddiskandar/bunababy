@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Clients;
 use Livewire\Component;
 use App\Models\Address;
 use App\Models\User;
+use Filament\Notifications\Notification;
 
 class ClientAddresses extends Component
 {
@@ -15,13 +16,10 @@ class ClientAddresses extends Component
     public $showAddNewAddressForm = false;
 
     public $showDialog = false;
-    public $successMessage = false;
 
     protected $rules = [
         'state.label' => 'required|string|min:3|max:32',
         'state.address' => 'required|string|min:3|max:255',
-        'state.rt' => 'required|numeric|min:1|max:255',
-        'state.rw' => 'required|numeric|min:1|max:255',
         'state.desa' => 'required|string|min:2|max:32',
         'state.kecamatan_id' => 'required|exists:kecamatans,id',
         'state.note' => 'nullable|string|min:2|max:255',
@@ -32,8 +30,6 @@ class ClientAddresses extends Component
     protected $validationAttributes = [
         'state.label' => 'Label',
         'state.address' => 'Kampung/Jalan',
-        'state.rt' => 'Rt',
-        'state.rw' => 'Rw',
         'state.desa' => 'Desa',
         'state.kecamatan_id' => 'Kecamatan',
         'state.note' => 'Catatan',
@@ -82,8 +78,6 @@ class ClientAddresses extends Component
                 'client_user_id' => $this->client->id,
                 'label' => $this->state['label'],
                 'address' => $this->state['address'],
-                'rt' => $this->state['rt'],
-                'rw' => $this->state['rw'],
                 'desa' => $this->state['desa'],
                 'kecamatan_id' => $this->state['kecamatan_id'],
                 'note' => $this->state['note'] ?? NULL,
@@ -94,7 +88,11 @@ class ClientAddresses extends Component
         $this->emit('saved');
 
         $this->showDialog = false;
-        $this->successMessage = true;
+
+        Notification::make()
+            ->title('Alamat berhasil disimpan')
+            ->success()
+            ->send();
 
         $this->showAddNewAddressForm = false;
     }
