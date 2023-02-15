@@ -11,11 +11,12 @@ use Livewire\Component;
 class Payments extends Component
 {
     public $order;
-    public $additional;
+    public $adjustment_name;
+    public $adjustment_amount;
     public $state = [];
 
     public $showDialog = false;
-    public $showSetAdditionalDialog = false;
+    public $showSetAdjustmentDialog = false;
     public $successMessage = false;
 
     protected $listeners = [
@@ -34,13 +35,15 @@ class Payments extends Component
         'state.value' => 'Besar pembayaran',
         'state.attachment' => 'lampiran foto',
         'state.note' => 'Catatan',
-        'additional' => 'Additional'
+        'adjustment_name' => 'Nama penyesuaian',
+        'adjustment_amount' => 'Nominal penyesuaian',
     ];
 
     public function mount(Order $order)
     {
         $this->order = $order;
-        $this->additional = $order->additional;
+        $this->adjustment_amount = $order->adjustment_amount;
+        $this->adjustment_name = $order->adjustment_name;
     }
 
     public function showAddNewPaymentDialog()
@@ -56,17 +59,24 @@ class Payments extends Component
         $this->showDialog = true;
     }
 
-    public function setAdditional()
+    public function setAdjustment()
     {
         $this->validate([
-            'additional' => 'required|numeric'
+            'adjustment_name' => 'required|string|min:3|max:128',
+            'adjustment_amount' => 'required|numeric',
         ]);
 
         $this->order->update([
-            'additional' => $this->additional,
+            'adjustment_name' => $this->adjustment_name,
+            'adjustment_amount' => $this->adjustment_amount,
         ]);
 
-        $this->showSetAdditionalDialog = false;
+        Notification::make()
+            ->title('Berhasil disimpan')
+            ->success()
+            ->send();
+
+        $this->showSetAdjustmentDialog = false;
         $this->emit('saved');
     }
 
@@ -95,11 +105,11 @@ class Payments extends Component
             ]);
         });
 
-        $this->showDialog = false;
         Notification::make()
             ->title('Berhasil disimpan')
             ->success()
             ->send();
+        $this->showDialog = false;
         $this->emit('saved');
     }
 

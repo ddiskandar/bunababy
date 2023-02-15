@@ -15,7 +15,7 @@
                     <div>
                         {{ $order->no_reg }}
                     </div>
-                    @if (auth()->user()->isAdmin())
+                    @if (auth()->user()->isAdmin() || true)
                     <a href="{{ route('order.invoice', $order->no_reg) }}" target="_blank" class="text-sm font-semibold text-bunababy-200">
                         Lihat Invoice
                     </a>
@@ -132,6 +132,16 @@
                             {{ $treatment->name }}
                         </div>
                         @endforeach
+                    </div>
+                </dd>
+            </div>
+            <div class="sm:col-span-1">
+                <dt class="text-sm font-medium text-gray-500">
+                    Screening
+                </dt>
+                <dd class="mt-1 text-gray-900">
+                    <div class="flex flex-wrap gap-1">
+                        {{ $order->screening ?? '-' }}
                     </div>
                 </dd>
             </div>

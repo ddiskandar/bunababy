@@ -122,7 +122,7 @@
 
                     <tr>
                         <td colspan="3" class="py-2 font-semibold text-right">
-                        Subtotal
+                            Subtotal
                         </td>
                         <td class="py-2 text-right">
                             {{ rupiah($order->treatments->sum('pivot.treatment_price')) }}
@@ -136,14 +136,16 @@
                             {{ rupiah($order->total_transport) }}
                         </td>
                     </tr>
+                    @if ($order->adjustment_amount !== 0)
                     <tr>
                         <td colspan="3" class="py-2 font-semibold text-right">
-                            Aditional
+                            {{ $order->adjustment_name }}
                         </td>
                         <td class="py-2 text-right">
-                            {{ rupiah($order->additional) }}
+                            {{ rupiah($order->adjustment_amount) }}
                         </td>
                     </tr>
+                    @endif
                     <tr>
                         <td colspan="3" class="py-2 font-bold text-right uppercase border-y border-bunababy-50">
                             Total Tagihan

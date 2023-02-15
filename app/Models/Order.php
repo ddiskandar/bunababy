@@ -28,7 +28,7 @@ class Order extends Model
         'total_price' => 'integer',
         'total_duration' => 'integer',
         'total_transport' => 'integer',
-        'additional' => 'integer',
+        'adjustment_amount' => 'integer',
         'start_datetime' => 'datetime',
         'end_datetime' => 'datetime',
         'status' => 'integer',
@@ -162,7 +162,7 @@ class Order extends Model
 
     public function getGrandTotal()
     {
-        return ($this->total_price + $this->total_transport + $this->additional);
+        return ($this->total_price + $this->total_transport + $this->adjustment_amount);
     }
 
     // Create Order

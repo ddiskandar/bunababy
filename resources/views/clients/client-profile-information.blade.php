@@ -50,22 +50,27 @@
                     </div>
 
                     <div class="space-y-1">
-                        <x-label   for="state.name">Nama bidan</x-label>
+                        <x-label for="state.name">Nama bidan</x-label>
                         <x-input wire:model.lazy="state.name" class="w-full" type="text" id="state.name" />
                         <x-input-error for="state.name" class="mt-2" />
                     </div>
                     <div class="space-y-1">
-                        <x-label   for="state.email">Alamat Email</x-label>
+                        <x-label for="state.email">Alamat Email</x-label>
                         <x-input wire:model.lazy="state.email" class="w-full" type="email" id="state.email" />
                         <x-input-error for="state.email" class="mt-2" />
                     </div>
                     <div class="space-y-1">
-                        <x-label   for="state.phone">Nomor WA</x-label>
+                        <x-label for="state.dob">Tanggal Lahir</x-label>
+                        <x-input wire:model.lazy="state.dob" class="w-full" type="date" id="state.dob" />
+                        <x-input-error for="state.dob" class="mt-2" />
+                    </div>
+                    <div class="space-y-1">
+                        <x-label for="state.phone">Nomor WA</x-label>
                         <x-input wire:model.lazy="state.phone" class="w-full" type="text" id="state.phone" />
                         <x-input-error for="state.phone" class="mt-2" />
                     </div>
                     <div class="space-y-1">
-                        <x-label   for="state.ig">Instagram</x-label>
+                        <x-label for="state.ig">Instagram</x-label>
                         <x-input wire:model.lazy="state.ig" class="w-full" type="text" id="state.ig" />
                         <x-input-error for="state.ig" class="mt-2" />
                     </div>

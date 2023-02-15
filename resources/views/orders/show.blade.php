@@ -5,11 +5,10 @@
 
         @if (auth()->user()->isAdmin())
             @livewire('orders.midwife-and-place', [$order->id])
+            @livewire('admin.orders.screening', [$order->id])
             @livewire('orders.select-treatments', [$order->id])
             @livewire('orders.payments', [$order->id])
         @endif
-
-            @livewire('admin.orders.screening', [$order->id])
 
         @if (now()->isAfter($order->start_datetime))
             @livewire('orders.set-status', [$order->id])

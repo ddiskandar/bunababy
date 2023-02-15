@@ -95,7 +95,10 @@
                             </th>
                             @if (auth()->user()->isAdmin())
                             <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
-                                Harga / Transport
+                                Harga Treatment
+                            </th>
+                            <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
+                                Adjustment / Transport
                             </th>
                             <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500 md:table-cell">
                                 Total / Sisa
@@ -140,6 +143,9 @@
                                 @if (auth()->user()->isAdmin())
                                 <td class="p-3 align-top whitespace-nowrap">
                                     <p class="font-semibold">{{ rupiah($order->total_price) }}</p>
+                                </td>
+                                <td class="p-3 align-top whitespace-nowrap">
+                                    <p class="font-semibold">{{ rupiah($order->adjustment_amount) }}</p>
                                     <p>{{ rupiah($order->total_transport) }}</p>
                                 </td>
                                 <td class="p-3 align-top whitespace-nowrap">

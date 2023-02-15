@@ -12,11 +12,15 @@ class CreateClient extends Component
 
     public $rules = [
         'state.name' => 'required|string',
-        'state.email' => 'required|string',
+        'state.email' => 'required|email|unique:users,email',
         'state.phone' => 'required|string',
     ];
 
-    protected $listeners = ['saved' => '$refresh'];
+    protected $validationAttributes = [
+        'state.name' => 'Nama',
+        'state.email' => 'Email',
+        'state.phone' => 'Nomor WA',
+    ];
 
     public function mount()
     {
@@ -27,7 +31,7 @@ class CreateClient extends Component
     {
         $this->validate();
 
-        DB::transaction(function(){
+        DB::transaction(function () {
             $user = User::create([
                 'name' => $this->state['name'],
                 'email' => $this->state['email'],
@@ -38,8 +42,6 @@ class CreateClient extends Component
             $user->profile()->create([
                 'phone' => $this->state['phone'],
             ]);
-
-            $this->emit('saved');
 
             return redirect()->route('clients.show', $user->id);
         });
