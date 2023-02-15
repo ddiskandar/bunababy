@@ -57,7 +57,7 @@ class Order extends Model
 
     public function treatments(): BelongsToMany
     {
-        return $this->belongsToMany(Treatment::class)->withPivot('family_name', 'treatment_price', 'treatment_duration');
+        return $this->belongsToMany(Treatment::class)->withPivot('family_name', 'family_age', 'treatment_price', 'treatment_duration');
     }
 
     public function scopeInClient($query)
@@ -184,19 +184,11 @@ class Order extends Model
 
     public function getTotalTransport()
     {
-        // TRANSPORT ALGO
-
-        $options = DB::table('options')->select(['transport_base_amount', 'transport_per_km'])->first();
-
         if (session('order.place') == Order::PLACE_CLINIC) {
             return 0;
         }
 
-        if (session('order.kecamatan_distance') < 4) {
-            return $options->transport_base_amount;
-        } else {
-            return $options->transport_base_amount + (session('order.kecamatan_distance') * $options->transport_per_km);
-        }
+        return calculate_transport(session('order.kecamatan_distance'));
     }
 
     public function getTotalPrice()

@@ -24,8 +24,6 @@ class CreateOptionsTable extends Migration
             $table->string('account_name');
             $table->integer('timeout')->default(0);
             $table->integer('transport_duration')->default(0);
-            $table->integer('transport_base_amount')->default(0);
-            $table->integer('transport_per_km')->default(0);
             $table->timestamps();
         });
     }

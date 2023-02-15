@@ -42,3 +42,24 @@ if (!function_exists('to_wa_indo')) {
         }
     }
 }
+
+if (!function_exists('calculate_transport')) {
+    function calculate_transport($distance)
+    {
+        if ($distance <= 2) {
+            return 15000;
+        } elseif ($distance <= 3) {
+            return 18000;
+        } elseif ($distance <= 5) {
+            return 25000;
+        } elseif ($distance <= 7) {
+            return 30000;
+        } elseif ($distance <= 9) {
+            return 33000;
+        } elseif ($distance <= 20) {
+            return 38000;
+        } else {
+            return 40000;
+        }
+    }
+}

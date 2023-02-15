@@ -60,15 +60,7 @@
                     Nama Buna
                 </dt>
                 <dd class="mt-1 text-gray-900">
-                    {{ $order->client->name }}
-                </dd>
-            </div>
-            <div class="sm:col-span-1">
-                <dt class="text-sm font-medium text-gray-500">
-                    Usia
-                </dt>
-                <dd class="mt-1 text-gray-900">
-                    {{ $order->client->profile->dob ? $order->client->profile->dob->age : '-' }}  tahun
+                    {{ $order->client->name }} / {{ ($order->client->profile->dob->age ? $order->client->profile->dob->age : '-') . ' tahun' }}
                 </dd>
             </div>
             @if ($baby)
@@ -129,7 +121,7 @@
                     <div class="flex flex-wrap gap-1">
                         @foreach ($order->treatments as $treatment)
                         <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 border rounded-full text-bunababy-200 bg-bunababy-50 border-bunababy-100">
-                            {{ $treatment->name }}
+                            {{ $treatment->name . ', ' . $treatment->pivot->family_name . ' / ' . $treatment->pivot->family_age  }}
                         </div>
                         @endforeach
                     </div>

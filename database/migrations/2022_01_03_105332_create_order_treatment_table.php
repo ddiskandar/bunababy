@@ -18,6 +18,7 @@ class CreateOrderTreatmentTable extends Migration
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
             $table->foreignId('treatment_id')->constrained()->onDelete('cascade');
             $table->string('family_name')->nullable();
+            $table->string('family_age')->nullable();
             $table->integer('treatment_price')->nullable();
             $table->integer('treatment_duration')->nullable();
             $table->timestamps();

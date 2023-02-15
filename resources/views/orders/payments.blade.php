@@ -77,6 +77,7 @@
                     <x-label for="adjustment_amount">Nominal</x-label>
                     <x-input wire:model.lazy="adjustment_amount" class="w-full" type="number" id="adjustment_amount" />
                     <x-input-error for="adjustment_amount" class="mt-2" />
+                    <p class="mt-2 text-sm">Pastikan untuk memberikan tanda kurang (-) bila berupa potongan harga. Contoh: Nama Diskon, Nominal -50000</p>
                 </div>
             </div>
             <div class="py-4">

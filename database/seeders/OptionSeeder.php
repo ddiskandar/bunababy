@@ -24,7 +24,6 @@ class OptionSeeder extends Seeder
             'account_name' => 'a/n Febrianti Nur Azizah',
             'timeout' => 60, // minutes
             'transport_duration' => 40, // minutes
-            'transport_base_amount' => 40000,
             'transport_per_km' => 5000,
         ]);
     }

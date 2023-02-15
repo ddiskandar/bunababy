@@ -39,7 +39,7 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
     {
         $order = Order::query()
             ->with('client', 'midwife')
-            ->when($this->midwifeId, function($query){
+            ->when($this->midwifeId, function ($query) {
                 $query->where('midwife_user_id', $this->midwifeId);
             })
             ->whereBetween('start_datetime', [$this->from, Carbon::parse($this->to)->addDay()]);
@@ -67,6 +67,7 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
             'Treatment',
             'Harga Treatment',
             'Transport',
+            'Adjustment',
             'Total',
             'Keterangan',
         ];
@@ -75,7 +76,7 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
     public function map($order): array
     {
         $timetables = Timetable::query()
-            ->when($this->midwifeId, function($query){
+            ->when($this->midwifeId, function ($query) {
                 $query->where('midwife_user_id', $this->midwifeId);
             })
             ->orWhere('type', Timetable::OVERTIME)
@@ -84,12 +85,9 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
 
         $status = '';
 
-        if($timetables->contains('date', Carbon::parse($order->start_datetime->toDateString())))
-        {
-            foreach($timetables as $timetable)
-            {
-                if($timetable->midwife_user_id == $order->midwife_user_id)
-                {
+        if ($timetables->contains('date', Carbon::parse($order->start_datetime->toDateString()))) {
+            foreach ($timetables as $timetable) {
+                if ($timetable->midwife_user_id == $order->midwife_user_id) {
                     $status = $timetable->type();
                 }
             }
@@ -104,9 +102,9 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
             $order->treatments->pluck('name')->implode(', '),
             $order->total_price,
             $order->total_transport,
+            $order->adjustment_amount,
             $order->getGrandTotal(),
             $status,
         ];
     }
-
 }
