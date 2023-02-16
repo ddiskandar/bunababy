@@ -25,7 +25,7 @@
             <div class="ml-4">
                 @if ($order->place == 1)
                     <span class="font-semibold">Homecare</span>
-                    <div class="text-sm">{{ $order->address->full_address }}</div>
+                    <div class="text-sm">{{ $order->address->full_address ?? '-' }}</div>
                 @else
                     <span class="font-semibold">Onsite</span>
                     <div class="text-sm">{{ $options->site_location }}</div>

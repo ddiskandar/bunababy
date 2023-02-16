@@ -58,7 +58,7 @@
                 name="price"
                 id="price"
                 class="block w-full pr-12 text-sm border-gray-300 rounded-md focus:ring-bunababy-100 focus:border-bunababy-100"
-                placeholder="Nama">
+                placeholder="{{ session()->has('order.families') ? 'Nama' : 'Nama Anda' }}">
             @if (session()->has('order.families'))
                 <div class="absolute inset-y-0 right-0 flex items-center">
                     <label for="currency" class="sr-only">Hubungan Keluarga</label>

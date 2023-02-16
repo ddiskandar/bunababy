@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Order;
 
+use App\Models\Family;
 use App\Models\Order;
 use App\Models\User;
 use App\Notifications\NewOrder;
@@ -41,8 +42,11 @@ class Confirm extends Component
             $order->save();
 
             foreach (collect(session('order.treatments')) as $treatment) {
+                $family = Family::find($treatment['family_id']);
+
                 $order->treatments()->attach($treatment['treatment_id'], [
                     'family_name' => $treatment['family_name'],
+                    'family_age' => calculate_age($family->dob),
                     'treatment_price' => $treatment['treatment_price'],
                     'treatment_duration' => $treatment['treatment_duration'],
                 ]);

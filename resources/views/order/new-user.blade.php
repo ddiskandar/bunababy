@@ -49,23 +49,9 @@
 
             <!-- Alamat -->
             <div class="col-span-6 lg:col-span-4">
-                <x-label for="" :value="__('Alamat Kampung / Jalan')" />
-                <x-input wire:model.lazy="state.address" id="address" class="block w-full mt-1" type="text" name="address" />
+                <x-label for="" :value="__('Alamat Lengkap')" />
+                <x-input wire:model.lazy="state.address" id="address" class="block w-full mt-1" type="text" name="address" placeholder="Nama jalan, Nomor Rumah, RT/RW" />
                 <x-input-error for="state.address" class="mt-2" />
-            </div>
-
-            <!-- Rt -->
-            <div class="col-span-6 lg:col-span-1">
-                <x-label for="rt" :value="__('RT')" />
-                <x-input wire:model.lazy="state.rt" id="rt" class="block w-full mt-1" type="number" name="rt" />
-                <x-input-error for="state.rt" class="mt-2" />
-            </div>
-
-            <!-- Rw -->
-            <div class="col-span-6 lg:col-span-1">
-                <x-label for="rw" :value="__('RW')" />
-                <x-input wire:model.lazy="state.rw" id="rw" class="block w-full mt-1" type="number" name="rw" />
-                <x-input-error for="state.rw" class="mt-2" />
             </div>
 
             <!-- Desa -->
@@ -142,7 +128,7 @@
         </div>
 
         <div class="py-6">
-            <button class="flex items-center justify-center w-full py-4 text-center transition duration-150 ease-in-out rounded-full shadow-xl disabled:opacity-25 bg-bunababy-200 text-white shadow-bunababy-100/50"
+            <button class="flex items-center justify-center w-full py-4 text-center text-white transition duration-150 ease-in-out rounded-full shadow-xl disabled:opacity-25 bg-bunababy-200 shadow-bunababy-100/50"
                 wire:loading.attr="disabled"
             >
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevrons-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">

@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 if (!function_exists('rupiah')) {
     function rupiah($value)
     {
@@ -61,5 +63,16 @@ if (!function_exists('calculate_transport')) {
         } else {
             return 40000;
         }
+    }
+}
+
+if (!function_exists('calculate_age')) {
+    function calculate_age($dob)
+    {
+        $age = Carbon::parse($dob)->diffInYears() . ' tahun';
+        if ($age <= 2) {
+            $age = Carbon::parse($dob)->diffInMonths() . ' bulan';
+        }
+        return $age;
     }
 }

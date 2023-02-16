@@ -25,8 +25,6 @@ class NewUser extends Component
 
         $this->state['families'] = collect(session('order.families'))->toArray();
         $this->state['address'] = '';
-        $this->state['rt'] = '';
-        $this->state['rw'] = '';
         $this->state['desa'] = '';
         $this->state['kec'] = $kecamatan->name;
         $this->state['kab'] = $kecamatan->kabupaten->name;
@@ -38,8 +36,6 @@ class NewUser extends Component
         'state.families.*.name' => 'required|min:2|max:64',
         'state.families.*.dob' => 'required',
         'state.address' => 'required|string|min:4|max:124',
-        'state.rt' => 'required|min:1|max:99',
-        'state.rw' => 'required|min:1|max:99',
         'state.desa' => 'required|min:4|max:64',
         'state.phone' => 'required|min:11|max:13',
         'state.ig' => 'nullable|min:2',
@@ -51,8 +47,6 @@ class NewUser extends Component
         'state.families.*.name' => 'Nama',
         'state.families.*.dob' => 'Tanggal Lahir',
         'state.address' => 'Alamat',
-        'state.rt' => 'Rt',
-        'state.rw' => 'Rw',
         'state.desa' => 'Desa',
         'state.phone' => 'WhatsApp',
         'state.ig' => 'User Instagram',
@@ -94,8 +88,6 @@ class NewUser extends Component
                 'client_user_id' => $user->id,
                 'label' => 'Rumah',
                 'address' => $this->state['address'],
-                'rt' => $this->state['rt'],
-                'rw' => $this->state['rw'],
                 'desa' => $this->state['desa'],
                 'kecamatan_id' => session('order.kecamatan_id'),
                 'is_main' => true,

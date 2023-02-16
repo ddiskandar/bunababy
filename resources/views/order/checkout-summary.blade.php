@@ -33,7 +33,7 @@
                 <div  >
                     <div class="font-semibold">{{ $data['date'] }}</div>
                     @if (session()->has('order.treatments'))
-                        <div class="text-sm">{{ $data['time']  }} ( {{ session('order.addMinutes') }} menit )</div>
+                        <div class="text-sm">{{ $data['time']  }}</div>
                     @endif
                 </div>
             </div>

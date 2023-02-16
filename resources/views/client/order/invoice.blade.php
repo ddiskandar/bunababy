@@ -105,7 +105,7 @@
                     <tr class="border-b border-gray-100">
                         <td class="py-1">
                             <p class="font-semibold">
-                                {{ $treatment->pivot->family_name ?? '#' }} {{ $treatment->name }}
+                                {{ $treatment->name . ', ' . ($treatment->pivot->family_name ?? '#') . ' / ' . ($treatment->pivot->family_age ?? '#') }}
                             </p>
                         </td>
                         <td class="py-1 text-center">
