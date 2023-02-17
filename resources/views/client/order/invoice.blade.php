@@ -84,16 +84,13 @@
                     <thead>
                     <tr class="border-b border-gray-100">
                         <th class="py-1 font-semibold tracking-wider text-left uppercase text-slate-400">
-                        Treatment
+                            Treatment
                         </th>
-                        <th class="py-1 font-semibold tracking-wider text-center uppercase text-slate-400">
-                        Jumlah
-                        </th>
-                        <th class="py-1 font-semibold tracking-wider text-right uppercase text-slate-400">
-                        Harga Satuan
+                        <th class="py-1 font-semibold tracking-wider text-left uppercase text-slate-400">
+                            Client / Usia
                         </th>
                         <th class="py-1 font-semibold tracking-wider text-right uppercase text-slate-400">
-                        Total Harga
+                            Harga
                         </th>
                     </tr>
                     </thead>
@@ -104,15 +101,12 @@
                     @foreach ($order->treatments as $treatment)
                     <tr class="border-b border-gray-100">
                         <td class="py-1">
-                            <p class="font-semibold">
-                                {{ $treatment->name . ', ' . ($treatment->pivot->family_name ?? '#') . ' / ' . ($treatment->pivot->family_age ?? '#') }}
-                            </p>
+                            <div class="font-semibold">
+                                <div>{{ $treatment->name }}</div>
+                            </div>
                         </td>
-                        <td class="py-1 text-center">
-                            1
-                        </td>
-                        <td class="py-1 text-right">
-                            {{ rupiah($treatment->pivot->treatment_price) }}
+                        <td class="py-1">
+                            <div>{{ ($treatment->pivot->family_name ?? '#') . ' / ' . ($treatment->pivot->family_age ?? '#') }}</div>
                         </td>
                         <td class="py-1 text-right">
                             {{ rupiah($treatment->pivot->treatment_price) }}
@@ -121,7 +115,7 @@
                     @endforeach
 
                     <tr>
-                        <td colspan="3" class="py-2 font-semibold text-right">
+                        <td colspan="2" class="py-2 font-semibold text-right">
                             Subtotal
                         </td>
                         <td class="py-2 text-right">
@@ -129,7 +123,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3" class="py-2 font-semibold text-right">
+                        <td colspan="2" class="py-2 font-semibold text-right">
                             Transport
                         </td>
                         <td class="py-2 text-right">
@@ -138,7 +132,7 @@
                     </tr>
                     @if ($order->adjustment_amount !== 0)
                     <tr>
-                        <td colspan="3" class="py-2 font-semibold text-right">
+                        <td colspan="2" class="py-2 font-semibold text-right">
                             {{ $order->adjustment_name }}
                         </td>
                         <td class="py-2 text-right">
@@ -147,7 +141,7 @@
                     </tr>
                     @endif
                     <tr>
-                        <td colspan="3" class="py-2 font-bold text-right uppercase border-y border-bunababy-50">
+                        <td colspan="2" class="py-2 font-bold text-right uppercase border-y border-bunababy-50">
                             Total Tagihan
                         </td>
                         <td class="py-2 font-semibold text-right border-y border-bunababy-50">
