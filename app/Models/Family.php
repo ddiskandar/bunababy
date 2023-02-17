@@ -15,8 +15,15 @@ class Family extends Model
         'dob' => 'date'
     ];
 
+    protected $appends = ['age'];
+
     public function client()
     {
         return $this->belongsTo(User::class, 'client_user_id');
+    }
+
+    public function getAgeAttribute()
+    {
+        return calculate_age($this->dob);
     }
 }

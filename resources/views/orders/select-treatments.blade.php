@@ -10,11 +10,12 @@
                 <div class="space-y-1">
                     <div class="divide-y divide-bunababy-50">
                         @forelse ($order->treatments as $treatment)
-                            <div class="py-4 ">
+                            <div class="py-4">
                                 <div class="flex items-center justify-between text-sm">
                                     <div>
                                         <div class="font-semibold">{{ $treatment->name }}</div>
                                         <div>{{ $treatment->category->name }}</div>
+                                        <div>{{ ($treatment->pivot->family_name ?? '') . ', ' . ($treatment->pivot->family_age ?? '') }}</div>
                                     </div>
                                     <div>
                                         <div class="font-semibold">{{ rupiah($treatment->pivot->treatment_price) }}</div>
@@ -41,9 +42,22 @@
                         <x-input-error for="treatmentId" class="mt-2" />
                     </div>
 
+                    <div class="mt-4 space-y-1">
+                        <x-label for="familyId">Pilih Client</x-label>
+                        <select wire:model="familyId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="familyId">
+                            <option value="" selected>-- Pilih salah satu</option>
+                            @foreach ($families as $family)
+                            <option value="{{ $family['id'] }}">{{ $family['name'] . ' - ' . ($family['type'] ?? '-') . ' - ' . ($family['age'] ?? '-') }}</option>
+                            @endforeach
+                        </select>
+                        <x-input-error for="familyId" class="mt-2" />
+                    </div>
+
                     @if (session()->has('treatments'))
                         <div class="mb-4 text-sm text-red-600">{{ session('treatments') }}</div>
                     @endif
+
+                    {{ $selectedFamily->age ?? '' }}
 
                     <div class="flex items-center mt-4">
                         <div>

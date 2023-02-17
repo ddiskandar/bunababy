@@ -61,6 +61,11 @@ class User extends Authenticatable
         'active' => 'boolean',
     ];
 
+    protected $appends = [
+        'profile_photo_url',
+        'age'
+    ];
+
     public function isMidwife()
     {
         return $this->type == self::MIDWIFE;
@@ -68,7 +73,7 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->type == self::ADMIN OR $this->type == self::OWNER;
+        return $this->type == self::ADMIN or $this->type == self::OWNER;
     }
 
     public function isClient()
@@ -89,6 +94,11 @@ class User extends Authenticatable
     public function kecamatans(): BelongsToMany
     {
         return $this->belongsToMany(Kecamatan::class, 'kecamatan_user', 'midwife_user_id', 'kecamatan_id')->orderBy('name');
+    }
+
+    public function getAgeAttribute()
+    {
+        return calculate_age($this->profile->dob);
     }
 
     // order untuk Bidan
@@ -133,7 +143,7 @@ class User extends Authenticatable
 
     public function getProfilePhotoUrlAttribute()
     {
-        return $this->google_id ? $this->profile->photo : ( $this->profile->photo ? asset('storage/' . $this->profile->photo) : $this->defaultProfilePhotoUrl());
+        return $this->google_id ? $this->profile->photo : ($this->profile->photo ? asset('storage/' . $this->profile->photo) : $this->defaultProfilePhotoUrl());
     }
 
     protected function defaultProfilePhotoUrl()
@@ -142,12 +152,8 @@ class User extends Authenticatable
             return mb_substr($segment, 0, 1);
         })->join(' '));
 
-        return 'https://ui-avatars.com/api/?name='.urlencode($name).'&color=FE0E9C&background=FCE7F3';
+        return 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&color=FE0E9C&background=FCE7F3';
     }
-
-    protected $appends = [
-        'profile_photo_url',
-    ];
 
     public function scopeActive($query)
     {
@@ -182,5 +188,4 @@ class User extends Authenticatable
             'id'
         );
     }
-
 }

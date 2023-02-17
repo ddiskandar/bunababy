@@ -2,32 +2,58 @@
 
 namespace App\Http\Livewire\Orders;
 
+use App\Models\Family;
 use App\Models\Order;
 use App\Models\Treatment;
-use Carbon\Carbon;
+use Illuminate\Support\Arr;
 use Livewire\Component;
 
 class SelectTreatments extends Component
 {
     public $order;
     public $treatmentId;
+    public $familyId;
+    public $families;
+    public $selectedFamily;
 
     protected $listeners = [
         'saved' => '$refresh',
     ];
 
     protected $rules = [
-        'treatmentId' => 'required|exists:treatments,id'
+        'treatmentId' => 'required|exists:treatments,id',
+        'familyId' => 'required',
     ];
 
     protected $validationAttributes = [
-        'treatmentId' => 'Treatment'
+        'treatmentId' => 'Treatment',
+        'familyId' => 'Client',
     ];
 
     public function mount(Order $order)
     {
         $order->load('treatments');
         $this->order = $order;
+
+        $families = Family::query()
+            ->where('client_user_id', $this->order->client_user_id)
+            ->orderBy('name')
+            ->get()
+            ->toArray();
+
+        $families[] = [
+            'id' => $this->order->client->id,
+            'name' => $this->order->client->name,
+            'age' => $this->order->client->age ?? null,
+            'type' => 'Client'
+        ];
+
+        $this->families = collect($families);
+    }
+
+    public function updatedFamilyId()
+    {
+        $this->selectedFamily = $this->families->firstWhere('id', $this->familyId);
     }
 
     public function delete($id)
@@ -72,6 +98,8 @@ class SelectTreatments extends Component
         $this->order->treatments()->attach($this->treatmentId, [
             'treatment_price' => $treatment->price,
             'treatment_duration' => $treatment->duration,
+            'family_name' => $this->selectedFamily['name'],
+            'family_age' => $this->selectedFamily['age'],
         ]);
 
         $this->order->update([
@@ -82,6 +110,8 @@ class SelectTreatments extends Component
         ]);
 
         $this->treatmentId = '';
+        $this->familyId = '';
+        $this->selectedFamily = [];
         $this->emit('saved');
     }
 
