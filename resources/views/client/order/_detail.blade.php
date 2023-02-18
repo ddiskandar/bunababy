@@ -35,7 +35,7 @@
                 window.navigator.clipboard.writeText({{ $order->no_reg }});
                 new Notification()
                     .success()
-                    .title('ID Transaksi telah disalin')
+                    .title('Copied')
                     .duration(3000)
                     .send();
                 ">

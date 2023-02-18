@@ -41,12 +41,21 @@ class Confirm extends Component
 
             $order->save();
 
+            $families = collect(session('order.families'));
+
             foreach (collect(session('order.treatments')) as $treatment) {
-                $family = Family::find($treatment['family_id']);
+                $client = $families->where('id', $treatment['family_id'])->first();
+
+                if ($client['type'] === 'Diri Sendiri') {
+                    $age = calculate_age(auth()->user()->profile->dob);
+                } else {
+                    $family = Family::find($treatment['family_id']);
+                    $age = calculate_age($family->dob);
+                }
 
                 $order->treatments()->attach($treatment['treatment_id'], [
                     'family_name' => $treatment['family_name'],
-                    'family_age' => calculate_age($family->dob),
+                    'family_age' => $age,
                     'treatment_price' => $treatment['treatment_price'],
                     'treatment_duration' => $treatment['treatment_duration'],
                 ]);

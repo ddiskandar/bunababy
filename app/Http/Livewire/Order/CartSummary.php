@@ -20,7 +20,7 @@ class CartSummary extends Component
         $treatments = collect(session('order.treatments'))->where('treatment_id', $id);
 
         foreach ($treatments as $key => $treatment) {
-            session()->forget('order.treatments.' . $key );
+            session()->forget('order.treatments.' . $key);
             session()->decrement('order.addMinutes', $treatment['treatment_duration']);
         }
 
@@ -29,12 +29,12 @@ class CartSummary extends Component
 
     public function checkout()
     {
-        if( session()->missing('order.start_time')){
+        if (session()->missing('order.start_time')) {
             session()->flash('treatments', 'Belum ada slot yang dipilih, silahkan anda mulai reservasi dengan memilih waktu mulai treatment');
             return back();
         }
 
-        if( session()->has('order.treatments') AND count(session('order.treatments')) <= 0) {
+        if (session()->has('order.treatments') and count(session('order.treatments')) <= 0) {
             session()->flash('treatments', 'Belum ada treatment yang dipilih, silahkan anda pilih terlebih dahulu');
             return back();
         }
@@ -47,7 +47,7 @@ class CartSummary extends Component
 
         $date = session('order.date')->toDateString();
 
-        foreach($orders as $order) {
+        foreach ($orders as $order) {
             if ($order->activeBetween($date . ' ' . $order->getStartTime(), $date . ' ' . $order->getEndTime())->exists()) {
                 session()->flash('treatments', 'Tidak dapat membuat reservasi pada pilihan dan rentang waktu ini, silahkan pilih slot waktu yang kosong.');
                 return back();
@@ -61,7 +61,7 @@ class CartSummary extends Component
     {
         $treatments = collect(session('order.treatments')) ?? [];
 
-        $treatments = $treatments->mapToGroups(function($item, $key) {
+        $treatments = $treatments->mapToGroups(function ($item, $key) {
             return [$item['treatment_name'] => [
                 'family_name' => $item['family_name'],
                 'treatment_id' => $item['treatment_id'],
@@ -74,8 +74,7 @@ class CartSummary extends Component
 
         $order = new Order();
 
-        if(session('order.place') == Order::PLACE_CLIENT)
-        {
+        if (session('order.place') == Order::PLACE_CLIENT) {
             $bidan = \App\Models\User::where('id', session('order.midwife_user_id'))->first();
             $data['bidan'] = $bidan->name;
             $data['bidan_photo'] = $bidan->profile_photo_url;
@@ -86,7 +85,9 @@ class CartSummary extends Component
         $data['time'] = waktu($order->getStartTime()) . ' - ' . waktu($order->getEndTime()) . ' WIB ';
         $data['total_price'] = rupiah($order->getTotalPrice());
         $data['total_transport'] = rupiah($order->getTotalTransport());
-        $data['grand_total'] = rupiah($order->getTotalTransport() + $order->getTotalPrice());
+        $data['grand_total'] = session()->has('order.treatments') && session('order.treatments') !== []
+            ? rupiah($order->getTotalTransport() + $order->getTotalPrice())
+            : rupiah(0);
 
         return view('order.cart-summary', [
             'data' => $data,

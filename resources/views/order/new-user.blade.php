@@ -11,7 +11,6 @@
         </div>
         <div class="grid grid-cols-6 gap-6">
 
-
             @foreach ($state['families'] as $index => $family)
                 <!-- Nama Lengkap -->
                 <div class="col-span-6 xl:col-span-2">
@@ -91,7 +90,7 @@
 
     </div>
 
-    <div  class="py-6">
+    <div class="py-6">
         <div class="flex items-center mb-4 text-bunababy-400">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -114,14 +113,14 @@
             <!-- Kata Sandi -->
             <div class="col-span-6 xl:col-span-3">
                 <x-label for="name" :value="__('Kata Sandi')" />
-                <x-input wire:model.lazy="state.password" id="name" class="block w-full mt-1" type="password" name="password" />
+                <x-input wire:model="state.password" id="name" class="block w-full mt-1" type="password" name="password" />
                 <x-input-error for="state.password" class="mt-2" />
             </div>
 
             <!-- Konfirmasi Kata Sandi -->
             <div class="col-span-6 xl:col-span-3">
                 <x-label for="name" :value="__('Konfirmasi Kata Sandi')" />
-                <x-input wire:model.lazy="state.password_confirmation" id="name" class="block w-full mt-1" type="password" name="password" />
+                <x-input wire:model="state.password_confirmation" id="name" class="block w-full mt-1" type="password" name="password" />
                 <x-input-error for="state.password_confirmation" class="mt-2" />
             </div>
 
@@ -131,14 +130,10 @@
             <button class="flex items-center justify-center w-full py-4 text-center text-white transition duration-150 ease-in-out rounded-full shadow-xl disabled:opacity-25 bg-bunababy-200 shadow-bunababy-100/50"
                 wire:loading.attr="disabled"
             >
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevrons-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <polyline points="7 7 12 12 7 17"></polyline>
-                <polyline points="13 7 18 12 13 17"></polyline>
-            </svg>
-            <span class="ml-2">Simpan dan Buat Akun</span>
+                Simpan dan Buat Akun
             </button>
         </div>
     </div>
+    </form>
 
 </div>

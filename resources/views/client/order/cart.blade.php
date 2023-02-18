@@ -54,7 +54,7 @@
             @livewire('order.select-treatments')
         </div>
 
-        <div class="px-6 py-4 text-white bg-bunababy-100">
+        <div class="pb-32 bg-white">
             @livewire('order.cart-summary')
         </div>
 
