@@ -141,6 +141,7 @@
                                         </label>
                                         <p class="mt-2 text-xs">File Photo Maksimal 700 Kb.</p>
                                         <x-input-error for="attachment" class="mt-2" />
+                                        <p class="mt-2 text-xs" wire:loading wire:target="attachment">Uploading...</p>
                                     </div>
                                     <div class="py-4 space-y-1">
                                         <x-label for="value">Nominal</x-label>
