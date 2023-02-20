@@ -41,6 +41,6 @@
 </div>
 <!-- END Simple Statistics Grid -->
 
-@livewire('daily-midwife-schedules')
+@livewire('admin.daily-midwife-schedules')
 
 </x-app-layout>

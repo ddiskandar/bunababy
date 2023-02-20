@@ -78,7 +78,7 @@
                         </svg>
                     </span>
                     <span class="py-2 grow">Notifikasi</span>
-                    @livewire('notifications.user-notifications-count')
+                    @livewire('admin.notifications.user-notifications-count')
                 </x-nav-link>
                 <x-nav-link :href="route('calendar')" :active="request()->is('calendar*')">
                     <span class="flex items-center flex-none opacity-50">

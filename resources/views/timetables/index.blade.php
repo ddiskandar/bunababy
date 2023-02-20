@@ -1,5 +1,5 @@
 <x-app-layout>
 
-    @livewire('timetables.manage-timetables')
+    @livewire('admin.timetables.manage-timetables')
 
 </x-app-layout>

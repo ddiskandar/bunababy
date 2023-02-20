@@ -6,18 +6,18 @@
 
         <div class="space-y-2">
             <div class="px-6 py-4 bg-white">
-                @livewire('order.checkout-summary')
+                @livewire('client.order.checkout-summary')
             </div>
 
             @guest
             <div class="px-6 py-4 bg-white">
-                @livewire('order.new-user')
+                @livewire('client.order.new-user')
             </div>
             @endguest
 
             @auth
             <div class="px-6 py-4 bg-white">
-                @livewire('order.auth-user')
+                @livewire('client.order.auth-user')
             </div>
             @endauth
 

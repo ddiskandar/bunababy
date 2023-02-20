@@ -46,16 +46,16 @@
             </div>
 
             <div class="py-4">
-                @livewire('order.select-time')
+                @livewire('client.order.select-time')
             </div>
         </div>
 
         <div class="px-6 py-4 bg-white">
-            @livewire('order.select-treatments')
+            @livewire('client.order.select-treatments')
         </div>
 
         <div class="pb-32 bg-white">
-            @livewire('order.cart-summary')
+            @livewire('client.order.cart-summary')
         </div>
 
         @endif

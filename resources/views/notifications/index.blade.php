@@ -1,3 +1,3 @@
 <x-app-layout>
-    @livewire('notifications.manage-notifications')
+    @livewire('admin.notifications.manage-notifications')
 </x-app-layout>

@@ -1,3 +1,3 @@
 <x-app-layout>
-    @livewire('orders.manage-orders')
+    @livewire('admin.orders.manage-orders')
 </x-app-layout>

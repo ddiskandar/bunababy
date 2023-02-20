@@ -1,5 +1,5 @@
 <x-app-layout>
 
-    @livewire('treatments.manage-treatments')
+    @livewire('admin.treatments.manage-treatments')
 
 </x-app-layout>

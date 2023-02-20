@@ -1,3 +1,3 @@
 <x-app-layout>
-    @livewire('payments.manage-payments')
+    @livewire('admin.payments.manage-payments')
 </x-app-layout>

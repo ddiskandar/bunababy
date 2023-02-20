@@ -17,7 +17,7 @@
             @media print {
               body {-webkit-print-color-adjust: exact;}
             }
-            </style>
+        </style>
 
         <!-- Scripts -->
         {{-- @vite('resources/js/app.js') --}}

@@ -1,3 +1,3 @@
 <x-app-layout>
-    @livewire('testimonials.manage-testimonials')
+    @livewire('admin.testimonials.manage-testimonials')
 </x-app-layout>

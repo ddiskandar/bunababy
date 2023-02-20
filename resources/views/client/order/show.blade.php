@@ -69,7 +69,7 @@
                 @include('client.order._activity')
             </div>
             <div class="px-6 py-4 bg-white">
-                @livewire('order.payments', [$order->id])
+                @livewire('client.order.payments', [$order->id])
             </div>
             <div class="px-6 py-4 bg-white">
                 @include('client.order._summary')

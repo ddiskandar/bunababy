@@ -1,5 +1,5 @@
 <x-app-layout>
 
-    @livewire('wilayah.manage-kabupaten')
+    @livewire('admin.wilayah.manage-kabupaten')
 
 </x-app-layout>

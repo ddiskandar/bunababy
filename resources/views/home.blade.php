@@ -84,9 +84,6 @@
     </div>
     <!-- END Hero -->
 
-    <div>
-        @livewire('treatments-catalog')
-    </div>
 
     <!-- FAQ Section: To the Side -->
     <div class="bg-white">
