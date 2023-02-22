@@ -7,9 +7,9 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'show'])->name('hom
 
 // make an order
 Route::get('/order/create', [App\Http\Controllers\Client\OrderController::class, 'create'])->name('order.create');
-Route::get('/order/cart', [App\Http\Controllers\Client\OrderController::class, 'cart'])->name('order.cart');
-Route::get('/order/check', [App\Http\Controllers\Client\OrderController::class, 'check'])->name('order.check');
-Route::get('/order/checkout', [App\Http\Controllers\Client\OrderController::class, 'checkout'])->name('order.checkout');
+Route::get('/order/cart', App\Http\Controllers\Client\OrderCartController::class)->name('order.cart');
+Route::get('/order/check', App\Http\Controllers\Client\OrderCheckController::class)->name('order.check');
+Route::get('/order/checkout', App\Http\Controllers\Client\OrderCheckoutController::class)->name('order.checkout');
 
 Route::middleware(['auth'])->group(function () {
 
@@ -63,7 +63,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/settings', [App\Http\Controllers\SettingController::class, 'show'])->name('settings');
         Route::get('/user/profile', [App\Http\Controllers\UserProfileController::class, 'show'])->name('user.profile');
     });
-
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

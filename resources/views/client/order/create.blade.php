@@ -1,33 +1,26 @@
 <x-client-layout>
-    <div class="relative max-w-screen-sm min-h-screen mx-auto my-0">
+    <x-order-step>
+        <x-section>
+            <x-title>Pilih Tempat</x-title>
+            @livewire('client.order.select-place')
+        </x-section>
 
-        @include('layouts._order-step')
-
-        <div class="space-y-2">
-            <div class="px-6 py-4 bg-white">
-                <div>
-                    <x-title>Pilih Tempat</x-title>
-                    @livewire('client.order.select-place')
-                </div>
-            </div>
-
-            @if (session('order.place') == 1)
-            <div class="px-6 py-4 bg-white">
+        @if (session('order.place') == 1)
+            <x-section>
                 @livewire('client.select-location')
+            </x-section>
+        @endif
+
+        <x-section>
+            @if (session('order.place') == 1)
+            <div class="flex-1 mt-6 md:mt-0">
+                @livewire('client.order.list-midwife')
+            </div>
+            @else
+            <div class="flex-1 mt-6 md:mt-0">
+                @livewire('client.order.clinic')
             </div>
             @endif
-
-            <div class="px-6 py-4 bg-white">
-                @if (session('order.place') == 1)
-                <div class="flex-1 mt-6 md:mt-0">
-                    @livewire('client.order.list-midwife')
-                </div>
-                @else
-                <div class="flex-1 mt-6 md:mt-0">
-                    @livewire('client.order.clinic')
-                </div>
-                @endif
-            </div>
-        </div>
-    </div>
+        </x-section>
+    </x-order-step>
 </x-client-layout>

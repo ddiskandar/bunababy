@@ -61,32 +61,6 @@
 
     </div>
 
-    <!-- Banner (bottom bubble) -->
-    <div
-        x-data="{ show: @entangle('successMessage') }" x-show="show" x-init="setTimeout(() => show = false, 4000)"
-        x-transition:enter="transition ease-out duration-300"
-        x-transition:enter-start="opacity-0 transform translate-x-8"
-        x-transition:enter-end="opacity-100 transform translate-x-0"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100 transform translate-x-0"
-        x-transition:leave-end="opacity-0 transform translate-x-8"
-        style="display: none !important"
-        class="fixed inset-x-0 bottom-0 right-0 flex items-center justify-between px-8 py-2 mx-auto mb-24 rounded-full shadow-lg w-72 z-60 bg-bunababy-200">
-        <div class="inline-flex items-center text-sm text-pink-100">
-            <p>
-                Data berhasil diperbaharui
-            </p>
-        </div>
-        <div class="flex items-center ml-2">
-            <button
-                wire:click="$set('successMessage', false)"
-                type="button" class="inline-flex items-center justify-center p-1 text-white rounded opacity-75 focus:outline-none hover:opacity-100 active:opacity-75">
-                <svg class="inline-block w-4 h-4 hi-outline hi-x" stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
-        </div>
-    </div>
-    <!-- END Banner (bottom bubble) -->
-
     <!-- Modal -->
     <div
     x-show="showDialog"
@@ -157,7 +131,7 @@
                                 <x-label for="state.kecamatan_id">Kecamatan</x-label>
                                 <select @if ($dialogEditMode) disabled @endif wire:model.defer="state.kecamatan_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.kecamatan_id">
                                     <option value="" selected>-- Pilih salah satu</option>
-                                    @foreach (\DB::table('kecamatans')->orderBy('name')->get(['id', 'name']) as $kecamatan)
+                                    @foreach ($kecamatans as $kecamatan)
                                         <option value="{{ $kecamatan->id }}">{{ $kecamatan->name }}</option>
                                     @endforeach
                                 </select>
@@ -165,7 +139,7 @@
                             </div>
 
                             <div class="space-y-1">
-                                <x-label for="state.note">Catatan Petunjuk</x-label>
+                                <x-label for="state.note">{{ __('Catatan Petunjuk') }}</x-label>
                                 <x-textarea wire:model.defer="state.note" class="placeholder:text-xs" rows=3 class="w-full" type="text" id="state.note" placeholder="Patokan alamat atau petunjuk menuju lokasi" />
                                 <x-input-error for="state.note" class="mt-2" />
                             </div>
@@ -176,7 +150,7 @@
                             <button type="submit"
                                 wire:loading.attr="disabled"
                                 class="block w-full py-2 text-center text-white rounded-full shadow-xl disabled:opacity-75 bg-bunababy-200 shadow-bunababy-100/50"
-                            >Simpan</button>
+                            >{{ __('Simpan') }}</button>
                         </div>
 
                     </form>

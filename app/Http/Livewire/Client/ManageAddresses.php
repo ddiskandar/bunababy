@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Client;
 
 use App\Models\Address;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class ManageAddresses extends Component
@@ -13,6 +14,7 @@ class ManageAddresses extends Component
     public $addresses;
     public $showDialog = false;
     public $dialogEditMode = false;
+    public $kecamatans;
 
     protected $rules = [
         'state.label' => 'required|string|min:3|max:32',
@@ -38,6 +40,8 @@ class ManageAddresses extends Component
             ->where('client_user_id', auth()->id())
             ->with('kecamatan', 'kecamatan.kabupaten')
             ->get();
+
+        $this->kecamatans = DB::table('kecamatans')->orderBy('name')->get(['id', 'name']);
     }
 
     public function hydrate()

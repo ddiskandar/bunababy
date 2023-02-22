@@ -1,9 +1,5 @@
 <x-client-layout>
-
-    <div class="relative max-w-screen-sm min-h-screen mx-auto my-0">
-
-        @include('layouts._order-step')
-
+    <x-order-step>
         <div class="space-y-2">
             <div class="px-6 py-4 bg-white">
                 @livewire('client.order.checkout-summary')
@@ -22,6 +18,5 @@
             @endauth
 
         </div>
-    </div>
-
+    </x-order-step>
 </x-client-layout>
