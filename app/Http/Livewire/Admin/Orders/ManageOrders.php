@@ -8,6 +8,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\DB;
 
 class ManageOrders extends Component
 {
@@ -127,7 +128,7 @@ class ManageOrders extends Component
         $orders = $query->latest('start_datetime')
             ->simplePaginate($this->perPage);
 
-        $midwives = \DB::table('users')->where('type', User::MIDWIFE)->get();
+        $midwives = DB::table('users')->where('type', User::MIDWIFE)->get();
 
         return view('admin.orders.manage-orders', [
             'orders' => $orders,

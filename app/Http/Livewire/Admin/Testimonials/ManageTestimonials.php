@@ -6,6 +6,7 @@ use App\Models\Testimonial;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\DB;
 
 class ManageTestimonials extends Component
 {
@@ -107,7 +108,7 @@ class ManageTestimonials extends Component
             ->latest()
             ->paginate($this->perPage);
 
-        $midwives = \DB::table('users')->where('type', User::MIDWIFE)->get();
+        $midwives = DB::table('users')->where('type', User::MIDWIFE)->get();
 
         return view('admin.testimonials.manage-testimonials', [
             'testimonials' => $testimonials,

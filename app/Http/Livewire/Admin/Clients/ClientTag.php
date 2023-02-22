@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Admin\Clients;
 use App\Models\Tag;
 use App\Models\User;
 use Livewire\Component;
+use Illuminate\Support\Facades\DB;
 
 class ClientTag extends Component
 {
@@ -43,7 +44,7 @@ class ClientTag extends Component
 
     public function render()
     {
-        $tags = \DB::table('tags')
+        $tags = DB::table('tags')
             ->whereNotIn('id', $this->client->tags->pluck('id'))
             ->orderBy('name')
             ->get();

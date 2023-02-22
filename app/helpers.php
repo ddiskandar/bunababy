@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 if (!function_exists('rupiah')) {
     function rupiah($value)
@@ -30,7 +31,7 @@ if (!function_exists('tanggal_indo')) {
 if (!function_exists('waktu')) {
     function waktu($value)
     {
-        return \Str::substr($value, 0, 5);
+        return Str::substr($value, 0, 5);
     }
 }
 
