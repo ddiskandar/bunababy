@@ -16,7 +16,7 @@ class Owner
      */
     public function handle(Request $request, Closure $next)
     {
-        if(! auth()->user()->isOwner()) {
+        if (!auth()->user()->isOwner()) {
             return redirect()->route('dashboard');
         }
 

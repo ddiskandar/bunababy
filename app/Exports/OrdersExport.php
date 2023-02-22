@@ -17,42 +17,55 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
 {
     use Exportable;
 
-    public function fromDate($from)
-    {
-        $this->from = $from;
-        return $this;
-    }
+    public $filterFromDate;
+    public $filterToDate;
+    public $filterSearch;
+    public $filterStatus;
+    public $filterMidwife;
+    public $filterPlace;
 
-    public function toDate($to)
+    public function filter($from, $to, $search, $status, $midwife, $place)
     {
-        $this->to = $to;
-        return $this;
-    }
+        $this->filterFromDate = $from;
+        $this->filterToDate = $to;
+        $this->filterSearch = $search;
+        $this->filterStatus = $status;
+        $this->filterMidwife = $midwife;
+        $this->filterPlace = $place;
 
-    public function midwife($id)
-    {
-        $this->midwifeId = $id;
         return $this;
     }
 
     public function query()
     {
-        $order = Order::query()
-            ->with('client', 'midwife')
-            ->when($this->midwifeId, function ($query) {
-                $query->where('midwife_user_id', $this->midwifeId);
+        $query = Order::query()
+            ->when(auth()->user()->isMidwife(), function ($query) {
+                $query->where('midwife_user_id', auth()->id());
             })
-            ->whereBetween('start_datetime', [$this->from, Carbon::parse($this->to)->addDay()]);
+            ->where(function ($query) {
+                $query->where('no_reg', 'LIKE', '%' . $this->filterSearch . '%')
+                    ->orWhereHas('client', function ($query) {
+                        $query->where('name', 'LIKE', '%' . $this->filterSearch . '%')
+                            ->orWhereHas('addresses.kecamatan', function ($query) {
+                                $query->where('name', 'like', '%' . $this->filterSearch . '%');
+                            });
+                    });
+            })
+            ->whereBetween('start_datetime', [$this->filterFromDate, Carbon::parse($this->filterToDate)->addDay()->toDateString()])
+            ->where('place', 'LIKE', '%' . $this->filterPlace . '%')
+            ->where('status', 'LIKE', '%' . $this->filterStatus . '%')
+            ->where('midwife_user_id', 'LIKE', '%' . $this->filterMidwife . '%')
+            ->orWhere('midwife_user_id', NULL)
+            ->with('client', 'treatments');
 
-        return $order;
+        return $query;
     }
 
     public function styles(Worksheet $sheet)
     {
         return [
             // Style the first row as bold text.
-            1    => ['font' => ['bold' => true]],
-
+            1 => ['font' => ['bold' => true]],
         ];
     }
 
@@ -76,11 +89,11 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
     public function map($order): array
     {
         $timetables = Timetable::query()
-            ->when($this->midwifeId, function ($query) {
-                $query->where('midwife_user_id', $this->midwifeId);
+            ->when($this->filterMidwife, function ($query) {
+                $query->where('midwife_user_id', $this->filterMidwife);
             })
             ->orWhere('type', Timetable::OVERTIME)
-            ->whereBetween('date', [$this->from, $this->to])
+            ->whereBetween('date', [$this->filterFromDate, $this->filterToDate])
             ->get();
 
         $status = '';

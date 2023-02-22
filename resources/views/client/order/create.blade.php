@@ -13,7 +13,7 @@
 
             @if (session('order.place') == 1)
             <div class="px-6 py-4 bg-white">
-                @livewire('select-location')
+                @livewire('client.select-location')
             </div>
             @endif
 

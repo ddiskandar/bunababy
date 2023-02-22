@@ -16,7 +16,7 @@ class Client
      */
     public function handle(Request $request, Closure $next)
     {
-        if(! auth()->user()->isClient()) {
+        if (!auth()->user()->isClient()) {
             return redirect()->route('dashboard');
         }
 

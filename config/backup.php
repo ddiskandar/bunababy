@@ -8,7 +8,7 @@ return [
          * The name of this application. You can use this name to monitor
          * the backups.
          */
-        'name' => env('APP_NAME', 'laravel-backup'),
+        'name' => env('APP_NAME', 'bunababycare-backup'),
 
         'source' => [
 
@@ -169,7 +169,7 @@ return [
             'to' => 'd3215k@gmail.com',
 
             'from' => [
-                'address' => env('MAIL_FROM_ADDRESS', 'bunababy.dev@gmail.com'),
+                'address' => env('MAIL_FROM_ADDRESS', 'bunababycare@gmail.com'),
                 'name' => env('MAIL_FROM_NAME', 'Bunababy'),
             ],
         ],

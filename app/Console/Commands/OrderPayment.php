@@ -8,6 +8,7 @@ use App\Models\Payment;
 use App\Models\User;
 use App\Notifications\OrderUnpaid;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class OrderPayment extends Command
 {
@@ -34,19 +35,19 @@ class OrderPayment extends Command
     {
         $orders = Order::where('status', Order::STATUS_LOCKED)
             ->doesntHave('payments')
-            ->whereDoesntHave('payments', function($query){
+            ->whereDoesntHave('payments', function ($query) {
                 $query->where('status', Payment::STATUS_VERIFIED)
                     ->orWhere('status', Payment::STATUS_UNVERIFIED);
             })
             ->get();
 
+        $options = DB::table('options')->first();
+
         foreach ($orders as $order) {
 
-            if(! $order->isPaid() && (now()->gt($order->created_at->addMinutes(30))) ) {
+            if (!$order->isPaid() && (now()->gt($order->created_at->addMinutes($options->timeout)))) {
 
-                $order->update([
-                    'status' => Order::STATUS_UNPAID,
-                ]);
+                $order->update(['status' => Order::STATUS_UNPAID]);
 
                 $users = User::query()
                     ->where('type', User::ADMIN)

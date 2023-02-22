@@ -15,7 +15,6 @@ class ManageOrders extends Component
 
     public $perPage = 3;
 
-
     public $filterFromDate;
     public $filterToDate;
 
@@ -74,21 +73,25 @@ class ManageOrders extends Component
     {
         $this->filterFromDate = today()->startOfMonth()->toDateString();
         $this->filterToDate = today()->endOfMonth()->toDateString();
-
     }
 
     public function export()
     {
         $name = 'Semua ';
 
-        if($this->filterMidwife) {
+        if ($this->filterMidwife) {
             $name = User::where('id', $this->filterMidwife)->first()->name;
         }
 
         return (new OrdersExport)
-            ->fromDate($this->filterFromDate)
-            ->toDate($this->filterToDate)
-            ->midwife($this->filterMidwife)
+            ->filter(
+                $this->filterFromDate,
+                $this->filterToDate,
+                $this->filterSearch,
+                $this->filterStatus,
+                $this->filterMidwife,
+                $this->filterPlace,
+            )
             ->download($name . ' - ' . $this->filterFromDate . ' - ' . $this->filterToDate . '.xlsx');
     }
 
@@ -98,14 +101,14 @@ class ManageOrders extends Component
             ->when(auth()->user()->isMidwife(), function ($query) {
                 $query->where('midwife_user_id', auth()->id());
             })
-            ->where(function($query){
+            ->where(function ($query) {
                 $query->where('no_reg', 'LIKE', '%' . $this->filterSearch . '%')
-                ->orWhereHas('client', function ($query) {
-                    $query->where('name', 'LIKE', '%' . $this->filterSearch . '%')
-                    ->orWhereHas('addresses.kecamatan', function ($query) {
-                        $query->where('name', 'like', '%' . $this->filterSearch . '%');
+                    ->orWhereHas('client', function ($query) {
+                        $query->where('name', 'LIKE', '%' . $this->filterSearch . '%')
+                            ->orWhereHas('addresses.kecamatan', function ($query) {
+                                $query->where('name', 'like', '%' . $this->filterSearch . '%');
+                            });
                     });
-                });
             })
             ->whereBetween('start_datetime', [$this->filterFromDate, Carbon::parse($this->filterToDate)->addDay()->toDateString()])
             ->where('place', 'LIKE', '%' . $this->filterPlace . '%')
