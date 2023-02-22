@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
+    'failed' => 'Email atau kata sandi ada yang tidak sesuai.',
     'password' => 'Kata sandi salah.',
     'throttle' => 'Terlalu banyak percobaan. mohon coba lagi :seconds detik.',
 
