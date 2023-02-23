@@ -65,7 +65,7 @@
     @if (! $order->isPaid())
         @if ($isLocked)
         <div class="py-6 text-xs text-slate-600">
-            Bila dalam waktu maksimal 30 menit upload bukti transaksi anda belum dikonfirmasi, silahkan untuk segera <a href="https://api.whatsapp.com/send?phone={{ to_wa_indo(\DB::table('options')->select('phone')->first()->phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+{{ auth()->user()->name ?? '' }}.+Mohon+segera+konfirmasi+pembayaran." class="font-semibold text-bunababy-200">menghubungi Admin</a>
+            Bila dalam waktu maksimal 30 menit upload bukti transaksi anda belum dikonfirmasi, silahkan untuk segera <a href="https://api.whatsapp.com/send?phone={{ to_wa_indo($phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+{{ auth()->user()->name ?? '' }}.+Mohon+segera+konfirmasi+pembayaran." class="font-semibold text-bunababy-200">menghubungi Admin</a>
         </div>
         @endif
 

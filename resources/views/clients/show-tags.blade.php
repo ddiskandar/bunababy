@@ -1,5 +1,5 @@
 <x-app-layout>
 
-    @livewire('clients.manage-tags')
+    @livewire('admin.clients.manage-tags')
 
 </x-app-layout>

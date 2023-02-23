@@ -90,7 +90,7 @@
                 <x-label for="state.kecamatan_id">Kecamatan</x-label>
                 <select wire:model.defer="state.kecamatan_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.kecamatan_id">
                     <option value="" selected>-- Pilih salah satu</option>
-                    @foreach (\DB::table('kecamatans')->orderBy('name')->get(['id', 'name']) as $kecamatan)
+                    @foreach ($kecamatans as $kecamatan)
                         <option value="{{ $kecamatan->id }}">{{ $kecamatan->name }}</option>
                     @endforeach
                 </select>

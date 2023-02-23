@@ -6,6 +6,7 @@ use App\Models\Payment;
 use App\Models\Order;
 use App\Models\User;
 use App\Notifications\NewPayment;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Livewire\WithFileUploads;
 use Livewire\Component;
@@ -103,6 +104,7 @@ class Payments extends Component
 
         return view('client.order.payments', [
             'payments' => $payments,
+            'phone' => DB::table('options')->select('phone')->first()->phone
         ]);
     }
 }

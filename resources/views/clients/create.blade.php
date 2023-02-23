@@ -1,3 +1,3 @@
 <x-app-layout>
-    @livewire('clients.create-client')
+    @livewire('admin.clients.create-client')
 </x-app-layout>

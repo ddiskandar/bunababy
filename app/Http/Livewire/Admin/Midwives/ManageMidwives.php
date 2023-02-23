@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Midwives;
 
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -26,11 +27,11 @@ class ManageMidwives extends Component
     {
         $midwives = User::query()
             ->where('type', User::MIDWIFE)
-            ->where(function($query){
+            ->where(function ($query) {
                 $query->where('name', 'LIKE', '%' . $this->filterSearch . '%')
-                ->orWhereHas('kecamatans', function ($query) {
-                    $query->where('name', 'like', '%' . $this->filterSearch . '%');
-                });
+                    ->orWhereHas('kecamatans', function ($query) {
+                        $query->where('name', 'like', '%' . $this->filterSearch . '%');
+                    });
             })
             ->where('active', 'LIKE', '%' . $this->filterStatus . '%')
             ->with('kecamatans', 'reviews', 'profile:id,user_id,photo')
@@ -38,6 +39,7 @@ class ManageMidwives extends Component
 
         return view('admin.midwives.manage-midwives', [
             'midwives' => $midwives,
+            'categories' => DB::table('categories')->get()
         ]);
     }
 }

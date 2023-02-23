@@ -17,7 +17,7 @@
                     <div class="order-1 w-40 sm:order-2">
                         <select wire:model="filterCategory" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
                             <option value="" selected="selected">Semua Kategory</option>
-                            @foreach (DB::table('categories')->get() as $category)
+                            @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>

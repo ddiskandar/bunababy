@@ -45,7 +45,7 @@
                         </button>
                     </a>
                 @endif
-                <a href="https://api.whatsapp.com/send?phone={{ to_wa_indo(\DB::table('options')->select('phone')->first()->phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+{{ auth()->user()->name ?? '' }}." target="_blank">
+                <a href="https://api.whatsapp.com/send?phone={{ to_wa_indo($phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+{{ auth()->user()->name ?? '' }}." target="_blank">
                     <button class="flex items-center justify-center w-full gap-3 px-8 py-1 text-white transition duration-150 ease-in-out bg-green-500 border-2 border-green-500 rounded-full hover:opacity-80 ">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>

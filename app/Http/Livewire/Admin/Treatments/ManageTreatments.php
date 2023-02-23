@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin\Treatments;
 
 use App\Models\Treatment;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -131,6 +132,7 @@ class ManageTreatments extends Component
 
         return view('admin.treatments.manage-treatments', [
             'treatments' => $treatments,
+            'categories' => DB::table('categories')->get()
         ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Clients;
 
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -28,18 +29,17 @@ class ManageClients extends Component
     {
         $clients = User::query()
             ->where('type', User::CLIENT)
-            ->where(function($query){
+            ->where(function ($query) {
                 $query->where('name', 'LIKE', '%' . $this->filterSearch . '%')
-                ->orWhereHas('addresses.kecamatan', function ($query) {
-                    $query->where('name', 'like', '%' . $this->filterSearch . '%');
-                })
-                ->orWhereHas('profile', function ($query) {
-                    $query->where('phone', 'like', '%' . $this->filterSearch . '%')
-                    ->orWhere('ig', 'like', '%' . $this->filterSearch . '%')
-                    ;
-                });
+                    ->orWhereHas('addresses.kecamatan', function ($query) {
+                        $query->where('name', 'like', '%' . $this->filterSearch . '%');
+                    })
+                    ->orWhereHas('profile', function ($query) {
+                        $query->where('phone', 'like', '%' . $this->filterSearch . '%')
+                            ->orWhere('ig', 'like', '%' . $this->filterSearch . '%');
+                    });
             })
-            ->when($this->filterTag, function($query){
+            ->when($this->filterTag, function ($query) {
                 $query->whereHas('tags', function ($query) {
                     $query->where('name', 'LIKE', '%' . $this->filterTag . '%');
                 });
@@ -48,8 +48,11 @@ class ManageClients extends Component
             ->latest()
             ->paginate($this->perPage);
 
+        $tags = DB::table('tags')->select('name')->get();
+
         return view('admin.clients.manage-clients', [
             'clients' => $clients,
+            'tags' => $tags,
         ]);
     }
 }

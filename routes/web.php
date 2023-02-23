@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 // Home
-Route::get('/', [App\Http\Controllers\HomeController::class, 'show'])->name('home');
+Route::get('/', App\Http\Controllers\HomeController::class)->name('home');
 
 // make an order
 Route::get('/order/create', [App\Http\Controllers\Client\OrderController::class, 'create'])->name('order.create');

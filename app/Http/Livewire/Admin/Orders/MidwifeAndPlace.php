@@ -160,6 +160,7 @@ class MidwifeAndPlace extends Component
         return view('admin.orders.midwife-and-place', [
             'midwives' => $midwives,
             'addresses' => $addresses,
+            'kecamatans' => DB::table('kecamatans')->orderBy('name')->get(['id', 'name'])
         ]);
     }
 }

@@ -8,7 +8,7 @@
         <div class="mb-4 text-3xl font-semibold text-red-600">{{ rupiah($order->getGrandTotal()) }}</div>
 
         <div class="text-sm">Silahkan untuk segera melakukan pembayaran di ATM atau Internet Banking sebelum</div>
-        <div class="mt-1 mb-4 font-semibold">{{ $order->created_at->addMinutes(\DB::table('options')->select('timeout')->first()->timeout)->isoFormat('dddd, D MMMM G HH:mm') }} WIB</div>
+        <div class="mt-1 mb-4 font-semibold">{{ $order->created_at->addMinutes($options->timeout)->isoFormat('dddd, D MMMM G HH:mm') }} WIB</div>
         @else
         <div class="text-sm">Sisa Pembayaran</div>
         <div class="mb-4 text-3xl font-semibold text-red-600">{{ rupiah($order->getRemainingPayment()) }}</div>

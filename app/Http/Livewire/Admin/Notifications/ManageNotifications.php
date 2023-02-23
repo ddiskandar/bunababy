@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin\Notifications;
 
 use Filament\Notifications\Notification;
 use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,8 +13,6 @@ class ManageNotifications extends Component
     use WithPagination;
 
     public $perPage = 8;
-
-    public $showDialog = false;
 
     public $filterStatus;
     public $filterSearch;
@@ -108,8 +107,6 @@ class ManageNotifications extends Component
     public function save()
     {
         $this->validate();
-
-        $this->showDialog = false;
     }
 
     public function render()
@@ -131,6 +128,7 @@ class ManageNotifications extends Component
 
         return view('admin.notifications.manage-notifications', [
             'notifications' => $notifications,
+            'categories' => DB::table('categories')->get()
         ]);
     }
 }

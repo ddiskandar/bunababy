@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Address;
 use App\Models\User;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\DB;
 
 class ClientAddresses extends Component
 {
@@ -103,8 +104,11 @@ class ClientAddresses extends Component
             ->where('client_user_id', $this->client->id)
             ->get();
 
+        $kecamatans = DB::table('kecamatans')->orderBy('name')->get(['id', 'name']);
+
         return view('admin.clients.client-addresses', [
             'addresses' => $addresses,
+            'kecamatans' => $kecamatans,
         ]);
     }
 }

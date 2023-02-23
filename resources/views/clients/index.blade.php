@@ -1,3 +1,3 @@
 <x-app-layout>
-    @livewire('clients.manage-clients')
+    @livewire('admin.clients.manage-clients')
 </x-app-layout>

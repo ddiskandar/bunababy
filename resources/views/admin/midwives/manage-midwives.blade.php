@@ -92,12 +92,10 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="p-3 align-top w-[500px] whitespace-nowrap">
-                                <div class="flex flex-wrap gap-2 whitespace-nowrap">
+                            <td class="p-3 align-top w-[500px] ">
+                                <div class="flex flex-wrap gap-2 ">
                                     @forelse ($midwife->kecamatans as $kecamatan)
-                                        <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 border rounded-full text-slate-600 bg-slate-50 border-slate-200">
-                                            {{ $kecamatan->name }}
-                                        </div>
+                                        {{ $kecamatan->name . ', ' }}
                                     @empty
                                         <span>Belum ada</span>
                                     @endforelse
@@ -175,7 +173,7 @@
                 <x-label   for="state.category_id">Kategory</x-label>
                 <select wire:model.lazy="state.category_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.category_id">
                     <option value="" selected>-- Pilih salah satu</option>
-                    @foreach (DB::table('categories')->get() as $category)
+                    @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
