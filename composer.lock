@@ -3353,16 +3353,16 @@
         },
         {
             "name": "opcodesio/log-viewer",
-            "version": "v2.0.1",
+            "version": "v2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opcodesio/log-viewer.git",
-                "reference": "898bb9efaa8386ac02caed48c908af181c52176a"
+                "reference": "f547bd9fca8ffc71a39dbb485c87630abda4a60a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opcodesio/log-viewer/zipball/898bb9efaa8386ac02caed48c908af181c52176a",
-                "reference": "898bb9efaa8386ac02caed48c908af181c52176a",
+                "url": "https://api.github.com/repos/opcodesio/log-viewer/zipball/f547bd9fca8ffc71a39dbb485c87630abda4a60a",
+                "reference": "f547bd9fca8ffc71a39dbb485c87630abda4a60a",
                 "shasum": ""
             },
             "require": {
@@ -3421,9 +3421,9 @@
             ],
             "support": {
                 "issues": "https://github.com/opcodesio/log-viewer/issues",
-                "source": "https://github.com/opcodesio/log-viewer/tree/v2.0.1"
+                "source": "https://github.com/opcodesio/log-viewer/tree/v2.0.2"
             },
-            "time": "2023-02-22T06:20:51+00:00"
+            "time": "2023-02-23T07:02:26+00:00"
         },
         {
             "name": "phpoffice/phpspreadsheet",
