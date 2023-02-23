@@ -21,6 +21,7 @@ class ProfileFactory extends Factory
             'user_id' => User::factory(),
             'phone' => '088296447264',
             'ig' => $this->faker->userName(),
+            'dob' => $this->faker->date(),
         ];
     }
 }

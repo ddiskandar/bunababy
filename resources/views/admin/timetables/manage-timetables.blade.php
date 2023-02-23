@@ -191,50 +191,58 @@
     <!-- END Card -->
 
     <x-dialog wire:model="showDialog">
+        <form wire:submit.prevent="save">
+            <x-title>Data Penjadwalan</x-title>
 
-        <x-title>Data Penjadwalan</x-title>
+            <div class="h-64 mt-2 space-y-3 overflow-y-auto">
+                <div class="space-y-1">
+                    <x-label   for="state.midwife_user_id">Bidan</x-label>
+                    <select wire:model.lazy="state.midwife_user_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.midwife_user_id">
+                        <option value="" selected>-- Pilih salah satu</option>
+                        @foreach ($midwives as $midwife)
+                            <option value="{{ $midwife->id }}">{{ $midwife->name }}</option>
+                        @endforeach
+                    </select>
+                    <x-input-error for="state.midwife_user_id" class="mt-2" />
+                </div>
+                <div class="space-y-1">
+                    <x-label   for="state.date">Tanggal</x-label>
+                    <x-input wire:model.lazy="state.date" class="w-full" type="date" id="state.date" />
+                    <x-input-error for="state.date" class="mt-2" />
+                </div>
+                <div class="space-y-1">
+                    <x-label   for="state.type">Tipe</x-label>
+                    <select wire:model.lazy="state.type" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.type">
+                        <option value="" selected>-- Pilih salah satu</option>
+                        <option value="1">Libur</option>
+                        <option value="2">Lembur</option>
+                        <option value="3">Klinik</option>
+                    </select>
+                    <x-input-error for="state.type" class="mt-2" />
+                </div>
+                <div class="space-y-1">
+                    <x-label   for="state.note">Catatan</x-label>
+                    <x-textarea wire:model.lazy="state.note" class="w-full" type="text" id="state.note" />
+                    <x-input-error for="state.note" class="mt-2" />
+                </div>
 
-        <div class="h-64 mt-2 space-y-3 overflow-y-auto">
-            <div class="space-y-1">
-                <x-label   for="state.midwife_user_id">Bidan</x-label>
-                <select wire:model.lazy="state.midwife_user_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.midwife_user_id">
-                    <option value="" selected>-- Pilih salah satu</option>
-                    @foreach ($midwives as $midwife)
-                        <option value="{{ $midwife->id }}">{{ $midwife->name }}</option>
-                    @endforeach
-                </select>
-                <x-input-error for="state.midwife_user_id" class="mt-2" />
-            </div>
-            <div class="space-y-1">
-                <x-label   for="state.date">Tanggal</x-label>
-                <x-input wire:model.lazy="state.date" class="w-full" type="date" id="state.date" />
-                <x-input-error for="state.date" class="mt-2" />
-            </div>
-            <div class="space-y-1">
-                <x-label   for="state.type">Tipe</x-label>
-                <select wire:model.lazy="state.type" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.type">
-                    <option value="" selected>-- Pilih salah satu</option>
-                    <option value="1">Libur</option>
-                    <option value="2">Lembur</option>
-                    <option value="3">Klinik</option>
-                </select>
-                <x-input-error for="state.type" class="mt-2" />
-            </div>
-            <div class="space-y-1">
-                <x-label   for="state.note">Catatan</x-label>
-                <x-textarea wire:model.lazy="state.note" class="w-full" type="text" id="state.note" />
-                <x-input-error for="state.note" class="mt-2" />
             </div>
 
-        </div>
-
-        <div class="py-4">
-            <button
-                wire:click="save"
-                type="button"
-                class="block w-full py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
-            >Simpan</button>
-        </div>
+            <div class="py-4">
+                <button
+                    wire:loading.attr="disabled"
+                    type="submit"
+                    class="flex items-center justify-center w-full h-12 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
+                >
+                    <span wire:loading wire:target="save">
+                        <x-loading-spinner />
+                    </span>
+                    <span wire:loading.remove wire:target="save" class="font-semibold">
+                        {{ __('Simpan') }}
+                    </span>
+                </button>
+            </div>
+        </form>
 
     </x-dialog>
 

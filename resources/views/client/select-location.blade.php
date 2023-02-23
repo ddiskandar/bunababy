@@ -21,7 +21,7 @@
 
     </button>
 
-    <x-modal wire:model="showModalPicker">
+    <x-dialog wire:model="showModalPicker">
 
         @guest
         <div class="py-2 text-sm">
@@ -63,5 +63,5 @@
                 @endforeach
             </div>
         </div>
-    </x-modal>
+    </x-dialog>
 </div>

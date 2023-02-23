@@ -107,46 +107,52 @@
     <!-- END Card -->
 
     <x-dialog wire:model="showDialog">
+        <form wire:submit.prevent="save">
+            <x-title>Data Kategori</x-title>
 
-        <x-title>Data Kategori</x-title>
-
-        <div class="h-64 mt-2 space-y-3 overflow-y-auto">
-            <div class="space-y-1">
-                <x-label   for="state.name">Nama</x-label>
-                <x-input wire:model.lazy="state.name" class="w-full" type="text" id="state.name" />
-                <x-input-error for="state.name" class="mt-2" />
-            </div>
-            <div class="space-y-1">
-                <x-label   for="state.description">Deskripsi</x-label>
-                <x-textarea wire:model.lazy="state.description" class="w-full" type="text" id="state.description" />
-                <x-input-error for="state.description" class="mt-2" />
-            </div>
-            <div class="space-y-1">
-                <x-label   for="state.order">Urutan</x-label>
-                <x-input wire:model.lazy="state.order" class="w-full" type="number" id="state.order" />
-                <x-input-error for="state.order" class="mt-2" />
-            </div>
-            <div class="py-4 space-y-1">
-                <div class="inline-flex items-center ml-2">
-                    <div class="flex items-center h-5 ">
-                        <input type="checkbox" wire:model.lazy="state.active" name="state.active" class="w-12 transition-all duration-150 ease-out rounded-full cursor-pointer form-switch h-7 text-bunababy-200 focus:ring focus:ring-bunababy-200 focus:ring-opacity-50">
-                    </div>
-                    <div class="ml-2 ">
-                        <x-label   for="state.active">Aktif</x-label>
+            <div class="h-64 mt-2 space-y-3 overflow-y-auto">
+                <div class="space-y-1">
+                    <x-label   for="state.name">Nama</x-label>
+                    <x-input wire:model.lazy="state.name" class="w-full" type="text" id="state.name" />
+                    <x-input-error for="state.name" class="mt-2" />
+                </div>
+                <div class="space-y-1">
+                    <x-label   for="state.description">Deskripsi</x-label>
+                    <x-textarea wire:model.lazy="state.description" class="w-full" type="text" id="state.description" />
+                    <x-input-error for="state.description" class="mt-2" />
+                </div>
+                <div class="space-y-1">
+                    <x-label   for="state.order">Urutan</x-label>
+                    <x-input wire:model.lazy="state.order" class="w-full" type="number" id="state.order" />
+                    <x-input-error for="state.order" class="mt-2" />
+                </div>
+                <div class="py-4 space-y-1">
+                    <div class="inline-flex items-center ml-2">
+                        <div class="flex items-center h-5 ">
+                            <input type="checkbox" wire:model.lazy="state.active" name="state.active" class="w-12 transition-all duration-150 ease-out rounded-full cursor-pointer form-switch h-7 text-bunababy-200 focus:ring focus:ring-bunababy-200 focus:ring-opacity-50">
+                        </div>
+                        <div class="ml-2 ">
+                            <x-label   for="state.active">Aktif</x-label>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
-        </div>
-
-        <div class="py-4">
-            <button
-                wire:click="save"
-                type="button"
-                class="block w-full py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
-            >Simpan</button>
-        </div>
-
+            <div class="py-4">
+                <button
+                    wire:loading.attr="disabled"
+                    type="submit"
+                    class="flex items-center justify-center w-full h-12 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
+                >
+                    <span wire:loading wire:target="save">
+                        <x-loading-spinner />
+                    </span>
+                    <span wire:loading.remove wire:target="save" class="font-semibold">
+                        {{ __('Simpan') }}
+                    </span>
+                </button>
+            </div>
+        </form>
     </x-dialog>
-
 </div>

@@ -61,7 +61,7 @@
     </div>
 
 
-    <x-modal wire:model="showDialog">
+    <x-dialog wire:model="showDialog">
         <form wire:submit.prevent="save">
             <x-title>Data Anggota Keluarga</x-title>
             <div class="h-64 mt-2 space-y-3 overflow-y-auto">
@@ -107,5 +107,5 @@
                 </button>
             </div>
         </form>
-    </x-modal>
+    </x-dialog>
 </div>

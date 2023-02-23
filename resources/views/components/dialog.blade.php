@@ -55,9 +55,7 @@ $id = $id ?? md5($attributes->wire('model'));
             </button>
 
             <div class="px-4 pt-5 pb-4 overflow-hidden bg-white rounded-lg shadow-xl sm:p-6 sm:pb-4">
-
                 {{ $slot }}
-
             </div>
         </div>
     </div>

@@ -207,52 +207,58 @@
     <!-- END Card -->
 
     <x-dialog wire:model="showDialog">
-        <x-title>Status Pembayaran</x-title>
+        <form wire:submit.prevent="save">
+            <x-title>Status Pembayaran</x-title>
 
-        <div class="h-64 mt-2 space-y-3 overflow-y-auto">
-            <div class="space-y-1">
-                <x-label for="state.value">Besar Pembayaran</x-label>
-                <x-input wire:model.lazy="state.value" x-mask:dynamic="$money($input, ',')" class="w-full" type="text" id="state.value"/>
-                <x-input-error for="state.value" class="mt-2" />
+            <div class="h-64 mt-2 space-y-3 overflow-y-auto">
+                <div class="space-y-1">
+                    <x-label for="state.value">Besar Pembayaran</x-label>
+                    <x-input wire:model.lazy="state.value" x-mask:dynamic="$money($input, ',')" class="w-full" type="text" id="state.value"/>
+                    <x-input-error for="state.value" class="mt-2" />
+                </div>
+
+                @isset ($state['attachment'])
+                <div class="space-y-1">
+                    <x-label>Bukti</x-label>
+                    <a href="{{ asset('storage/' . $state['attachment']) }}" target="_blank">
+                        <x-secondary-button type="button" class="mt-2">
+                            {{ __('Lihat bukti lampiran') }}
+                        </x-secondary-button>
+                    </a>
+                </div>
+                @endisset
+
+                <div class="space-y-1">
+                    <x-label for="state.status">Status</x-label>
+                    <select wire:model.lazy="state.status" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.status">
+                        <option value="" selected>-- Pilih salah satu</option>
+                        <option value="2">Approved</option>
+                        <option value="3">Reject</option>
+                    </select>
+                    <x-input-error for="state.status" class="mt-2" />
+                </div>
+                <div class="space-y-1">
+                    <x-label   for="state.note">Catatan</x-label>
+                    <x-textarea wire:model.lazy="state.note" class="w-full" type="text" id="state.note" />
+                    <x-input-error for="state.note" class="mt-2" />
+                </div>
+
             </div>
 
-            @isset ($state['attachment'])
-            <div class="space-y-1">
-                <x-label>Bukti</x-label>
-                <a href="{{ asset('storage/' . $state['attachment']) }}" target="_blank">
-                    <x-secondary-button type="button" class="mt-2">
-                        {{ __('Lihat bukti lampiran') }}
-                    </x-secondary-button>
-                </a>
+            <div class="py-4">
+                <button
+                    wire:loading.attr="disabled"
+                    type="submit"
+                    class="flex items-center justify-center w-full h-12 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
+                >
+                    <span wire:loading wire:target="save">
+                        <x-loading-spinner />
+                    </span>
+                    <span wire:loading.remove wire:target="save" class="font-semibold">
+                        {{ __('Simpan') }}
+                    </span>
+                </button>
             </div>
-            @endisset
-
-            <div class="space-y-1">
-                <x-label for="state.status">Status</x-label>
-                <select wire:model.lazy="state.status" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.status">
-                    <option value="" selected>-- Pilih salah satu</option>
-                    <option value="2">Approved</option>
-                    <option value="3">Reject</option>
-                </select>
-                <x-input-error for="state.status" class="mt-2" />
-            </div>
-            <div class="space-y-1">
-                <x-label   for="state.note">Catatan</x-label>
-                <x-textarea wire:model.lazy="state.note" class="w-full" type="text" id="state.note" />
-                <x-input-error for="state.note" class="mt-2" />
-            </div>
-
-        </div>
-
-        <div class="py-4">
-            <button
-                wire:loading.attr="disabled"
-                wire:click="save"
-                type="button"
-                class="block w-full py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
-            >Simpan</button>
-        </div>
-
+        </form>
     </x-dialog>
-
 </div>

@@ -59,7 +59,7 @@
 
     </div>
 
-    <x-modal wire:model="showDialog">
+    <x-dialog wire:model="showDialog">
         <form wire:submit.prevent="save">
             <x-title>Alamat</x-title>
             <div class="h-64 px-1 mt-2 space-y-3 overflow-y-auto">
@@ -114,6 +114,6 @@
             </div>
 
         </form>
-    </x-modal>
+    </x-dialog>
 
 </div>
