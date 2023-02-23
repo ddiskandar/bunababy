@@ -14,7 +14,6 @@ class ManageAddresses extends Component
     public $addresses;
     public $showDialog = false;
     public $dialogEditMode = false;
-    public $kecamatans;
 
     protected $rules = [
         'state.label' => 'required|string|min:3|max:32',
@@ -40,8 +39,6 @@ class ManageAddresses extends Component
             ->where('client_user_id', auth()->id())
             ->with('kecamatan', 'kecamatan.kabupaten')
             ->get();
-
-        $this->kecamatans = DB::table('kecamatans')->orderBy('name')->get(['id', 'name']);
     }
 
     public function hydrate()
@@ -110,7 +107,11 @@ class ManageAddresses extends Component
 
     public function render()
     {
-        return view('client.profile.manage-addresses')
-            ->layout('layouts.client');
+        return view(
+            'client.profile.manage-addresses',
+            [
+                'kecamatans' => DB::table('kecamatans')->orderBy('name')->select(['id', 'name'])->get(),
+            ]
+        )->layout('layouts.client');
     }
 }

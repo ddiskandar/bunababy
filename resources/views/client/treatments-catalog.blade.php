@@ -28,18 +28,18 @@
         <div class=" snap-start">
         </div>
         @foreach ($treatments as $treatment)
-        <div class="flex flex-col justify-between flex-none gap-1 p-6 shadow-lg shadow-bunababy-50 rounded snap-start w-72 border-bunababy-200 ">
+        <div class="flex flex-col justify-between flex-none gap-1 p-6 rounded shadow-lg shadow-bunababy-50 snap-start w-72 border-bunababy-200 ">
             <div class="space-y-1">
                 <p class="text-xs text-bunababy-100">{{ $treatment->category->name }}</p>
                 <h3 class="text-lg font-bold leading-tight">
                     {{ $treatment->name }}
                 </h3>
-                <p class="text-sm text-slate-600 h-24 overflow-y-auto">{{ $treatment->desc }}</p>
+                <p class="h-32 overflow-y-auto text-sm  text-slate-600">{{ $treatment->desc }}</p>
                 <p class="text-xs font-semibold text-slate-600">Durasi {{ $treatment->duration }} menit</p>
             </div>
-            <div>
+            {{-- <div>
                 <span class="font-semibold text-bunababy-200">{{ rupiah($treatment->price) }}</span>
-            </div>
+            </div> --}}
         </div>
         @endforeach
         <div class=" snap-start">

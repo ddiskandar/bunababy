@@ -8,33 +8,34 @@ use Livewire\Component;
 
 class SelectLocation extends Component
 {
+    public $showModalPicker = false;
     public $search = '';
     public $kecamatan;
 
-    public function mount() {
+    public function mount()
+    {
 
         $kecamatan_id = '';
 
-        if( auth()->check() AND auth()->user()->isClient() AND session()->missing('order.kecamatan_id')) {
+        if (auth()->check() and auth()->user()->isClient() and session()->missing('order.kecamatan_id')) {
             $kecamatan_id = auth()->user()->addresses->where('is_main', true)->first()->kecamatan_id ?? '';
-            if($kecamatan_id)
-            {
+            if ($kecamatan_id) {
                 session()->put('order.kecamatan_id', $kecamatan_id);
             }
         }
 
         $this->kecamatan = 'Pilih lokasi';
 
-        if(session()->has('order.kecamatan_id') OR $kecamatan_id){
+        if (session()->has('order.kecamatan_id') or $kecamatan_id) {
             $this->kecamatan = DB::table('kecamatans')
-                ->where('id', session('order.kecamatan_id') ?? $kecamatan_id )
+                ->where('id', session('order.kecamatan_id') ?? $kecamatan_id)
                 ->value('name');
         }
-
     }
 
-    public function setLocation($kecamatan_id) {
-        $kecamatan = DB::table('kecamatans')->where('id', $kecamatan_id )->first();
+    public function setLocation($kecamatan_id)
+    {
+        $kecamatan = DB::table('kecamatans')->where('id', $kecamatan_id)->first();
         $this->kecamatan = $kecamatan->name;
 
         session()->put('order.kecamatan_id', $kecamatan_id);
@@ -48,22 +49,22 @@ class SelectLocation extends Component
     public function load()
     {
         $this->readyToLoad = true;
+        $this->showModalPicker = true;
     }
 
     public function render()
     {
-        if($this->readyToLoad)
-        {
+        if ($this->readyToLoad) {
             $kabupatens = Kabupaten::query()
-            ->where(function ($query) {
-                $query->whereHas('Kecamatans', function ($query) {
+                ->where(function ($query) {
+                    $query->whereHas('Kecamatans', function ($query) {
+                        $query->where('name', 'LIKE', $this->search . '%');
+                    });
+                })
+                ->with('kecamatans', function ($query) {
                     $query->where('name', 'LIKE', $this->search . '%');
-                });
-            })
-            ->with('kecamatans', function ($query) {
-                $query->where('name', 'LIKE', $this->search . '%');
-            })
-            ->get();
+                })
+                ->get();
         } else {
             $kabupatens = collect();
         }

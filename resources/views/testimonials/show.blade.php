@@ -100,8 +100,6 @@
 
             </div>
 
-            @include('layouts._bottom-menu')
-
         </div>
     </div>
 </x-client-layout>

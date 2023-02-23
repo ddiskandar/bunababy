@@ -56,12 +56,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/midwives/create', [App\Http\Controllers\MidwivesController::class, 'create'])->name('midwives.create');
         Route::get('/midwives/{midwife}/edit', [App\Http\Controllers\MidwivesController::class, 'edit'])->name('midwives.edit');
         Route::get('/midwives', [App\Http\Controllers\MidwivesController::class, 'index'])->name('midwives');
-        Route::get('/treatments', [App\Http\Controllers\TreatmentsController::class, 'index'])->name('treatments');
-        Route::get('/treatments/categories', [App\Http\Controllers\TreatmentCategoriesController::class, 'show'])->name('categories');
-        Route::get('/wilayah', [App\Http\Controllers\KecamatanController::class, 'index'])->name('wilayah');
-        Route::get('/wilayah/kabupaten', [App\Http\Controllers\KabupatenController::class, 'show'])->name('kabupaten');
-        Route::get('/settings', [App\Http\Controllers\SettingController::class, 'show'])->name('settings');
-        Route::get('/user/profile', [App\Http\Controllers\UserProfileController::class, 'show'])->name('user.profile');
+        Route::get('/treatments', App\Http\Controllers\TreatmentsController::class)->name('treatments');
+        Route::get('/treatments/categories', App\Http\Controllers\TreatmentCategoriesController::class)->name('categories');
+        Route::get('/wilayah', App\Http\Controllers\KecamatanController::class)->name('wilayah');
+        Route::get('/wilayah/kabupaten', App\Http\Controllers\KabupatenController::class)->name('kabupaten');
+        Route::get('/settings', App\Http\Controllers\SettingController::class)->name('settings');
+        Route::get('/user/profile', App\Http\Controllers\UserProfileController::class)->name('user.profile');
     });
 });
 

@@ -1,5 +1,5 @@
 <x-client-layout>
-    <div class="relative max-w-screen-sm min-h-screen mx-auto my-0">
+    <x-bottom-tabs>
         <div class="sticky top-0 z-20">
             <div class="py-3 bg-white border-b border-bunababy-50">
                 <div class="flex items-center justify-between px-6 mx-auto">
@@ -13,22 +13,22 @@
 
         <div class="space-y-2">
             @auth
-            <div class="px-6 py-4 bg-white">
+            <x-section>
                 @include('client._user-info')
-            </div>
+            </x-section>
             @endauth
 
-            <div class="px-6 py-4 bg-white">
+            <x-section>
                 @livewire('client.select-location')
-            </div>
+            </x-section>
 
             @if(auth()->check() && $profileCompleted && $reservation)
-            <div class="px-6 py-4 bg-white">
+            <x-section>
                 @include('client._latest-reservation')
-            </div>
+            </x-section>
             @endif
 
-            <div class="px-6 py-4 bg-white">
+            <x-section>
                 @if (!$reservation)
                     <a href="{{ route('order.create') }}">
                         <button class="flex items-center justify-center w-full gap-3 px-8 py-1 mb-4 text-white transition duration-150 ease-in-out rounded-full bg-bunababy-200 hover:opacity-80 ">
@@ -55,7 +55,7 @@
                         <span class="font-semibold">Tanya Admin</span>
                     </button>
                 </a>
-            </div>
+            </x-section>
 
             <div class="bg-white">
                 @livewire('client.treatments-catalog')
@@ -93,8 +93,6 @@
                 <p class="text-sm text-center text-slate-400">Copyright 2023 Bunababycare. All Rights Reserved</p>
             </div>
         </div>
-
-        @include('layouts._bottom-menu')
-    </div>
+    </x-bottom-tabs>
 
 </x-client-layout>

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class KabupatenController extends Controller
 {
-    public function show()
+    public function __invoke()
     {
         return view('wilayah.show-kabupaten');
     }

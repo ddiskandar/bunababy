@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Models\Address;
 use App\Models\Order;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    public function create()
+    public function create(): RedirectResponse|Redirector|View
     {
         if (auth()->check() && !auth()->user()->isClient()) {
             return redirect()->route('dashboard');
@@ -26,7 +28,7 @@ class OrderController extends Controller
         return view('client.order.create');
     }
 
-    public function show($no_reg)
+    public function show($no_reg): View|RedirectResponse
     {
         $order = Order::query()
             ->with('treatments')

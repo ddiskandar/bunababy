@@ -1,3 +1,5 @@
 <x-client-layout>
-    @livewire('client.history')
+    <x-bottom-tabs>
+        @livewire('client.history')
+    </x-bottom-tabs>
 </x-client-layout>

@@ -85,8 +85,6 @@
             </div>
         </div>
 
-        @include('layouts._bottom-menu')
-
     </div>
 
 </div>

@@ -3,13 +3,12 @@
 namespace App\Http\Livewire\Client;
 
 use App\Models\Family;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 
 class ManageFamilies extends Component
 {
     public $state = [];
-
-    public $successMessage = false;
     public $showDialog = false;
 
     protected $rules = [
@@ -59,7 +58,10 @@ class ManageFamilies extends Component
         );
         $this->showDialog = false;
 
-        $this->successMessage = true;
+        Notification::make()
+            ->title('Berhasil disimpan')
+            ->success()
+            ->send();
     }
 
     public function render()
