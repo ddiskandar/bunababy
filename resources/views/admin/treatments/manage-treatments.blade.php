@@ -177,7 +177,7 @@
                 <x-label   for="state.category_id">Kategory</x-label>
                 <select wire:model.lazy="state.category_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.category_id">
                     <option value="" selected>-- Pilih salah satu</option>
-                    @foreach (DB::table('categories')->get() as $category)
+                    @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>

@@ -80,7 +80,7 @@
 
                     <div class="py-6 text-xs text-center text-slate-600">
                         Bila kesulitan upload bukti transfer melalui aplikasi ini, silahkan dapat
-                        <a href="https://api.whatsapp.com/send?phone={{ to_wa_indo(\DB::table('options')->select('phone')->first()->phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+{{ auth()->user()->name ?? '' }}.+Mau+mengirim+bukti+transfer+dengan+ID+transaksi+%2A{{ $order->no_reg }}%2A." class="font-semibold text-bunababy-200">
+                        <a href="https://api.whatsapp.com/send?phone={{ to_wa_indo($phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+{{ auth()->user()->name ?? '' }}.+Mau+mengirim+bukti+transfer+dengan+ID+transaksi+%2A{{ $order->no_reg }}%2A." class="font-semibold text-bunababy-200">
                             mengirimkan ke Admin lewat WA.
                         </a>
                     </div>
