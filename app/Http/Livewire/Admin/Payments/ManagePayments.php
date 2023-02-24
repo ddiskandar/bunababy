@@ -15,7 +15,6 @@ class ManagePayments extends Component
     public $perPage = 8;
 
     public $showDialog = false;
-    public $successMessage = false;
 
     public $filterSearch;
     public $filterStatus;
@@ -32,18 +31,16 @@ class ManagePayments extends Component
 
     protected $rules = [
         'state.value' => 'required',
+        'state.status' => 'required',
         'state.attachment' => 'nullable',
         'state.note' => 'nullable',
     ];
 
     protected $validationAttributes = [
-        'state.name' => 'nama',
-        'state.desc' => 'deskripsi',
-        'state.price' => 'harga',
-        'state.duration' => 'durasi',
-        'state.order' => 'urutan',
-        'state.category_id' => 'kategori',
-        'state.active' => 'status aktif',
+        'state.value' => 'Nominal',
+        'state.status' => 'Status',
+        'state.attachment' => 'Bukti',
+        'state.note' => 'Catatan',
     ];
 
     public function updatingPerPage()
@@ -71,6 +68,10 @@ class ManagePayments extends Component
     public function save()
     {
         $this->validate();
+
+        if ($this->state['status'] === Payment::STATUS_UNVERIFIED) {
+            return $this->setErrorBag(['state.status' => 'Status pembayaran harus dipilih.']);
+        }
 
         if (isset($this->state['value']) && !is_numeric(str_replace('.', '', $this->state['value']))) {
             return $this->setErrorBag(['state.value' => 'Besar pembayaran harus berupa nilai angka.']);

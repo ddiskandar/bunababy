@@ -32,6 +32,7 @@ class ClientTag extends Component
         $this->validate();
 
         $this->client->tags()->attach($this->tagId);
+        $this->tagId = null;
         $this->emit('saved');
     }
 

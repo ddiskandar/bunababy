@@ -174,9 +174,11 @@
                             </td>
                             <td class="p-3 text-center whitespace-nowrap">
                                 <div class="flex justify-center space-x-2">
+                                    @if ($payment->status() === 'Waiting' || auth()->user()->isOwner())
                                     <button wire:click="showEditPaymentDialog({{ $payment->id }})" class="text-slate-400 hover:text-bunababy-200">
                                         <x-icon-pencil/>
                                     </button>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
@@ -238,7 +240,7 @@
                     <x-input-error for="state.status" class="mt-2" />
                 </div>
                 <div class="space-y-1">
-                    <x-label   for="state.note">Catatan</x-label>
+                    <x-label for="state.note">Catatan</x-label>
                     <x-textarea wire:model.lazy="state.note" class="w-full" type="text" id="state.note" />
                     <x-input-error for="state.note" class="mt-2" />
                 </div>
