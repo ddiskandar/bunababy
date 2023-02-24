@@ -24,9 +24,6 @@ class OrderFactory extends Factory
             'midwife_user_id' => User::factory(['type' => User::MIDWIFE]),
             'address_id' => Address::factory(),
             'total_price' => 0,
-            'total_duration' => 0,
-            'total_transport' => 40000,
-            'adjustment_amount' => 0,
         ];
     }
 }

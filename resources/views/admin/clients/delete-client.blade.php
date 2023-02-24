@@ -10,19 +10,26 @@
         </div>
 
         <x-dialog wire:model="showDialog">
+            <form wire:submit.prevent="delete">
+                <div class="py-4 mt-2 overflow-y-auto">
+                    Yakin data <span class="font-semibold">{{ $user->name }}</span> ini mau dihapus?
+                </div>
 
-            <div class="py-4 mt-2 overflow-y-auto">
-                Yakin data <span class="font-semibold">{{ $user->name }}</span> ini mau dihapus?
-            </div>
-
-            <div class="py-4">
-                <button
-                    wire:click="delete"
-                    type="button"
-                    class="block w-full py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
-                >Ya, Hapus Sekarang</button>
-            </div>
-
+                <div class="py-4">
+                    <button
+                        wire:loading.attr="disabled"
+                        type="submit"
+                        class="flex items-center justify-center w-full h-12 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
+                    >
+                        <span wire:loading>
+                            <x-loading-spinner />
+                        </span>
+                        <span wire:loading.remove class="font-semibold">
+                            {{ __('Ya, Hapus sekarang') }}
+                        </span>
+                    </button>
+                </div>
+            </form>
         </x-dialog>
     </x-slot>
 </x-action-section>

@@ -110,6 +110,7 @@ class MidwifeAndPlace extends Component
 
     public function showEditDialog(Address $address)
     {
+        $this->resetErrorBag();
         $this->state = $address->toArray();
         $this->showDialog = true;
         $this->dialogEditMode = true;

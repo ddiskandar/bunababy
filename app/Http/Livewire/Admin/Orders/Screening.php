@@ -2,9 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Orders;
 
-use App\Models\Address;
 use App\Models\Order;
-use Filament\Notifications\Notification;
 use Livewire\Component;
 
 class Screening extends Component
@@ -35,11 +33,6 @@ class Screening extends Component
         $this->order->update([
             'screening' => $this->state['screening'],
         ]);
-
-        Notification::make()
-            ->title('Berhasil disimpan')
-            ->success()
-            ->send();
 
         $this->emit('saved');
     }
