@@ -44,7 +44,7 @@ class OrderController extends Controller
             'options' => DB::table('options')->select('account', 'account_name', 'site_location', 'timeout')->first(),
             'hasPayments' => $order->payments()->exists(),
             'isDpPaid' => $order->dp(),
-            'dpPaidAt' => $order->payments()->verified()->first()->created_at->isoFormat('DD MMM YYYY HH:mm') ?? '-',
+            'dpPaidAt' => $order->dp() ? $order->payments()->verified()->first()->created_at->isoFormat('DD MMM YYYY HH:mm') : '-',
             'isFinished' => $order->status === Order::STATUS_FINISHED,
             'finishedAt' => $order->status === Order::STATUS_FINISHED ? $order->finished_at->isoFormat('DD MMM YYYY HH:mm') : '-',
             'isPaid' => $order->isPaid(),

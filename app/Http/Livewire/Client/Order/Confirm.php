@@ -9,6 +9,7 @@ use App\Notifications\NewOrder;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
+use Filament\Notifications\Notification as FlashNotification;
 use Livewire\Component;
 
 class Confirm extends Component
@@ -70,6 +71,11 @@ class Confirm extends Component
                 ->get();
 
             Notification::send($admin, new NewOrder($order));
+
+            FlashNotification::make()
+                ->title('Order berhasil dibuat')
+                ->success()
+                ->send();
 
             return redirect()->route('order.show', $order->no_reg);
         });

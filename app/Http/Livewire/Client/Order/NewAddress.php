@@ -17,8 +17,6 @@ class NewAddress extends Component
         $kecamatan->load('kabupaten:id,name');
 
         $this->state['address'] = '';
-        $this->state['rt'] = '';
-        $this->state['rw'] = '';
         $this->state['desa'] = '';
         $this->state['kec'] = $kecamatan->name;
         $this->state['kab'] = $kecamatan->kabupaten->name;
@@ -28,15 +26,11 @@ class NewAddress extends Component
 
     protected $rules = [
         'state.address' => 'required|string|min:4|max:124',
-        'state.rt' => 'required|min:1|max:99',
-        'state.rw' => 'required|min:1|max:99',
         'state.desa' => 'required|min:4|max:64',
     ];
 
     protected $validationAttributes = [
-        'state.address' => 'Alamat',
-        'state.rt' => 'Rt',
-        'state.rw' => 'Rw',
+        'state.address' => 'Alamat Lengkap',
         'state.desa' => 'Desa',
     ];
 
@@ -53,8 +47,6 @@ class NewAddress extends Component
             'client_user_id' => auth()->id(),
             'label' => 'Alamat Baru',
             'address' => $this->state['address'],
-            'rt' => $this->state['rt'],
-            'rw' => $this->state['rw'],
             'desa' => $this->state['desa'],
             'kecamatan_id' => session('order.kecamatan_id'),
             'is_main' => true,

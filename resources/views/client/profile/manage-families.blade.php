@@ -7,12 +7,12 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
                 </svg>
             </a>
-            <h1 class="flex-1 font-semibold md:text-center">Daftar Anggota Keluarga</h1>
+            <h1 class="flex-1 font-semibold md:text-center">Daftar Keluarga</h1>
             <button
                 wire:click="addNewFamily"
                 class="text-sm "
                 >
-                Tambah Anggota
+                Tambah
             </button>
         </div>
     </div>

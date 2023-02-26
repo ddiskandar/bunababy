@@ -24,11 +24,18 @@
                 </button>
             @endforeach
         </nav>
-        <div
-            x-show = "! add"
+        @auth
+        <div x-show="! add"
+            class="py-4 text-sm text-slate-400">
+            Belum ada di daftar? <a href="{{ route('client.families') }}" class="font-semibold text-bunababy-200">Tambah anggota di halaman profil keluarga</a> terlebih dahulu
+        </div>
+        @else
+        <div x-show="! add"
             class="py-4 text-sm text-slate-400">
             Belum ada di daftar? <button x-on:click="add = true" class="font-semibold text-bunababy-200">Tambah profil keluarga</button>
         </div>
+        @endauth
+
     @else
     <div
         x-init="add = true"

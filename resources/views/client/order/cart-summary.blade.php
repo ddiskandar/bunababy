@@ -1,10 +1,10 @@
 <div>
-    <div class="fixed max-w-screen-sm w-full z-10 bottom-0 px-6 py-3 text-white bg-bunababy-100">
+    <div class="fixed max-w-screen-sm w-full z-10 bottom-0 px-6 py-3 border-t border-bunababy-50 bg-white">
         <div class="py-1 flex justify-between relative">
             <div class="w-2/3">
                 <div class="">
                     <div class="text-sm">Total Pembayaran</div>
-                    <div class="font-medium text-xl flex items-center" x-on:click="show = true">
+                    <div class="font-semibold text-xl flex items-center" x-on:click="show = true">
                         <div class="mr-2">{{ $data['grand_total'] }}</div>
                         @if (session()->has('order.treatments') && session('order.treatments') !== [])
                             <button wire:click="$toggle('showDialog')">

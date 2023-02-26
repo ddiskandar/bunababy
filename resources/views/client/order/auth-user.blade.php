@@ -36,7 +36,7 @@
             </div>
             @endisset
 
-            @isset($baby)
+            {{-- @isset($baby)
             <div class="sm:col-span-1">
                 <dt class="text-sm font-medium text-gray-500">
                     Nama Baby
@@ -53,7 +53,8 @@
                     {{ tanggal_indo($baby->dob) }}
                 </dd>
             </div>
-            @endisset
+            @endisset --}}
+
             <div class="sm:col-span-1">
                 <dt class="text-sm font-medium text-gray-500">
                     Nomor Whatsapp
@@ -100,7 +101,9 @@
             @livewire('client.order.confirm')
         </x-section>
     @else
-        @livewire('client.order.new-address')
+        <x-section>
+            @livewire('client.order.new-address')
+        </x-section>
     @endif
 
 </div>
