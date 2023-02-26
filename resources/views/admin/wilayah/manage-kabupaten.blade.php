@@ -123,7 +123,7 @@
                 <button
                     wire:loading.attr="disabled"
                     type="submit"
-                    class="flex items-center justify-center w-full h-12 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
+                    class="flex items-center justify-center w-full h-12 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50 disabled:opacity-25"
                 >
                     <span wire:loading wire:target="save">
                         <x-loading-spinner />
