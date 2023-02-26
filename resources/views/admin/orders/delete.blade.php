@@ -22,18 +22,10 @@
                 </div>
 
                 <div class="py-4">
-                    <button
-                        wire:loading.attr="disabled"
-                        type="submit"
-                        class="flex items-center justify-center w-full h-12 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50 disabled:opacity-25"
-                    >
-                        <span wire:loading>
-                            <x-loading-spinner />
-                        </span>
-                        <span wire:loading.remove class="font-semibold">
-                            {{ __('Ya, Hapus sekarang') }}
-                        </span>
-                    </button>
+                    <x-button-on-modal
+                        target="delete"
+                        label="Ya, Hapus sekarang"
+                    />
                 </div>
             </form>
 

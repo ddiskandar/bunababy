@@ -68,18 +68,9 @@
                         </div>
                     </div>
                     <div class="py-4">
-                        <button
-                            wire:loading.attr="disabled"
-                            type="submit"
-                            class="flex items-center justify-center w-full h-12 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50 disabled:opacity-25"
-                        >
-                            <span wire:loading wire:target="setAdjustment">
-                                <x-loading-spinner />
-                            </span>
-                            <span wire:loading.remove wire:target="setAdjustment" class="font-semibold">
-                                {{ __('Simpan') }}
-                            </span>
-                        </button>
+                        <x-button-on-modal
+                            target="setAdjustment"
+                        />
                     </div>
                 </form>
             </x-dialog>
@@ -160,18 +151,7 @@
                     </div>
 
                     <div class="py-4">
-                        <button
-                            wire:loading.attr="disabled"
-                            type="submit"
-                            class="flex items-center justify-center w-full h-12 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50 disabled:opacity-25"
-                        >
-                            <span wire:loading wire:target="save">
-                                <x-loading-spinner />
-                            </span>
-                            <span wire:loading.remove wire:target="save" class="font-semibold">
-                                {{ __('Simpan') }}
-                            </span>
-                        </button>
+                        <x-button-on-modal />
                     </div>
                 </form>
 

@@ -28,19 +28,7 @@
             </div>
 
             <div class="col-span-6 xl:col-span-2">
-                <button
-                    wire:loading.attr="disabled"
-                    type="submit"
-                    class="flex items-center justify-center w-full h-12 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50 disabled:opacity-25"
-                >
-                    <span wire:loading wire:target="save">
-                        <x-loading-spinner />
-                    </span>
-                    <span wire:loading.remove wire:target="save" class="font-medium">
-                        {{ __('Simpan Alamat') }}
-                    </span>
-                </button>
-
+                <x-button-on-modal label="Simpan Alamat" />
             </div>
         </div>
     </form>
