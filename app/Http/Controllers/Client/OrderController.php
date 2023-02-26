@@ -39,19 +39,18 @@ class OrderController extends Controller
             return to_route('home');
         }
 
-        $isPaid = $order->isPaid();
-        $dp =  $order->dp();
-        $hasPayments = $order->payments()->exists();
-        $hasTestimonial = $order->testimonial()->exists();
-        $options = DB::table('options')->select('account', 'account_name', 'site_location', 'timeout')->first();
-
         return view('client.order.show', [
             'order' => $order,
-            'options' => $options,
-            'isPaid' => $isPaid,
-            'hasPayments' => $hasPayments,
-            'dp' => $dp,
-            'hasTestimonial' => $hasTestimonial,
+            'options' => DB::table('options')->select('account', 'account_name', 'site_location', 'timeout')->first(),
+            'hasPayments' => $order->payments()->exists(),
+            'isDpPaid' => $order->dp(),
+            'dpPaidAt' => $order->payments()->verified()->first()->created_at->isoFormat('DD MMM YYYY HH:mm') ?? '-',
+            'isFinished' => $order->status === Order::STATUS_FINISHED,
+            'finishedAt' => $order->status === Order::STATUS_FINISHED ? $order->finished_at->isoFormat('DD MMM YYYY HH:mm') : '-',
+            'isPaid' => $order->isPaid(),
+            'paidAt' => $order->isPaid() ? $order->payments()->verified()->latest()->first()->created_at->isoFormat('DD MMM YYYY HH:mm') : '-',
+            'isReviewed' => $order->testimonial()->exists(),
+            'reviewedAt' => $order->testimonial()->exists() ? $order->testimonial->created_at->isoFormat('DD MMM YYYY HH:mm') : '-',
         ]);
     }
 }

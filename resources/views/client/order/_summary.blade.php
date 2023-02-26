@@ -47,48 +47,40 @@
                     </div>
                 </li>
             @endforeach
+        </ul>
 
-            <li class="py-2 text-sm font-semibold">
-                <div class="flex justify-between py-2">
-                    <div>Subtotal</div>
-                    <div>{{ rupiah($order->total_price) }}</div>
-                </div>
-            </li>
+        <div class="text-sm">
+            <div class="flex justify-between py-2">
+                <div>Subtotal</div>
+                <div>{{ rupiah($order->total_price) }}</div>
+            </div>
 
-            <li class="py-2 text-sm ">
-                <div class="flex justify-between py-2">
-                    <div>Transport</div>
-                    <div>{{ rupiah($order->total_transport) }}</div>
-                </div>
-            </li>
+            <div class="flex justify-between py-2">
+                <div>Transport</div>
+                <div>{{ rupiah($order->total_transport) }}</div>
+            </div>
 
             @if ($order->adjustment_amount !== 0)
-            <li class="py-2 text-sm ">
-                <div class="flex justify-between py-2">
-                    <div>{{ $order->adjustment_name }}</div>
-                    <div>{{ rupiah($order->adjustment_amount) }}</div>
-                </div>
-            </li>
+            <div class="flex justify-between py-2">
+                <div>{{ $order->adjustment_name }}</div>
+                <div>{{ rupiah($order->adjustment_amount) }}</div>
+            </div>
             @endif
 
-            <li class="py-2 text-sm font-semibold">
-                <div class="flex justify-between py-2">
-                    <div>Total Tagihan</div>
-                    <div>{{ rupiah($order->getGrandTotal()) }}</div>
-                </div>
-            </li>
-            <li class="py-2 text-sm ">
-                <div class="flex justify-between py-2">
-                    <div>Sudah Bayar</div>
-                    <div>{{ rupiah($order->getVerifiedPayments()) }}</div>
-                </div>
-            </li>
-            <li class="py-2 text-sm font-semibold">
-                <div class="flex justify-between py-2">
-                    <div>Sisa Pembayaran</div>
-                    <div>{{ rupiah($order->getRemainingPayment()) }}</div>
-                </div>
-            </li>
-        </ul>
+            <div class="flex justify-between font-semibold py-2">
+                <div>Total Tagihan</div>
+                <div>{{ rupiah($order->getGrandTotal()) }}</div>
+            </div>
+
+            <div class="flex justify-between py-2">
+                <div>Sudah Bayar</div>
+                <div>{{ rupiah($order->getVerifiedPayments()) }}</div>
+            </div>
+
+            <div class="flex justify-between font-semibold py-2">
+                <div>Sisa Pembayaran</div>
+                <div>{{ rupiah($order->getRemainingPayment()) }}</div>
+            </div>
+        </div>
     </div>
 </div>
