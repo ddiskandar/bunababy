@@ -45,6 +45,8 @@ class ChangePassword extends Component
             ->title('Berhasil disimpan')
             ->success()
             ->send();
+
+        return to_route('client.profile');
     }
 
     public function render()

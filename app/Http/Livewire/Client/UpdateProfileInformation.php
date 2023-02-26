@@ -83,6 +83,8 @@ class UpdateProfileInformation extends Component
             ->success()
             ->duration(3000)
             ->send();
+
+        return to_route('client.profile');
     }
 
     public function getUserProperty()

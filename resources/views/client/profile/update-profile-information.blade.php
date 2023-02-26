@@ -18,7 +18,7 @@
         <div class="px-6 py-8 bg-white ">
             <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
                 <!-- Profile Photo File Input -->
-                <input type="file" class="hidden"
+                <input type="file" accept="image/*" class="hidden"
                             wire:model="photo"
                             x-ref="photo"
                             x-on:change="

@@ -27,10 +27,10 @@ class SelectFamily extends Component
         $this->validate();
 
         session()->push('order.families', [
-            'id' => time() . rand(111,999),
+            'id' => time(),
             'name' => ucwords($this->name),
             'birthdate' => '',
-            'type' => ! session('order.families') ? 'Diri Sendiri' : $this->type,
+            'type' => !session('order.families') ? 'Diri Sendiri' : $this->type,
         ]);
         $this->name = '';
         $this->showAddNewFamily = false;
@@ -43,7 +43,7 @@ class SelectFamily extends Component
 
     public function render()
     {
-        $families = collect(session('order.families') ?? [] );
+        $families = collect(session('order.families') ?? []);
 
         return view('client.order.select-family', [
             'families' => $families,

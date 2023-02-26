@@ -18,27 +18,26 @@ class SelectTreatments extends Component
     {
         $this->currentTreatment = new Treatment();
 
-        $this->family_id = time() . rand(11, 99);
+        $this->family_id = time();
 
         if (auth()->check()) {
 
             if (auth()->user()->families()->exists()) {
                 session()->put('order.families', auth()->user()->families->toArray());
                 session()->push('order.families', [
-                    'id' => time() . rand(111,999),
+                    'id' => time(),
                     'name' => auth()->user()->name,
                     'type' => 'Diri Sendiri'
                 ]);
             } else {
                 session()->put('order.families', [
                     [
-                        'id' => time() . rand(111,999),
+                        'id' => time(),
                         'name' => auth()->user()->name,
                         'type' => 'Diri Sendiri'
                     ]
                 ]);
             }
-
         }
     }
 
@@ -61,15 +60,16 @@ class SelectTreatments extends Component
         $this->showAddTreatmentModal = true;
     }
 
-    public function addTreatment(Treatment $treatment) {
+    public function addTreatment(Treatment $treatment)
+    {
 
-        if(session()->missing('order.addMinutes')) {
+        if (session()->missing('order.addMinutes')) {
             session()->put('order.addMinutes', 40);
         }
 
         session()->increment('order.addMinutes', $treatment->duration);
 
-        $family = collect(session('order.families'))->where('id',$this->family_id)->first();
+        $family = collect(session('order.families'))->where('id', $this->family_id)->first();
 
         session()->push('order.treatments', [
             'treatment_id' => $treatment->id,
@@ -86,7 +86,7 @@ class SelectTreatments extends Component
 
     public function deleteTreatment($index, Treatment $treatment)
     {
-        session()->forget('order.treatments.' . $index );
+        session()->forget('order.treatments.' . $index);
         session()->decrement('order.addMinutes', $treatment->duration);
 
         $this->emit('treatmentDeleted');
@@ -97,14 +97,14 @@ class SelectTreatments extends Component
         session()->push('order.families', [
             'id' => $this->family_id,
             'name' => 'pulan',
-            'type'=> 'buna',
+            'type' => 'buna',
         ]);
     }
 
     public function render()
     {
         $categories = Category::query()
-            ->with('treatments', function($query){
+            ->with('treatments', function ($query) {
                 $query->whereActive(true)->orderBy('order', 'ASC');
             })
             ->orderBy('order', 'ASC')

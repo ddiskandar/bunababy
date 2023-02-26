@@ -79,7 +79,7 @@ class NewUser extends Component
             ]);
 
             $user->profile()->create([
-                'phone' => '62' . $this->state['phone'],
+                'phone' => $this->state['phone'],
                 'ig' => $this->state['ig'],
                 'dob' => $newUser['dob'],
             ]);

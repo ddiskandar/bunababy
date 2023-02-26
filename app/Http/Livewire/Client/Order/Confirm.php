@@ -73,7 +73,7 @@ class Confirm extends Component
             Notification::send($admin, new NewOrder($order));
 
             FlashNotification::make()
-                ->title('Order berhasil dibuat')
+                ->title('Order created!')
                 ->success()
                 ->send();
 
