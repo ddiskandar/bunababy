@@ -2,8 +2,14 @@
     <form wire:submit.prevent="save">
     <div class="pt-2 pb-6">
         <div class="flex items-center mb-6 text-bunababy-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 icon icon-tabler icon-tabler-address-book" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z"></path>
+                <path d="M10 16h6"></path>
+                <path d="M13 11m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                <path d="M4 8h3"></path>
+                <path d="M4 12h3"></path>
+                <path d="M4 16h3"></path>
             </svg>
             <div class="ml-2 text-sm font-semibold">
                 Data Lengkap Pemesan
@@ -92,16 +98,17 @@
 
     <div class="py-6">
         <div class="flex items-center mb-4 text-bunababy-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon w-6 h-6 icon-tabler icon-tabler-user-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-                <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
-            </svg>
+                <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+                <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+                <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855"></path>
+             </svg>
             <div class="ml-2 text-sm font-semibold">
                 Akun Login
             </div>
         </div>
-        <div class="mb-4 text-sm text-bunababy-400">Simpan dan catat akun login anda agar reservasi treatment kedepannya bisa lebih cepat.</div>
+        <div class="mb-4 text-sm text-gray-500">Simpan dan catat akun login anda agar reservasi treatment kedepannya bisa lebih cepat.</div>
         <div class="grid grid-cols-6 gap-6">
             <!-- Alamat Email -->
             <div class="col-span-6 xl:col-span-4">
@@ -112,25 +119,30 @@
 
             <!-- Kata Sandi -->
             <div class="col-span-6 xl:col-span-3">
-                <x-label for="name" :value="__('Kata Sandi')" />
-                <x-input wire:model="state.password" id="name" class="block w-full mt-1" type="password" name="password" />
+                <x-label for="name" :value="__('Kata Sandi ( minimal 6 karakter)')" />
+                <x-input wire:model.lazy="state.password" id="name" class="block w-full mt-1" type="password" name="password" />
                 <x-input-error for="state.password" class="mt-2" />
             </div>
 
             <!-- Konfirmasi Kata Sandi -->
             <div class="col-span-6 xl:col-span-3">
-                <x-label for="name" :value="__('Konfirmasi Kata Sandi')" />
-                <x-input wire:model="state.password_confirmation" id="name" class="block w-full mt-1" type="password" name="password" />
+                <x-label for="name" :value="__('Tulis ulang Kata Sandi')" />
+                <x-input wire:model.lazy="state.password_confirmation" id="name" class="block w-full mt-1" type="password" name="password" />
                 <x-input-error for="state.password_confirmation" class="mt-2" />
             </div>
 
         </div>
 
         <div class="py-6">
-            <button class="flex items-center justify-center w-full py-4 text-center text-white transition duration-150 ease-in-out rounded-full shadow-xl disabled:opacity-25 bg-bunababy-200 shadow-bunababy-100/50"
-                wire:loading.attr="disabled"
+            <button class="flex items-center justify-center w-full h-14 text-center text-white transition duration-150 ease-in-out rounded-full shadow-xl disabled:opacity-25 bg-bunababy-200 shadow-bunababy-100/50"
+                wire:loading.attr="disabled" wire:target="save"
             >
-                Simpan dan Buat Akun
+                <span wire:loading wire:target="save">
+                    <x-loading-spinner />
+                </span>
+                <span wire:loading.remove wire:target="save" class="font-medium">
+                    {{ __('Simpan dan Buat Akun Login') }}
+                </span>
             </button>
         </div>
     </div>

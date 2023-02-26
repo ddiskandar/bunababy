@@ -15,9 +15,10 @@
                     <button type="button" class="w-full px-6 py-4 text-left" @click="selected !== {{ $loop->iteration }} ? selected = {{ $loop->iteration }} : selected = null">
                         <div class="flex items-center justify-between">
                             <span class="font-semibold text-bunababy-200">{{ $category->name }}</span>
-                            <span :class=" selected == {{ $loop->iteration }} ? 'rotate-45' : ''" class="transition-all duration-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-bunababy-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 4v16m8-8H4" />
+                            <span :class=" selected !== {{ $loop->iteration }} ? ' rotate-180' : ''" class="transition-all duration-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-bunababy-200" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M6 15l6 -6l6 6"></path>
                                 </svg>
                             </span>
                         </div>
@@ -91,76 +92,26 @@
         </ul>
     </div>
 
-    <!-- Modal -->
-    <div
-        x-data="{ open: @entangle('showAddTreatmentModal') }"
-        x-show="open"
-        style="display: none !important;"
-        class="fixed inset-0 z-30 overflow-y-auto " aria-labelledby="modal-title" role="dialog" aria-modal="true"
-    >
-        <div
-            x-show = "open"
-            class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-            <div
-                x-show="open"
-                x-transition:enter="ease-out duration-300"
-                x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100"
-                x-transition:leave="ease-in duration-200"
-                x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="tk-modal-simple"
-                x-bind:aria-hidden="!open"
-                class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" aria-hidden="true">
-            </div>
-
-            <!-- This element is to trick the browser into centering the modal contents. -->
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-
-            <div
-                x-show="open"
-                x-trap.noscroll="open"
-                x-transition:enter="ease-out duration-300"
-                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                x-transition:leave="ease-in duration-200"
-                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                class="relative inline-block text-left align-bottom transition-all transform sm:mb-8 sm:align-middle sm:max-w-lg sm:w-full"
-            >
-                <button
-                    x-on:click="open = false"
-                    class="absolute z-30 p-2 bg-white rounded-full -top-12 right-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 rotate-45 stroke-bunababy-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
-                </button>
-
-                <div class="px-4 pt-5 pb-4 overflow-hidden bg-white rounded-lg shadow-xl sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                        <div class="w-full">
-                            <x-title>Tambah treatment berikut</x-title>
-                            <div class="p-4 border rounded bg-bunababy-50/10 border-bunababy-50" >
-                            <div>
-                                <h3 class="text-xl font-semibold leading-6" id="modal-title">{{ $currentTreatment->name }}</h3>
-                                <div class="mt-2">
-                                    <p class="text-sm text-gray-500">{{ $currentTreatment->desc }}</p>
-                                </div>
-                                <div class="py-2 text-sm text-slate-400"><span class="font-medium text-slate-600">{{ rupiah($currentTreatment->price) }}</span> • <span class="font-medium text-slate-600">{{ $currentTreatment->duration }} menit</span></div>
-                            </div>
-                            </div>
-
-                            <div class="w-full mt-4">
-                                <x-title>untuk (pilih salah satu)</x-title>
-                                @livewire('client.order.select-family')
-                            </div>
-                        </div>
+    <x-dialog wire:model="showAddTreatmentModal">
+        <div class="sm:flex sm:items-start">
+            <div class="w-full">
+                <x-title>Tambah treatment berikut</x-title>
+                <div class="p-4 border rounded bg-bunababy-50/10 border-bunababy-50" >
+                <div>
+                    <h3 class="text-xl font-semibold leading-6" id="modal-title">{{ $currentTreatment->name }}</h3>
+                    <div class="mt-2">
+                        <p class="text-sm text-gray-500">{{ $currentTreatment->desc }}</p>
                     </div>
+                    <div class="py-2 text-sm text-slate-400"><span class="font-medium text-slate-600">{{ rupiah($currentTreatment->price) }}</span> • <span class="font-medium text-slate-600">{{ $currentTreatment->duration }} menit</span></div>
+                </div>
+                </div>
+
+                <div class="w-full mt-4">
+                    <x-title>untuk (pilih salah satu)</x-title>
+                    @livewire('client.order.select-family')
                 </div>
             </div>
         </div>
-    </div>
+    </x-dialog>
     @endif
 </div>

@@ -1,5 +1,4 @@
 <div class="relative max-w-screen-sm min-h-screen mx-auto my-0">
-
     <div class="sticky top-0 z-20 py-4 bg-white border-b border-bunababy-50 ">
         <div class=" flex items-center justify-between px-4 mx-auto">
             <div>
@@ -87,7 +86,7 @@
     </div>
     <div class="py-6 bg-bunababy-200">
         <div class="container px-4 mx-auto ">
-            <h1 class="text-xl font-semibold text-center text-white">Pesan Treatment</h1>
+            <h1 class="text-xl font-semibold text-center text-white">{{ $title ?? 'Pesan Treatment' }}</h1>
         </div>
     </div>
 

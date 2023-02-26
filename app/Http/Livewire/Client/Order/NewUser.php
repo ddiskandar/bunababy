@@ -40,7 +40,7 @@ class NewUser extends Component
         'state.phone' => 'required|min:11|max:13',
         'state.ig' => 'nullable|min:2',
         'state.email' => 'required|email|unique:users,email',
-        'state.password' => 'required|string|confirmed|min:4',
+        'state.password' => 'required|string|confirmed|min:6',
     ];
 
     protected $validationAttributes = [
@@ -54,10 +54,10 @@ class NewUser extends Component
         'state.password' => 'Kata sandi'
     ];
 
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
-    }
+    // public function updated($propertyName)
+    // {
+    //     $this->validateOnly($propertyName);
+    // }
 
     public function save()
     {

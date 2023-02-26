@@ -8,6 +8,8 @@ use Livewire\Component;
 
 class CartSummary extends Component
 {
+    public $showDialog = false;
+
     protected $listeners = [
         'timeChanged' => '$refresh',
         'treatmentAdded' => '$refresh',

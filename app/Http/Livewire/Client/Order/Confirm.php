@@ -13,6 +13,8 @@ use Livewire\Component;
 
 class Confirm extends Component
 {
+    public $confirmed = false;
+
     public function confirm()
     {
         $this->orderNow();

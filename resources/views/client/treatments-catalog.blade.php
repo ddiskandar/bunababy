@@ -1,6 +1,6 @@
 <div>
     <div class="px-6 pt-4">
-        <x-title >Katalog Treatment</x-title>
+        <x-title>Katalog Treatment</x-title>
         <div class="flex flex-wrap gap-2 mt-3">
             <button
                 wire:click="$set('filterCategory', '')"
