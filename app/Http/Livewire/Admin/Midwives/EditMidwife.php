@@ -27,7 +27,7 @@ class EditMidwife extends Component
                 'email',
                 Rule::unique('users', 'email')->ignore($this->midwife->id)
             ],
-            'state.phone' => 'required|string|min:11|max:13',
+            'state.phone' => 'required|string|min:11|max:14',
             'state.active' => 'required',
         ];
     }
@@ -63,8 +63,7 @@ class EditMidwife extends Component
                 'phone' => $this->state['phone'],
             ]);
 
-            if($this->photo)
-            {
+            if ($this->photo) {
                 $this->midwife->profile->update([
                     'photo' => $this->photo->store('photos')
                 ]);

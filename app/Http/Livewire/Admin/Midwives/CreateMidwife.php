@@ -13,7 +13,7 @@ class CreateMidwife extends Component
     public $rules = [
         'state.name' => 'required|string|min:4|max:64',
         'state.email' => 'required|email|unique:users,email',
-        'state.phone' => 'required|string|min:11|max:13',
+        'state.phone' => 'required|string|min:11|max:14',
     ];
 
     public $validationAttributes = [
@@ -26,7 +26,7 @@ class CreateMidwife extends Component
     {
         $this->validate();
 
-        DB::transaction(function(){
+        DB::transaction(function () {
             $user = User::create([
                 'name' => $this->state['name'],
                 'email' => $this->state['email'],
@@ -42,7 +42,6 @@ class CreateMidwife extends Component
 
             return redirect()->route('midwives.edit', $user->id);
         });
-
     }
 
     public function render()

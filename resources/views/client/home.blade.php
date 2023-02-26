@@ -22,14 +22,8 @@
                 @livewire('client.select-location')
             </x-section>
 
-            @if(auth()->check() && $profileCompleted && $reservation)
             <x-section>
-                @include('client._latest-reservation')
-            </x-section>
-            @endif
-
-            <x-section>
-                @if (!$reservation)
+                @if (!$reservation || $reservation->status() === 'Selesai')
                     <a href="{{ route('order.create') }}">
                         <button class="flex items-center justify-center w-full gap-3 px-8 py-1 mb-4 text-white transition duration-150 ease-in-out rounded-full bg-bunababy-200 hover:opacity-80 ">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -56,6 +50,12 @@
                     </button>
                 </a>
             </x-section>
+
+            @if(auth()->check() && $profileCompleted && $reservation)
+            <x-section>
+                @include('client._latest-reservation')
+            </x-section>
+            @endif
 
             <div class="bg-white">
                 @livewire('client.treatments-catalog')

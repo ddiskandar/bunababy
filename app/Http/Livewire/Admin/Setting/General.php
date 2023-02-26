@@ -14,7 +14,7 @@ class General extends Component
         'state.site_location' => 'required|string|min:4|max:64',
         'state.site_desc' => 'required|string|min:4|max:255',
         'state.ig' => 'required|string|min:4|max:64',
-        'state.phone' => 'required|string|min:9|max:13',
+        'state.phone' => 'required|string|min:9|max:14',
     ];
 
     protected $validationAttributes = [

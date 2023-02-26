@@ -54,7 +54,7 @@
             <x-dialog wire:model="showSetAdjustmentDialog">
                 <form wire:submit.prevent="setAdjustment">
                     <x-title>Adjustment</x-title>
-                    <div class="h-64 mt-2 space-y-3 overflow-y-auto">
+                    <div class="h-64 mt-2 space-y-3 px-1 overflow-y-auto">
                         <div class="space-y-1">
                             <x-label for="adjustment_name">Nama</x-label>
                             <x-input wire:model.lazy="adjustment_name" class="w-full" type="text" id="adjustment_name" />

@@ -10,16 +10,16 @@
 
     <div class="py-6">
         <button class="flex w-full h-14 items-center justify-center transition duration-150 ease-in-out rounded-full shadow-xl disabled:opacity-25 bg-bunababy-200 shadow-bunababy-100/50"
-        wire:click="confirm"
-        wire:loading.attr="disabled"
-        @disabled(! $confirmed)
-    >
-        <span wire:loading wire:target="confirm">
-            <x-loading-spinner />
-        </span>
-        <span wire:loading.remove wire:target="confirm" class="font-medium text-white">
-            {{ __('Checkout') }}
-        </span>
-    </button>
+            wire:click="confirm"
+            wire:loading.attr="disabled"
+            @disabled(! $confirmed)
+        >
+            <span wire:loading wire:target="confirm">
+                <x-loading-spinner />
+            </span>
+            <span wire:loading.remove wire:target="confirm" class="font-medium text-white">
+                {{ __('Checkout') }}
+            </span>
+        </button>
     </div>
 </div>

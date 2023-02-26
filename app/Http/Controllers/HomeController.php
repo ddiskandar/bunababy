@@ -18,7 +18,7 @@ class HomeController extends Controller
         $hasPhone = isset(auth()->user()->profile->phone);
         $profileCompleted = ($hasPhone and $hasAddress);
 
-        $reservation = '';
+        $reservation = null;
 
         if ($profileCompleted) {
             $reservation = auth()->user()->latestReservation;

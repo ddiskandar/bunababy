@@ -112,21 +112,6 @@
                                 <p class="font-semibold text-slate-800">{{ rupiah($payment->value) }}</p>
                             </td>
                             <td class="p-3 whitespace-nowrap">
-                                {{-- <span
-                                    @class([
-                                        'inline-flex items-center pl-2 pr-4 text-xs font-semibold leading-5  rounded-full',
-                                        'text-green-800 bg-green-100' => $payment->status() == 'Verified',
-                                        'text-red-800 bg-red-100' => $payment->status() == 'Rejected',
-                                        'text-yellow-800 bg-yellow-100' => $payment->status() == 'Waiting',
-                                    ])>
-                                    <span
-                                        @class([
-                                            'w-2 h-2 mr-2 rounded-full',
-                                            'bg-green-600 ' => $payment->status() == 'Verified',
-                                            'bg-red-600 ' => $payment->status() == 'Rejected',
-                                            'bg-yellow-600 ' => $payment->status() == 'Waiting',
-                                        ])></span>
-                                    </span> --}}
                                 <div
                                     @class([
                                         'flex items-center',
@@ -212,7 +197,7 @@
         <form wire:submit.prevent="save">
             <x-title>Status Pembayaran</x-title>
 
-            <div class="h-64 mt-2 space-y-3 overflow-y-auto">
+            <div class="h-64 mt-2 space-y-3 px-1 overflow-y-auto">
                 <div class="space-y-1">
                     <x-label for="state.value">Besar Pembayaran</x-label>
                     <x-input wire:model.lazy="state.value" x-mask:dynamic="$money($input, ',')" class="w-full" type="text" id="state.value"/>

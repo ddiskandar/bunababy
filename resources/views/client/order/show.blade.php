@@ -14,7 +14,7 @@
 
         <div class="max-w-screen-sm min-h-screen mx-auto my-0 space-y-2">
 
-            <div class="px-6 py-4 bg-white">
+            <x-section>
                 <div class="flex items-center justify-between ">
                     <div >
                         <div class="text-sm font-semibold leading-loose text-bunababy-400">ID Transaksi</div>
@@ -52,22 +52,22 @@
                         </a>
                     </div>
                 </div>
-            </div>
+            </x-section>
             @if (! $isPaid)
-            <div class="px-6 py-4 bg-white">
+            <x-section>
                 @include('client.order._detail')
-            </div>
+            </x-section>
             @endif
-            <div class="px-6 py-4 bg-white">
+            <x-section>
                 @livewire('client.order.payments', [$order->id])
-            </div>
-            <div class="px-6 py-4 bg-white">
+            </x-section>
+            <x-section>
                 @include('client.order._activity')
-            </div>
+            </x-section>
 
-            <div class="px-6 py-4 bg-white">
+            <x-section>
                 @include('client.order._summary')
-            </div>
+            </x-section>
         </div>
     </div>
 </x-client-layout>

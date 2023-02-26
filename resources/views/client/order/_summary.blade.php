@@ -35,21 +35,24 @@
     </div>
 
     <div class="py-4">
-        <x-title>Treatment</x-title>
+        <x-title>Treatment dan Rincian Pembayaran</x-title>
         <ul class="divide-y divide-bunababy-50">
             @foreach ($order->treatments as $treatment)
-                <li class="flex justify-between py-2 text-sm">
-                    <div>{{ $treatment->name }}</div>
-                    <div class="truncate text-slate-400 ">
+                <li class="flex justify-between items-center py-2 text-sm">
+                    <div>
+                        <div class="font-medium">{{ $treatment->name }}</div>
+                        <div class="truncate text-slate-600 ">
+                            {{ $treatment->pivot->family_name . ', ' . ($treatment->pivot->family_age ?? '-') }}
+                        </div>
                     </div>
-                    <div class="flex justify-between ">
+                    <div>
                         <div>{{ rupiah($treatment->pivot->treatment_price) }}</div>
                     </div>
                 </li>
             @endforeach
         </ul>
 
-        <div class="text-sm">
+        <div class="text-sm border-t border-bunababy-50 pt-2 mt-2">
             <div class="flex justify-between py-2">
                 <div>Subtotal</div>
                 <div>{{ rupiah($order->total_price) }}</div>
@@ -79,7 +82,7 @@
 
             <div class="flex justify-between font-semibold py-2">
                 <div>Sisa Pembayaran</div>
-                <div>{{ rupiah($order->getRemainingPayment()) }}</div>
+                <div>{{ $order->getRemainingPayment() === 0 ? '-' : rupiah($order->getRemainingPayment()) }}</div>
             </div>
         </div>
     </div>

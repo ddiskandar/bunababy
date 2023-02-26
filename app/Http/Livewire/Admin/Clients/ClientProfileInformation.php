@@ -26,7 +26,7 @@ class ClientProfileInformation extends Component
                 Rule::unique('users', 'email')->ignore($this->client->id)
             ],
             'state.dob' => 'nullable|date',
-            'state.phone' => 'nullable|string|min:11|max:13',
+            'state.phone' => 'nullable|string|min:11|max:14',
             'state.ig' => 'nullable',
             'photo' => 'nullable|image|max:128',
         ];

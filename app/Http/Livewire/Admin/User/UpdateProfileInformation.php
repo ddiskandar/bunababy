@@ -27,7 +27,7 @@ class UpdateProfileInformation extends Component
                 'email',
                 Rule::unique('users', 'email')->ignore(auth()->id())
             ],
-            'state.phone' => 'nullable|string|min:11|max:13',
+            'state.phone' => 'nullable|string|min:11|max:14',
             'state.ig' => 'nullable',
             'photo' => 'nullable|image|max:128',
         ];

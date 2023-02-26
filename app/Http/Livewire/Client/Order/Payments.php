@@ -70,7 +70,7 @@ class Payments extends Component
     }
 
 
-    public function upload()
+    public function save()
     {
         $this->validate();
 

@@ -37,7 +37,7 @@ class NewUser extends Component
         'state.families.*.dob' => 'required',
         'state.address' => 'required|string|min:4|max:124',
         'state.desa' => 'required|min:4|max:64',
-        'state.phone' => 'required|min:11|max:13',
+        'state.phone' => 'required|min:11|max:14',
         'state.ig' => 'nullable|min:2',
         'state.email' => 'required|email|unique:users,email',
         'state.password' => 'required|string|confirmed|min:6',

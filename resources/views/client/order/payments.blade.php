@@ -5,7 +5,7 @@
             @forelse ($payments as $payment)
                 <li class="flex items-center gap-6 py-4">
                     <div class="flex-1">
-                        <a href="{{ asset('storage/' . $payment->attachment) }} " target="_blank">
+                        <a href="{{ $payment->attachment ? asset('storage/' . $payment->attachment) : '#' }} " target="_blank">
                             <div class="text-lg font-semibold">{{ rupiah($payment->value) }}</div>
                             <div>{{ $payment->created_at->isoFormat('DD/MM/YYYY hh:mm') . ' WIB' }}</div>
                         </a>
@@ -71,11 +71,11 @@
 
         @if (! $isLocked)
             <div class="py-4">
-                <div x-data="{ open: @entangle('showUploadDialog') }">
+                <div>
                     <button
+                        wire:click="$set('showUploadDialog', true)"
                         type="button"
-                        class="block w-full py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
-                        x-on:click="open = ! open"
+                        class="block w-full py-3 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
                     >+ Upload Bukti</button>
 
                     <div class="py-6 text-xs text-center text-slate-600">
@@ -85,83 +85,40 @@
                         </a>
                     </div>
 
-                    <!-- Modal -->
-                    <div
-                    x-show="open"
-                    style="display: none !important;"
-                    class="fixed inset-0 overflow-y-auto z-90 " aria-labelledby="modal-title" role="dialog" aria-modal="true"
-                    >
-                        <div
-                            x-show="open"
-                            class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-                            <div
-                                x-show="open"
-                                x-transition:enter="ease-out duration-300"
-                                x-transition:enter-start="opacity-0"
-                                x-transition:enter-end="opacity-100"
-                                x-transition:leave="ease-in duration-200"
-                                x-transition:leave-start="opacity-100"
-                                x-transition:leave-end="opacity-0"
-                                tabindex="-1"
-                                role="dialog"
-                                aria-labelledby="tk-modal-simple"
-                                x-bind:aria-hidden="!open"
-                                class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" aria-hidden="true">
+                    <x-dialog wire:model="showUploadDialog">
+                        <form wire:submit.prevent="save">
+                            <x-title>Upload bukti transfer</x-title>
+                            <div class="py-4">
+                                <label class="block space-y-1">
+                                    <x-label>Pilih file</x-label>
+                                    <input wire:model.defer="attachment" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100" type="file" accept="image/*" id="photo" name="photo">
+                                </label>
+                                <p class="mt-2 text-xs">File Photo Maksimal 700 Kb.</p>
+                                <x-input-error for="attachment" class="mt-2" />
+                                <p class="mt-2 text-xs" wire:loading wire:target="attachment">Uploading...</p>
+                            </div>
+                            <div class="py-4 space-y-1">
+                                <x-label for="value">Nominal</x-label>
+                                <x-input wire:model.defer="value" x-mask:dynamic="$money($input, ',')" class="w-full" type="text" id="value" />
+                                <x-input-error for="value" class="mt-2" />
                             </div>
 
-                            <!-- This element is to trick the browser into centering the modal contents. -->
-                            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-
-                            <div
-                                x-show="open"
-                                x-trap.noscroll="open"
-                                x-transition:enter="ease-out duration-300"
-                                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                                x-transition:leave="ease-in duration-200"
-                                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                                class="relative inline-block w-full text-left align-bottom transition-all transform sm:mb-8 sm:align-middle sm:max-w-lg sm:w-full"
-                            >
-                                <button
-                                    x-on:click="open = false"
-                                    class="absolute z-30 p-2 bg-white rounded-full -top-12 right-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 rotate-45 stroke-bunababy-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                                    </svg>
+                            <div class="py-4">
+                                <button class="flex w-full h-14 items-center justify-center transition duration-150 ease-in-out rounded-full shadow-xl disabled:opacity-25 bg-bunababy-200 shadow-bunababy-100/50"
+                                    type="submit"
+                                    wire:loading.attr="disabled"
+                                    @disabled( !$value || !$attachment)
+                                >
+                                    <span wire:loading wire:target="save">
+                                        <x-loading-spinner />
+                                    </span>
+                                    <span wire:loading.remove wire:target="save" class="font-medium text-white">
+                                        {{ __('Upload Bukti') }}
+                                    </span>
                                 </button>
-
-                                <div class="px-4 pt-5 pb-4 overflow-hidden bg-white rounded-lg shadow-xl sm:p-6 sm:pb-4">
-                                    <form wire:submit.prevent="upload">
-                                    <x-title>Upload bukti transfer</x-title>
-                                    <div class="py-4">
-                                        <label class="block space-y-1">
-                                            <x-label>Pilih file</x-label>
-                                            <input wire:model.defer="attachment" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100" type="file" accept="image/*" id="photo" name="photo">
-                                        </label>
-                                        <p class="mt-2 text-xs">File Photo Maksimal 700 Kb.</p>
-                                        <x-input-error for="attachment" class="mt-2" />
-                                        <p class="mt-2 text-xs" wire:loading wire:target="attachment">Uploading...</p>
-                                    </div>
-                                    <div class="py-4 space-y-1">
-                                        <x-label for="value">Nominal</x-label>
-                                        <x-input wire:model.defer="value" x-mask:dynamic="$money($input, ',')" class="w-full" type="text" id="value" />
-                                        <x-input-error for="value" class="mt-2" />
-                                    </div>
-
-                                    <div class="py-4">
-                                        <button
-                                            wire:loading.attr="disabled"
-                                            type="submit"
-                                            class="block w-full py-2 text-center text-white rounded-full shadow-xl disabled:opacity-60 bg-bunababy-200 shadow-bunababy-100/50"
-                                        >Upload Bukti</button>
-                                    </div>
-
-                                    </form>
-                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </form>
+                    </x-dialog>
                 </div>
             </div>
         @endif

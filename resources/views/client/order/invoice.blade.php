@@ -106,7 +106,7 @@
                             </div>
                         </td>
                         <td class="py-1">
-                            <div>{{ ($treatment->pivot->family_name ?? '#') . ' / ' . ($treatment->pivot->family_age ?? '#') }}</div>
+                            <div>{{ ($treatment->pivot->family_name ?? '#') . ', ' . ($treatment->pivot->family_age ?? '#') }}</div>
                         </td>
                         <td class="py-1 text-right">
                             {{ rupiah($treatment->pivot->treatment_price) }}

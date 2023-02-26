@@ -26,7 +26,7 @@ class UpdateProfileInformation extends Component
                 Rule::unique('users', 'email')->ignore(auth()->id())
             ],
             'state.dob' => 'required|date',
-            'state.phone' => 'required|string|min:11|max:13',
+            'state.phone' => 'required|string|min:11|max:14',
             'state.ig' => 'nullable',
             'photo' => 'nullable|image|max:128',
         ];
