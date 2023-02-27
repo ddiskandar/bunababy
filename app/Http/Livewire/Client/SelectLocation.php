@@ -41,6 +41,8 @@ class SelectLocation extends Component
         session()->put('order.kecamatan_id', $kecamatan_id);
         session()->put('order.kecamatan_distance', $kecamatan->distance);
 
+        $this->showModalPicker = false;
+
         $this->emit('locationChanged');
     }
 
