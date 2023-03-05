@@ -109,7 +109,7 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
         return [
             $order->no_reg,
             $order->start_datetime->isoFormat('DD/MM/YYYY'),
-            $order->place(),
+            $order->place->name,
             $order->client->name,
             $order->midwife->name ?? '-',
             $order->treatments->pluck('name')->implode(', '),

@@ -151,7 +151,8 @@ class ShowCalendar extends Component
             ->with(
                 'client:id,name',
                 'treatments:id,name',
-                'address.kecamatan:id,name'
+                'address.kecamatan:id,name',
+                'place:id,name'
             )
             ->select([
                 'id',
@@ -180,7 +181,7 @@ class ShowCalendar extends Component
                 'status' => $order->getStatusString(),
                 'finished_at' => $order->finished_at,
                 'address' => $order->address->kecamatan->name ?? '-',
-                'place' => $order->place()
+                'place' => $order->place->name
             ]);
         }
 

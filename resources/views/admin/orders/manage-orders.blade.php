@@ -126,7 +126,7 @@
                                 </td>
                                 <td class="p-3 align-top whitespace-nowrap">
                                     <p class="font-semibold">{{ $order->client->name }}</p>
-                                    <p class="font-medium text-bunababy-400">{{ $order->place() }}</p>
+                                    <p class="font-medium text-bunababy-400">{{ $order->place->name }}</p>
                                     <p class="text-slate-600">{{ $order->client->address }}</p>
                                 </td>
                                 <td class="w-64 p-3 align-top whitespace-nowrap">

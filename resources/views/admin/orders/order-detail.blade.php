@@ -55,7 +55,7 @@
                     Tempat
                 </dt>
                 <dd class="mt-1 text-gray-900">
-                    {{ $order->place() }}
+                    {{ $order->place->name }}
                 </dd>
             </div>
             <div class="sm:col-span-1">
