@@ -4,12 +4,25 @@ namespace App\Http\Livewire\Client\Order;
 
 use App\Models\Order;
 use App\Models\Place;
+use App\Models\Room;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class CheckoutSummary extends Component
 {
+    public $place;
+    public $room;
+
+    public function mount()
+    {
+        $this->place = Place::find(session('order.place_id'));
+
+        if (session('order.place_type') === Place::TYPE_CLINIC) {
+            $this->room = Room::find(session('order.room_id'));
+        }
+    }
+
     public function render()
     {
         $treatments = collect(session('order.treatments')) ?? [];
@@ -29,8 +42,8 @@ class CheckoutSummary extends Component
 
         if (session('order.place_type') === Place::TYPE_HOMECARE) {
             $midwife = User::where('id', session('order.midwife_user_id'))->first();
-            $data['bidan'] = $midwife->name;
-            $data['bidan_photo'] = $midwife->profile_photo_url;
+            $data['midwife'] = $midwife->name;
+            $data['midwife_photo'] = $midwife->profile_photo_url;
             $data['kecamatan'] = DB::table('kecamatans')->where('id', session('order.kecamatan_id'))->value('name');
         }
 

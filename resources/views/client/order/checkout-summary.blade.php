@@ -1,30 +1,22 @@
 <div>
     <div class="space-y-2">
-        @if (session('order.place_id') == 1)
+        <x-section>
+            <x-title>Tempat</x-title>
+            <div>
+                <span class="font-semibold">{{ session('order.place_type') === \App\Models\Place::TYPE_CLINIC ? $place->name . ', ' . $room->name : $place->name }}</span>
+                <div class="text-sm">{{ $place->desc }}</div>
+            </div>
+        </x-section>
+
+        @if (session('order.place_type') === \App\Models\Place::TYPE_HOMECARE)
             <x-section>
                 <x-title>Bidan </x-title>
                 <div class="flex items-center">
-                    <img src="{{ $data['bidan_photo'] }}" alt="User Avatar" class="inline-block w-10 h-10 rounded-full" />
-                    <div class="ml-2 font-semibold">{{ $data['bidan'] }}</div>
+                    <img src="{{ $data['midwife_photo'] }}" alt="User Avatar" class="inline-block w-10 h-10 rounded-full" />
+                    <div class="ml-2 font-semibold">{{ $data['midwife'] }}</div>
                 </div>
             </x-section>
         @endif
-
-        <x-section>
-            <x-title>Tempat</x-title>
-            <label class="flex items-center">
-                <input type="radio" class="w-4 h-4 border border-bunababy-50 text-bunababy-200 focus:border-bunababy-200 focus:ring focus:ring-bunababy-200 focus:ring-opacity-50" name="tk-form-elements-radios-stacked" checked />
-                <div class="ml-4">
-                    @if (session('order.place_id') == 1)
-                        <span class="font-semibold">Homecare</span>
-                        <div class="text-sm">{{ $data['kecamatan'] }}</div>
-                    @else
-                        <span class="font-semibold">Onsite</span>
-                        <div class="text-sm">Di Klinik bunababy</div>
-                    @endif
-                </div>
-            </label>
-        </x-section>
 
         <x-section>
             <x-title>Tanggal dan Waktu</x-title>
@@ -65,12 +57,14 @@
                         <div>{{ $data['total_price'] }}</div>
                     </div>
                 </li>
+                @if (session('order.place_type') === \App\Models\Place::TYPE_HOMECARE)
                 <li class="py-1 text-sm">
                     <div class="flex justify-between ">
                         <div>Transport</div>
                         <div>{{ $data['total_transport'] }}</div>
                     </div>
                 </li>
+                @endif
                 <li class="py-1 text-sm">
                     <div class="flex items-center justify-between text-lg font-semibold">
                         <div>Total Pembayaran</div>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Client\Order;
 
+use App\Models\Option;
 use App\Models\Order;
 use App\Models\Place;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -42,6 +44,8 @@ class CartSummary extends Component
             return back();
         }
 
+        $options = Option::first();
+
         $orders = Order::query()
             ->where('midwife_user_id', session('order.midwife_user_id'))
             ->locked()
@@ -51,7 +55,8 @@ class CartSummary extends Component
         $date = session('order.date')->toDateString();
 
         foreach ($orders as $order) {
-            if ($order->activeBetween($date . ' ' . $order->getStartTime(), $date . ' ' . $order->getEndTime())->exists()) {
+            // TODO : Cek bentrok
+            if ($order->activeBetween($date . ' ' . $order->getStartTime(), $date . ' ' . Carbon::parse($order->getEndTime())->addMinutes($options->transport_duration))->exists()) {
                 session()->flash('treatments', 'Tidak dapat membuat reservasi pada pilihan dan rentang waktu ini, silahkan pilih slot waktu yang kosong.');
                 return back();
             }

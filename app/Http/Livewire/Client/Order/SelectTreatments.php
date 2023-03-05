@@ -125,8 +125,6 @@ class SelectTreatments extends Component
         if (session('order.place_type') === Place::TYPE_CLINIC) {
             $availableTreatments = [];
 
-            // TODO: uncomment this when clinic is ready
-
             $room = Room::find(session('order.room_id'));
             throw_if(is_null($room), \Exception::class, 'room not found');
 
