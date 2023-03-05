@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Client\Order;
 
 use App\Models\Category;
 use App\Models\Place;
+use App\Models\Room;
 use App\Models\Treatment;
 use App\Models\User;
 use Livewire\Component;
@@ -122,14 +123,14 @@ class SelectTreatments extends Component
         }
 
         if (session('order.place_type') === Place::TYPE_CLINIC) {
-            $availableTreatments = null;
+            $availableTreatments = [];
 
             // TODO: uncomment this when clinic is ready
 
-            $place = Place::find(session('order.place_id'));
-            throw_if(is_null($place), \Exception::class, 'Place not found');
+            $room = Room::find(session('order.room_id'));
+            throw_if(is_null($room), \Exception::class, 'room not found');
 
-            $availableTreatments = $place->treatments()->whereActive(true)
+            $availableTreatments = $room->treatments()->whereActive(true)
                 ->orderBy('order', 'ASC')
                 ->with(['category' => function ($query) {
                     $query->orderBy('order', 'ASC');

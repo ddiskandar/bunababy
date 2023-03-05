@@ -1,10 +1,10 @@
 <div>
-    <div class="fixed max-w-screen-sm w-full z-10 bottom-0 px-6 py-3 border-t border-bunababy-50 bg-white">
-        <div class="py-1 flex justify-between relative">
+    <div class="fixed bottom-0 z-10 w-full max-w-screen-sm px-6 py-3 bg-white border-t border-bunababy-50">
+        <div class="relative flex justify-between py-1">
             <div class="w-2/3">
                 <div class="">
                     <div class="text-sm">Total Pembayaran</div>
-                    <div class="font-semibold text-xl flex items-center" x-on:click="show = true">
+                    <div class="flex items-center text-xl font-semibold" x-on:click="show = true">
                         <div class="mr-2">{{ $data['grand_total'] }}</div>
                         @if (session()->has('order.treatments') && session('order.treatments') !== [])
                             <button wire:click="$toggle('showDialog')">
@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            <button class="ml-2 flex-shrink-0 px-6 w-32 py-2 font-medium text-center text-white transition duration-150 ease-in-out rounded-full shadow-xl disabled:opacity-25 bg-bunababy-200 shadow-bunababy-100/50"
+            <button class="flex-shrink-0 w-32 px-6 py-2 ml-2 font-medium text-center text-white transition duration-150 ease-in-out rounded-full shadow-xl disabled:opacity-25 bg-bunababy-200 shadow-bunababy-100/50"
                 wire:click="checkout"
                 wire:loading.attr="disabled"
                 @disabled(!session()->has('order.treatments') || session('order.treatments') === [])
@@ -40,7 +40,7 @@
                 Treatment
             </div>
             <div>
-                <ul class="divide-y divide-bunababy-50 h-48 overflow-y-auto my-2">
+                <ul class="h-48 my-2 overflow-y-auto divide-y divide-bunababy-50">
                     @forelse ($treatments as $name => $treatment)
                     <li class="py-2 text-sm opacity-80">
                         <div class="font-semibold">{{ $name }}</div>
@@ -61,16 +61,18 @@
                     @endforelse
                 </ul>
 
-                <div class="border-t border-bunababy-50 pt-2">
-                    <div class="flex text-sm justify-between py-1">
+                <div class="pt-2 border-t border-bunababy-50">
+                    <div class="flex justify-between py-1 text-sm">
                         <div>Sub Total</div>
                         <div>{{ $data['total_price'] }}</div>
                     </div>
-                    <div class="flex text-sm justify-between py-1">
-                        <div>Transport</div>
-                        <div>{{ $data['total_transport'] }}</div>
-                    </div>
-                    <div class="flex text-sm justify-between py-1">
+                    @if (session('order.place_type') === \App\Models\Place::TYPE_HOMECARE)
+                        <div class="flex justify-between py-1 text-sm">
+                            <div>Transport</div>
+                            <div>{{ $data['total_transport'] }}</div>
+                        </div>
+                    @endif
+                    <div class="flex justify-between py-1 text-sm">
                         <div class="font-semibold">Total Pembayaran</div>
                         <div class="font-semibold">{{ $data['grand_total'] }}</div>
                     </div>
