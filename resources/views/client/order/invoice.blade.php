@@ -68,8 +68,13 @@
 
             {{-- <h3 class="mb-2 font-semibold">Treatment</h3> --}}
             <div class=" text-slate-600">
-                <div class="font-semibold text-slate-700">{{ $order->place->name }}</div>
-                <div>{{ $order->address->fullAddress ?? '' }}</div>
+                @if ($order->place->type === \App\Models\Place::TYPE_HOMECARE)
+                    <div class="font-semibold text-slate-700">{{ $order->place->name }}</div>
+                    <div>{{ $order->address->fullAddress ?? '' }}</div>
+                @else
+                    <div class="font-semibold">{{ $order->place->name . ', ' . $order->room->name }}</div>
+                    <div>{{ $order->place->desc }}</div>
+                @endif
                 <div>
                     {{ $order->start_datetime->isoFormat('dddd, DD MMMM Y') }}, pukul {{ $order->getTime() }} WIB
                 </div>

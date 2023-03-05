@@ -44,7 +44,7 @@ class Confirm extends Component
             }
 
             if (session('order.place_type') === Place::TYPE_CLINIC) {
-                $order->place_id = session('order.room_id');
+                $order->room_id = session('order.room_id');
             }
 
             $order->save();

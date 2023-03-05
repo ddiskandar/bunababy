@@ -25,7 +25,7 @@ class PlaceSeeder extends Seeder
             [
                 'id'   => 2,
                 'name' => 'Klinik Cimahi',
-                'desc' => 'Desc klinik Cimahi',
+                'desc' => 'Komplek Nata Endah Blok N No. 170, Cibabat, Cimahi',
                 // 'address' => 'Jl. Cimahi No. 1 Cimahi',
                 'add_transport' => false,
                 'type' => 2, // 1 = homecare, 2 = klinik
@@ -34,7 +34,7 @@ class PlaceSeeder extends Seeder
             [
                 'id'   => 3,
                 'name' => 'Klinik Bandung',
-                'desc' => 'Desc klinik Bandung',
+                'desc' => 'Alamat Klinik Bandung',
                 // 'address' => 'Jl. Bandung No. 1 Bandung',
                 'add_transport' => false,
                 'type' => 2, // 1 = homecare, 2 = klinik

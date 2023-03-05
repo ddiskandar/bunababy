@@ -20,10 +20,11 @@
 
     <div class="py-4">
         <x-title>Tempat</x-title>
-        <div class="font-semibold">{{ $order->place->name }}</div>
         @if ($order->place->type === \App\Models\Place::TYPE_HOMECARE)
+            <div class="font-semibold">{{ $order->place->name }}</div>
             <div class="text-sm">{{ $order->address->full_address ?? '-' }}</div>
         @else
+            <div class="font-semibold">{{ $order->place->name . ', ' . $order->room->name }}</div>
             <div class="text-sm">{{ $order->place->desc }}</div>
         @endif
     </div>
