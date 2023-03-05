@@ -77,7 +77,7 @@
                     Username Instagram
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900">
-                    {{ auth()->user()->profile->ig }}
+                    {{ strlen(auth()->user()->profile->ig) > 0 ? auth()->user()->profile->ig : '-' }}
                 </dd>
             </div>
             @endif
