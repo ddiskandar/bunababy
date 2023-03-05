@@ -42,7 +42,7 @@ class OrderController extends Controller
     public function show($no_reg)
     {
         $order = Order::query()
-            ->with('treatments')
+            ->with('treatments', 'place')
             ->where('no_reg', $no_reg)
             ->firstOrFail();
 

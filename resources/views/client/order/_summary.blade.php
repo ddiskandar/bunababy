@@ -20,18 +20,12 @@
 
     <div class="py-4">
         <x-title>Tempat</x-title>
-        <label class="flex items-center">
-            <input type="radio" class="w-4 h-4 border border-bunababy-50 text-bunababy-200 focus:border-bunababy-200 focus:ring focus:ring-bunababy-200 focus:ring-opacity-50" name="tk-form-elements-radios-stacked" checked />
-            <div class="ml-4">
-                @if ($order->place->type === \App\Models\Place::TYPE_HOMECARE)
-                    <span class="font-semibold">Homecare</span>
-                    <div class="text-sm">{{ $order->address->full_address ?? '-' }}</div>
-                @else
-                    <span class="font-semibold">Onsite</span>
-                    <div class="text-sm">{{ $options->site_location }}</div>
-                @endif
-            </div>
-        </label>
+        <div class="font-semibold">{{ $order->place->name }}</div>
+        @if ($order->place->type === \App\Models\Place::TYPE_HOMECARE)
+            <div class="text-sm">{{ $order->address->full_address ?? '-' }}</div>
+        @else
+            <div class="text-sm">{{ $order->place->desc }}</div>
+        @endif
     </div>
 
     <div class="py-4">
@@ -58,10 +52,12 @@
                 <div>{{ rupiah($order->total_price) }}</div>
             </div>
 
+            @if ($order->place->type === \App\Models\Place::TYPE_HOMECARE)
             <div class="flex justify-between py-2">
                 <div>Transport</div>
                 <div>{{ rupiah($order->total_transport) }}</div>
             </div>
+            @endif
 
             @if ($order->adjustment_amount !== 0)
             <div class="flex justify-between py-2">

@@ -54,7 +54,11 @@ class SelectTreatments extends Component
 
     public function confirmAddTreatment(Treatment $treatment)
     {
-        $treatment->load('price');
+        $treatment->load([
+            'price' => function ($query) {
+                $query->where('place_id', session('order.place_id'));
+            }
+        ]);
         $this->currentTreatment = $treatment->toArray();
         $this->showAddTreatmentModal = true;
     }
