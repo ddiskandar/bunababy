@@ -18,6 +18,8 @@ class SelectTreatments extends Component
     public function mount()
     {
         session()->forget('order.treatments');
+        session()->forget('order.start_time');
+        session()->forget('order.start_time_id');
         session()->put('order.addMinutes', 0);
 
         $this->family_id = time();
