@@ -16,7 +16,6 @@ class CreateSlotsTable extends Migration
         Schema::create('slots', function (Blueprint $table) {
             $table->id();
             $table->foreignId('place_id')->constrained()->onDelete('cascade');
-            $table->foreignId('room_id')->nullable()->onDelete('cascade');
             $table->time('time');
         });
     }
