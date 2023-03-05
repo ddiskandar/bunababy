@@ -17,13 +17,10 @@ class SelectClinicRoomAvailableDate extends Component
 
     public function mount($room_id)
     {
+        $this->selectedMonth = now()->format('Y-M');
+        $this->slots = Slot::where('place_id', session('order.place_id'))->get();
         $this->room = Room::find($room_id);
         $this->room->load('place');
-        $this->selectedMonth = now()->format('Y-M');
-
-        $this->slots = Slot::query()
-            ->where('place_id', session('order.place_id'))
-            ->get();
     }
 
     public function prevMonth()
@@ -53,6 +50,7 @@ class SelectClinicRoomAvailableDate extends Component
         }
 
         session()->put('order.date', $date);
+        session()->put('order.room_id', $this->room->id);
         session()->forget('order.midwife_user_id');
 
         return to_route('order.cart');

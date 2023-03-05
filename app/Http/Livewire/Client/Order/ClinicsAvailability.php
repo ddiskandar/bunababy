@@ -29,7 +29,7 @@ class ClinicsAvailability extends Component
 
     public function locationChanged()
     {
-        return redirect()->route('order.create');
+        return to_route('order.create');
     }
 
     public function render()
