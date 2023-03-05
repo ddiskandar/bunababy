@@ -16,11 +16,10 @@ return new class extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->constrained()->onDelete('cascade');
+            $table->date('dob')->nullable();
             $table->string('phone')->nullable();
             $table->text('photo')->nullable();
             $table->string('ig')->nullable();
-            $table->string('no_reg')->nullable();
-            $table->date('dob')->nullable();
             $table->timestamps();
         });
     }
