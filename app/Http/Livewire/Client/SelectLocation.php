@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Client;
 
 use App\Models\Kabupaten;
+use App\Models\Kecamatan;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -14,35 +15,33 @@ class SelectLocation extends Component
 
     public function mount()
     {
+        if (auth()->check() && auth()->user()->isClient() && session()->missing('order.kecamatan_id') && session()->missing('order.kecamatan_distance')) {
+            $id = DB::table('addresses')
+                ->where('client_user_id', auth()->id())
+                ->where('is_main', true)
+                ->value('kecamatan_id');
 
-        $kecamatan_id = '';
-
-        if (auth()->check() and auth()->user()->isClient() and session()->missing('order.kecamatan_id')) {
-            $kecamatan_id = auth()->user()->addresses->where('is_main', true)->first()->kecamatan_id ?? '';
-            if ($kecamatan_id) {
-                session()->put('order.kecamatan_id', $kecamatan_id);
+            if ($id) {
+                $this->putSessionKecamatan($id);
             }
         }
 
-        $this->kecamatan = 'Pilih lokasi';
-
-        if (session()->has('order.kecamatan_id') or $kecamatan_id) {
-            $this->kecamatan = DB::table('kecamatans')
-                ->where('id', session('order.kecamatan_id') ?? $kecamatan_id)
-                ->value('name');
+        if (session()->has('order.kecamatan_id')) {
+            $this->kecamatan = Kecamatan::find(session()->get('order.kecamatan_id'));
         }
     }
 
-    public function setLocation($kecamatan_id)
+    public function putSessionKecamatan($id)
     {
-        $kecamatan = DB::table('kecamatans')->where('id', $kecamatan_id)->first();
-        $this->kecamatan = $kecamatan->name;
+        $this->kecamatan = Kecamatan::find($id);
+        session()->put('order.kecamatan_id', $this->kecamatan->id);
+        session()->put('order.kecamatan_distance', $this->kecamatan->distance);
+    }
 
-        session()->put('order.kecamatan_id', $kecamatan_id);
-        session()->put('order.kecamatan_distance', $kecamatan->distance);
-
+    public function setLocation($id)
+    {
+        $this->putSessionKecamatan($id);
         $this->showModalPicker = false;
-
         $this->emit('locationChanged');
     }
 
