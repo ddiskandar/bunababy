@@ -29,7 +29,7 @@ class NewUser extends Component
         $this->state['kec'] = $kecamatan->name;
         $this->state['kab'] = $kecamatan->kabupaten->name;
         $this->state['phone'] = '';
-        $this->state['ig'] = '';
+        $this->state['ig'] = null;
     }
 
     protected $rules = [
@@ -80,7 +80,7 @@ class NewUser extends Component
 
             $user->profile()->create([
                 'phone' => $this->state['phone'],
-                'ig' => $this->state['ig'],
+                'ig' => $this->state['ig'] ?? null,
                 'dob' => $newUser['dob'],
             ]);
 

@@ -33,7 +33,7 @@ class ManageTreatments extends Component
     protected $rules = [
         'state.name' => 'required',
         'state.desc' => 'required',
-        'state.price' => 'required',
+        // 'state.price' => 'required',
         'state.duration' => 'required',
         'state.order' => 'required',
         'state.category_id' => 'required',
@@ -43,7 +43,7 @@ class ManageTreatments extends Component
     protected $validationAttributes = [
         'state.name' => 'Nama',
         'state.desc' => 'Deskripsi',
-        'state.price' => 'Harga',
+        // 'state.price' => 'Harga',
         'state.duration' => 'Durasi',
         'state.order' => 'Urutan',
         'state.category_id' => 'Kategori',
@@ -99,7 +99,7 @@ class ManageTreatments extends Component
             [
                 'category_id' => $this->state['category_id'],
                 'name' => $this->state['name'],
-                'price' => $this->state['price'],
+                // 'price' => $this->state['price'],
                 'duration' => $this->state['duration'],
                 'desc' => $this->state['desc'],
                 'order' => $this->state['order'],
@@ -121,12 +121,12 @@ class ManageTreatments extends Component
                 $query
                     ->where('name', 'LIKE', '%' . $this->filterSearch . '%')
                     ->orWhere('desc', 'LIKE', '%' . $this->filterSearch . '%')
-                    ->orWhere('price', 'LIKE', '%' . $this->filterSearch . '%')
+                    // ->orWhere('price', 'LIKE', '%' . $this->filterSearch . '%')
                     ->orWhere('duration', 'LIKE', '%' . $this->filterSearch . '%');
             })
             ->Where('category_id', 'LIKE', '%' . $this->filterCategory . '%')
             ->Where('active', 'LIKE', '%' . $this->filterStatus . '%')
-            ->with('category')
+            ->with('category', 'price')
             ->orderBy('category_id')->orderBy('order')
             ->paginate($this->perPage);
 

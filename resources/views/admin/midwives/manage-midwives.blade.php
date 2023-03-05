@@ -66,6 +66,9 @@
                             Wilayah
                         </th>
                         <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500">
+                            Treatment
+                        </th>
+                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-500">
                             Rating
                         </th>
                         <th class="p-3 text-xs font-medium tracking-wider text-center uppercase text-slate-500">
@@ -81,21 +84,26 @@
                             'text-slate-400' => ! $midwife->active,
                         ])>
                             <td class="p-3 pl-6 align-top whitespace-nowrap ">
-                                <p class="mt-2 font-semibold">{{ $midwife->id }}</p>
+                                <p class="font-semibold">{{ $midwife->id }}</p>
                             </td>
                             <td class="p-3 align-top whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <img src="{{ $midwife->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
-                                    <div class="ml-3 ">
-                                        <p class="font-semibold">{{ $midwife->name }}</p>
-                                        <p class="text-slate-600">{{ $midwife->email }}</p>
-                                    </div>
-                                </div>
+                                <p class="font-semibold">{{ $midwife->name }}</p>
                             </td>
-                            <td class="p-3 align-top w-[500px] ">
+                            <td class="p-3 align-top ">
                                 <div class="flex flex-wrap gap-2 ">
+                                    [{{ $midwife->kecamatans_count }}]
                                     @forelse ($midwife->kecamatans as $kecamatan)
                                         {{ $kecamatan->name . ', ' }}
+                                    @empty
+                                        <span>Belum ada</span>
+                                    @endforelse
+                                </div>
+                            </td>
+                            <td class="p-3 align-top ">
+                                <div class="flex flex-wrap gap-2 ">
+                                    [{{ $midwife->treatments_count }}]
+                                    @forelse ($midwife->treatments as $treatment)
+                                        {{ $treatment->name . ', ' }}
                                     @empty
                                         <span>Belum ada</span>
                                     @endforelse

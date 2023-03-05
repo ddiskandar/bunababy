@@ -105,7 +105,7 @@
                                 {{ $treatment->desc }}
                             </td>
                             <td class="p-3 align-top whitespace-nowrap">
-                                <p class="font-medium">{{ rupiah($treatment->price) }}</p>
+                                <p class="font-medium">{{ rupiah(0) }}</p>
                                 <p>{{ $treatment->duration . ' menit' }}</p>
                             </td>
                             <td class="p-3 align-top whitespace-nowrap">

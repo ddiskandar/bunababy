@@ -1,5 +1,5 @@
 <x-action-section>
-    <x-slot name="title">Tag</x-slot>
+    <x-slot name="title">Bidan</x-slot>
 
     <x-slot name="content">
         <div class="max-w-lg space-y-4">

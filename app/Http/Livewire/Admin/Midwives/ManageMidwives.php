@@ -34,7 +34,8 @@ class ManageMidwives extends Component
                     });
             })
             ->where('active', 'LIKE', '%' . $this->filterStatus . '%')
-            ->with('kecamatans', 'reviews', 'profile:id,user_id,photo')
+            ->with('kecamatans', 'reviews', 'profile:id,user_id,photo', 'treatments:id,name', 'treatments.category:id,name')
+            ->withCount('kecamatans', 'treatments')
             ->paginate($this->perPage);
 
         return view('admin.midwives.manage-midwives', [
