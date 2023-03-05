@@ -53,7 +53,7 @@ class TreatmentSeeder extends Seeder
                 'name' => 'Baby SPA',
                 // 'price' => 160000,
                 'duration' => 90,
-                'desc' => 'Pijat bayi, baby gym (senam bayi) dan baby swim (berenan)',
+                'desc' => 'Pijat bayi, baby gym (senam bayi) dan baby swim (berenang)',
                 'order' => 1
             ],
             [

@@ -25,18 +25,19 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            CategorySeeder::class,
+            TreatmentSeeder::class,
             OptionSeeder::class,
             KabupatenSeeder::class,
             KecamatanSeeder::class,
             PlaceSeeder::class,
-            RoomSeeder::class,
             SlotSeeder::class,
-            CategorySeeder::class,
-            TreatmentSeeder::class,
             TagSeeder::class,
+            PriceSeeder::class,
+            RoomSeeder::class,
         ]);
 
-        $owner = User::factory()
+        User::factory()
             ->has(Profile::factory())
             ->create([
                 'name' => 'Owner',
@@ -44,11 +45,19 @@ class DatabaseSeeder extends Seeder
                 'type' => User::OWNER,
             ]);
 
-        $admin = User::factory()
+        $admin1 = User::factory()
             ->has(Profile::factory())
             ->create([
-                'name' => 'Admin',
-                'email' => 'admin@bunababycare.com',
+                'name' => 'Admin 1',
+                'email' => 'admin1@bunababycare.com',
+                'type' => User::ADMIN,
+            ]);
+
+        $admin2 = User::factory()
+            ->has(Profile::factory())
+            ->create([
+                'name' => 'Admin 2',
+                'email' => 'admin2@bunababycare.com',
                 'type' => User::ADMIN,
             ]);
 
@@ -61,6 +70,11 @@ class DatabaseSeeder extends Seeder
             ]);
 
         $midwife1->kecamatans()->attach([2]);
+        $midwife1->treatments()->attach([
+            1, 2, 3, 4,
+            5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+            15, 16, 17, 18, 19, 20, 21
+        ]);
 
         $midwife2 = \App\Models\User::factory()
             ->has(Profile::factory())
@@ -71,6 +85,11 @@ class DatabaseSeeder extends Seeder
             ]);
 
         $midwife2->kecamatans()->attach([52, 53, 46, 36, 34, 56, 48, 63, 10, 8, 5, 13, 12, 28]);
+        $midwife2->treatments()->attach([
+            1, 2, 3, 4,
+            // 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+            15, 16, 17, 18, 19, 20, 21
+        ]);
 
         $midwife3 = \App\Models\User::factory()
             ->has(Profile::factory())
@@ -81,6 +100,11 @@ class DatabaseSeeder extends Seeder
             ]);
 
         $midwife3->kecamatans()->attach([19, 29, 30, 21, 73, 76, 71, 18, 4, 2, 3]);
+        $midwife3->treatments()->attach([
+            // 1, 2, 3, 4,
+            5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+            15, 16, 17, 18, 19, 20, 21
+        ]);
 
         $midwife4 = \App\Models\User::factory()
             ->has(Profile::factory())
@@ -91,6 +115,11 @@ class DatabaseSeeder extends Seeder
             ]);
 
         $midwife4->kecamatans()->attach([15, 16, 43, 21, 80, 31, 24, 28, 13, 14, 11, 23, 6, 7, 25]);
+        $midwife4->treatments()->attach([
+            1, 2, 3, 4,
+            5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+            // 15, 16, 17, 18, 19, 20, 21
+        ]);
 
         $midwife5 = \App\Models\User::factory()
             ->has(Profile::factory())
@@ -101,6 +130,11 @@ class DatabaseSeeder extends Seeder
             ]);
 
         $midwife5->kecamatans()->attach([3, 2, 1, 74, 75, 64, 29, 30, 18, 4, 10]);
+        $midwife5->treatments()->attach([
+            1, 2, 3, 4,
+            // 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+            15, 16, 17, 18, 19, 20, 21
+        ]);
 
         $midwife6 = \App\Models\User::factory()
             ->has(Profile::factory())
@@ -111,6 +145,11 @@ class DatabaseSeeder extends Seeder
             ]);
 
         $midwife6->kecamatans()->attach([16, 11, 23, 14, 27, 6, 7, 25, 20, 22, 26, 17, 32, 40, 43]);
+        $midwife6->treatments()->attach([
+            // 1, 2, 3, 4,
+            5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+            15, 16, 17, 18, 19, 20, 21
+        ]);
 
         // for ($i = 31; $i <= 50; $i++) {
 
