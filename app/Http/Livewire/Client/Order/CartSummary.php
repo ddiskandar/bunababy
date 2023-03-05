@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Client\Order;
 
 use App\Models\Order;
+use App\Models\Place;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -76,7 +77,7 @@ class CartSummary extends Component
 
         $order = new Order();
 
-        if (session('order.place') == Order::PLACE_CLIENT) {
+        if (session('order.place_type') === Place::TYPE_HOMECARE) {
             $bidan = \App\Models\User::where('id', session('order.midwife_user_id'))->first();
             $data['bidan'] = $bidan->name;
             $data['bidan_photo'] = $bidan->profile_photo_url;

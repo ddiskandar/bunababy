@@ -168,18 +168,18 @@
                                     <span
                                         @class([
                                             'inline-flex items-center pl-2 pr-4 text-xs font-semibold leading-5  rounded-full',
-                                            'text-green-800 bg-green-100' => $order->status() == 'Aktif',
-                                            'text-blue-800 bg-blue-100' => $order->status() == 'Selesai',
-                                            'text-yellow-800 bg-yellow-100' => $order->status() == 'Pending',
+                                            'text-green-800 bg-green-100' =>$order->status === \App\Models\Order::STATUS_LOCKED,
+                                            'text-blue-800 bg-blue-100' => $order->status === \App\Models\Order::STATUS_FINISHED,
+                                            'text-yellow-800 bg-yellow-100' => $order->status === \App\Models\Order::STATUS_UNPAID,
                                         ])>
                                         <span
                                             @class([
                                                 'w-2 h-2 mr-2 rounded-full',
-                                                'bg-green-600 ' => $order->status() == 'Aktif',
-                                                'bg-blue-600 ' => $order->status() == 'Selesai',
-                                                'bg-yellow-600 ' => $order->status() == 'Pending',
+                                                'bg-green-600 ' =>$order->status === \App\Models\Order::STATUS_LOCKED,
+                                                'bg-blue-600 ' => $order->status === \App\Models\Order::STATUS_FINISHED,
+                                                'bg-yellow-600 ' => $order->status === \App\Models\Order::STATUS_UNPAID,
                                             ])></span>
-                                        <span>{{ $order->status() }}</span>
+                                        <span>{{ $order->getStatusString() }}</span>
                                     </span>
                                 </td>
                                 <td class="p-3 align-top whitespace-nowrap">

@@ -14,8 +14,7 @@ class TestimonialsController extends Controller
 
     public function show(Order $order)
     {
-        if ($order->client_user_id != auth()->id())
-        {
+        if ($order->client_user_id !== auth()->id()) {
             return to_route('home');
         }
 

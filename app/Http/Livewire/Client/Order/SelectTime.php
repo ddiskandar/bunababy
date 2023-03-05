@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Client\Order;
 
 use App\Models\Order;
+use App\Models\Place;
 use App\Models\Slot;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -12,12 +13,12 @@ class SelectTime extends Component
 {
     protected $listeners = [
         'treatmentAdded' => '$refresh',
-        'treatmentDeleted'=> '$refresh',
+        'treatmentDeleted' => '$refresh',
     ];
 
     public function mount()
     {
-        if(auth()->check()){
+        if (auth()->check()) {
             session()->put('order.status', 'authUser');
         }
     }
@@ -33,30 +34,39 @@ class SelectTime extends Component
     public function render()
     {
         $orders = Order::query()
-            ->where('midwife_user_id', session('order.midwife_user_id'))
+            ->when(session('order.place_type') === Place::TYPE_HOMECARE, function ($query) {
+                return $query->where('midwife_user_id', session('order.midwife_user_id'));
+            })
+            ->when(session('order.place_type') === Place::TYPE_CLINIC, function ($query) {
+                return $query->where('place_id', session('order.place_id'));
+            })
             ->whereDate('start_datetime', session('order.date'))
             ->locked()
             ->select('id', 'start_datetime', 'end_datetime')
             ->get();
 
-        $slots = DB::table('slots')->get();
-        $data = collect();
+        $slots = DB::table('slots')->where('place_id', session('order.place_id'))->get();
+
+        $data = collect([]);
 
         foreach ($slots as $slot) {
-            $new = collect(['id'=> $slot->id]);
+            $new = collect(['id' => $slot->id]);
             $new->put('time', $slot->time);
             foreach ($orders as $order) {
-                if ( Carbon::parse(session('order.date')->toDateString().$slot->time)->between($order->start_datetime, $order->end_datetime)) {
+                if (Carbon::parse(session('order.date')->toDateString() . $slot->time)->between($order->start_datetime, $order->end_datetime)) {
                     $new->put($order->id, 'booked');
-                } else { $new->put($order->id, 'empty'); }
+                } else {
+                    $new->put($order->id, 'empty');
+                }
             }
             $new->put('status', ($new->contains('booked')) ? 'booked' : 'empty');
             $new->put('slot', Carbon::parse($slot->time)->gte(Carbon::parse('12:00:00')) ? 'siang' : 'pagi');
 
             $data->push($new);
         }
+
         $data = $data->groupBy(function ($slot) {
-            if ($slot['slot'] == 'pagi') {
+            if ($slot['slot'] === 'pagi') {
                 return 'pagi';
             }
             return 'siang';

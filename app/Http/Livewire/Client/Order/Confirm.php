@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Client\Order;
 
 use App\Models\Family;
 use App\Models\Order;
+use App\Models\Place;
 use App\Models\User;
 use App\Notifications\NewOrder;
 use Carbon\Carbon;
@@ -28,7 +29,7 @@ class Confirm extends Component
             $order = new Order();
             $order->no_reg = $order->getNoReg();
             $order->invoice = $order->getInvoice();
-            $order->place = session('order.place');
+            $order->place_id = session('order.place_id');
             $order->client_user_id = auth()->id();
             $order->total_price = $order->getTotalPrice();
             $order->total_duration = $order->getTotalDuration();
@@ -36,7 +37,7 @@ class Confirm extends Component
             $order->end_datetime = $order->start_datetime->addMinutes(session('order.addMinutes'));
             $order->status = Order::STATUS_LOCKED;
 
-            if (session('order.place') == Order::PLACE_CLIENT) {
+            if (session('order.place_type') === Place::TYPE_HOMECARE) {
                 $order->total_transport = $order->getTotalTransport();
                 $order->midwife_user_id = session('order.midwife_user_id');
                 $order->address_id = session('order.address_id');

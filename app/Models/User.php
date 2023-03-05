@@ -115,7 +115,12 @@ class User extends Authenticatable
         return $this->hasMany(Order::class, 'client_user_id');
     }
 
-    public function latestReservation()
+    public function treatments(): BelongsToMany
+    {
+        return $this->belongsToMany(Treatment::class, 'treatment_user', 'midwife_user_id', 'treatment_id');
+    }
+
+    public function latestReservation(): HasOne
     {
         return $this->hasOne(Order::class, 'client_user_id')->latestOfMany();
     }
@@ -127,7 +132,7 @@ class User extends Authenticatable
 
     public function getAddressAttribute()
     {
-        return $this->addresses()->where('is_main', true)->select('id', 'kecamatan_id')->with('kecamatan:id,name')->first()
+        return $this->addresses()->mainAddress()->select('id', 'kecamatan_id')->with('kecamatan:id,name')->first()
             ->kecamatan->name ?? NULL;
     }
 
@@ -143,7 +148,12 @@ class User extends Authenticatable
 
     public function getProfilePhotoUrlAttribute()
     {
-        return $this->google_id ? $this->profile->photo : ($this->profile->photo ? asset('storage/' . $this->profile->photo) : $this->defaultProfilePhotoUrl());
+        return $this->google_id && $this->profile->photo
+            ? $this->profile->photo
+            : (isset($this->profile->photo)
+                ? asset('storage/' . $this->profile->photo)
+                : $this->defaultProfilePhotoUrl()
+            );
     }
 
     protected function defaultProfilePhotoUrl()

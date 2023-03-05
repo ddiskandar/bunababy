@@ -7,15 +7,19 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class ListMidwife extends Component
+class ClinicAvailability extends Component
 {
+    public $kecamatan;
+    public $midwives;
+    public $availableMidwives;
+    public $notAvailableMidwives;
+
     protected $listeners  = [
         'locationChanged',
     ];
-    public $kecamatan;
-    public $midwives;
 
-    public function mount() {
+    public function mount()
+    {
 
         if (session()->has('order.kecamatan_id')) {
 
@@ -23,19 +27,23 @@ class ListMidwife extends Component
                 ->where('id', session('order.kecamatan_id'))
                 ->select('id', 'name')
                 ->with([
-                    'midwives' => function($query) {
-                        $query->active();
-                    }
+                    'midwives' => fn ($query) => $query->active(),
+                    'midwives.profile'
                 ])
                 ->first();
 
-            $this->midwives = User::query()
+            $this->availableMidwives = User::query()
                 ->midwives()->active()
+                ->whereIn('id', $this->kecamatan->midwives->pluck('id'))
+                ->pluck('id');
+
+            $this->notAvailableMidwives = User::query()
+                ->midwives()->active()
+                ->with('profile')
                 ->whereNotIn('id', $this->kecamatan->midwives->pluck('id'))
-                ->select('id', 'name', 'type')
+                ->select('id', 'name')
                 ->get();
         }
-
     }
 
     public function locationChanged()
@@ -45,6 +53,6 @@ class ListMidwife extends Component
 
     public function render()
     {
-        return view('client.order.list-midwife');
+        return view('client.order.clinic-availability');
     }
 }

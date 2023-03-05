@@ -4,30 +4,27 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSlotsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('slots', function (Blueprint $table) {
+        Schema::create('prices', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('treatment_id')->constrained()->onDelete('cascade');
             $table->foreignId('place_id')->constrained()->onDelete('cascade');
-            $table->foreignId('room_id')->nullable()->onDelete('cascade');
-            $table->time('time');
+            $table->integer('amount');
+            $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('slots');
+        Schema::dropIfExists('prices');
     }
-}
+};

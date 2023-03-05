@@ -3,25 +3,22 @@
 namespace App\Http\Livewire\Client\Order;
 
 use App\Models\Category;
+use App\Models\Place;
 use App\Models\Treatment;
+use App\Models\User;
 use Livewire\Component;
 
 class SelectTreatments extends Component
 {
     public $showAddTreatmentModal = false;
-
     public $family_id;
-
-    public Treatment $currentTreatment;
+    public $currentTreatment;
 
     public function mount()
     {
-        $this->currentTreatment = new Treatment();
-
         $this->family_id = time();
 
         if (auth()->check()) {
-
             if (auth()->user()->families()->exists()) {
                 session()->put('order.families', auth()->user()->families->toArray());
                 session()->push('order.families', [
@@ -51,32 +48,33 @@ class SelectTreatments extends Component
     {
         $this->showAddTreatmentModal = false;
         $this->family_id = $familyId;
-        $this->addTreatment($this->currentTreatment);
+        $this->addTreatment();
     }
 
     public function confirmAddTreatment(Treatment $treatment)
     {
-        $this->currentTreatment = $treatment;
+        $treatment->load('price');
+        $this->currentTreatment = $treatment->toArray();
         $this->showAddTreatmentModal = true;
     }
 
-    public function addTreatment(Treatment $treatment)
+    public function addTreatment()
     {
 
         if (session()->missing('order.addMinutes')) {
-            session()->put('order.addMinutes', 40);
+            session()->put('order.addMinutes', 0);
         }
 
-        session()->increment('order.addMinutes', $treatment->duration);
+        session()->increment('order.addMinutes', $this->currentTreatment['duration']);
 
         $family = collect(session('order.families'))->where('id', $this->family_id)->first();
 
         session()->push('order.treatments', [
-            'treatment_id' => $treatment->id,
-            'treatment_name' => $treatment->name,
-            'treatment_desc' => $treatment->desc,
-            'treatment_price' => $treatment->price,
-            'treatment_duration' => $treatment->duration,
+            'treatment_id' => $this->currentTreatment['id'],
+            'treatment_name' => $this->currentTreatment['name'],
+            'treatment_desc' => $this->currentTreatment['desc'],
+            'treatment_price' => $this->currentTreatment['price']['amount'],
+            'treatment_duration' => $this->currentTreatment['duration'],
             'family_id' => $this->family_id,
             'family_name' => $family['name'],
         ]);
@@ -84,8 +82,10 @@ class SelectTreatments extends Component
         $this->emit('treatmentAdded');
     }
 
-    public function deleteTreatment($index, Treatment $treatment)
+    public function deleteTreatment($index, $treatmentId)
     {
+        $treatment = Treatment::find($treatmentId);
+
         session()->forget('order.treatments.' . $index);
         session()->decrement('order.addMinutes', $treatment->duration);
 
@@ -103,12 +103,53 @@ class SelectTreatments extends Component
 
     public function render()
     {
-        $categories = Category::query()
-            ->with('treatments', function ($query) {
-                $query->whereActive(true)->orderBy('order', 'ASC');
-            })
-            ->orderBy('order', 'ASC')
-            ->get();
+
+        $availableTreatments = collect();
+
+        if (session('order.place_type') === Place::TYPE_HOMECARE) {
+            $midwife = User::find(session('order.midwife_user_id'));
+            throw_if(is_null($midwife), \Exception::class, 'Midwife not found');
+
+            $availableTreatments = $midwife->treatments()->whereActive(true)
+                ->orderBy('order', 'ASC')
+                ->with(['category' => function ($query) {
+                    $query->orderBy('order', 'ASC');
+                }, 'price' => function ($query) {
+                    $query->where('place_id', session('order.place_id'));
+                }])
+                ->get()
+                ->groupBy('category.name');
+        }
+
+        if (session('order.place_type') === Place::TYPE_CLINIC) {
+            $availableTreatments = null;
+
+            // TODO: uncomment this when clinic is ready
+
+            $place = Place::find(session('order.place_id'));
+            throw_if(is_null($place), \Exception::class, 'Place not found');
+
+            $availableTreatments = $place->treatments()->whereActive(true)
+                ->orderBy('order', 'ASC')
+                ->with(['category' => function ($query) {
+                    $query->orderBy('order', 'ASC');
+                }, 'price' => function ($query) {
+                    $query->where('place_id', session('order.place_id'));
+                }])
+                ->get()
+                ->groupBy('category.name');
+        }
+
+        $categories = [];
+
+        if (isset($availableTreatments)) {
+            $categories = $availableTreatments->map(function ($item, $key) {
+                return [
+                    'name' => $key,
+                    'treatments' => $item->toArray(),
+                ];
+            });
+        }
 
         return view('client.order.select-treatments', [
             'categories' => $categories,

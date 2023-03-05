@@ -17,7 +17,8 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->string('no_reg')->unique();
             $table->string('invoice')->unique();
-            $table->tinyInteger('place');
+            $table->foreignId('place_id')->constrained('places')->onDelete('cascade');
+            $table->foreignId('room_id')->nullable();
             $table->foreignId('client_user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('midwife_user_id')->nullable();
             $table->foreignId('address_id')->nullable();

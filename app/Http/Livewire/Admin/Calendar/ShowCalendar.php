@@ -16,7 +16,8 @@ class ShowCalendar extends Component
     public $times;
     public $selectedDay;
 
-    public function mount(){
+    public function mount()
+    {
 
         $this->selectedDay = today()->toDateString();
 
@@ -78,7 +79,7 @@ class ShowCalendar extends Component
         $this->midwives->push(['col-start' => 2, 'name' => 'Belum ada']);
 
         $i = 3;
-        foreach($users as $midwife) {
+        foreach ($users as $midwife) {
             $this->colStart->put($midwife->id, $i);
             $this->midwives->push(['col-start' => $i, 'name' => $midwife->name]);
             $i++;
@@ -128,7 +129,7 @@ class ShowCalendar extends Component
             '17:30' => '40',
             '17:45' => '41',
             '18:00' => '42',
-            ])->toArray();
+        ])->toArray();
     }
 
     public function prevDay()
@@ -166,7 +167,7 @@ class ShowCalendar extends Component
             ])
             ->get();
 
-        foreach($orders as $order){
+        foreach ($orders as $order) {
             $schedules->push([
                 'row-start' => $this->rowStart[$order->start_datetime->isoFormat('HH:mm')],
                 'col-start' => $order->midwife_user_id ? $this->colStart[$order->midwife_user_id] : 2,
@@ -176,10 +177,10 @@ class ShowCalendar extends Component
                 'client_name' => $order->client->name,
                 'time' => $order->start_datetime->isoFormat('HH:mm') . ' - ' . $order->end_datetime->isoFormat('HH:mm') . ' WIB',
                 'treatments' => $order->treatments->implode('name', ', '),
-                'status' => $order->status(),
+                'status' => $order->getStatusString(),
                 'finished_at' => $order->finished_at,
                 'address' => $order->address->kecamatan->name ?? '-',
-                'place' =>$order->place()
+                'place' => $order->place()
             ]);
         }
 

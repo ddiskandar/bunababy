@@ -28,6 +28,8 @@ class DatabaseSeeder extends Seeder
             OptionSeeder::class,
             KabupatenSeeder::class,
             KecamatanSeeder::class,
+            PlaceSeeder::class,
+            RoomSeeder::class,
             SlotSeeder::class,
             CategorySeeder::class,
             TreatmentSeeder::class,

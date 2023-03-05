@@ -7,7 +7,7 @@
                 <span  >{{ $order->start_datetime->isoFormat('HH:mm') . ' - ' . $order->end_datetime->isoFormat('HH:mm') }} WIB</span>
             </div>
         </div>
-        @if ($order->place == 1)
+        @if ($order->place->type === \App\Models\Place::TYPE_HOMECARE)
         <div class="flex-1 mt-6 md:mt-0">
             <x-title>Bidan </x-title>
             <div class="flex items-center">
@@ -23,7 +23,7 @@
         <label class="flex items-center">
             <input type="radio" class="w-4 h-4 border border-bunababy-50 text-bunababy-200 focus:border-bunababy-200 focus:ring focus:ring-bunababy-200 focus:ring-opacity-50" name="tk-form-elements-radios-stacked" checked />
             <div class="ml-4">
-                @if ($order->place == 1)
+                @if ($order->place->type === \App\Models\Place::TYPE_HOMECARE)
                     <span class="font-semibold">Homecare</span>
                     <div class="text-sm">{{ $order->address->full_address ?? '-' }}</div>
                 @else
@@ -38,7 +38,7 @@
         <x-title>Treatment dan Rincian Pembayaran</x-title>
         <ul class="divide-y divide-bunababy-50">
             @foreach ($order->treatments as $treatment)
-                <li class="flex justify-between items-center py-2 text-sm">
+                <li class="flex items-center justify-between py-2 text-sm">
                     <div>
                         <div class="font-medium">{{ $treatment->name }}</div>
                         <div class="truncate text-slate-600 ">
@@ -52,7 +52,7 @@
             @endforeach
         </ul>
 
-        <div class="text-sm border-t border-bunababy-50 pt-2 mt-2">
+        <div class="pt-2 mt-2 text-sm border-t border-bunababy-50">
             <div class="flex justify-between py-2">
                 <div>Subtotal</div>
                 <div>{{ rupiah($order->total_price) }}</div>
@@ -70,7 +70,7 @@
             </div>
             @endif
 
-            <div class="flex justify-between font-semibold py-2">
+            <div class="flex justify-between py-2 font-semibold">
                 <div>Total Tagihan</div>
                 <div>{{ rupiah($order->getGrandTotal()) }}</div>
             </div>
@@ -80,7 +80,7 @@
                 <div>{{ rupiah($order->getVerifiedPayments()) }}</div>
             </div>
 
-            <div class="flex justify-between font-semibold py-2">
+            <div class="flex justify-between py-2 font-semibold">
                 <div>Sisa Pembayaran</div>
                 <div>{{ $order->getRemainingPayment() === 0 ? '-' : rupiah($order->getRemainingPayment()) }}</div>
             </div>

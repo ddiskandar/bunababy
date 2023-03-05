@@ -1,6 +1,6 @@
 <div>
     <div class="space-y-2">
-        @if (session('order.place') == 1)
+        @if (session('order.place_id') == 1)
             <x-section>
                 <x-title>Bidan </x-title>
                 <div class="flex items-center">
@@ -15,7 +15,7 @@
             <label class="flex items-center">
                 <input type="radio" class="w-4 h-4 border border-bunababy-50 text-bunababy-200 focus:border-bunababy-200 focus:ring focus:ring-bunababy-200 focus:ring-opacity-50" name="tk-form-elements-radios-stacked" checked />
                 <div class="ml-4">
-                    @if (session('order.place') == 1)
+                    @if (session('order.place_id') == 1)
                         <span class="font-semibold">Homecare</span>
                         <div class="text-sm">{{ $data['kecamatan'] }}</div>
                     @else

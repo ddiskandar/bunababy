@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Place;
 
 class OrderCheckoutController extends Controller
 {
@@ -15,11 +16,15 @@ class OrderCheckoutController extends Controller
             return to_route('dashboard');
         }
 
-        if (session()->missing('order.kecamatan_id') or session()->missing('order.place') or session()->missing('order.date') or session()->missing('order.start_time_id') or session()->missing('order.treatments')) {
+        if (session()->missing('order.place_id') || session()->missing('order.date') || session()->missing('order.start_time_id') || session()->missing('order.treatments')) {
             return to_route('order.cart');
         }
 
-        if (auth()->check()) {
+        if (session('order.place_type') === Place::TYPE_HOMECARE && (session()->missing('order.kecamatan_id') || session()->missing('order.midwife_user_id'))) {
+            return to_route('order.cart');
+        }
+
+        if (auth()->check() && session('order.place_type') === Place::TYPE_HOMECARE) {
 
             $address = auth()->user()->addresses->where('kecamatan_id', session('order.kecamatan_id'))->first();
 

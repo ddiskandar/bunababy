@@ -20,7 +20,7 @@
 
                 <div class="mt-4 md:mt-0 ">
                     <div class="absolute hidden print:block top-6 -right-16 rotate-[35deg]">
-                        <div class="inline-flex py-6 text-xl font-semibold leading-4 text-orange-700 uppercase bg-orange-200 opacity-50 px-28">{{ $order->status() }}</div>
+                        <div class="inline-flex py-6 text-xl font-semibold leading-4 text-orange-700 uppercase bg-orange-200 opacity-50 px-28">{{ $order->getStatusString() }}</div>
                     </div>
 
                     <div class="print:hidden">
@@ -45,7 +45,7 @@
                             Invoice {{ $order->invoice }}
                         </h3>
                         <div class="inline-flex px-4 py-1 ml-2 font-semibold leading-4 text-orange-700 bg-orange-200 rounded-full print:hidden">
-                            {{ $order->status() }}
+                            {{ $order->getStatusString() }}
                         </div>
                     </div>
                     <div class="text-slate-600">
@@ -68,7 +68,7 @@
 
             {{-- <h3 class="mb-2 font-semibold">Treatment</h3> --}}
             <div class=" text-slate-600">
-                <div class="font-semibold text-slate-700">{{ $order->place() }}</div>
+                <div class="font-semibold text-slate-700">{{ $order->place->name }}</div>
                 <div>{{ $order->address->fullAddress ?? '' }}</div>
                 <div>
                     {{ $order->start_datetime->isoFormat('dddd, DD MMMM Y') }}, pukul {{ $order->getTime() }} WIB

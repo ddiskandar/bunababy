@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -18,24 +19,34 @@ class OrderController extends Controller
         }
 
         if (auth()->check() && is_null(auth()->user()->address)) {
-            return redirect('/');
+            Notification::make()
+                ->title('Tambah Alamat dulu ya')
+                ->success()
+                ->send();
+
+            return to_route('home');
         }
 
         if (auth()->check() && (auth()->user()->latestReservation && !auth()->user()->latestReservation->isPaid())) {
-            return redirect('/')->with('status', 'Anda masih punya order aktif yang belum dibayar!');
+            Notification::make()
+                ->title('Ada Reservasi Aktif')
+                ->success()
+                ->send();
+
+            return to_route('home');
         }
 
         return view('client.order.create');
     }
 
-    public function show($no_reg): View|RedirectResponse
+    public function show($no_reg)
     {
         $order = Order::query()
             ->with('treatments')
             ->where('no_reg', $no_reg)
             ->firstOrFail();
 
-        if (!auth()->check() or $order->client_user_id != auth()->id()) {
+        if (!auth()->check() or $order->client_user_id !== auth()->id()) {
             return to_route('home');
         }
 

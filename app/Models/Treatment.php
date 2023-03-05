@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Treatment extends Model
 {
@@ -18,6 +19,16 @@ class Treatment extends Model
         'duration' => 'integer',
         'active' => 'boolean',
     ];
+
+    public function midwives(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'treatment_user', 'treatment_id', 'midwife_user_id');
+    }
+
+    public function price(): HasOne
+    {
+        return $this->hasOne(Price::class);
+    }
 
     public function orders(): BelongsToMany
     {

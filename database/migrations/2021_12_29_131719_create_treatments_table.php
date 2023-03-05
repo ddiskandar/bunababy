@@ -18,7 +18,6 @@ class CreateTreatmentsTable extends Migration
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('image')->nullable();
-            $table->integer('price'); // unchecked
             $table->integer('duration'); // unchecked
             $table->text('desc')->nullable();
             $table->integer('order');

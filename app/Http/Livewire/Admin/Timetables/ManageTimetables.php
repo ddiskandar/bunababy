@@ -85,6 +85,7 @@ class ManageTimetables extends Component
 
     public function showAddNewTimetableDialog()
     {
+        $this->errorBag = null;
         $this->showDialog = true;
         $this->state = [];
     }

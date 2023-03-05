@@ -1,5 +1,5 @@
 <div>
-    <div class="flex flex-col md:flex-row md:items-center justify-between pt-6 pb-2">
+    <div class="flex flex-col justify-between pt-6 pb-2 md:flex-row md:items-center">
         <div class="text-lg font-semibold">Schedules</div>
         <div class="flex items-center justify-between gap-4 text-sm">
             <div>
@@ -18,11 +18,11 @@
 
     <ul class="space-y-2">
         @forelse ($schedules as $schedule)
-            <li class="w-full text-sm bg-white px-6 py-3 rounded shadow">
+            <li class="w-full px-6 py-3 text-sm bg-white rounded shadow">
                 <a href="{{ route('orders.show', $schedule->id) }}">
                     <div class="flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
-                        <div class="flex justify-between w-full items-start md:items-center">
-                            <div class="space-y-2 md:flex md:justify-between md:items-center flex-1">
+                        <div class="flex items-start justify-between w-full md:items-center">
+                            <div class="flex-1 space-y-2 md:flex md:justify-between md:items-center">
                                 <div class="text-lg font-semibold">
                                     @foreach ($schedule->treatments as $treatment)
                                         <span>{{ $treatment->name }}</span>@if(!$loop->last)<span>, </span>@endif
@@ -30,7 +30,7 @@
                                 </div>
                                 <div>
                                     <div class="flex items-center gap-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-400" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <circle cx="12" cy="12" r="9"></circle>
                                             <polyline points="12 7 12 12 15 15"></polyline>
@@ -52,14 +52,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="md:w-1/3 flex justify-end">
+                            <div class="flex justify-end md:w-1/3">
                                 <div @class([
                                 'inline-flex px-6 py-1 leading-4 font-semibold text-white text-xs rounded-full',
                                 'bg-orange-400' => $schedule->status == '1',
                                 'bg-bunababy-100' => $schedule->status == '2',
                                 'bg-blue-400' => $schedule->status == '3',
                             ])>
-                                {{ $schedule->status() }}
+                                {{ $schedule->getStatusString() }}
                             </div>
                             </div>
                         </div>
@@ -67,8 +67,8 @@
                 </a>
             </li>
         @empty
-            <li class="py-12 w-full border rounded flex flex-col items-center text-gray-400">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 " width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <li class="flex flex-col items-center w-full py-12 text-gray-400 border rounded">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 " width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M19.823 19.824a2 2 0 0 1 -1.823 1.176h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 1.175 -1.823m3.825 -.177h9a2 2 0 0 1 2 2v9"></path>
                     <line x1="16" y1="3" x2="16" y2="7"></line>
@@ -78,7 +78,7 @@
                     <line x1="12" y1="15" x2="12" y2="18"></line>
                     <line x1="3" y1="3" x2="21" y2="21"></line>
                 </svg>
-                <p class="font-medium text-sm mt-4">
+                <p class="mt-4 text-sm font-medium">
                     Tidak ada jadwal
                 </p>
             </div>

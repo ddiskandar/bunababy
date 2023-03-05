@@ -89,9 +89,10 @@
         <div class="mt-2 md:mt-0">
             <!-- Button (small) -->
             <button
+                wire.loading.attr="disabled"
                 wire:click="addFamily()"
                 type="button"
-                class="w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-bunababy-200 hover:bg-bunababy-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-bunababy-200 ">
+                class="w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm disabled:opacity-25 bg-bunababy-200 hover:bg-bunababy-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-bunababy-200 ">
             Tambah
             </button>
             <!-- END Button (small) -->

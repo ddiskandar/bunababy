@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Client\Order;
 
 use App\Models\Order;
+use App\Models\Place;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -12,7 +14,7 @@ class CheckoutSummary extends Component
     {
         $treatments = collect(session('order.treatments')) ?? [];
 
-        $treatments = $treatments->mapToGroups(function($item, $key) {
+        $treatments = $treatments->mapToGroups(function ($item, $key) {
             return [$item['treatment_name'] => [
                 'family_name' => $item['family_name'],
                 'treatment_id' => $item['treatment_id'],
@@ -25,11 +27,10 @@ class CheckoutSummary extends Component
 
         $order = new Order();
 
-        if(session('order.place') == Order::PLACE_CLIENT)
-        {
-            $bidan = \App\Models\User::where('id', session('order.midwife_user_id'))->first();
-            $data['bidan'] = $bidan->name;
-            $data['bidan_photo'] = $bidan->profile_photo_url;
+        if (session('order.place_type') === Place::TYPE_HOMECARE) {
+            $midwife = User::where('id', session('order.midwife_user_id'))->first();
+            $data['bidan'] = $midwife->name;
+            $data['bidan_photo'] = $midwife->profile_photo_url;
             $data['kecamatan'] = DB::table('kecamatans')->where('id', session('order.kecamatan_id'))->value('name');
         }
 

@@ -17,9 +17,6 @@ class Order extends Model
 
     protected $guarded = [];
 
-    const PLACE_CLIENT = 1;
-    const PLACE_CLINIC = 2;
-
     const STATUS_UNPAID = 1;
     const STATUS_LOCKED = 2;
     const STATUS_FINISHED = 3;
@@ -35,6 +32,16 @@ class Order extends Model
         'finished_at' => 'datetime'
     ];
 
+    public function place(): BelongsTo
+    {
+        return $this->belongsTo(Place::class, 'place_id', 'id');
+    }
+
+    public function room(): BelongsTo
+    {
+        return $this->belongsTo(Room::class, 'room_id', 'id');
+    }
+
     public function client(): BelongsTo
     {
         return $this->belongsTo(User::class, 'client_user_id', 'id');
@@ -45,11 +52,6 @@ class Order extends Model
         return $this->belongsTo(User::class, 'midwife_user_id', 'id');
     }
 
-    public function testimonial(): HasOne
-    {
-        return $this->hasOne(Testimonial::class);
-    }
-
     public function address(): BelongsTo
     {
         return $this->belongsTo(Address::class, 'address_id');
@@ -57,17 +59,14 @@ class Order extends Model
 
     public function treatments(): BelongsToMany
     {
-        return $this->belongsToMany(Treatment::class)->withPivot('family_name', 'family_age', 'treatment_price', 'treatment_duration');
+        return $this->belongsToMany(Treatment::class)
+            ->withPivot('family_name', 'family_age', 'treatment_price', 'treatment_duration')
+            ->withTimestamps();
     }
 
-    public function scopeInClient($query)
+    public function testimonial(): HasOne
     {
-        $query->where('place', self::PLACE_CLIENT);
-    }
-
-    public function scopeInClinic($query)
-    {
-        $query->where('place', self::PLACE_CLINIC);
+        return $this->hasOne(Testimonial::class);
     }
 
     public function scopeUnpaid($query)
@@ -85,16 +84,11 @@ class Order extends Model
         $query->where('status', self::STATUS_FINISHED);
     }
 
-    public function place()
+    public function getStatusString()
     {
-        return $this->place == self::PLACE_CLIENT ? 'Homecare' : 'Onsite';
-    }
-
-    public function status()
-    {
-        return $this->status == self::STATUS_FINISHED
+        return $this->status === self::STATUS_FINISHED
             ? 'Selesai'
-            : ($this->status == self::STATUS_LOCKED
+            : ($this->status === self::STATUS_LOCKED
                 ? 'Aktif'
                 : 'Pending'
             );
@@ -169,7 +163,7 @@ class Order extends Model
 
     public function numberStartTime()
     {
-        return session('order.place') . sprintf('%02d', session('order.midwife_user_id')) . session('order.start_time')[0] . session('order.start_time')[1] . session('order.start_time')[3] . session('order.start_time')[4];
+        return session('order.place_id') . sprintf('%02d', session('order.midwife_user_id')) . session('order.start_time')[0] . session('order.start_time')[1] . session('order.start_time')[3] . session('order.start_time')[4];
     }
 
     public function getNoReg()
@@ -184,11 +178,14 @@ class Order extends Model
 
     public function getTotalTransport()
     {
-        if (session('order.place') == Order::PLACE_CLINIC) {
-            return 0;
+        $place = Place::find(session('order.place_id'));
+        throw_if(!$place, \Exception::class, 'Place not found');
+
+        if ($place->add_transport) {
+            return calculate_transport(session('order.kecamatan_distance'));
         }
 
-        return calculate_transport(session('order.kecamatan_distance'));
+        return 0;
     }
 
     public function getTotalPrice()
@@ -200,7 +197,7 @@ class Order extends Model
     {
         $default = 0;
 
-        if (session('order.place') == Order::PLACE_CLIENT) {
+        if (session('order.place_type') === Place::TYPE_HOMECARE) {
             $default = DB::table('options')->select('transport_duration')->first()->transport_duration;
         }
         return collect(session('order.treatments'))->sum('treatment_duration') + $default;

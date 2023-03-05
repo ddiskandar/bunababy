@@ -16,10 +16,10 @@
         <div>
             <div @class([
                 'inline-flex px-6 py-1 leading-4 font-semibold text-white text-xs rounded-full',
-                'bg-orange-400' => $reservation->status == '1',
-                'bg-bunababy-100' => $reservation->status == '2',
-                'bg-blue-400' => $reservation->status == '3',
-            ])>{{ $reservation->status() }}</div>
+                'bg-orange-400' => $reservation->status === \App\Models\Order::STATUS_UNPAID,
+                'bg-bunababy-100' => $reservation->status === \App\Models\Order::STATUS_LOCKED,
+                'bg-blue-400' => $reservation->status === \App\Models\Order::STATUS_FINISHED,
+            ])>{{ $reservation->getStatusString() }}</div>
         </div>
     </div>
     <div class="py-2">
@@ -29,7 +29,7 @@
             @endforeach
         </div>
         <div>
-            <span>{{ $reservation->place() }}</span>
+            <span>{{ $reservation->place->name }}</span>
             <span>{{ $reservation->midwife->name ?? '' }}</span>
         </div>
     </div>

@@ -34,11 +34,11 @@ class CreateOrder extends Component
 
     public function mount()
     {
-        if (session()->missing('order.place')) {
-            session()->put('order.place', 1);
+        if (session()->missing('order.place_id')) {
+            session()->put('order.place_id', 1);
         }
 
-        $this->place = session('order.place');
+        $this->place = session('order.place_id');
 
         if (session()->has('order.client_user_id')) {
             $this->clientId = session('order.client_user_id');
@@ -57,7 +57,7 @@ class CreateOrder extends Component
             $this->date = session('order.date')->toDateString();
         }
 
-        if (session('order.place') == 1) {
+        if (session('order.place_id') == 1) {
             $addMinutes = DB::table('options')->select('transport_duration')->first()->transport_duration;
             session()->put('order.addMinutes', $addMinutes);
         } else {
@@ -81,9 +81,9 @@ class CreateOrder extends Component
 
     public function updatedPlace()
     {
-        session()->put('order.place', $this->place);
+        session()->put('order.place_id', $this->place);
 
-        if (session('order.place') == 1) {
+        if (session('order.place_id') == 1) {
             $addMinutes = DB::table('options')->select('transport_duration')->first()->transport_duration;
             session()->put('order.addMinutes', $addMinutes);
         } else {
@@ -151,7 +151,7 @@ class CreateOrder extends Component
             $order = new Order();
             $order->no_reg = $order->getNoReg();
             $order->invoice = $order->getInvoice();
-            $order->place = session('order.place');
+            $order->place = session('order.place_id');
             $order->client_user_id = session('order.client_user_id');
             $order->midwife_user_id = session('order.midwife_user_id') ?? NULL;
             $order->total_price = 0;
@@ -160,7 +160,7 @@ class CreateOrder extends Component
             $order->end_datetime = Carbon::parse(session('order.date')->toDateString() . ' ' . session('order.start_time'))->addMinutes(session('order.addMinutes'));
             $order->status = Order::STATUS_LOCKED;
 
-            if (session('order.place') == 1) {
+            if (session('order.place_id') == 1) {
                 $order->total_transport = $order->getTotalTransport();
             }
 

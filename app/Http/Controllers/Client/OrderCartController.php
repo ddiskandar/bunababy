@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Place;
 
 class OrderCartController extends Controller
 {
@@ -19,7 +20,11 @@ class OrderCartController extends Controller
             session()->put('order.status', 'AuthUser');
         }
 
-        if (session()->missing('order.kecamatan_id') or session()->missing('order.place') or session()->missing('order.date')) {
+        if (session()->missing('order.place_type') || session()->missing('order.place_id') || session()->missing('order.date')) {
+            return redirect()->route('order.create');
+        }
+
+        if (session('order.place_type') === Place::TYPE_HOMECARE && session()->missing('order.kecamatan_id')) {
             return redirect()->route('order.create');
         }
 

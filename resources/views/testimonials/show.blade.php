@@ -34,7 +34,7 @@
                             'bg-orange-400' => $reservation->status == '1',
                             'bg-bunababy-100' => $reservation->status == '2',
                             'bg-blue-400' => $reservation->status == '3',
-                        ])>{{ $reservation->status() }}</div>
+                        ])>{{ $reservation->getStatusString() }}</div>
                     </div>
                 </div>
                 <div class="py-2">
