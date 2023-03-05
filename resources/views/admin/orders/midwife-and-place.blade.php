@@ -22,7 +22,7 @@
                 <x-input-error for="place" class="mt-2" />
             </div>
 
-            @if ($place == 1)
+            @if ($place === \App\Models\Place::TYPE_HOMECARE)
             <div class="space-y-1">
                 <div  >
                     <x-label for="role" value="{{ __('Alamat') }}" />

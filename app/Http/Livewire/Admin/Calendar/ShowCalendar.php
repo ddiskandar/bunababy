@@ -164,7 +164,7 @@ class ShowCalendar extends Component
                 'status',
                 'finished_at',
                 'address_id',
-                'place'
+                'place_id'
             ])
             ->get();
 
