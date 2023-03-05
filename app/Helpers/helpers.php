@@ -70,10 +70,11 @@ if (!function_exists('calculate_transport')) {
 if (!function_exists('calculate_age')) {
     function calculate_age($dob)
     {
-        $age = Carbon::parse($dob)->diffInYears() . ' tahun';
+        $age = Carbon::parse($dob)->diffInYears();
+        $string = $age . ' tahun';
         if ($age <= 2) {
-            $age = Carbon::parse($dob)->diffInMonths() . ' bulan';
+            $string = Carbon::parse($dob)->diffInMonths() . ' bulan';
         }
-        return $age;
+        return $string;
     }
 }
