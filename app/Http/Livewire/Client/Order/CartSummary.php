@@ -47,7 +47,12 @@ class CartSummary extends Component
         $options = Option::first();
 
         $orders = Order::query()
-            ->where('midwife_user_id', session('order.midwife_user_id'))
+            ->when(session('order.place_type') === Place::TYPE_HOMECARE, function ($query) {
+                return $query->where('midwife_user_id', session('order.midwife_user_id'));
+            })
+            ->when(session('order.place_type') === Place::TYPE_CLINIC, function ($query) {
+                return $query->where('room_id', session('order.room_id'));
+            })
             ->locked()
             ->whereDate('start_datetime', session('order.date'))
             ->get();
