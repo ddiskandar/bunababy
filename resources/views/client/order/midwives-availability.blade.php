@@ -1,6 +1,6 @@
 <div>
     @if (session()->has('order.kecamatan_id'))
-        <div class="mb-4 font-semibold">Cari Jadwal Bidan untuk {{ $kecamatan->name }}</div>
+        <x-title>Cari Jadwal Bidan untuk {{ $kecamatan->name }}</x-title>
         <div class="space-y-4">
             @foreach ($availableMidwives as $midwifeId)
                 @livewire('client.order.select-midwife-available-date', ['midwife_user_id' => $midwifeId], key($midwifeId))
