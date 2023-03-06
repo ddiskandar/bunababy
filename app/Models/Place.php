@@ -39,6 +39,11 @@ class Place extends Model
         return $this->hasMany(Room::class);
     }
 
+    public function prices(): HasMany
+    {
+        return $this->hasMany(Price::class);
+    }
+
     public function scopeActive($query)
     {
         return $query->where('active', true);

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Treatment extends Model
@@ -25,9 +26,9 @@ class Treatment extends Model
         return $this->belongsToMany(User::class, 'treatment_user', 'treatment_id', 'midwife_user_id');
     }
 
-    public function price(): HasOne
+    public function prices(): HasMany
     {
-        return $this->hasOne(Price::class);
+        return $this->hasMany(Price::class);
     }
 
     public function orders(): BelongsToMany

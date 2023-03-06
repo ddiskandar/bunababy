@@ -29,7 +29,7 @@ $id = $id ?? md5($attributes->wire('model'));
             role="dialog"
             aria-labelledby="tk-modal-simple"
             x-bind:aria-hidden="!show"
-            class="fixed inset-0 transition backdrop-blur backdrop-brightness-75" aria-hidden="true">
+            class="fixed inset-0 transition bg-gray-500 bg-opacity-75" aria-hidden="true">
         </div>
 
         <!-- This element is to trick the browser into centering the modal contents. -->

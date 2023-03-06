@@ -126,7 +126,7 @@ class ManageTreatments extends Component
             })
             ->Where('category_id', 'LIKE', '%' . $this->filterCategory . '%')
             ->Where('active', 'LIKE', '%' . $this->filterStatus . '%')
-            ->with('category', 'price')
+            ->with('category', 'prices')
             ->orderBy('category_id')->orderBy('order')
             ->paginate($this->perPage);
 

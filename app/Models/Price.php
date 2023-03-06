@@ -14,4 +14,9 @@ class Price extends Model
     {
         return $this->belongsTo(Treatment::class);
     }
+
+    public function place(): BelongsTo
+    {
+        return $this->belongsTo(Place::class);
+    }
 }

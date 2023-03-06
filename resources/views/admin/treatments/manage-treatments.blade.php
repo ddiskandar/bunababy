@@ -75,10 +75,10 @@
                             Nama
                         </th>
                         <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
-                            Deskripsi
+                            Deskripsi  / Durasi
                         </th>
                         <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
-                        Harga / Durasi
+                            Harga / Tempat
                         </th>
                         <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
                             Kategori
@@ -102,11 +102,13 @@
                                 <p class="font-semibold">{{ $treatment->name }}</p>
                             </td>
                             <td class="w-64 p-3 align-top ">
-                                {{ $treatment->desc }}
+                                <p>{{ $treatment->desc }}</p>
+                                <p class="mt-2">{{ $treatment->duration . ' menit' }}</p>
                             </td>
                             <td class="p-3 align-top whitespace-nowrap">
-                                <p class="font-medium">{{ rupiah(0) }}</p>
-                                <p>{{ $treatment->duration . ' menit' }}</p>
+                                @foreach ($treatment->prices as $price)
+                                <p>{{ rupiah($price->amount) . ' / ' . $price->place->name }}</p>
+                                @endforeach
                             </td>
                             <td class="p-3 align-top whitespace-nowrap">
                                 <p>{{ $treatment->category->name }}</p>
