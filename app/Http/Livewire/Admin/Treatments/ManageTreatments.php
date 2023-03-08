@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Admin\Treatments;
 
+use App\Models\Place;
+use App\Models\Price;
 use App\Models\Treatment;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +23,7 @@ class ManageTreatments extends Component
     public $filterStatus;
 
     public $state = [];
+    public $places = [];
 
     protected $queryString = [
         'filterSearch' => ['except' => ''],
@@ -31,24 +34,29 @@ class ManageTreatments extends Component
     ];
 
     protected $rules = [
-        'state.name' => 'required',
+        'state.name' => 'required|min:3',
         'state.desc' => 'required',
-        // 'state.price' => 'required',
-        'state.duration' => 'required',
-        'state.order' => 'required',
-        'state.category_id' => 'required',
-        'state.active' => 'required',
+        'state.duration' => 'required|numeric',
+        'state.order' => 'required|numeric',
+        'state.category_id' => 'required|numeric',
+        'state.active' => 'required|boolean',
+        'state.prices.*' => 'required|numeric'
     ];
 
     protected $validationAttributes = [
         'state.name' => 'Nama',
         'state.desc' => 'Deskripsi',
-        // 'state.price' => 'Harga',
         'state.duration' => 'Durasi',
         'state.order' => 'Urutan',
         'state.category_id' => 'Kategori',
         'state.active' => 'Status',
+        'state.prices.*' => 'Harga',
     ];
+
+    public function mount()
+    {
+        $this->places = Place::active()->orderAsc()->get();
+    }
 
     public function updatingPerPage()
     {
@@ -85,6 +93,9 @@ class ManageTreatments extends Component
     public function ShowEditTreatmentDialog(Treatment $treatment)
     {
         $this->state = $treatment->toArray();
+        foreach ($this->places as $place) {
+            $this->state['prices'][$place->id] = $treatment->prices->where('place_id', $place->id)->value('amount');
+        }
         $this->showDialog = true;
     }
 
@@ -92,20 +103,35 @@ class ManageTreatments extends Component
     {
         $this->validate();
 
-        Treatment::updateOrCreate(
-            [
-                'id' => $this->state['id'] ?? Treatment::max('id') + 1,
-            ],
-            [
-                'category_id' => $this->state['category_id'],
-                'name' => $this->state['name'],
-                // 'price' => $this->state['price'],
-                'duration' => $this->state['duration'],
-                'desc' => $this->state['desc'],
-                'order' => $this->state['order'],
-                'active' => $this->state['active'],
-            ]
-        );
+        DB::transaction(function () {
+            $treatment = Treatment::updateOrCreate(
+                [
+                    'id' => $this->state['id'] ?? Treatment::max('id') + 1,
+                ],
+                [
+                    'category_id' => $this->state['category_id'],
+                    'name' => $this->state['name'],
+                    'duration' => $this->state['duration'],
+                    'desc' => $this->state['desc'],
+                    'order' => $this->state['order'],
+                    'active' => $this->state['active'],
+                ]
+            );
+
+            foreach ($this->state['prices'] as $placeId => $amount) {
+                Price::updateOrCreate(
+                    [
+                        'treatment_id' => $this->state['id'] ?? $treatment->id,
+                        'place_id' => $placeId,
+                    ],
+                    [
+                        'amount' => $amount,
+                    ]
+                );
+            }
+        });
+
+
 
         $this->showDialog = false;
         Notification::make()
@@ -126,7 +152,7 @@ class ManageTreatments extends Component
             })
             ->Where('category_id', 'LIKE', '%' . $this->filterCategory . '%')
             ->Where('active', 'LIKE', '%' . $this->filterStatus . '%')
-            ->with('category', 'prices')
+            ->with('category', 'prices', 'prices.place')
             ->orderBy('category_id')->orderBy('order')
             ->paginate($this->perPage);
 

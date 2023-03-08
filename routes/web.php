@@ -57,6 +57,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/midwives/{midwife}/edit', [App\Http\Controllers\MidwivesController::class, 'edit'])->name('midwives.edit');
         Route::get('/midwives', [App\Http\Controllers\MidwivesController::class, 'index'])->name('midwives');
         Route::get('/treatments', App\Http\Controllers\TreatmentsController::class)->name('treatments');
+        Route::get('/places', [App\Http\Controllers\PlaceController::class, 'index'])->name('places');
+        Route::get('/places/{place}/edit', [App\Http\Controllers\PlaceController::class, 'edit'])->name('places.edit');
         Route::get('/treatments/categories', App\Http\Controllers\TreatmentCategoriesController::class)->name('categories');
         Route::get('/wilayah', App\Http\Controllers\KecamatanController::class)->name('wilayah');
         Route::get('/wilayah/kabupaten', App\Http\Controllers\KabupatenController::class)->name('kabupaten');

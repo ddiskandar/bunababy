@@ -15,19 +15,29 @@ class Place extends Model
 
     protected $casts = [
         'active' => 'boolean',
-        'add_transport' => 'boolean',
         'type' => 'integer',
     ];
 
     protected $fillable = [
         'name',
         'desc',
-        'add_transport',
         'type',
         'address',
         'order',
         'active',
     ];
+
+    public function getTypeString()
+    {
+        switch ($this->type) {
+            case self::TYPE_HOMECARE:
+                return 'Homecare';
+            case self::TYPE_CLINIC:
+                return 'Klinik';
+            default:
+                return 'Tidak diketahui';
+        }
+    }
 
     public function orders(): HasMany
     {

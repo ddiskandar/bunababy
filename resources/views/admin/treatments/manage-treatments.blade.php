@@ -154,29 +154,24 @@
         <form wire:submit.prevent="save">
             <x-title>Data Treatment</x-title>
 
-            <div class="h-64 mt-2 space-y-3 overflow-y-auto">
+            <div class="h-64 mt-2 space-y-3 px-1 overflow-y-auto">
                 <div class="space-y-1">
-                    <x-label   for="state.name">Nama</x-label>
+                    <x-label for="state.name">Nama</x-label>
                     <x-input wire:model.lazy="state.name" class="w-full" type="text" id="state.name" />
                     <x-input-error for="state.name" class="mt-2" />
                 </div>
                 <div class="space-y-1">
-                    <x-label   for="state.desc">Deskripsi</x-label>
-                    <x-textarea wire:model.lazy="state.desc" class="w-full" type="text" id="state.desc" />
+                    <x-label for="state.desc">Deskripsi</x-label>
+                    <x-textarea wire:model.lazy="state.desc" class="w-full" rows=4 type="text" id="state.desc" />
                     <x-input-error for="state.desc" class="mt-2" />
                 </div>
                 <div class="space-y-1">
-                    <x-label   for="state.price">Harga</x-label>
-                    <x-input wire:model.lazy="state.price" class="w-full" type="number" id="state.price" />
-                    <x-input-error for="state.price" class="mt-2" />
-                </div>
-                <div class="space-y-1">
-                    <x-label   for="state.duration">Durasi</x-label>
+                    <x-label for="state.duration">Durasi (menit)</x-label>
                     <x-input wire:model.lazy="state.duration" class="w-full" type="number" id="state.duration" />
                     <x-input-error for="state.duration" class="mt-2" />
                 </div>
                 <div class="space-y-1">
-                    <x-label   for="state.category_id">Kategory</x-label>
+                    <x-label for="state.category_id">Kategory</x-label>
                     <select wire:model.lazy="state.category_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.category_id">
                         <option value="" selected>-- Pilih salah satu</option>
                         @foreach ($categories as $category)
@@ -186,7 +181,7 @@
                     <x-input-error for="state.category_id" class="mt-2" />
                 </div>
                 <div class="space-y-1">
-                    <x-label   for="state.order">Urutan</x-label>
+                    <x-label for="state.order">Urutan</x-label>
                     <x-input wire:model.lazy="state.order" class="w-full" type="number" id="state.order" />
                     <x-input-error for="state.order" class="mt-2" />
                 </div>
@@ -196,10 +191,18 @@
                             <input type="checkbox" wire:model.lazy="state.active" name="state.active" class="w-12 transition-all duration-150 ease-out rounded-full cursor-pointer form-switch h-7 text-bunababy-200 focus:ring focus:ring-bunababy-200 focus:ring-opacity-50">
                         </div>
                         <div class="ml-2 ">
-                            <x-label   for="state.active">Aktif</x-label>
+                            <x-label for="state.active">Aktif</x-label>
                         </div>
                     </div>
                 </div>
+                <x-title>Harga</x-title>
+                @foreach ($places as $place)
+                <div class="space-y-1">
+                    <x-label for="state.prices.{{ $place->id }}">{{ $place->name }}</x-label>
+                    <x-input wire:model.lazy="state.prices.{{ $place->id }}" class="w-full" type="number" id="state.prices.{{ $place->id }}" />
+                    <x-input-error for="state.prices" class="mt-2" />
+                </div>
+                @endforeach
 
             </div>
 

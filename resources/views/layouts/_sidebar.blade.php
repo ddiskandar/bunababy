@@ -1,6 +1,6 @@
 <nav
     id="page-sidebar"
-    class="flex flex-col fixed top-0 left-0 bottom-0 w-full lg:w-64 h-full bg-white border-r border-gray-200 z-50 transform transition-transform duration-500 ease-out"
+    class="fixed top-0 bottom-0 left-0 z-50 flex flex-col w-full h-full transition-transform duration-500 ease-out transform bg-white border-r border-gray-200 lg:w-64"
     x-bind:class="{
         '-translate-x-full': !mobileSidebarOpen,
         'translate-x-0': mobileSidebarOpen,
@@ -139,6 +139,18 @@
                         </svg>
                     </span>
                     <span class="py-2 grow">Bidan</span>
+                </x-nav-link>
+                <x-nav-link :href="route('places')" :active="request()->is('places*')">
+                    <span class="flex items-center flex-none opacity-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M10.828 9.828a4 4 0 1 0 -5.656 0l2.828 2.829l2.828 -2.829z"></path>
+                            <path d="M8 7l0 .01"></path>
+                            <path d="M18.828 17.828a4 4 0 1 0 -5.656 0l2.828 2.829l2.828 -2.829z"></path>
+                            <path d="M16 15l0 .01"></path>
+                         </svg>
+                    </span>
+                    <span class="py-2 grow">Tempat</span>
                 </x-nav-link>
                 <x-nav-link :href="route('treatments')" :active="request()->is('treatments*')">
                     <span class="flex items-center flex-none opacity-50">

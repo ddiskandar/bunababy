@@ -18,7 +18,6 @@ class PlaceSeeder extends Seeder
                 'id'   => 1,
                 'name' => 'Homecare',
                 'desc' => 'Di rumah sesuai alamat lokasi',
-                'add_transport' => true,
                 'type' => 1, // 1 = homecare, 2 = klinik
                 'order' => 1,
             ],
@@ -26,8 +25,6 @@ class PlaceSeeder extends Seeder
                 'id'   => 2,
                 'name' => 'Klinik Cimahi',
                 'desc' => 'Komplek Nata Endah Blok N No. 170, Cibabat, Cimahi',
-                // 'address' => 'Jl. Cimahi No. 1 Cimahi',
-                'add_transport' => false,
                 'type' => 2, // 1 = homecare, 2 = klinik
                 'order' => 2,
             ],
@@ -35,8 +32,6 @@ class PlaceSeeder extends Seeder
                 'id'   => 3,
                 'name' => 'Klinik Bandung',
                 'desc' => 'Alamat Klinik Bandung',
-                // 'address' => 'Jl. Bandung No. 1 Bandung',
-                'add_transport' => false,
                 'type' => 2, // 1 = homecare, 2 = klinik
                 'order' => 3,
             ],
