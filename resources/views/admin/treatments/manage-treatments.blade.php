@@ -46,7 +46,7 @@
 
                 <div>
                     <button wire:click="showAddNewTreatmentDialog" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-bunababy-100">
-                        + Tambah Baru
+                        + Tambah Klinik Baru
                     </button>
 
                 </div>
@@ -154,7 +154,7 @@
         <form wire:submit.prevent="save">
             <x-title>Data Treatment</x-title>
 
-            <div class="h-64 mt-2 space-y-3 px-1 overflow-y-auto">
+            <div class="h-64 px-1 mt-2 space-y-3 overflow-y-auto">
                 <div class="space-y-1">
                     <x-label for="state.name">Nama</x-label>
                     <x-input wire:model.lazy="state.name" class="w-full" type="text" id="state.name" />

@@ -32,7 +32,7 @@
 
                 <div>
                     <button wire:click="showAddNewPlaceDialog" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-bunababy-100">
-                        + Tambah Baru
+                        + Tambah Klinik
                     </button>
 
                 </div>
@@ -126,4 +126,29 @@
 
     </div>
     <!-- END Card -->
+
+
+    <x-dialog wire:model="showDialog">
+        <form wire:submit.prevent="save">
+            <x-title>Tambah Klinik</x-title>
+
+            <div class="h-64 px-1 mt-2 space-y-3 overflow-y-auto">
+                <div class="space-y-1">
+                    <x-label for="state.name">Nama</x-label>
+                    <x-input wire:model.lazy="state.name" class="w-full" type="text" id="state.name" />
+                    <x-input-error for="state.name" class="mt-2" />
+                </div>
+                <div class="space-y-1">
+                    <x-label for="state.desc">Deskripsi</x-label>
+                    <x-textarea wire:model.lazy="state.desc" class="w-full" rows=4 type="text" id="state.desc" />
+                    <x-input-error for="state.desc" class="mt-2" />
+                </div>
+            </div>
+
+            <div class="py-4">
+                <x-button-on-modal/>
+            </div>
+        </form>
+    </x-dialog>
+
 </div>

@@ -3,11 +3,8 @@
 namespace App\Http\Livewire\Admin\Places;
 
 use App\Models\Place;
-use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rule;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 
 class EditPlace extends Component
 {

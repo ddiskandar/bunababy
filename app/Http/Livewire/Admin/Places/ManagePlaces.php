@@ -12,7 +12,7 @@ class ManagePlaces extends Component
 {
     use WithPagination;
 
-    public $perPage = 3;
+    public $perPage = 5;
 
     public $showDialog = false;
 
@@ -30,19 +30,13 @@ class ManagePlaces extends Component
     ];
 
     protected $rules = [
-        'state.name' => 'required|min:3',
-        'state.desc' => 'required',
-        'state.type' => 'required|numeric',
-        'state.order' => 'required|numeric',
-        'state.active' => 'required|boolean',
+        'state.name' => 'required|min:3|max:32',
+        'state.desc' => 'required|min:3|max:255',
     ];
 
     protected $validationAttributes = [
         'state.name' => 'Nama',
         'state.desc' => 'Deskripsi',
-        'state.type' => 'Type',
-        'state.order' => 'Urutan',
-        'state.active' => 'Status',
     ];
 
     public function mount()
@@ -69,12 +63,10 @@ class ManagePlaces extends Component
     {
         $this->showDialog = true;
         $this->state = [];
-        $this->state['active'] = true;
     }
 
     public function ShowEditPlaceDialog(Place $Place)
     {
-        dd($Place->toArray());
         $this->state = $Place->toArray();
         foreach ($this->places as $place) {
             $this->state['prices'][$place->id] = $Place->prices->where('place_id', $place->id)->value('amount');
@@ -94,9 +86,9 @@ class ManagePlaces extends Component
                 [
                     'name' => $this->state['name'],
                     'desc' => $this->state['desc'],
-                    'type' => $this->state['type'],
-                    'order' => $this->state['order'],
-                    'active' => $this->state['active'],
+                    'type' => Place::TYPE_CLINIC,
+                    'order' => Place::max('order') + 1,
+                    'active' => false,
                 ]
             );
         });
