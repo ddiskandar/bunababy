@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Slot extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'time',
+        'place_id',
+    ];
+
+    public $timestamps = false;
 }

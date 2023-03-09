@@ -54,6 +54,11 @@ class Place extends Model
         return $this->hasMany(Price::class);
     }
 
+    public function slots(): HasMany
+    {
+        return $this->hasMany(Slot::class);
+    }
+
     public function scopeActive($query)
     {
         return $query->where('active', true);
