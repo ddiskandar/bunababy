@@ -1,29 +1,29 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 [x-cloak] {
     display: none !important;
 }
 
 .filament-notifications {
-    @apply inset-24
+    @apply min-w-fit inset-24;
 }
 
 .filament-notifications-notification {
-    @apply bg-bunababy-200 text-white rounded-full py-2 border-transparent max-w-screen-sm md:max-w-sm
+    @apply py-2 text-white border-transparent rounded-full bg-bunababy-200;
 }
 
 .filament-notifications-icon {
-    @apply text-white
+    @apply text-white;
 }
 
 .filament-notifications-title {
-    @apply text-white flex-nowrap
+    @apply leading-tight text-white flex-nowrap;
 }
 
 .filament-notifications-close-button {
-    @apply text-white
+    @apply text-white;
 }
 
 ::-webkit-scrollbar {

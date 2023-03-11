@@ -36,6 +36,7 @@
             class="block w-full px-3 py-2 text-sm leading-6 border rounded-full border-bunababy-50 focus:border-bunababy-50 focus:outline-0 focus:ring-0 "
             type="text"
             id="tk-form-elements-name"
+            autocomplete="off"
             placeholder="Cari berdasarkan nama kecamatan" />
         </div>
 
