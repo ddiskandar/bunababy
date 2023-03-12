@@ -68,22 +68,22 @@ class User extends Authenticatable
 
     public function isMidwife()
     {
-        return $this->type == self::MIDWIFE;
+        return $this->type === self::MIDWIFE;
     }
 
     public function isAdmin()
     {
-        return $this->type == self::ADMIN or $this->type == self::OWNER;
+        return $this->type === self::ADMIN || $this->type === self::OWNER;
     }
 
     public function isClient()
     {
-        return $this->type == self::CLIENT;
+        return $this->type === self::CLIENT;
     }
 
     public function isOwner()
     {
-        return $this->type == self::OWNER;
+        return $this->type === self::OWNER;
     }
 
     public function profile(): HasOne
@@ -172,7 +172,12 @@ class User extends Authenticatable
 
     public function scopeMidwives($query)
     {
-        return $query->where('type', User::MIDWIFE);
+        return $query->where('type', self::MIDWIFE);
+    }
+
+    public function scopeClients($query)
+    {
+        return $query->where('type', self::CLIENT);
     }
 
     public function testimonials()

@@ -38,7 +38,8 @@ class SelectTime extends Component
                 return $query->where('midwife_user_id', session('order.midwife_user_id'));
             })
             ->when(session('order.place_type') === Place::TYPE_CLINIC, function ($query) {
-                return $query->where('place_id', session('order.place_id'));
+                return $query->where('place_id', session('order.place_id'))
+                    ->where('room_id', session('order.room_id')); // TODO: add room_id to session
             })
             ->whereDate('start_datetime', session('order.date'))
             ->locked()

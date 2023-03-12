@@ -14,12 +14,14 @@ class CreateClient extends Component
         'state.name' => 'required|string',
         'state.email' => 'required|email|unique:users,email',
         'state.phone' => 'required|string',
+        'state.dob' => 'required|string',
     ];
 
     protected $validationAttributes = [
         'state.name' => 'Nama',
         'state.email' => 'Email',
         'state.phone' => 'Nomor WA',
+        'state.dob' => 'Tanggal Lahir',
     ];
 
     public function mount()
@@ -41,6 +43,7 @@ class CreateClient extends Component
 
             $user->profile()->create([
                 'phone' => $this->state['phone'],
+                'dob' => $this->state['dob'],
             ]);
 
             return redirect()->route('clients.show', $user->id);

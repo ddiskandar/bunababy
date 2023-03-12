@@ -4,9 +4,9 @@
     <x-slot name="content">
         <div class="space-y-1">
             <div class="max-w-lg">
-                <div class="relative z-0 mt-1 border border-gray-200 rounded-lg cursor-pointer">
+                <div class="relative z-0 space-y-2">
                     @forelse ($addresses as $index => $address)
-                        <div class="relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 {{ $index > 0 ? 'border-t border-gray-200 rounded-t-none' : '' }} {{ ! $loop->last ? 'rounded-b-none' : '' }}">
+                        <div class="relative px-4 py-3 inline-flex w-full border border-gray-200  cursor-pointer rounded-lg focus:z-10 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 {{ $index > 0 ? 'border-t border-gray-200 rounded-t-none' : '' }} {{ ! $loop->last ? 'rounded-b-none' : '' }}">
                             <div class="w-full">
                                 <div class="flex items-center justify-between ">
                                     <div class="flex items-center">
@@ -47,7 +47,7 @@
                             </div>
                         </div>
                     @empty
-                        <div class="px-4 py-3 text-sm">Belum ada alamat</div>
+                        <div class="text-sm text-red-600">Belum ada alamat</div>
                     @endforelse
                 </div>
             </div>

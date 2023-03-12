@@ -23,6 +23,11 @@
                         <x-input wire:model.lazy="state.phone" class="w-full" type="text" id="state.phone" />
                         <x-input-error for="state.phone" class="mt-2" />
                     </div>
+                    <div class="space-y-1">
+                        <x-label   for="state.dob">Tanggal Lahir</x-label>
+                        <x-input wire:model.lazy="state.dob" class="w-full" type="date" id="state.dob" />
+                        <x-input-error for="state.dob" class="mt-2" />
+                    </div>
                     <div class="flex items-center">
                         <div  >
                             <x-button wire:click="save" wire:loading.attr="disabled">Simpan</x-button>
