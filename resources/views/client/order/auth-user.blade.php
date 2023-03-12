@@ -25,7 +25,7 @@
                 </dd>
             </div>
 
-            @isset(auth()->user()->profile->dob->age)
+            @isset(auth()->user()->profile->dob)
             <div class="sm:col-span-1">
                 <dt class="text-sm font-medium text-gray-500">
                     Usia Buna

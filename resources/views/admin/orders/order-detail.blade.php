@@ -65,7 +65,7 @@
                     Nama Buna
                 </dt>
                 <dd class="mt-1 text-gray-900">
-                    {{ $order->client->name }} / {{ ($order->client->profile->dob->age ? $order->client->profile->dob->age : '-') . ' tahun' }}
+                    {{ $order->client->name }} / {{ ($order->client->profile->dob ? $order->client->profile->dob->age : '-') . ' tahun' }}
                 </dd>
             </div>
             @if ($baby)
