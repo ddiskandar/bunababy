@@ -22,22 +22,22 @@
         <div>
             <div class="
                 overflow-scroll
-                grid grid-cols-[70px,repeat({{ $midwives->count() }},200px)]
-                grid-rows-[auto,repeat(41,40px)]
+                grid grid-cols-[70px,repeat({{ $titles->count() }},200px)]
+                grid-rows-[auto,repeat(61,40px)]
                 max-h-[420px]
             ">
                 <!-- Calendar frame -->
                 <div class="sticky top-0 z-10 col-start-1 row-start-1 py-2 text-sm font-medium bg-white border-b border-slate-100 bg-clip-padding text-slate-900"></div>
-                @foreach ($midwives as $midwife)
+                @foreach ($titles as $item)
                     <div class="row-start-1 col-start-{{ $loop->iteration + 1 }} sticky top-0 z-10 bg-white border-slate-100 bg-clip-padding text-slate-900 border-b text-sm font-medium py-2 text-center">
-                        {{ $midwife['name'] }}
+                        {{ $item['name'] }}
                     </div>
                 @endforeach
 
                 @foreach ($times as $time)
                     <div class="row-start-{{ $time['row-start'] }} col-start-1 border-slate-100 border-r text-xs p-1.5 pt-0 text-right text-slate-400 uppercase sticky z-10 left-0 bg-white font-medium">{{ $time['time'] }}</div>
 
-                    @for($i = 2; $i <= $midwives->count() + 1; $i++)
+                    @for($i = 2; $i <= $titles->count() + 1; $i++)
                     <div class="row-start-{{ $time['row-start'] }} col-start-{{ $i }} border-slate-100 border-b border-r"></div>
                     @endfor
 
@@ -49,9 +49,9 @@
                     col-start-{{ $schedule['col-start'] }}
                     row-span-{{ $schedule['row-span'] }}
                     text-slate-800 m-1 p-2 relative overflow-y-scroll
-                    @if ($schedule['status'] == 'Aktif')
+                    @if ($schedule['status'] === 'Aktif')
                         bg-green-400/20 border border-green-700/10
-                    @elseif ($schedule['status'] == 'Selesai')
+                    @elseif ($schedule['status'] === 'Selesai')
                         bg-blue-400/20 border border-blue-700/10
                     @else
                         bg-red-400/20 border border-red-700/10
@@ -65,12 +65,12 @@
                         <span class="mt-2 text-xs">{{ $schedule['treatments'] }}</span>
 
                         <div class="absolute flex items-center top-1 right-2">
-                            @if ($schedule['status'] == 'Selesai')
+                            @if ($schedule['status'] === 'Selesai')
                             <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 12C4.75 7.99594 7.99594 4.75 12 4.75V4.75C16.0041 4.75 19.25 7.99594 19.25 12V12C19.25 16.0041 16.0041 19.25 12 19.25V19.25C7.99594 19.25 4.75 16.0041 4.75 12V12Z"></path>
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 12.75L10.1837 13.6744C10.5275 14.407 11.5536 14.4492 11.9564 13.7473L14.25 9.75"></path>
                             </svg>
-                            @elseif ($schedule['status'] == 'Pending')
+                            @elseif ($schedule['status'] === 'Pending')
                             <svg class="text-red-600" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 12C4.75 7.99594 7.99594 4.75 12 4.75V4.75C16.0041 4.75 19.25 7.99594 19.25 12V12C19.25 16.0041 16.0041 19.25 12 19.25V19.25C7.99594 19.25 4.75 16.0041 4.75 12V12Z"></path>
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 9.75L14.25 14.25"></path>

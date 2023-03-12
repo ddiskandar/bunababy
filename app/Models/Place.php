@@ -64,6 +64,11 @@ class Place extends Model
         return $query->where('active', true);
     }
 
+    public function scopeClinics($query)
+    {
+        return $query->where('type', self::TYPE_CLINIC);
+    }
+
     public function scopeOrderAsc($query)
     {
         return $query->orderBy('order', 'asc');

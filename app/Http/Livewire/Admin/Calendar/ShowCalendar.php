@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Admin\Calendar;
 
 use App\Models\Order;
+use App\Models\Place;
+use App\Models\Room;
 use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -10,7 +12,7 @@ use Livewire\Component;
 class ShowCalendar extends Component
 {
     public $date;
-    public $midwives;
+    public $titles;
     public $colStart;
     public $rowStart;
     public $times;
@@ -63,25 +65,60 @@ class ShowCalendar extends Component
             ['time' => '17:30', 'row-start' => '40'],
             ['time' => '', 'row-start' => '41'],
             ['time' => '18:00', 'row-start' => '42'],
+            ['time' => '', 'row-start' => '43'],
+            ['time' => '18:30', 'row-start' => '44'],
+            ['time' => '', 'row-start' => '45'],
+            ['time' => '19:00', 'row-start' => '46'],
+            ['time' => '', 'row-start' => '47'],
+            ['time' => '19:30', 'row-start' => '48'],
+            ['time' => '', 'row-start' => '49'],
+            ['time' => '20:00', 'row-start' => '50'],
+            ['time' => '', 'row-start' => '51'],
+            ['time' => '20:30', 'row-start' => '52'],
+            ['time' => '', 'row-start' => '53'],
+            ['time' => '21:00', 'row-start' => '54'],
+            ['time' => '', 'row-start' => '55'],
+            ['time' => '21:30', 'row-start' => '56'],
+            ['time' => '', 'row-start' => '57'],
+            ['time' => '22:00', 'row-start' => '58'],
+            ['time' => '', 'row-start' => '59'],
+            ['time' => '22:30', 'row-start' => '60'],
+            ['time' => '', 'row-start' => '61'],
+            ['time' => '23:00', 'row-start' => '62'],
         ])->toArray();
 
-        $users = User::query()
-            ->where('type', User::MIDWIFE)
-            ->active()
+        $midwives = User::active()->midwives()
             ->select(['id', 'name'])
             ->orderBy('id', 'ASC')
             ->get();
 
-        $this->midwives = collect();
+        $clinics = Place::active()->clinics()
+            ->select(['id', 'name'])
+            ->orderAsc()
+            ->get();
+
+        $rooms = Room::active()->orderBy('id', 'ASC')
+            ->with('place:id,name')
+            ->get();
+
+        $this->titles = collect();
         $this->colStart = collect();
 
         $this->colStart->put(1, 2);
-        $this->midwives->push(['col-start' => 2, 'name' => 'Belum ada']);
 
-        $i = 3;
-        foreach ($users as $midwife) {
+        $i = 2;
+        foreach ($rooms as $room) {
+            $this->colStart->put($room->id, $i);
+            $this->titles->push(['col-start' => $i, 'name' => $room->name . ' - ' . $room->place->name]);
+            $i++;
+        }
+        // $this->titles->push(['col-start' => 2, 'name' => 'Klinik Cimahi']);
+        // $this->titles->push(['col-start' => 3, 'name' => 'Klinik Bandung']);
+
+        $i = 2 + $rooms->count();
+        foreach ($midwives as $midwife) {
             $this->colStart->put($midwife->id, $i);
-            $this->midwives->push(['col-start' => $i, 'name' => $midwife->name]);
+            $this->titles->push(['col-start' => $i, 'name' => $midwife->name]);
             $i++;
         }
 
@@ -129,6 +166,26 @@ class ShowCalendar extends Component
             '17:30' => '40',
             '17:45' => '41',
             '18:00' => '42',
+            '18:15' => '43',
+            '18:30' => '44',
+            '18:45' => '45',
+            '19:00' => '46',
+            '19:15' => '47',
+            '19:30' => '48',
+            '19:45' => '49',
+            '20:00' => '50',
+            '20:15' => '51',
+            '20:30' => '52',
+            '20:45' => '53',
+            '21:00' => '54',
+            '21:15' => '55',
+            '21:30' => '56',
+            '21:45' => '57',
+            '22:00' => '58',
+            '22:15' => '59',
+            '22:30' => '60',
+            '22:45' => '61',
+            '22:00' => '62',
         ])->toArray();
     }
 
@@ -164,7 +221,8 @@ class ShowCalendar extends Component
                 'status',
                 'finished_at',
                 'address_id',
-                'place_id'
+                'place_id',
+                'room_id',
             ])
             ->get();
 
