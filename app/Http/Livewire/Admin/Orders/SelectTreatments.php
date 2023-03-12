@@ -66,7 +66,7 @@ class SelectTreatments extends Component
             'total_duration' => $this->order->total_duration - $treatment->duration,
             'start_datetime' => $this->order->start_datetime,
             'end_datetime' => $this->order->end_datetime->subMinutes($treatment->duration),
-            'total_price' => $this->order->treatments()->sum('price'),
+            'total_price' => $this->order->treatments()->sum('treatment_price'),
         ]);
 
         $this->emit('saved');
