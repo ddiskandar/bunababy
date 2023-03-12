@@ -32,7 +32,7 @@
                                 <li class="p-6 border rounded border-slate-200">
                                     <div class="text-xl font-semibold leading-tight">{{ $treatment['name'] }}</div>
                                     <div class="text-sm text-slate-400">{{ $treatment['desc'] }}</div>
-                                    <div class="py-2 text-sm text-slate-400"><span class="font-medium text-slate-600">{{ rupiah($treatment['price']['amount']) }}</span> • <span class="font-medium text-slate-600">{{ $treatment['duration'] }} menit</span></div>
+                                    <div class="py-2 text-sm text-slate-400"><span class="font-medium text-slate-600">{{ rupiah($treatment['prices'][0]['amount']) }}</span> • <span class="font-medium text-slate-600">{{ $treatment['duration'] }} menit</span></div>
 
                                     @if(session()->has('order'))
 
@@ -100,10 +100,10 @@
                 <div class="p-4 border rounded bg-bunababy-50/10 border-bunababy-50" >
                 <div>
                     <h3 class="text-xl font-semibold leading-6" id="modal-title">{{ $currentTreatment['name'] }}</h3>
-                    <div class="mt-2">
+                    {{-- <div class="mt-2">
                         <p class="text-sm text-gray-500">{{ $currentTreatment['desc'] }}</p>
                     </div>
-                    <div class="py-2 text-sm text-slate-400"><span class="font-medium text-slate-600">{{ rupiah($currentTreatment['price']['amount']) }}</span> • <span class="font-medium text-slate-600">{{ $currentTreatment['duration'] }} menit</span></div>
+                    <div class="py-2 text-sm text-slate-400"><span class="font-medium text-slate-600">{{ rupiah($currentTreatment['prices'][0]['amount']) }}</span> • <span class="font-medium text-slate-600">{{ $currentTreatment['duration'] }} menit</span></div> --}}
                 </div>
                 </div>
 

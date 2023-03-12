@@ -22,6 +22,7 @@ class SelectMidwifeAvailableDate extends Component
 
         $this->slots = Slot::query()
             ->where('place_id', session('order.place_id'))
+            ->orderBy('time')
             ->get();
 
         $this->midwife = User::find($midwife_user_id);

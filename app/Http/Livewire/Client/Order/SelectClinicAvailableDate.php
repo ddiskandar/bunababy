@@ -21,6 +21,7 @@ class SelectClinicAvailableDate extends Component
 
         $this->slots = Slot::query()
             ->where('place_id', session('order.place_id'))
+            ->orderBy('time')
             ->get();
 
         $this->place = Place::find($place_id);

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin\Orders;
 
 use App\Models\Family;
 use App\Models\Order;
+use App\Models\Price;
 use App\Models\Treatment;
 use Illuminate\Support\Arr;
 use Livewire\Component;
@@ -96,7 +97,9 @@ class SelectTreatments extends Component
         $treatment = Treatment::find($this->treatmentId);
 
         $this->order->treatments()->attach($this->treatmentId, [
-            'treatment_price' => $treatment->price,
+            'treatment_price' => Price::where('treatment_id', $this->treatmentId)
+                ->where('place_id', $this->order->place_id)->value('amount'),
+
             'treatment_duration' => $treatment->duration,
             'family_name' => $this->selectedFamily['name'],
             'family_age' => $this->selectedFamily['age'],
@@ -106,7 +109,7 @@ class SelectTreatments extends Component
             'total_duration' => $this->order->total_duration + $treatment->duration,
             'start_datetime' => $this->order->start_datetime,
             'end_datetime' => $this->order->end_datetime->addMinutes($treatment->duration),
-            'total_price' => $this->order->treatments()->sum('price'),
+            'total_price' => $this->order->treatments()->sum('treatment_price'),
         ]);
 
         $this->treatmentId = '';

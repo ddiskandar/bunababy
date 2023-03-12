@@ -1,18 +1,8 @@
 <x-action-section>
-    <x-slot name="title">Pilihan Bidan dan Tempat</x-slot>
+    <x-slot name="title">Pilihan Tempat dan Bidan</x-slot>
 
     <x-slot name="content">
         <div class="max-w-lg space-y-4">
-            <div class="space-y-1">
-                <x-label for="state.midwifeId">Bidan</x-label>
-                <select wire:model="state.midwifeId" wire:change="setSelectedMidwife" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.midwifeId">
-                    <option value="" selected>-- Belum ada yang dipilih</option>
-                    @foreach ($midwives as $midwife)
-                        <option value="{{ $midwife->id }}">{{ $midwife->name }}</option>
-                    @endforeach
-                </select>
-                <x-input-error for="state.midwifeId" class="mt-2" />
-            </div>
             <div class="space-y-1">
                 <x-label for="state.placeId">Tempat</x-label>
                 <select wire:model="state.placeId" wire:change="setSelectedPlace" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.placeId">
@@ -106,6 +96,17 @@
             </x-secondary-button>
 
             @endif
+
+            <div class="space-y-1">
+                <x-label for="state.midwifeId">Bidan</x-label>
+                <select wire:model="state.midwifeId" wire:change="setSelectedMidwife" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.midwifeId">
+                    <option value="" selected>-- Belum ada yang dipilih</option>
+                    @foreach ($midwives as $midwife)
+                        <option value="{{ $midwife->id }}">{{ $midwife->name }}</option>
+                    @endforeach
+                </select>
+                <x-input-error for="state.midwifeId" class="mt-2" />
+            </div>
 
             <div class="flex items-center py-4">
                 <x-button wire:click="update" wire:loading.attr="disabled" wire:target="update">{{ __('Simpan') }}</x-button>

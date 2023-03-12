@@ -60,7 +60,7 @@ class SelectTreatments extends Component
     public function confirmAddTreatment(Treatment $treatment)
     {
         $treatment->load([
-            'price' => function ($query) {
+            'prices' => function ($query) {
                 $query->where('place_id', session('order.place_id'));
             }
         ]);
@@ -83,7 +83,7 @@ class SelectTreatments extends Component
             'treatment_id' => $this->currentTreatment['id'],
             'treatment_name' => $this->currentTreatment['name'],
             'treatment_desc' => $this->currentTreatment['desc'],
-            'treatment_price' => $this->currentTreatment['price']['amount'],
+            'treatment_price' => $this->currentTreatment['prices'][0]['amount'],
             'treatment_duration' => $this->currentTreatment['duration'],
             'family_id' => $this->family_id,
             'family_name' => $family['name'],
@@ -124,7 +124,7 @@ class SelectTreatments extends Component
                 ->orderBy('order', 'ASC')
                 ->with(['category' => function ($query) {
                     $query->orderBy('order', 'ASC');
-                }, 'price' => function ($query) {
+                }, 'prices' => function ($query) {
                     $query->where('place_id', session('order.place_id'));
                 }])
                 ->get()
@@ -141,7 +141,7 @@ class SelectTreatments extends Component
                 ->orderBy('order', 'ASC')
                 ->with(['category' => function ($query) {
                     $query->orderBy('order', 'ASC');
-                }, 'price' => function ($query) {
+                }, 'prices' => function ($query) {
                     $query->where('place_id', session('order.place_id'));
                 }])
                 ->get()
@@ -158,6 +158,8 @@ class SelectTreatments extends Component
                 ];
             });
         }
+
+        // dd($availableTreatments);
 
         return view('client.order.select-treatments', [
             'categories' => $categories,

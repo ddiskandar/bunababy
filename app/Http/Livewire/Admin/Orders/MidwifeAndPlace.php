@@ -70,24 +70,25 @@ class MidwifeAndPlace extends Component
 
     public function setSelectedPlace()
     {
-        if($this->order->place_id !== $this->state['placeId']) {
-            if($this->order->place->type === Place::TYPE_HOMECARE && $this->selectedPlace->type !== Place::TYPE_CLINIC){
+        $this->resetOnPlaceChange();
+        $this->selectedPlace = Place::whereId($this->state['placeId'])->first();
+        if($this->order->place_id !== $this->selectedPlace->id) {
+            if($this->order->place->type === Place::TYPE_HOMECARE && $this->selectedPlace->type === Place::TYPE_CLINIC){
                 $this->state['totalDuration'] = $this->order->total_duration - $this->option->transport_duration;
                 $this->state['totalTransport'] = 0;
             }
 
-            if($this->order->place->type === Place::TYPE_CLINIC && $this->selectedPlace->type !== Place::TYPE_HOMECARE){
+            if($this->order->place->type === Place::TYPE_CLINIC && $this->selectedPlace->type === Place::TYPE_HOMECARE){
                 $this->state['totalDuration'] = $this->order->total_duration + $this->option->transport_duration;
             }
         }
-        $this->resetOnPlaceChange();
-        $this->selectedPlace = Place::whereId($this->state['placeId'])->first();
     }
 
     private function resetOnPlaceChange()
     {
         $this->state['roomId'] = null;
         $this->state['addressId'] = null;
+        $this->state['totalTransport'] = $this->order->total_transport;
     }
 
     public function setSelectedMidwife()
@@ -98,10 +99,9 @@ class MidwifeAndPlace extends Component
     public function setSelectedAddress($addressId)
     {
         $this->state['addressId'] = (int) $addressId;
-        $address = Address::whereId($this->state['addressId'])->first();
+        $address = Address::whereId($this->state['addressId'])->first(); // TODO : refactor relationship
         $kecamatan = Kecamatan::whereId($address->kecamatan_id)->first();
         $this->state['totalTransport'] = calculate_transport($kecamatan->distance);
-        $this->emit('saved');
     }
 
     public function showEditDialog(Address $address)
@@ -160,8 +160,7 @@ class MidwifeAndPlace extends Component
             $this->order->update([
                 'total_duration' => $this->state['totalDuration'],
                 'total_transport' => $this->state['totalTransport'],
-                // 'start_datetime' => null,
-                // 'end_datetime' => null,
+                'end_datetime' => $this->order->start_datetime->addMinutes($this->state['totalDuration']),
             ]);
         }
 

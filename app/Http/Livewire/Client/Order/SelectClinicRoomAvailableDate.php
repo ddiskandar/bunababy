@@ -18,7 +18,7 @@ class SelectClinicRoomAvailableDate extends Component
     public function mount($room_id)
     {
         $this->selectedMonth = now()->format('Y-M');
-        $this->slots = Slot::where('place_id', session('order.place_id'))->get();
+        $this->slots = Slot::where('place_id', session('order.place_id'))->orderBy('time')->get();
         $this->room = Room::find($room_id);
         $this->room->load('place');
     }
