@@ -21,10 +21,11 @@
                 @if (auth()->user()->isAdmin())
                 <div class="w-32">
                     <select wire:model="filterMidwife" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
-                        <option value="" selected="selected">Semua Bidan</option>
+                        <option value="" selected>Semua Bidan</option>
                         @foreach ($midwives as $midwife)
                         <option value="{{ $midwife->id }}">{{ $midwife->name }}</option>
                         @endforeach
+                        <option value="belumDipilih">-- Belum Dipilih bidan</option>
                     </select>
                 </div>
                 @endif

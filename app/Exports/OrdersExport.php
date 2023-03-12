@@ -54,9 +54,10 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
             ->whereBetween('start_datetime', [$this->filterFromDate, Carbon::parse($this->filterToDate)->addDay()->toDateString()])
             ->where('place_id', 'LIKE', '%' . $this->filterPlace . '%')
             ->where('status', 'LIKE', '%' . $this->filterStatus . '%')
-            ->where('midwife_user_id', 'LIKE', '%' . $this->filterMidwife . '%')
-            ->orWhere('midwife_user_id', NULL)
-            ->with('client', 'treatments');
+            ->when($this->filterMidwife === "belumDipilih",
+                fn ($query) => $query->where('midwife_user_id', null),
+                fn ($query) => $query->where('midwife_user_id', 'LIKE', '%' . $this->filterMidwife . '%')
+            )->with('client', 'treatments');
 
         return $query;
     }
