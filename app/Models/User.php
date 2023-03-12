@@ -59,6 +59,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'active' => 'boolean',
+        'type' => 'integer'
     ];
 
     protected $appends = [
