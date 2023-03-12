@@ -72,13 +72,13 @@ class MidwifeAndPlace extends Component
     {
         $this->resetOnPlaceChange();
         $this->selectedPlace = Place::whereId($this->state['placeId'])->first();
-        if($this->order->place_id !== $this->selectedPlace->id) {
-            if($this->order->place->type === Place::TYPE_HOMECARE && $this->selectedPlace->type === Place::TYPE_CLINIC){
+        if ($this->order->place_id !== $this->selectedPlace->id) {
+            if ($this->order->place->type === Place::TYPE_HOMECARE && $this->selectedPlace->type === Place::TYPE_CLINIC){
                 $this->state['totalDuration'] = $this->order->total_duration - $this->option->transport_duration;
                 $this->state['totalTransport'] = 0;
             }
 
-            if($this->order->place->type === Place::TYPE_CLINIC && $this->selectedPlace->type === Place::TYPE_HOMECARE){
+            if ($this->order->place->type === Place::TYPE_CLINIC && $this->selectedPlace->type === Place::TYPE_HOMECARE){
                 $this->state['totalDuration'] = $this->order->total_duration + $this->option->transport_duration;
             }
         }
@@ -150,13 +150,13 @@ class MidwifeAndPlace extends Component
             'address_id' => $this->state['addressId'],
         ]);
 
-        if($this->selectedPlace->type === Place::TYPE_CLINIC){
+        if ($this->selectedPlace->type === Place::TYPE_CLINIC){
             $this->order->update([
                 'room_id' => $this->state['roomId'],
             ]);
         }
 
-        if($this->order->place_id !== $this->selectedPlace->id){
+        if ($this->order->place_id !== $this->selectedPlace->id){
             $this->order->update([
                 'total_duration' => $this->state['totalDuration'],
                 'total_transport' => $this->state['totalTransport'],
@@ -169,16 +169,12 @@ class MidwifeAndPlace extends Component
 
     public function render()
     {
+        $midwives = User::active()->midwives()->orderBy('name')->get();
+
+        $addresses = Address::where('client_user_id', $this->selectedClient->id)->get();
+
         $rooms = [];
-        $midwives = User::active()->midwives()
-            ->orderBy('name')
-            ->get();
-
-        $addresses = Address::query()
-            ->where('client_user_id', $this->selectedClient->id)
-            ->get();
-
-        if($this->selectedPlace) {
+        if ($this->selectedPlace) {
             $rooms = Room::active()
                 ->where('place_id', $this->selectedPlace->id)
                 ->orderBy('name')
