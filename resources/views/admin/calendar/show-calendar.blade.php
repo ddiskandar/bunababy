@@ -24,7 +24,7 @@
                 overflow-scroll
                 grid grid-cols-[70px,repeat({{ $titles->count() }},200px)]
                 grid-rows-[auto,repeat(61,40px)]
-                max-h-[420px]
+                max-h-[520px]
             ">
                 <!-- Calendar frame -->
                 <div class="sticky top-0 z-10 col-start-1 row-start-1 py-2 text-sm font-medium bg-white border-b border-slate-100 bg-clip-padding text-slate-900"></div>

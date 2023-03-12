@@ -92,11 +92,6 @@ class ShowCalendar extends Component
             ->orderBy('id', 'ASC')
             ->get();
 
-        $clinics = Place::active()->clinics()
-            ->select(['id', 'name'])
-            ->orderAsc()
-            ->get();
-
         $rooms = Room::active()->orderBy('id', 'ASC')
             ->with('place:id,name')
             ->get();
@@ -106,19 +101,21 @@ class ShowCalendar extends Component
 
         $this->colStart->put(1, 2);
 
-        $i = 2;
-        foreach ($rooms as $room) {
-            $this->colStart->put($room->id, $i);
-            $this->titles->push(['col-start' => $i, 'name' => $room->name . ' - ' . $room->place->name]);
-            $i++;
-        }
+
         // $this->titles->push(['col-start' => 2, 'name' => 'Klinik Cimahi']);
         // $this->titles->push(['col-start' => 3, 'name' => 'Klinik Bandung']);
 
-        $i = 2 + $rooms->count();
+        $i = 2 ;
         foreach ($midwives as $midwife) {
             $this->colStart->put($midwife->id, $i);
             $this->titles->push(['col-start' => $i, 'name' => $midwife->name]);
+            $i++;
+        }
+
+        $i = 2 + $midwives->count();
+        foreach ($rooms as $room) {
+            $this->colStart->put($room->id, $i);
+            $this->titles->push(['col-start' => $i, 'name' => $room->name . ' - ' . $room->place->name]);
             $i++;
         }
 
