@@ -206,7 +206,8 @@ class ShowCalendar extends Component
                 'client:id,name',
                 'treatments:id,name',
                 'address.kecamatan:id,name',
-                'place:id,name'
+                'place:id,name,type',
+                'room:id,name',
             )
             ->select([
                 'id',
@@ -225,8 +226,10 @@ class ShowCalendar extends Component
 
         foreach ($orders as $order) {
             $schedules->push([
+                'col-start' => $order->place->type === Place::TYPE_HOMECARE
+                    ? $this->colStart[$order->midwife_user_id]
+                    : $this->colStart[$order->room_id],
                 'row-start' => $this->rowStart[$order->start_datetime->isoFormat('HH:mm')],
-                'col-start' => $order->midwife_user_id ? $this->colStart[$order->midwife_user_id] : 2,
                 'row-span' => (int) round($order->start_datetime->diffInMinutes($order->end_datetime) / 15),
                 'id' => $order->id,
                 'no_reg' => $order->no_reg,
@@ -236,7 +239,8 @@ class ShowCalendar extends Component
                 'status' => $order->getStatusString(),
                 'finished_at' => $order->finished_at,
                 'address' => $order->address->kecamatan->name ?? '-',
-                'place' => $order->place->name
+                'place' => $order->place->name,
+                'room' => $order->room->name ?? '',
             ]);
         }
 
