@@ -226,8 +226,8 @@ class CreateOrder extends Component
 
         if($this->selectedClient) {
             $kecamatans = Kecamatan::active()
-                ->orderBy('name')
                 ->whereIn('id', $this->selectedClient->addresses->pluck('kecamatan_id'))
+                ->orderBy('name')
                 ->get();
         }
 

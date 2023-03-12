@@ -25,8 +25,8 @@ class ClientProfileInformation extends Component
                 'email',
                 Rule::unique('users', 'email')->ignore($this->client->id)
             ],
-            'state.dob' => 'nullable|date',
-            'state.phone' => 'nullable|string|min:11|max:14',
+            'state.dob' => 'required|date',
+            'state.phone' => 'required|string|min:11|max:14',
             'state.ig' => 'nullable',
             'photo' => 'nullable|image|max:128',
         ];
@@ -48,7 +48,7 @@ class ClientProfileInformation extends Component
         $this->client = $user;
         $this->client->load('profile');
         $this->state = $this->client->toArray();
-        $this->state['dob'] = $this->client->profile->dob->toDateString();
+        $this->state['dob'] = $this->client->profile->dob ? $this->client->profile->dob->toDateString() : null;
         $this->state['phone'] = $this->client->profile->phone;
         $this->state['ig'] = $this->client->profile->ig;
     }

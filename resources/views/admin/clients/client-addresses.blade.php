@@ -10,15 +10,17 @@
                             <div class="w-full">
                                 <div class="flex items-center justify-between ">
                                     <div class="flex items-center">
-                                        <div
-                                            class="text-sm font-semibold capitalize text-gray-600 {{ $address->is_main ? 'font-semibold' : '' }}"
-                                            wire:click="setAddressAsMain({{ $address->id }})"
-                                            >
+                                        <div class="text-sm font-semibold capitalize text-gray-600 {{ $address->is_main ? 'font-semibold' : '' }}"
+                                            wire:click="setAddressAsMain('{{ $address->id }}')"
+                                        >
                                             {{ $address->label }}
                                         </div>
 
                                         @if ($address->is_main)
-                                            <svg class="w-5 h-5 ml-2 text-green-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <div class="flex items-center ml-2 text-green-400">
+                                                <svg class="w-5 h-5 mr-1" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                <div class="text-sm">Alamat Utama</div>
+                                            </div>
                                         @endif
 
                                     </div>
@@ -27,9 +29,11 @@
                                     </div>
                                 </div>
 
-                                <div class="text-sm text-left text-gray-600 ">
-                                    {{ $address->full_address }}
-                                    <div class="py-2">{{ $address->note ?? '' }}</div>
+                                <div class="text-sm text-left text-gray-600">
+                                    <div wire:click="setAddressAsMain('{{ $address->id }}')">
+                                        {{ $address->full_address }}
+                                        <div class="py-2">{{ $address->note ?? '' }}</div>
+                                    </div>
                                     @if (isset($address->share_location))
                                         <a href="{{ $address->share_location }}" class="flex items-center text-bunababy-200" target="_blank">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">

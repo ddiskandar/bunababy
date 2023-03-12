@@ -33,7 +33,7 @@ class SelectClient extends Component
         if ($this->readyToLoad) {
             $clients = User::query()
                 ->clients()->active()
-                ->select('id', 'name')
+                // ->select('id', 'name')
                 ->with('profile')
                 ->where('name', 'like', "%{$this->search}%")
                 ->orderBy('name')
