@@ -1,52 +1,67 @@
 <x-action-section>
-    <x-slot name="title">Bidan</x-slot>
+    <x-slot name="title">Pilihan Bidan dan Tempat</x-slot>
 
     <x-slot name="content">
         <div class="max-w-lg space-y-4">
             <div class="space-y-1">
-                <x-label for="midwifeId">Bidan</x-label>
-                <select wire:model="midwifeId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="midwifeId">
+                <x-label for="state.midwifeId">Bidan</x-label>
+                <select wire:model="state.midwifeId" wire:change="setSelectedMidwife" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.midwifeId">
                     <option value="" selected>-- Belum ada yang dipilih</option>
                     @foreach ($midwives as $midwife)
                         <option value="{{ $midwife->id }}">{{ $midwife->name }}</option>
                     @endforeach
                 </select>
-                <x-input-error for="midwifeId" class="mt-2" />
+                <x-input-error for="state.midwifeId" class="mt-2" />
             </div>
             <div class="space-y-1">
-                <x-label for="place">Tempat</x-label>
-                <select wire:model="place" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="place">
-                    <option value="1">Homecare</option>
-                    <option value="2">Klinik</option>
+                <x-label for="state.placeId">Tempat</x-label>
+                <select wire:model="state.placeId" wire:change="setSelectedPlace" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.placeId">
+                    @foreach ($places as $place)
+                    <option value="{{ $place->id }}">{{ $place->name }}</option>
+                    @endforeach
                 </select>
-                <x-input-error for="place" class="mt-2" />
+                <x-input-error for="state.placeId" class="mt-2" />
             </div>
 
-            @if ($place === \App\Models\Place::TYPE_HOMECARE)
+            @if ($selectedPlace && $selectedPlace->type === \App\Models\Place::TYPE_CLINIC)
             <div class="space-y-1">
-                <div  >
+                <x-label for="state.roomId">Ruangan</x-label>
+                <select wire:model="state.roomId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.roomId">
+                    <option value="">--Pilih salah satu</option>
+                    @foreach ($rooms as $room)
+                    <option value="{{ $room->id }}">{{ $room->name }}</option>
+                    @endforeach
+                </select>
+                <x-input-error for="state.roomId" class="mt-2" />
+            </div>
+            @endif
+
+            @if ($selectedPlace->type === \App\Models\Place::TYPE_HOMECARE)
+            <div class="space-y-1">
+                <div>
                     <x-label for="role" value="{{ __('Alamat') }}" />
                     <x-input-error for="role" class="mt-2" />
 
                     <div class="relative z-0 mt-1 border border-gray-200 rounded-lg cursor-pointer">
                         @foreach ($addresses as $index => $address)
                             <button type="button" class="relative px-4 py-3 inline-flex w-full rounded-lg {{ $index > 0 ? 'border-t border-gray-200 rounded-t-none' : '' }} {{ ! $loop->last ? 'rounded-b-none' : '' }}"
-                                            wire:click="$set('selectedAddressId', '{{ $address->id }}')">
-                                <div class="{{ isset($selectedAddressId) && $selectedAddressId != $address->id ? 'opacity-50' : '' }}">
+                                wire:click="setSelectedAddress('{{ $address->id }}')"
+                            >
+                                <div class="{{ isset($state['addressId']) && $state['addressId'] !== $address->id ? 'opacity-50' : '' }}">
                                     <!-- Role Name -->
                                     <div class="flex items-center justify-between">
                                         <div class="flex items-center space-x-2">
-                                            <div class="text-sm capitalize text-gray-600 {{ $selectedAddressId == $address->id ? 'font-semibold' : '' }}">
+                                            <div class="text-sm capitalize text-gray-600 {{isset($state['addressId']) && $state['addressId'] === $address->id ? 'font-semibold' : '' }}">
                                                 {{ $address->label }}
                                             </div>
 
-                                            @if ($selectedAddressId == $address->id)
+                                            @if (isset($state['addressId']) && $state['addressId'] === $address->id)
                                                 <svg class="w-5 h-5 ml-2 text-green-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                                 <span class="ml-1 text-sm text-green-400">Selected</span>
                                             @endif
                                         </div>
 
-                                        @if ($selectedAddressId == $address->id)
+                                        @if (isset($state['addressId']) && $state['addressId'] === $address->id)
                                         <div class="text-sm font-semibold text-bunababy-200"
                                             wire:click="showEditDialog({{ $address->id }})"
                                         >
@@ -58,7 +73,7 @@
                                     <!-- Role Description -->
                                     <div class="mt-2 text-sm text-left text-gray-600">
                                         {{ $address->full_address }}
-                                        @if ($selectedAddressId == $address->id)
+                                        @if (isset($state['addressId']) && $state['addressId'] === $address->id)
                                             <div class="py-2">{{ $address->note ?? '' }}</div>
                                             @if (isset($address->share_location))
                                                 <a href="{{ $address->share_location }}" class="flex items-center text-bunababy-200" target="_blank">
@@ -91,6 +106,13 @@
             </x-secondary-button>
 
             @endif
+
+            <div class="flex items-center py-4">
+                <x-button wire:click="update" wire:loading.attr="disabled" wire:target="update">{{ __('Simpan') }}</x-button>
+                <x-action-message class="ml-3" on="saved">
+                    {{ __('Berhasil disimpan') }}
+                </x-action-message>
+            </div>
         </div>
 
         <x-dialog wire:model="showDialog">

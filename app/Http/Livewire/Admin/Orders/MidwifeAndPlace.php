@@ -3,18 +3,24 @@
 namespace App\Http\Livewire\Admin\Orders;
 
 use App\Models\Address;
+use App\Models\Kecamatan;
+use App\Models\Option;
 use App\Models\Order;
+use App\Models\Place;
+use App\Models\Room;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class MidwifeAndPlace extends Component
 {
+    public $places;
     public $order;
-    public $client;
-    public $selectedAddressId;
-    public $place;
-    public $midwifeId;
+    public $option;
+
+    public $selectedPlace;
+    public $selectedMidwife;
+    public $selectedClient;
 
     public $state = [];
 
@@ -43,68 +49,58 @@ class MidwifeAndPlace extends Component
 
     public function mount(Order $order)
     {
+        $this->places = Place::active()->orderAsc()->get();
+        $this->option = Option::first();
+        $order->load('place');
         $this->order = $order;
-        $this->client = $order->client;
-        $this->place = $order->place;
-        $this->midwifeId = $order->midwife_user_id;
-        $this->selectedAddressId = $order->address_id;
+
+        $this->selectedClient = User::whereId($order->client_user_id)->first();
+
+        $this->state['placeId'] = $order->place_id;
+        $this->setSelectedPlace();
+        $this->state['midwifeId'] = $order->midwife_user_id;
+        $this->setSelectedMidwife();
+
+        $this->state['roomId'] = $order->room_id;
+        $this->state['addressId'] = (int) $order->address_id;
+
+        $this->state['totalDuration'] = $order->total_duration;
+        $this->state['totalTransport'] = $order->total_transport;
     }
 
-    public function updatedMidwifeId()
+    public function setSelectedPlace()
     {
-        if ($this->midwifeId == NULL) {
-            return back();
+        if($this->order->place_id !== $this->state['placeId']) {
+            if($this->order->place->type === Place::TYPE_HOMECARE && $this->selectedPlace->type !== Place::TYPE_CLINIC){
+                $this->state['totalDuration'] = $this->order->total_duration - $this->option->transport_duration;
+                $this->state['totalTransport'] = 0;
+            }
+
+            if($this->order->place->type === Place::TYPE_CLINIC && $this->selectedPlace->type !== Place::TYPE_HOMECARE){
+                $this->state['totalDuration'] = $this->order->total_duration + $this->option->transport_duration;
+            }
         }
-
-        $this->order->update([
-            'midwife_user_id' => $this->midwifeId,
-        ]);
-
-        $this->emit('saved');
+        $this->resetOnPlaceChange();
+        $this->selectedPlace = Place::whereId($this->state['placeId'])->first();
     }
 
-    public function updatedPlace()
+    private function resetOnPlaceChange()
     {
-        $this->order->update([
-            'address_id' => NULL,
-            'place' => $this->place,
-        ]);
-
-        $duration = DB::table('options')->first()->transport_duration;
-
-        if ($this->place == Order::PLACE_CLINIC) {
-            $this->order->update([
-                'total_transport' => 0,
-                'total_duration' => 0,
-                'end_datetime' => $this->order->end_datetime->subMinutes($duration),
-            ]);
-        }
-
-        if ($this->place == Order::PLACE_CLIENT) {
-            $this->order->update([
-                'total_duration' => $duration,
-                'end_datetime' => $this->order->end_datetime->addMinutes($duration),
-            ]);
-        }
-
-        $this->emit('saved');
+        $this->state['roomId'] = null;
+        $this->state['addressId'] = null;
     }
 
-    public function updatedSelectedAddressId()
+    public function setSelectedMidwife()
     {
-        $this->order->update([
-            'address_id' => $this->selectedAddressId,
-        ]);
+        $this->selectedMidwife = User::whereId($this->state['midwifeId'])->first();
+    }
 
-        $transport = 0;
-        if ($this->place !== Order::PLACE_CLINIC) {
-            $transport = calculate_transport(session('order.kecamatan_distance'));
-        }
-
-        $this->order->update([
-            'total_transport' => $transport,
-        ]);
-
+    public function setSelectedAddress($addressId)
+    {
+        $this->state['addressId'] = (int) $addressId;
+        $address = Address::whereId($this->state['addressId'])->first();
+        $kecamatan = Kecamatan::whereId($address->kecamatan_id)->first();
+        $this->state['totalTransport'] = calculate_transport($kecamatan->distance);
         $this->emit('saved');
     }
 
@@ -130,7 +126,7 @@ class MidwifeAndPlace extends Component
         Address::updateOrCreate(
             [
                 'id' => $this->state['id'] ?? time(),
-                'client_user_id' => $this->client->id,
+                'client_user_id' => $this->selectedClient->id,
                 'kecamatan_id' => $this->state['kecamatan_id'],
             ],
             [
@@ -146,22 +142,55 @@ class MidwifeAndPlace extends Component
         $this->showDialog = false;
     }
 
+    public function update()
+    {
+        $this->order->update([
+            'midwife_user_id' => $this->state['midwifeId'],
+            'place_id' => $this->state['placeId'],
+            'address_id' => $this->state['addressId'],
+        ]);
+
+        if($this->selectedPlace->type === Place::TYPE_CLINIC){
+            $this->order->update([
+                'room_id' => $this->state['roomId'],
+            ]);
+        }
+
+        if($this->order->place_id !== $this->selectedPlace->id){
+            $this->order->update([
+                'total_duration' => $this->state['totalDuration'],
+                'total_transport' => $this->state['totalTransport'],
+                // 'start_datetime' => null,
+                // 'end_datetime' => null,
+            ]);
+        }
+
+        $this->emit('saved');
+    }
+
     public function render()
     {
-        $midwives = User::query()
-            ->active()
+        $rooms = [];
+        $midwives = User::active()->midwives()
             ->orderBy('name')
-            ->where('type', User::MIDWIFE)
             ->get();
 
         $addresses = Address::query()
-            ->where('client_user_id', $this->client->id)
+            ->where('client_user_id', $this->selectedClient->id)
             ->get();
+
+        if($this->selectedPlace) {
+            $rooms = Room::active()
+                ->where('place_id', $this->selectedPlace->id)
+                ->orderBy('name')
+                ->get();
+        }
 
         return view('admin.orders.midwife-and-place', [
             'midwives' => $midwives,
             'addresses' => $addresses,
-            'kecamatans' => DB::table('kecamatans')->orderBy('name')->get(['id', 'name'])
+            'kecamatans' => DB::table('kecamatans')->orderBy('name')->get(['id', 'name']),
+            'rooms' => $rooms,
         ]);
     }
 }

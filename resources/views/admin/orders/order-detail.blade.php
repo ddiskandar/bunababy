@@ -2,16 +2,18 @@
     <div class="overflow-hidden bg-white rounded">
         <!-- Card Body: User Profile -->
         <div class="items-center justify-between w-full px-4 py-5 border-b md:px-8 md:flex border-slate-200">
-            <div class="flex items-center space-x-3 space-y-0 ">
-                <a href="{{ route('orders') }}">
-                    <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
-                    </svg>
-                </a>
-                <div class="text-xl font-semibold">{{ $order->midwife->name ?? '' }}</div>
-                <div class="hidden md:block">•</div>
+            <div class="flex flex-col space-y-0 md:space-x-3 md:items-center md:flex-row ">
+                <div class="flex flex-col md:items-center md:flex-row">
+                    <a href="{{ route('orders') }}">
+                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
+                        </svg>
+                    </a>
+                    <div class="text-xl font-semibold">{{ $order->midwife->name ?? '[ Bidan belum dipilih ]' }}</div>
+                </div>
                 <div class="flex items-center justify-start gap-2 md:gap-4 md:justify-between">
+                    <div class="hidden md:block">•</div>
                     <div>
                         {{ $order->no_reg }}
                     </div>
