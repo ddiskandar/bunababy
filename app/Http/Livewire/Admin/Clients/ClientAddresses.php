@@ -91,7 +91,7 @@ class ClientAddresses extends Component
         $this->showDialog = false;
 
         Notification::make()
-            ->title('Alamat berhasil disimpan')
+            ->title('berhasil disimpan')
             ->success()
             ->send();
 

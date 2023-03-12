@@ -20,7 +20,7 @@ class OrderController extends Controller
 
         if (auth()->check() && is_null(auth()->user()->address)) {
             Notification::make()
-                ->title('Tambah Alamat dulu ya')
+                ->title('Tambah Alamat')
                 ->success()
                 ->send();
 

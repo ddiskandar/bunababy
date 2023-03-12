@@ -98,7 +98,7 @@ class ManageNotifications extends Component
     {
         auth()->user()->notifications()->delete();
         Notification::make()
-            ->title('All Notifications deleted successfully')
+            ->title('Deleted successfully')
             ->success()
             ->send();
         $this->emit('refreshSidebar');
