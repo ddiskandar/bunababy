@@ -18,7 +18,7 @@ class RoomSeeder extends Seeder
             ['name' => 'Ruang Tengah', 'place_id' => 2],
 
             ['name' => 'Ruang Baby Spa', 'place_id' => 3],
-            ['name' => 'Ruang Tengah', 'place_id' => 3],
+            ['name' => 'Ruang Utama', 'place_id' => 3],
         ]);
 
         DB::table('room_treatment')->insert([
