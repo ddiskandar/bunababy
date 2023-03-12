@@ -35,7 +35,7 @@ class DailyMidwifeSchedules extends Component
                 })
                 ->select(
                     'id',
-                    'place',
+                    'place_id',
                     'midwife_user_id',
                     'client_user_id',
                     'start_datetime',
@@ -44,6 +44,7 @@ class DailyMidwifeSchedules extends Component
                     'status'
                 )
                 ->with(
+                    'place:id,name',
                     'client:id,name',
                     'address:id,kecamatan_id',
                     'treatments:id,name',

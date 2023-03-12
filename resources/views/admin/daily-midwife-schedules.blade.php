@@ -40,7 +40,7 @@
                                         </div>
                                     </div>
                                     <div class="ml-6">
-                                        {{ $schedule->place() }}
+                                        {{ $schedule->place->name }}
                                     </div>
                                 </div>
                                 <div>
