@@ -30,6 +30,9 @@
             <div class="space-y-1">
                 <div>
                     <x-label for="role" value="{{ __('Alamat') }}" />
+                    @if (! isset($order->address_id))
+                    <div class="py-3 text-sm text-red-600">Belum ada yang dipilih</div>
+                    @endif
                     <x-input-error for="role" class="mt-2" />
 
                     <div class="relative z-0 mt-1 border border-gray-200 rounded-lg cursor-pointer">
