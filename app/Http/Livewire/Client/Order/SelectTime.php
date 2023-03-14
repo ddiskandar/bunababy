@@ -46,7 +46,7 @@ class SelectTime extends Component
             ->select('id', 'start_datetime', 'end_datetime')
             ->get();
 
-        $slots = DB::table('slots')->where('place_id', session('order.place_id'))->get();
+        $slots = DB::table('slots')->where('place_id', session('order.place_id'))->orderBy('time')->get();
 
         $data = collect([]);
 

@@ -58,8 +58,8 @@ class SelectMidwifeAvailableDate extends Component
             ->where('midwife_user_id', $this->midwife->id)
             ->whereDate('date', $date)
             ->where(function ($query) {
-                $query->where('type', Timetable::LEAVE)
-                    ->orWhere('type', Timetable::CLINIC);
+                $query->where('type', Timetable::TYPE_LEAVE)
+                    ->orWhere('type', Timetable::TYPE_CLINIC);
             })
             ->first();
 
@@ -95,8 +95,8 @@ class SelectMidwifeAvailableDate extends Component
             ->where('midwife_user_id', $this->midwife->id)
             ->whereBetween('date', [Carbon::parse($this->selectedMonth)->startOfMonth()->startOfWeek(), Carbon::parse($this->selectedMonth)->endOfMonth()->endOfWeek()])
             ->where(function ($query) {
-                $query->where('type', Timetable::LEAVE)
-                    ->orWhere('type', Timetable::CLINIC);
+                $query->where('type', Timetable::TYPE_LEAVE)
+                    ->orWhere('type', Timetable::TYPE_CLINIC);
             })
             ->get();
 
@@ -106,7 +106,7 @@ class SelectMidwifeAvailableDate extends Component
             $new = collect(['date' => $date]);
 
             foreach ($timetables as $timetable) {
-                if ($timetable->date->format('m-d') == $date->format('m-d')) {
+                if ($timetable->date->format('m-d') === $date->format('m-d')) {
                     foreach ($this->slots as $slot) {
                         $new->put($slot->time, 'booked');
                     }
@@ -115,7 +115,7 @@ class SelectMidwifeAvailableDate extends Component
 
             foreach ($schedules as $order) {
 
-                if ($order->start_datetime->format('m-d') == $date->format('m-d')) {
+                if ($order->start_datetime->format('m-d') === $date->format('m-d')) {
                     foreach ($this->slots as $slot) {
                         if (Carbon::parse($date->toDateString() . $slot->time)->between($order->start_datetime, $order->end_datetime)) {
                             $new->put($slot->time, 'booked');

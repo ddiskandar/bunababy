@@ -24,6 +24,7 @@
         <form wire:submit.prevent="add">
             <div class="mt-4 space-y-1">
                 <x-label for="time">Tambah Slot baru</x-label>
+                <div class="py-2 text-red-600">Pastikan pilih menit dalam interval 15 menit. misal 07:00 07:15 07:30 07:45</div>
                 <x-input wire:model.defer="time" class="w-full" type="time" id="time" />
                 <x-input-error for="time" class="mt-2" />
             </div>
