@@ -99,18 +99,16 @@ class ManageOrders extends Component
     public function render()
     {
         $query = Order::query()
-            ->when(auth()->user()->isMidwife(), function ($query) {
-                $query->where('midwife_user_id', auth()->id());
-            })
-            ->where(function ($query) {
-                $query->where('no_reg', 'LIKE', '%' . $this->filterSearch . '%')
-                    ->orWhereHas('client', function ($query) {
-                        $query->where('name', 'LIKE', '%' . $this->filterSearch . '%')
-                            ->orWhereHas('addresses.kecamatan', function ($query) {
-                                $query->where('name', 'like', '%' . $this->filterSearch . '%');
-                            });
-                    });
-            })
+            ->when(auth()->user()->isMidwife(), fn ($query) => $query->where('midwife_user_id', auth()->id()))
+            ->where(fn ($query) => $query
+                ->where('no_reg', 'LIKE', '%' . $this->filterSearch . '%')
+                ->orWhereHas('client', fn ($query) => $query
+                    ->where('name', 'LIKE', '%' . $this->filterSearch . '%')
+                    ->orWhereHas('addresses.kecamatan', fn ($query) => $query
+                        ->where('name', 'like', '%' . $this->filterSearch . '%')
+                    )
+                )
+            )
             ->whereBetween('start_datetime', [$this->filterFromDate, Carbon::parse($this->filterToDate)->addDay()->toDateString()])
             ->where('place_id', 'LIKE', '%' . $this->filterPlace . '%')
             ->where('status', 'LIKE', '%' . $this->filterStatus . '%')
