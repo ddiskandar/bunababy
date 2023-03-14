@@ -7,7 +7,7 @@
 }
 
 .filament-notifications {
-    @apply min-w-fit inset-24;
+    @apply bottom-24;
 }
 
 .filament-notifications-notification {

@@ -23,8 +23,8 @@ class OrderCartController extends Controller
 
         if (session()->missing('order.place_type') || session()->missing('order.place_id') || session()->missing('order.date') || session()->missing('order.kecamatan_id')) {
             Notification::make()
-                ->title('Pilih lokasi')
-                ->success()
+                ->title('Pilih lokasi dulu ya')
+                ->danger()
                 ->send();
 
             return redirect()->route('order.create');
