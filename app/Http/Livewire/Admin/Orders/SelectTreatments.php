@@ -6,6 +6,7 @@ use App\Models\Family;
 use App\Models\Order;
 use App\Models\Price;
 use App\Models\Treatment;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Arr;
 use Livewire\Component;
 
@@ -89,7 +90,12 @@ class SelectTreatments extends Component
 
         foreach ($orders as $order) {
             if ($order->activeBetween($this->order->start_datetime, $this->order->end_datetime->addMinutes($treatment->duration))->exists()) {
-                session()->flash('treatments', 'Tidak dapat membuat reservasi pada pilihan dan rentang waktu ini, silahkan pilih pada slot waktu yang kosong.');
+
+                Notification::make()
+                    ->title('Jadwal tidak tersedia!')
+                    ->danger()
+                    ->send();
+
                 return back();
             }
         }

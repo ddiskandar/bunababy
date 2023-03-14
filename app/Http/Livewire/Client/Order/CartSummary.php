@@ -45,8 +45,6 @@ class CartSummary extends Component
             return back();
         }
 
-        $options = Option::first();
-
         $orders = Order::query()
             ->locked()
             ->when(session('order.place_type') === Place::TYPE_HOMECARE,
@@ -58,15 +56,14 @@ class CartSummary extends Component
             ->whereDate('start_datetime', session('order.date'))
             ->get();
 
-        $date = session('order.date')->toDateString();
+        $startTime = Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'));
 
         foreach ($orders as $order) {
             if ($order->activeBetween(
-                Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time')),
-                Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'))->addMinutes(session('order.addMinutes'))
+                $startTime,
+                $startTime->addMinutes(session('order.addMinutes') + session('order.place_transport_duration'))
             )->exists()
             ) {
-
             Notification::make()
                 ->title('Jadwal Reservasi Bentrok!')
                 ->danger()

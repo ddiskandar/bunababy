@@ -32,6 +32,7 @@ class SelectPlace extends Component
         $place = Place::find($this->selectedPlace ?? $this->places->first()->id);
         session()->put('order.place_id', $place->id);
         session()->put('order.place_type', $place->type);
+        session()->put('order.place_transport_duration', $place->transport_duration);
     }
 
     public function render()

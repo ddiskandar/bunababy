@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Admin\Orders;
 
 use App\Models\Address;
 use App\Models\Kecamatan;
-use App\Models\Option;
 use App\Models\Order;
 use App\Models\Place;
 use App\Models\Room;
@@ -16,7 +15,6 @@ class MidwifeAndPlace extends Component
 {
     public $places;
     public $order;
-    public $option;
 
     public $selectedPlace;
     public $selectedMidwife;
@@ -52,7 +50,6 @@ class MidwifeAndPlace extends Component
     public function mount(Order $order)
     {
         $this->places = Place::active()->orderAsc()->get();
-        $this->option = Option::first();
         $order->load('place');
         $this->order = $order;
 
@@ -76,12 +73,12 @@ class MidwifeAndPlace extends Component
         $this->selectedPlace = Place::whereId($this->state['placeId'])->first();
         if ($this->order->place_id !== $this->selectedPlace->id) {
             if ($this->order->place->type === Place::TYPE_HOMECARE && $this->selectedPlace->type === Place::TYPE_CLINIC){
-                $this->state['totalDuration'] = $this->order->total_duration - $this->option->transport_duration;
+                $this->state['totalDuration'] = $this->order->total_duration - $this->selectedPlace->transport_duration;
                 $this->state['totalTransport'] = 0;
             }
 
             if ($this->order->place->type === Place::TYPE_CLINIC && $this->selectedPlace->type === Place::TYPE_HOMECARE){
-                $this->state['totalDuration'] = $this->order->total_duration + $this->option->transport_duration;
+                $this->state['totalDuration'] = $this->order->total_duration + $this->selectedPlace->transport_duration;
             }
         }
     }

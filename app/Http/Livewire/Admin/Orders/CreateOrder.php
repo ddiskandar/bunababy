@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Admin\Orders;
 
 use App\Models\Kecamatan;
-use App\Models\Option;
 use App\Models\Order;
 use App\Models\Place;
 use App\Models\Room;
@@ -18,7 +17,6 @@ use Livewire\Component;
 class CreateOrder extends Component
 {
     public $places;
-    public $option;
 
     public $selectedPlace;
     public $selectedMidwife;
@@ -36,7 +34,6 @@ class CreateOrder extends Component
 
     public function mount()
     {
-        $this->option = Option::first();
         $this->places = Place::active()->orderAsc()->get();
 
         $this->state['startTime'] = null;
@@ -58,9 +55,7 @@ class CreateOrder extends Component
 
     private function setAddMinutes()
     {
-        $this->state['addMinutes'] = isset($this->selectedPlace->type) && $this->selectedPlace->type === Place::TYPE_HOMECARE
-            ? $this->option->transport_duration
-            : 0;
+        $this->state['addMinutes'] = $this->selectedPlace->transport_duration;
     }
 
     private function resetOnPlaceChange()
@@ -135,6 +130,7 @@ class CreateOrder extends Component
         session()->put('order', [
             'place_id' => $this->selectedPlace->id,
             'place_type' => $this->selectedPlace->type,
+            'place_transport_duration' => $this->selectedPlace->transport_duration,
             'room_id' => $this->state['roomId'] ?? null,
             'midwife_user_id' => $this->selectedMidwife->id,
             'start_time_id' => $this->state['startTimeId'],
@@ -145,13 +141,14 @@ class CreateOrder extends Component
             'order.treatments' => [],
         ]);
 
+        $startTime = Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'));
+
         foreach ($orders as $order) {
             if ($order->activeBetween(
-                    Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time')),
-                    Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'))->addMinutes(session('order.addMinutes'))
+                    $startTime,
+                    $startTime->addMinutes(session('order.addMinutes') + session('order.place_transport_duration'))
                 )->exists()
                 ) {
-
                 Notification::make()
                     ->title('Jadwal Reservasi Bentrok!')
                     ->danger()

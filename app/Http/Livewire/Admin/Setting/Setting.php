@@ -11,12 +11,10 @@ class Setting extends Component
 
     public $rules = [
         'state.timeout' => 'required|numeric',
-        'state.transport_duration' => 'required|numeric',
     ];
 
     public $validationAttributes = [
         'state.timeout' => 'Batas waktu DP',
-        'state.transport_duration' => 'Durasi Transport',
     ];
 
     public function mount()
@@ -30,7 +28,6 @@ class Setting extends Component
 
         Option::where('id', 1)->update([
             'timeout' => $this->state['timeout'],
-            'transport_duration' => $this->state['transport_duration'],
         ]);
 
         $this->emit('saved');

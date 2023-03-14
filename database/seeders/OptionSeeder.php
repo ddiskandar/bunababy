@@ -23,7 +23,6 @@ class OptionSeeder extends Seeder
             'account' => 'BCA 2810417067',
             'account_name' => 'a/n Febrianti Nur Azizah',
             'timeout' => 60, // minutes
-            'transport_duration' => 40, // minutes
         ]);
     }
 }

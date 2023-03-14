@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('desc');
             $table->tinyInteger('type');
+            $table->integer('transport_duration')->default(0);
             $table->integer('order');
             $table->boolean('active')->default(true);
             $table->timestamps();
