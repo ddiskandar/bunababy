@@ -6,6 +6,7 @@ use App\Models\Option;
 use App\Models\Order;
 use App\Models\Place;
 use Carbon\Carbon;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -47,23 +48,31 @@ class CartSummary extends Component
         $options = Option::first();
 
         $orders = Order::query()
-            ->when(session('order.place_type') === Place::TYPE_HOMECARE, function ($query) {
-                return $query->where('midwife_user_id', session('order.midwife_user_id'));
-            })
-            ->when(session('order.place_type') === Place::TYPE_CLINIC, function ($query) {
-                return $query->where('room_id', session('order.room_id'));
-            })
             ->locked()
+            ->when(session('order.place_type') === Place::TYPE_HOMECARE,
+                fn ($query) => $query->where('midwife_user_id', session('order.midwife_user_id')))
+            ->when(session('order.place_type') === Place::TYPE_CLINIC,
+                fn ($query) => $query->where('room_id', session('order.room_id'))
+            )
+            ->select('id', 'start_datetime', 'end_datetime')
             ->whereDate('start_datetime', session('order.date'))
             ->get();
 
         $date = session('order.date')->toDateString();
 
         foreach ($orders as $order) {
-            // TODO : Cek bentrok
-            if ($order->activeBetween($date . ' ' . $order->getStartTime(), $date . ' ' . Carbon::parse($order->getEndTime())->addMinutes($options->transport_duration))->exists()) {
-                session()->flash('treatments', 'Tidak dapat membuat reservasi pada pilihan dan rentang waktu ini, silahkan pilih slot waktu yang kosong.');
-                return back();
+            if ($order->activeBetween(
+                Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time')),
+                Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'))->addMinutes(session('order.addMinutes'))
+            )->exists()
+            ) {
+
+            Notification::make()
+                ->title('Jadwal Reservasi Bentrok!')
+                ->danger()
+                ->send();
+
+            return back();
             }
         }
 
