@@ -113,14 +113,13 @@ class CreateOrder extends Component
     {
         $orders = Order::query()
             ->locked()
-            ->when($this->selectedPlace->type === Place::TYPE_HOMECARE, function ($query) {
-                return $query->where('midwife_user_id', $this->selectedMidwife->id);
-            })
-            ->when($this->selectedPlace->type === Place::TYPE_CLINIC, function ($query) {
-                return $query->where('place_id', $this->selectedPlace->id)
-                    ->where('room_id', $this->state['roomId']);
-            })
-            ->whereDate('start_datetime', $this->state['date'])
+            ->when($this->selectedPlace->type === Place::TYPE_HOMECARE,
+                fn ($query) => $query->where('midwife_user_id', $this->selectedMidwife->id)
+            )->when($this->selectedPlace->type === Place::TYPE_CLINIC,
+                fn ($query) => $query
+                    ->where('place_id', $this->selectedPlace->id)
+                    ->where('room_id', $this->state['roomId'])
+            )->whereDate('start_datetime', $this->state['date'])
             ->where('midwife_user_id', $this->selectedMidwife->id)
             ->select('id', 'start_datetime', 'end_datetime')
             ->get();
