@@ -102,7 +102,7 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
         if ($timetables->contains('date', Carbon::parse($order->start_datetime->toDateString()))) {
             foreach ($timetables as $timetable) {
                 if ($timetable->midwife_user_id == $order->midwife_user_id) {
-                    $status = $timetable->type();
+                    $status = $timetable->getTypeString();
                 }
             }
         }

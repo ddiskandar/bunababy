@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Timetables;
 
+use App\Models\Place;
 use App\Models\Timetable;
 use App\Models\User;
 use Carbon\Carbon;
@@ -15,6 +16,7 @@ class ManageTimetables extends Component
 
     public $perPage = 8;
     public $midwives;
+    public $places;
 
     public $showDialog = false;
 
@@ -35,8 +37,9 @@ class ManageTimetables extends Component
 
     protected $rules = [
         'state.midwife_user_id' => 'required',
-        'state.date' => 'required',
+        'state.date' => 'required|date',
         'state.type' => 'required',
+        'state.place_id' => 'required_if:state.type,3',
         'state.note' => 'nullable',
     ];
 
@@ -44,12 +47,14 @@ class ManageTimetables extends Component
         'state.midwife_user_id' => 'bidan',
         'state.date' => 'tanggal',
         'state.type' => 'tipe',
+        'state.place_id' => 'tempat',
         'state.note' => 'catatan',
     ];
 
     public function mount()
     {
-        $this->midwives = User::active()->where('type', User::MIDWIFE)->get();
+        $this->midwives = User::active()->midwives()->get();
+        $this->places = Place::active()->clinics()->get();
         $this->selectedMonth = today()->isoFormat('YYYY-MM');
     }
 
@@ -109,6 +114,7 @@ class ManageTimetables extends Component
                 'midwife_user_id' => $this->state['midwife_user_id'],
                 'date' => $this->state['date'],
                 'type' => $this->state['type'],
+                'place_id' => $this->state['type'] === Place::TYPE_CLINIC ? $this->state['place_id'] : null,
                 'note' => $this->state['note'] ?? '',
             ]
         );
@@ -135,7 +141,7 @@ class ManageTimetables extends Component
                 $query->where('midwife_user_id', auth()->id());
             })
             ->whereMonth('date', Carbon::parse($this->selectedMonth)->month)
-            ->with('midwife')
+            ->with('midwife', 'place')
             ->orderBy('date', 'ASC')
             ->paginate($this->perPage);
 

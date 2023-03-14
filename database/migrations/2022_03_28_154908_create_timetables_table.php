@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('midwife_user_id')->constrained('users')->onDelete('cascade');
             $table->date('date');
             $table->tinyInteger('type');
-            $table->foreignId('room_id')->nullable();
+            $table->foreignId('place_id')->nullable();
             $table->string('note')->nullable();
             $table->timestamps();
         });

@@ -130,18 +130,23 @@
                                 <span
                                     @class([
                                         'inline-flex items-center pl-2 pr-4 text-xs font-semibold leading-5  rounded-full',
-                                        'text-green-800 bg-green-100' => $timetable->type() == 'Lembur',
-                                        'text-red-800 bg-red-100' => $timetable->type() == 'Libur',
-                                        'text-yellow-800 bg-yellow-100' => $timetable->type() == 'Klinik',
+                                        'text-green-800 bg-green-100' => $timetable->type === \App\Models\Timetable::TYPE_OVERTIME,
+                                        'text-red-800 bg-red-100' => $timetable->type === \App\Models\Timetable::TYPE_LEAVE,
+                                        'text-yellow-800 bg-yellow-100' => $timetable->type === \App\Models\Timetable::TYPE_CLINIC,
                                     ])>
                                     <span
                                         @class([
                                             'w-2 h-2 mr-2 rounded-full',
-                                            'bg-green-600 ' => $timetable->type() == 'Lembur',
-                                            'bg-red-600 ' => $timetable->type() == 'Libur',
-                                            'bg-yellow-600 ' => $timetable->type() == 'Klinik',
-                                        ])></span>
-                                    <span>{{ $timetable->type() }}</span>
+                                            'bg-green-600 ' => $timetable->type === \App\Models\Timetable::TYPE_OVERTIME,
+                                            'bg-red-600 ' => $timetable->type === \App\Models\Timetable::TYPE_LEAVE,
+                                            'bg-yellow-600 ' => $timetable->type === \App\Models\Timetable::TYPE_CLINIC,
+                                    ])></span>
+
+                                    @if ($timetable->type === \App\Models\Timetable::TYPE_CLINIC)
+                                        <span>{{ $timetable->place->name }}</span>
+                                    @else
+                                        <span>{{ $timetable->getTypeString() }}</span>
+                                    @endif
                                 </span>
                             </td>
                             <td class="p-3 whitespace-nowrap">
@@ -196,7 +201,7 @@
 
             <div class="h-64 mt-2 space-y-3 overflow-y-auto">
                 <div class="space-y-1">
-                    <x-label   for="state.midwife_user_id">Bidan</x-label>
+                    <x-label for="state.midwife_user_id">Bidan</x-label>
                     <select wire:model.lazy="state.midwife_user_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.midwife_user_id">
                         <option value="" selected>-- Pilih salah satu</option>
                         @foreach ($midwives as $midwife)
@@ -206,22 +211,34 @@
                     <x-input-error for="state.midwife_user_id" class="mt-2" />
                 </div>
                 <div class="space-y-1">
-                    <x-label   for="state.date">Tanggal</x-label>
+                    <x-label for="state.date">Tanggal</x-label>
                     <x-input wire:model.lazy="state.date" class="w-full" type="date" id="state.date" />
                     <x-input-error for="state.date" class="mt-2" />
                 </div>
                 <div class="space-y-1">
-                    <x-label   for="state.type">Tipe</x-label>
+                    <x-label for="state.type">Tipe</x-label>
                     <select wire:model.lazy="state.type" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.type">
                         <option value="" selected>-- Pilih salah satu</option>
-                        <option value="1">Libur</option>
-                        <option value="2">Lembur</option>
-                        <option value="3">Klinik</option>
+                        <option value={{ 1 }}>Libur</option>
+                        <option value={{ 2 }}>Lembur</option>
+                        <option value={{ 3 }}>Klinik</option>
                     </select>
                     <x-input-error for="state.type" class="mt-2" />
                 </div>
+                @if (isset($state['type']) && $state['type'] == \App\Models\Timetable::TYPE_CLINIC)
                 <div class="space-y-1">
-                    <x-label   for="state.note">Catatan</x-label>
+                    <x-label for="state.place_id">Tempat</x-label>
+                    <select wire:model.lazy="state.place_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.place_id">
+                        <option value="" selected>-- Pilih salah satu</option>
+                        @foreach ($places as $place)
+                            <option value="{{ $place->id }}">{{ $place->name }}</option>
+                        @endforeach
+                    </select>
+                    <x-input-error for="state.place_id" class="mt-2" />
+                </div>
+                @endif
+                <div class="space-y-1">
+                    <x-label for="state.note">Catatan</x-label>
                     <x-textarea wire:model.lazy="state.note" class="w-full" type="text" id="state.note" />
                     <x-input-error for="state.note" class="mt-2" />
                 </div>
