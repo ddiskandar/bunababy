@@ -1,13 +1,13 @@
 <x-action-section>
-    <x-slot name="title">Wilayah</x-slot>
-    <x-slot name="description">Daftar wilayah yang menjadi jangkauan bidan.</x-slot>
+    <x-slot name="title">Slot Waktu</x-slot>
+    <x-slot name="description">Daftar slot waktu yang tersedia.</x-slot>
 
     <x-slot name="content">
         <div class="space-y-1">
             <div class="flex flex-wrap gap-2 py-2">
                 @forelse ($slots as $slot)
                     <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 rounded-full text-bunababy-200 bg-bunababy-50">
-                        <span>{{ $slot->time }}</span>
+                        <span>{{ \Carbon\Carbon::parse($slot->time)->format('H:i') }}</span>
                         <button
                             wire:click="delete({{ $slot->id }})"
                             type="button"
@@ -16,7 +16,7 @@
                         </button>
                     </div>
                 @empty
-                    <div class="text-sm text-red-600">Belum ada wilayah yang dipilih</div>
+                    <div class="text-sm text-red-600">Belum ada slot yang dipilih</div>
                 @endforelse
             </div>
         </div>
@@ -30,7 +30,7 @@
             </div>
 
             <div class="py-4">
-                <x-button wire:loading.attr="disabled" wire:target="add">Tambah Wilayah</x-button>
+                <x-button wire:loading.attr="disabled" wire:target="add">Tambah Slot Waktu</x-button>
             </div>
         </form>
     </x-slot>

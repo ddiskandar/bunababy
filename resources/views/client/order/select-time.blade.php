@@ -3,7 +3,7 @@
     <div class="inline-flex items-center mb-2 text-bunababy-400">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
-          </svg>
+        </svg>
         <div class="ml-2 text-sm font-semibold">
             Pilih Waktu Mulai Treatment
         </div>
@@ -16,12 +16,12 @@
                     @if( \Carbon\Carbon::parse(session('order.date')->toDateString().$slot['time'])->gt(now()))
 
                         @php
-                            $isSelected = $slot['id'] == session('order.start_time_id');
+                            $isSelected = $slot['id'] === session('order.start_time_id');
                             $isAvailable = '';
                             $inRange = \Carbon\Carbon::parse($slot['time'])->isBetween(\Carbon\Carbon::parse(session('order.start_time')), \Carbon\Carbon::parse(session('order.start_time'))->addMinutes(session('order.addMinutes')));
                         @endphp
 
-                        @if ($slot['status'] == 'empty')
+                        @if ($slot['status'] === 'empty')
                         <button
                             wire:click="selectTime({{ $slot['id'] }})"
                             @class([
@@ -70,12 +70,12 @@
                     @if(\Carbon\Carbon::parse(session('order.date')->toDateString().$slot['time'])->gt(now()))
 
                         @php
-                            $isSelected = $slot['id'] == session('order.start_time_id');
+                            $isSelected = $slot['id'] === session('order.start_time_id');
                             $isAvailable = '';
                             $inRange = \Carbon\Carbon::parse($slot['time'])->isBetween(\Carbon\Carbon::parse(session('order.start_time')), \Carbon\Carbon::parse(session('order.start_time'))->addMinutes(session('order.addMinutes')));
                         @endphp
 
-                        @if ($slot['status'] == 'empty')
+                        @if ($slot['status'] === 'empty')
                         <button
                             wire:click="selectTime({{ $slot['id'] }})"
                             @class([

@@ -58,7 +58,7 @@ class CreateOrder extends Component
 
     private function setAddMinutes()
     {
-        $this->state['addMinutes'] = $this->selectedPlace->type === Place::TYPE_HOMECARE
+        $this->state['addMinutes'] = isset($this->selectedPlace->type) && $this->selectedPlace->type === Place::TYPE_HOMECARE
             ? $this->option->transport_duration
             : 0;
     }
@@ -69,6 +69,8 @@ class CreateOrder extends Component
         $this->state['roomId'] = null;
         $this->state['startTime'] = null;
         $this->state['startTimeId'] = null;
+        $this->selectedMidwife = null;
+        $this->setAddMinutes();
     }
 
     public function clientSelected($id)
@@ -200,7 +202,7 @@ class CreateOrder extends Component
         if($this->selectedPlace && $this->selectedMidwife && isset($this->state['date'])) {
             $orders = $this->getCurrentExistsOrders();
             $data = collect();
-            $slots = DB::table('slots')->where('place_id', $this->selectedPlace->id)->get();
+            $slots = DB::table('slots')->where('place_id', $this->selectedPlace->id)->orderBy('time')->get();
 
             foreach ($slots as $slot) {
                 $new = collect(['id' => $slot->id]);
