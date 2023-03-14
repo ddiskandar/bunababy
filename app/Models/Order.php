@@ -168,12 +168,13 @@ class Order extends Model
 
     public function getNoReg()
     {
-        return session('order.date')->isoFormat('YYMMDD') . $this->numberStartTime();
+        return time();
+        // return session('order.date')->isoFormat('YYMMDD') . $this->numberStartTime();
     }
 
     public function getInvoice()
     {
-        return 'INV/' . session('order.date')->isoFormat('YYMMDD') . '/BBC/' . $this->numberStartTime();
+        return 'INV/' . session('order.date')->isoFormat('YYMMDD') . '/BBC/' . $this->getNoReg();
     }
 
     public function getTotalTransport()
