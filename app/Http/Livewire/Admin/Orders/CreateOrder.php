@@ -11,6 +11,7 @@ use App\Models\Slot;
 use App\Models\Timetable;
 use App\Models\User;
 use Carbon\Carbon;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -144,8 +145,17 @@ class CreateOrder extends Component
         ]);
 
         foreach ($orders as $order) {
-            if ($order->activeBetween(session('order.date') . ' ' . session('order.start_time'), Carbon::parse(session('order.date') . ' ' . session('order.start_time'))->addMinutes(session('order.addMinutes')))->exists()) {
-                session()->flash('treatments', 'Tidak dapat membuat reservasi pada pilihan dan rentang waktu ini, silahkan pilih pada slot waktu yang kosong.');
+            if ($order->activeBetween(
+                    Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time')),
+                    Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'))->addMinutes(session('order.addMinutes'))
+                )->exists()
+                ) {
+
+                Notification::make()
+                    ->title('Jadwal Reservasi Bentrok!')
+                    ->danger()
+                    ->send();
+
                 return back();
             }
         }
