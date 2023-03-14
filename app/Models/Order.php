@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class Order extends Model
 {
@@ -168,7 +169,7 @@ class Order extends Model
 
     public function getNoReg()
     {
-        return time();
+        return random_int(1000000000, 9999999999);
         // return session('order.date')->isoFormat('YYMMDD') . $this->numberStartTime();
     }
 
