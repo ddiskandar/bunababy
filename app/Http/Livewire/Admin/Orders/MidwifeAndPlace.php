@@ -24,6 +24,8 @@ class MidwifeAndPlace extends Component
 
     public $state = [];
 
+    public $showAllMidwives = false;
+
     public $showDialog = false;
     public $dialogEditMode = false;
 

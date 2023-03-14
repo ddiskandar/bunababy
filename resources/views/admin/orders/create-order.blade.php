@@ -53,6 +53,14 @@
                     @endif
 
                     @if ($selectedKecamatan)
+                    <div class="space-y-1">
+                        <x-label for="state.date">Tanggal Treatment</x-label>
+                        <x-input wire:model="state.date" class="w-full" type="date" id="state.date" />
+                        <x-input-error for="state.date" class="mt-2" />
+                    </div>
+                    @endif
+
+                    @if (isset($state['date']))
                     <div class="inline-flex items-center">
                         <div class="flex items-center h-5 ">
                             <input type="checkbox" wire:model.lazy="showAllMidwives" name="showAllMidwives" class="w-12 transition-all duration-150 ease-out rounded-full cursor-pointer form-switch h-7 text-bunababy-200 focus:ring focus:ring-bunababy-200 focus:ring-opacity-50">
@@ -61,20 +69,26 @@
                             <x-label for="showAllMidwives">
                                 @if ($showAllMidwives)
                                     Semua bidan
+                                @elseif (! $showAllMidwives && $selectedPlace->type === \App\Models\Place::TYPE_CLINIC)
+                                    Hanya Bidan dengan jadwal di {{ $selectedPlace->name }}
                                 @else
-                                    Hanya Bidan di kecamatan ini
+                                    Hanya Bidan dengan jangkauan di {{ $selectedKecamatan->name }}
                                 @endif
                             </x-label>
                         </div>
                     </div>
                     @endif
 
-                    @if ($selectedKecamatan)
+                    @if (isset($state['date']))
                         <div class="space-y-1">
                             <x-label for="state.midwifeId">Bidan</x-label>
                             <select wire:model="state.midwifeId" wire:change="setSelectedMidwife" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.midwifeId">
                                 <option value="" selected>-- Pilih salah satu</option>
                                 @if ($showAllMidwives)
+                                    @foreach ($midwives as $midwife)
+                                        <option value="{{ $midwife->id }}">{{ $midwife->name }}</option>
+                                    @endforeach
+                                @elseif ($selectedPlace->type === \App\Models\Place::TYPE_CLINIC && !$showAllMidwives)
                                     @foreach ($midwives as $midwife)
                                         <option value="{{ $midwife->id }}">{{ $midwife->name }}</option>
                                     @endforeach
@@ -90,14 +104,6 @@
                     @endif
 
                     @if ($selectedMidwife)
-                    <div class="space-y-1">
-                        <x-label for="state.date">Tanggal Treatment</x-label>
-                        <x-input wire:model="state.date" class="w-full" type="date" id="state.date" />
-                        <x-input-error for="state.date" class="mt-2" />
-                    </div>
-                    @endif
-
-                    @if (isset($state['date']))
                     <div class="space-y-1">
                         <x-label for="time">Waktu Treatment</x-label>
                         <div class="-mt-4 divide-y divide-bunababy-50">

@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Place;
 use App\Models\Room;
 use App\Models\Slot;
+use App\Models\Timetable;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,6 @@ use Livewire\Component;
 class CreateOrder extends Component
 {
     public $places;
-    public $midwives;
     public $option;
 
     public $selectedPlace;
@@ -37,11 +37,6 @@ class CreateOrder extends Component
     {
         $this->option = Option::first();
         $this->places = Place::active()->orderAsc()->get();
-        $this->midwives = User::query()
-            ->midwives()->active()
-            ->with('profile')
-            ->orderBy('name')
-            ->get();
 
         $this->state['startTime'] = null;
         $this->state['startTimeId'] = null;
@@ -220,8 +215,6 @@ class CreateOrder extends Component
                 }
                 return 'siang';
             });
-
-            // dd($data);
         }
 
         if($this->selectedClient) {
@@ -238,10 +231,27 @@ class CreateOrder extends Component
                 ->get();
         }
 
+        $timetable = [];
+
+        if ($this->selectedPlace && isset($this->state['date'])){
+            $timetable = Timetable::query()
+                ->where('place_id', $this->selectedPlace->id)
+                ->whereDate('date', Carbon::parse($this->state['date']))
+                ->pluck('midwife_user_id');
+        }
+
+        $midwives = User::active()->midwives()
+            ->when($this->selectedPlace->type === Place::TYPE_CLINIC && ! $this->showAllMidwives,
+                fn ($query) => $query->whereIn('id', $timetable)
+            )->with('profile')
+            ->orderBy('name')
+            ->get();
+
         return view('admin.orders.create-order', [
             'rooms' => $rooms,
             'kecamatans' => $kecamatans,
             'data' => $data,
+            'midwives' => $midwives,
         ]);
     }
 }

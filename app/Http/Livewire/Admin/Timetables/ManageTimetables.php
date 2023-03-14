@@ -114,7 +114,7 @@ class ManageTimetables extends Component
                 'midwife_user_id' => $this->state['midwife_user_id'],
                 'date' => $this->state['date'],
                 'type' => $this->state['type'],
-                'place_id' => $this->state['type'] === Place::TYPE_CLINIC ? $this->state['place_id'] : null,
+                'place_id' => $this->state['place_id'] ?? null,
                 'note' => $this->state['note'] ?? '',
             ]
         );
