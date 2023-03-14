@@ -93,7 +93,7 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
             ->when($this->filterMidwife, function ($query) {
                 $query->where('midwife_user_id', $this->filterMidwife);
             })
-            ->orWhere('type', Timetable::OVERTIME)
+            ->orWhere('type', Timetable::TYPE_OVERTIME)
             ->whereBetween('date', [$this->filterFromDate, $this->filterToDate])
             ->get();
 
@@ -101,7 +101,7 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
 
         if ($timetables->contains('date', Carbon::parse($order->start_datetime->toDateString()))) {
             foreach ($timetables as $timetable) {
-                if ($timetable->midwife_user_id == $order->midwife_user_id) {
+                if ($timetable->midwife_user_id === $order->midwife_user_id) {
                     $status = $timetable->getTypeString();
                 }
             }

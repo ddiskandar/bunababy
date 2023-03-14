@@ -219,13 +219,13 @@
                     <x-label for="state.type">Tipe</x-label>
                     <select wire:model.lazy="state.type" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.type">
                         <option value="" selected>-- Pilih salah satu</option>
-                        <option value={{ 1 }}>Libur</option>
-                        <option value={{ 2 }}>Lembur</option>
-                        <option value={{ 3 }}>Klinik</option>
+                        <option value="1">Libur</option>
+                        <option value="2">Lembur</option>
+                        <option value="3">Klinik</option>
                     </select>
                     <x-input-error for="state.type" class="mt-2" />
                 </div>
-                @if (isset($state['type']) && $state['type'] == \App\Models\Timetable::TYPE_CLINIC)
+                @if (isset($state['type']) && (int) $state['type'] === \App\Models\Timetable::TYPE_CLINIC)
                 <div class="space-y-1">
                     <x-label for="state.place_id">Tempat</x-label>
                     <select wire:model.lazy="state.place_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.place_id">
