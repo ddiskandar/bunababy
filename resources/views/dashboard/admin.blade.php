@@ -45,7 +45,7 @@
     <!-- Card: Simple Widget -->
     <div class="flex flex-col overflow-hidden bg-white rounded shadow-sm">
         <!-- Card Body: Simple Widget -->
-        <div class="w-full p-5 lg:p-6 grow">
+        <a href="/orders?filterMidwife=belumDipilih" class="w-full p-5 lg:p-6 grow">
             <dl>
             <dt class="text-2xl font-semibold">
                 {{ $data['unmidwife'] }}
@@ -54,7 +54,7 @@
                 Belum pilih bidan
             </dd>
             </dl>
-        </div>
+        </a>
         <!-- END Card Body: Simple Widget -->
         </div>
         <!-- END Card: Simple Widget -->
