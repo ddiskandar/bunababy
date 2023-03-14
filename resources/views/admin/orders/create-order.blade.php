@@ -11,33 +11,7 @@
             </div>
             <div class="md:w-2/3 md:pl-2">
                 <div class="max-w-lg space-y-6 ">
-                    <div class="space-y-1">
-                        <x-label for="state.placeId">Tempat</x-label>
-                        <select wire:model="state.placeId" wire:change="setSelectedPlace" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.placeId">
-                            <option value="">--Pilih salah satu</option>
-                            @foreach ($places as $place)
-                            <option value="{{ $place->id }}">{{ $place->name }}</option>
-                            @endforeach
-                        </select>
-                        <x-input-error for="state.placeId" class="mt-2" />
-                    </div>
-
-                    @if ($selectedPlace && $selectedPlace->type === \App\Models\Place::TYPE_CLINIC)
-                    <div class="space-y-1">
-                        <x-label for="state.roomId">Ruangan</x-label>
-                        <select wire:model="state.roomId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.roomId">
-                            <option value="">--Pilih salah satu</option>
-                            @foreach ($rooms as $room)
-                            <option value="{{ $room->id }}">{{ $room->name }}</option>
-                            @endforeach
-                        </select>
-                        <x-input-error for="state.roomId" class="mt-2" />
-                    </div>
-                    @endif
-
-                    @if ($selectedPlace)
                     @livewire('admin.orders.select-client')
-                    @endif
 
                     @if ($selectedClient)
                     <div class="space-y-1">
@@ -49,6 +23,31 @@
                             @endforeach
                         </select>
                         <x-input-error for="state.kecamatanId" class="mt-2" />
+                    </div>
+                    @endif
+
+                    @if ($selectedKecamatan)
+                    <div class="space-y-1">
+                        <x-label for="state.placeId">Tempat</x-label>
+                        <select wire:model="state.placeId" wire:change="setSelectedPlace" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.placeId">
+                            @foreach ($places as $place)
+                            <option value="{{ $place->id }}">{{ $place->name }}</option>
+                            @endforeach
+                        </select>
+                        <x-input-error for="state.placeId" class="mt-2" />
+                    </div>
+                    @endif
+
+                    @if ($selectedPlace && $selectedPlace->type === \App\Models\Place::TYPE_CLINIC)
+                    <div class="space-y-1">
+                        <x-label for="state.roomId">Ruangan</x-label>
+                        <select wire:model="state.roomId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.roomId">
+                            <option value="">--Pilih salah satu</option>
+                            @foreach ($rooms as $room)
+                            <option value="{{ $room->id }}">{{ $room->name }}</option>
+                            @endforeach
+                        </select>
+                        <x-input-error for="state.roomId" class="mt-2" />
                     </div>
                     @endif
 
