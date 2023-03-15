@@ -39,7 +39,7 @@
                 >
                     <img src="{{ $client->profile_photo_url }}" alt="User Avatar" class="inline-block object-cover w-10 h-10 rounded-full">
                     <div class="ml-3">
-                        <p class="font-medium text-md">{{ $client->name }}</p>
+                        <p class="font-medium text-left text-md">{{ $client->name }}</p>
                         <p class="text-sm text-left">{{ $client->address }}</p>
                     </div>
                 </button>

@@ -103,11 +103,11 @@ class Order extends Model
 
     public function scopeBetweenTimes($query, $from, $to)
     {
-        $query->where(function ($query) use ($to, $from) {
+        $query->where(function ($query) use ($from, $to) {
             $query
                 ->whereBetween('start_datetime', [$from, $to])
                 ->orWhereBetween('end_datetime', [$from, $to])
-                ->orWhere(function ($query) use ($to, $from) {
+                ->orWhere(function ($query) use ($from, $to) {
                     $query
                         ->where('start_datetime', '<', $from)
                         ->where('end_datetime', '>', $to);
@@ -197,12 +197,7 @@ class Order extends Model
 
     public function getTotalDuration()
     {
-        $default = 0;
-
-        if (session('order.place_type') === Place::TYPE_HOMECARE) {
-            $default = DB::table('options')->select('transport_duration')->first()->transport_duration;
-        }
-        return collect(session('order.treatments'))->sum('treatment_duration') + $default;
+        return collect(session('order.treatments'))->sum('treatment_duration') + session('order.place_transport_duration');
     }
 
     public function getStartTime()

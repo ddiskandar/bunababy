@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Admin\Orders;
 
 use App\Models\Family;
 use App\Models\Order;
+use Carbon\Carbon;
+use App\Models\Place;
 use App\Models\Price;
 use App\Models\Treatment;
 use Filament\Notifications\Notification;
@@ -34,7 +36,7 @@ class SelectTreatments extends Component
 
     public function mount(Order $order)
     {
-        $order->load('treatments');
+        $order->load('treatments', 'place', 'client');
         $this->order = $order;
 
         $families = Family::query()
@@ -74,33 +76,48 @@ class SelectTreatments extends Component
         $this->emit('saved');
     }
 
+    private function getCurrentExistsOrders()
+    {
+        return Order::locked()
+            ->when($this->order->place->type === Place::TYPE_HOMECARE,
+                fn ($query) => $query->where('midwife_user_id', $this->order->midwife->id)
+            )->when($this->order->place->type === Place::TYPE_CLINIC,
+                fn ($query) => $query
+                    ->where('place_id', $this->order->place_id)
+                    ->where('room_id', $this->order->room_id)
+            )->whereDate('start_datetime', $this->order->start_datetime)
+            ->where('midwife_user_id', $this->order->midwife_user_id)
+            ->select('id', 'start_datetime', 'end_datetime')
+            ->get()
+            ->except($this->order->id);
+    }
+
     public function save()
     {
         $this->validate();
-
-        // TODO Cek bentrok
         $treatment = Treatment::find($this->treatmentId);
 
-        $orders = Order::query()
-            ->where('midwife_user_id', $this->order->midwife_user_id)
-            ->whereDate('start_datetime', $this->order->start_datetime)
-            ->locked()
-            ->get()
-            ->except($this->order->id);
+        // TODO : Check if the time slot is available
+        // $orders = $this->getCurrentExistsOrders();
 
-        foreach ($orders as $order) {
-            if ($order->activeBetween($this->order->start_datetime, $this->order->end_datetime->addMinutes($treatment->duration))->exists()) {
+        // foreach ($orders as $order) {
+        //     $addMinutes = (int) $treatment->duration + (int) $this->order->place->transport_duration;
 
-                Notification::make()
-                    ->title('Jadwal tidak tersedia!')
-                    ->danger()
-                    ->send();
+        //     if ($order->activeBetween(
+        //             $this->order->start_datetime,
+        //             $this->order->end_datetime
+        //                 ->addMinutes($addMinutes)
+        //         )
+        //         ->exists()) {
 
-                return back();
-            }
-        }
+        //         Notification::make()
+        //             ->title('Slot waktu tersedia kurang!')
+        //             ->danger()
+        //             ->send();
 
-        $treatment = Treatment::find($this->treatmentId);
+        //         return back();
+        //     }
+        // }
 
         $this->order->treatments()->attach($this->treatmentId, [
             'treatment_price' => Price::where('treatment_id', $this->treatmentId)

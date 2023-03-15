@@ -44,13 +44,12 @@ class CreateOrder extends Component
 
     public function setSelectedPlace()
     {
-        $this->resetOnPlaceChange();
-
         if (! isset($this->state['placeId'])) {
             $this->state['placeId'] = 1;
         }
         $this->selectedPlace = Place::whereId($this->state['placeId'])->first();
-        $this->setAddMinutes();
+
+        $this->resetOnPlaceChange();
     }
 
     private function setAddMinutes()
@@ -108,8 +107,7 @@ class CreateOrder extends Component
 
     private function getCurrentExistsOrders()
     {
-        $orders = Order::query()
-            ->locked()
+        return Order::locked()
             ->when($this->selectedPlace->type === Place::TYPE_HOMECARE,
                 fn ($query) => $query->where('midwife_user_id', $this->selectedMidwife->id)
             )->when($this->selectedPlace->type === Place::TYPE_CLINIC,
@@ -120,8 +118,6 @@ class CreateOrder extends Component
             ->where('midwife_user_id', $this->selectedMidwife->id)
             ->select('id', 'start_datetime', 'end_datetime')
             ->get();
-
-        return $orders;
     }
 
     public function save()
@@ -136,19 +132,19 @@ class CreateOrder extends Component
             'start_time_id' => $this->state['startTimeId'],
             'start_time' => $this->state['startTime'],
             'date' => Carbon::parse($this->state['date']),
-            'addMinutes' => $this->state['addMinutes'],
+            'addMinutes' => $this->selectedPlace->transport_duration,
             'kecamatan_distance' => $this->selectedKecamatan->distance,
             'order.treatments' => [],
         ]);
 
-        $startTime = Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'));
+        $startDateTime = Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'));
 
         foreach ($orders as $order) {
             if ($order->activeBetween(
-                    $startTime,
-                    $startTime->addMinutes(session('order.addMinutes') + session('order.place_transport_duration'))
-                )->exists()
-                ) {
+                    $startDateTime,
+                    $startDateTime->addMinutes(session('order.place_transport_duration'))
+                )->exists()) {
+
                 Notification::make()
                     ->title('Jadwal Reservasi Bentrok!')
                     ->danger()
@@ -160,6 +156,8 @@ class CreateOrder extends Component
 
         DB::transaction(function () {
 
+            $startDateTime = Carbon::parse(session('order.date')->toDateString() . ' ' . session('order.start_time'));
+
             $order = new Order();
             $order->no_reg = $order->getNoReg();
             $order->invoice = $order->getInvoice();
@@ -167,8 +165,8 @@ class CreateOrder extends Component
             $order->client_user_id = $this->selectedClient->id;
             $order->total_price = $order->getTotalPrice();
             $order->total_duration = $order->getTotalDuration();
-            $order->start_datetime = Carbon::parse(session('order.date')->toDateString() . ' ' . session('order.start_time'));
-            $order->end_datetime = $order->start_datetime->addMinutes(session('order.addMinutes'));
+            $order->start_datetime = $startDateTime;
+            $order->end_datetime = $startDateTime;
             $order->status = Order::STATUS_LOCKED;
 
             if (session('order.place_type') === Place::TYPE_HOMECARE) {

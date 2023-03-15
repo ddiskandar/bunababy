@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Place;
 use App\Models\Room;
 use App\Models\User;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -141,8 +142,44 @@ class MidwifeAndPlace extends Component
         $this->showDialog = false;
     }
 
+    private function getCurrentExistsOrders()
+    {
+        return Order::locked()
+            ->when($this->selectedPlace->type === Place::TYPE_HOMECARE,
+                fn ($query) => $query->where('midwife_user_id', $this->order->midwife_user_id)
+            )->when($this->selectedPlace->type === Place::TYPE_CLINIC,
+                fn ($query) => $query
+                    ->where('place_id', $this->selectedPlace->id)
+                    ->where('room_id', $this->order->room_id)
+            )->whereDate('start_datetime', $this->order->start_datetime)
+            ->where('midwife_user_id', $this->order->midwife_user_id)
+            ->select('id', 'start_datetime', 'end_datetime')
+            ->get()
+            ->except($this->order->id);
+    }
+
     public function update()
     {
+        // $orders = $this->getCurrentExistsOrders();
+
+        // foreach ($orders as $order) {
+
+        //     if ($order->activeBetween(
+        //             $this->order->start_datetime,
+        //             $this->order->end_datetime
+        //                 ->addMinutes($this->order->place->transport_duration)
+        //         )
+        //         ->exists()) {
+
+        //         Notification::make()
+        //             ->title('Slot waktu tersedia kurang!')
+        //             ->danger()
+        //             ->send();
+
+        //         return back();
+        //     }
+        // }
+
         $this->order->update([
             'midwife_user_id' => $this->state['midwifeId'],
             'place_id' => $this->state['placeId'],

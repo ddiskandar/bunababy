@@ -35,42 +35,28 @@ class CartSummary extends Component
 
     public function checkout()
     {
-        if (session()->missing('order.start_time')) {
-            session()->flash('treatments', 'Belum ada slot yang dipilih, silahkan anda mulai reservasi dengan memilih waktu mulai treatment');
-            return back();
-        }
-
-        if (session()->has('order.treatments') and count(session('order.treatments')) <= 0) {
-            session()->flash('treatments', 'Belum ada treatment yang dipilih, silahkan anda pilih terlebih dahulu');
-            return back();
-        }
+        $startTime = Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'));
 
         $orders = Order::query()
-            ->locked()
             ->when(session('order.place_type') === Place::TYPE_HOMECARE,
                 fn ($query) => $query->where('midwife_user_id', session('order.midwife_user_id')))
             ->when(session('order.place_type') === Place::TYPE_CLINIC,
                 fn ($query) => $query->where('room_id', session('order.room_id'))
             )
-            ->select('id', 'start_datetime', 'end_datetime')
             ->whereDate('start_datetime', session('order.date'))
-            ->get();
+            ->activeBetween($startTime->toDateTimeString(), $startTime
+                ->addMinutes(
+                    (int) session('order.addMinutes') + (int) session('order.place_transport_duration')
+                )->toDateTimeString()
+            );
 
-        $startTime = Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'));
-
-        foreach ($orders as $order) {
-            if ($order->activeBetween(
-                $startTime,
-                $startTime->addMinutes(session('order.addMinutes') + session('order.place_transport_duration'))
-            )->exists()
-            ) {
-            Notification::make()
-                ->title('Jadwal Reservasi Bentrok!')
-                ->danger()
-                ->send();
+        if ($orders->exists()) {
+        Notification::make()
+            ->title('Jadwal Reservasi Bentrok!')
+            ->danger()
+            ->send();
 
             return back();
-            }
         }
 
         return to_route('order.checkout');
