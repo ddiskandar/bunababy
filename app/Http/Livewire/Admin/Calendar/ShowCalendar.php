@@ -97,24 +97,23 @@ class ShowCalendar extends Component
             ->get();
 
         $this->titles = collect();
-        $this->colStart = collect();
+        $this->colStart = collect([
+            'midwives' => collect([]),
+            'clinics' => collect([]),
+        ]);
 
-        $this->colStart->put(1, 2);
-
-
-        // $this->titles->push(['col-start' => 2, 'name' => 'Klinik Cimahi']);
-        // $this->titles->push(['col-start' => 3, 'name' => 'Klinik Bandung']);
+        // $this->colStart->put(1, 2);
 
         $i = 2 ;
         foreach ($midwives as $midwife) {
-            $this->colStart->put($midwife->id, $i);
+            $this->colStart['midwives']->put($midwife->id, $i);
             $this->titles->push(['col-start' => $i, 'name' => $midwife->name]);
             $i++;
         }
 
         $i = 2 + $midwives->count();
         foreach ($rooms as $room) {
-            $this->colStart->put($room->id, $i);
+            $this->colStart['clinics']->put($room->id, $i);
             $this->titles->push(['col-start' => $i, 'name' => $room->name . ' - ' . $room->place->name]);
             $i++;
         }
@@ -226,9 +225,9 @@ class ShowCalendar extends Component
 
         foreach ($orders as $order) {
             $schedules->push([
-                'col-start' => $order->place->type === Place::TYPE_HOMECARE
-                    ? $this->colStart[$order->midwife_user_id]
-                    : $this->colStart[$order->room_id],
+                'col-start' => ($order->place->type === Place::TYPE_CLINIC && $order->midwife_user_id === null)
+                    ? $this->colStart['clinics'][$order->room_id]
+                    : $this->colStart['midwives'][$order->midwife_user_id],
                 'row-start' => $this->rowStart[$order->start_datetime->isoFormat('HH:mm')],
                 'row-span' => (int) round($order->start_datetime->diffInMinutes($order->end_datetime) / 15),
                 'id' => $order->id,

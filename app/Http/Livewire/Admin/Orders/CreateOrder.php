@@ -121,7 +121,7 @@ class CreateOrder extends Component
             'order.treatments' => [],
         ]);
 
-        if ($this->getCurrentExistsOrders()->count() > 0) {
+        if ($this->currentActiveOrders()->exists()) {
             Notification::make()
                 ->title('Slot reservasi tidak cukup tersedia!')
                 ->danger()->send();
@@ -162,7 +162,7 @@ class CreateOrder extends Component
         });
     }
 
-    private function getCurrentExistsOrders()
+    private function currentActiveOrders()
     {
         $startDateTime = Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'));
 
@@ -176,10 +176,9 @@ class CreateOrder extends Component
             ->activeBetween(
                 $startDateTime->toDateTimeString(),
                 $startDateTime->addMinutes(
-                    (int) session('order.addMinutes') + (int) session('order.place_transport_duration')
+                    (int) session('order.addMinutes')
                 )->toDateTimeString()
-            )
-            ->get();
+            );
 
         return $currentActiveOrders;
     }
