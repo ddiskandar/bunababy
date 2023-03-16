@@ -144,7 +144,7 @@ class MidwifeAndPlace extends Component
 
     private function getCurrentExistsOrders()
     {
-        return Order::locked()
+        $currentActiveOrders =  Order::locked()
             ->when($this->selectedPlace->type === Place::TYPE_HOMECARE,
                 fn ($query) => $query->where('midwife_user_id', $this->order->midwife_user_id)
             )->when($this->selectedPlace->type === Place::TYPE_CLINIC,
@@ -154,31 +154,28 @@ class MidwifeAndPlace extends Component
             )->whereDate('start_datetime', $this->order->start_datetime)
             ->where('midwife_user_id', $this->order->midwife_user_id)
             ->select('id', 'start_datetime', 'end_datetime')
+            ->activeBetween(
+                $this->order->start_datetime,
+                $this->order->end_datetime
+                    ->addMinutes($this->order->place->transport_duration)
+            )
             ->get()
             ->except($this->order->id);
+
+        return $currentActiveOrders;
     }
 
     public function update()
     {
-        // $orders = $this->getCurrentExistsOrders();
+        $orders = $this->getCurrentExistsOrders();
 
-        // foreach ($orders as $order) {
+        if ($orders->count() > 0) {
+            Notification::make()
+                ->title('Slot waktu tersedia kurang!')
+                ->danger()->send();
 
-        //     if ($order->activeBetween(
-        //             $this->order->start_datetime,
-        //             $this->order->end_datetime
-        //                 ->addMinutes($this->order->place->transport_duration)
-        //         )
-        //         ->exists()) {
-
-        //         Notification::make()
-        //             ->title('Slot waktu tersedia kurang!')
-        //             ->danger()
-        //             ->send();
-
-        //         return back();
-        //     }
-        // }
+            return back();
+        }
 
         $this->order->update([
             'midwife_user_id' => $this->state['midwifeId'],

@@ -11,13 +11,15 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Filament\Notifications\Notification as FlashNotification;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
+use Livewire\Redirector;
 
 class Confirm extends Component
 {
     public $confirmed = false;
 
-    public function confirm()
+    public function confirm(): Redirector|RedirectResponse
     {
         if ($this->clashCheck()) {
             Notification::make()
@@ -32,7 +34,7 @@ class Confirm extends Component
 
     private function clashCheck(): bool
     {
-        $startTime = Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'));
+        $startDateTime = Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'));
 
         $currentActiveOrders = Order::query()
             ->whereDate('start_datetime', session('order.date'))
@@ -42,8 +44,8 @@ class Confirm extends Component
                 fn ($query) => $query->where('room_id', session('order.room_id'))
             )
             ->activeBetween(
-                $startTime->toDateTimeString(),
-                $startTime->addMinutes(
+                $startDateTime->toDateTimeString(),
+                $startDateTime->addMinutes(
                     (int) session('order.addMinutes') + (int) session('order.place_transport_duration')
                 )->toDateTimeString()
             );
@@ -51,7 +53,7 @@ class Confirm extends Component
         return $currentActiveOrders->exists();
     }
 
-    public function orderNow()
+    private function orderNow()
     {
         DB::transaction(function () {
 
