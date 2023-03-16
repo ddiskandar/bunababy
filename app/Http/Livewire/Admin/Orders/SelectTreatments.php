@@ -15,23 +15,22 @@ use Livewire\Component;
 class SelectTreatments extends Component
 {
     public $order;
-    public $treatmentId;
-    public $familyId;
     public $families;
     public $selectedFamily;
+    public $state = [];
 
     protected $listeners = [
         'saved' => '$refresh',
     ];
 
     protected $rules = [
-        'treatmentId' => 'required|exists:treatments,id',
-        'familyId' => 'required',
+        'state.treatmentId' => 'required|exists:treatments,id',
+        'state.familyId' => 'required',
     ];
 
     protected $validationAttributes = [
-        'treatmentId' => 'Treatment',
-        'familyId' => 'Client',
+        'state.treatmentId' => 'Treatment',
+        'state.familyId' => 'Client',
     ];
 
     public function mount(Order $order)
@@ -55,9 +54,9 @@ class SelectTreatments extends Component
         $this->families = collect($families);
     }
 
-    public function updatedFamilyId()
+    public function setSelectedFamily()
     {
-        $this->selectedFamily = $this->families->firstWhere('id', $this->familyId);
+        $this->selectedFamily = $this->families->firstWhere('id', $this->state['familyId']);
     }
 
     public function delete($id)
@@ -78,8 +77,17 @@ class SelectTreatments extends Component
 
     public function save()
     {
+        if (! $this->order->midwife_user_id) {
+            Notification::make()
+                ->title('Bidan belum dipilih!')
+                ->danger()->send();
+
+            return back();
+        }
+
         $this->validate();
-        $treatment = Treatment::where('id', $this->treatmentId)->first();
+
+        $treatment = Treatment::where('id', $this->state['treatmentId'])->first();
 
         $currentActiveOrders =  Order::query()
             ->whereDate('start_datetime', $this->order->start_datetime)
@@ -101,8 +109,8 @@ class SelectTreatments extends Component
             return back();
         }
 
-        $this->order->treatments()->attach($this->treatmentId, [
-            'treatment_price' => Price::where('treatment_id', $this->treatmentId)
+        $this->order->treatments()->attach($this->state['treatmentId'], [
+            'treatment_price' => Price::where('treatment_id', $this->state['treatmentId'])
                 ->where('place_id', $this->order->place_id)->value('amount'),
 
             'treatment_duration' => $treatment->duration,
@@ -117,8 +125,7 @@ class SelectTreatments extends Component
             'total_price' => $this->order->treatments()->sum('treatment_price'),
         ]);
 
-        $this->treatmentId = '';
-        $this->familyId = '';
+        $this->state = [];
         $this->selectedFamily = [];
         $this->emit('saved');
     }

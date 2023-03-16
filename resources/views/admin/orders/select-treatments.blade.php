@@ -28,25 +28,25 @@
 
             <form wire:submit.prevent="save">
                 <div class="space-y-1">
-                    <x-label for="treatmentId">Tambah Treatment</x-label>
-                    <select wire:model="treatmentId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="treatmentId">
+                    <x-label for="state.treatmentId">Tambah Treatment</x-label>
+                    <select wire:model="state.treatmentId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.treatmentId">
                         <option value="" selected>-- Pilih salah satu</option>
                         @foreach ($treatments as $treatment)
                         <option value="{{ $treatment->id }}">{{ $treatment->category_name }} - {{ $treatment->duration }} menit / {{ $treatment->name }}</option>
                         @endforeach
                     </select>
-                    <x-input-error for="treatmentId" class="mt-2" />
+                    <x-input-error for="state.treatmentId" class="mt-2" />
                 </div>
 
                 <div class="mt-4 space-y-1">
-                    <x-label for="familyId">Pilih Client</x-label>
-                    <select wire:model="familyId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="familyId">
+                    <x-label for="state.familyId">Pilih Client</x-label>
+                    <select wire:model="state.familyId" wire:change="setSelectedFamily" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.familyId">
                         <option value="" selected>-- Pilih salah satu</option>
                         @foreach ($families as $family)
                         <option value="{{ $family['id'] }}">{{ $family['name'] . ' - ' . ($family['type'] ?? '-') . ' - ' . ($family['age'] ?? '-') }}</option>
                         @endforeach
                     </select>
-                    <x-input-error for="familyId" class="mt-2" />
+                    <x-input-error for="state.familyId" class="mt-2" />
                 </div>
 
                 @if (session()->has('treatments'))
