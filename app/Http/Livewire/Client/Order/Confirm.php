@@ -17,44 +17,38 @@ class Confirm extends Component
 {
     public $confirmed = false;
 
-    private function getCurrentExistsOrders()
-    {
-        $orders = Order::query()
-            ->locked()
-            ->when($this->selectedPlace->type === Place::TYPE_HOMECARE,
-                fn ($query) => $query->where('midwife_user_id', session('order.midwife_user_id'))
-            )->when($this->selectedPlace->type === Place::TYPE_CLINIC,
-                fn ($query) => $query
-                    ->where('place_id', session('order.place_id'))
-                    ->where('room_id', session('order.room_id'))
-            )->whereDate('start_datetime', Carbon::parse(session('order.date')))
-            ->where('midwife_user_id', session('order.midwife_user_id'))
-            ->select('id', 'start_datetime', 'end_datetime')
-            ->get();
-
-        return $orders;
-    }
-
     public function confirm()
     {
-        $orders = $this->getCurrentExistsOrders();
+        if ($this->clashCheck()) {
+            Notification::make()
+                ->title('Jadwal Reservasi Bentrok!')
+                ->danger()->send();
 
-        foreach ($orders as $order) {
-            if ($order->activeBetween(
-                    Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time')),
-                    Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'))->addMinutes(session('order.addMinutes'))
-                )->exists()) {
-
-                Notification::make()
-                    ->title('Jadwal Reservasi Bentrok!')
-                    ->danger()
-                    ->send();
-
-                return back();
-            }
+            return back();
         }
 
         $this->orderNow();
+    }
+
+    private function clashCheck(): bool
+    {
+        $startTime = Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'));
+
+        $currentActiveOrders = Order::query()
+            ->whereDate('start_datetime', session('order.date'))
+            ->where('place_id', session('order.place_id'))
+            ->when(session('order.place_type') === Place::TYPE_HOMECARE,
+                fn ($query) => $query->where('midwife_user_id', session('order.midwife_user_id')),
+                fn ($query) => $query->where('room_id', session('order.room_id'))
+            )
+            ->activeBetween(
+                $startTime->toDateTimeString(),
+                $startTime->addMinutes(
+                    (int) session('order.addMinutes') + (int) session('order.place_transport_duration')
+                )->toDateTimeString()
+            );
+
+        return $currentActiveOrders->exists();
     }
 
     public function orderNow()

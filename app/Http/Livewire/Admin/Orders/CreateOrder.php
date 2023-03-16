@@ -105,24 +105,8 @@ class CreateOrder extends Component
         $this->emit('timeChanged');
     }
 
-    private function getCurrentExistsOrders()
-    {
-        return Order::locked()
-            ->when($this->selectedPlace->type === Place::TYPE_HOMECARE,
-                fn ($query) => $query->where('midwife_user_id', $this->selectedMidwife->id)
-            )->when($this->selectedPlace->type === Place::TYPE_CLINIC,
-                fn ($query) => $query
-                    ->where('place_id', $this->selectedPlace->id)
-                    ->where('room_id', $this->state['roomId'])
-            )->whereDate('start_datetime', $this->state['date'])
-            ->where('midwife_user_id', $this->selectedMidwife->id)
-            ->select('id', 'start_datetime', 'end_datetime')
-            ->get();
-    }
-
     public function save()
     {
-        $orders = $this->getCurrentExistsOrders();
         session()->put('order', [
             'place_id' => $this->selectedPlace->id,
             'place_type' => $this->selectedPlace->type,
@@ -137,21 +121,12 @@ class CreateOrder extends Component
             'order.treatments' => [],
         ]);
 
-        $startDateTime = Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'));
+        if ($this->getCurrentExistsOrders()->count() > 0) {
+            Notification::make()
+                ->title('Slot reservasi tidak cukup tersedia!')
+                ->danger()->send();
 
-        foreach ($orders as $order) {
-            if ($order->activeBetween(
-                    $startDateTime,
-                    $startDateTime->addMinutes(session('order.place_transport_duration'))
-                )->exists()) {
-
-                Notification::make()
-                    ->title('Jadwal Reservasi Bentrok!')
-                    ->danger()
-                    ->send();
-
-                return back();
-            }
+            return back();
         }
 
         DB::transaction(function () {
@@ -187,15 +162,44 @@ class CreateOrder extends Component
         });
     }
 
+    private function getCurrentExistsOrders()
+    {
+        $startDateTime = Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'));
+
+        $currentActiveOrders = Order::query()
+            ->where('place_id', session('order.place_id'))
+            ->whereDate('start_datetime', session('order.date'))
+            ->when(session('order.place_type') === Place::TYPE_HOMECARE,
+                fn ($query) => $query->where('midwife_user_id', session('order.midwife_user_id')),
+                fn ($query) => $query->where('room_id', session('order.room_id'))
+            )
+            ->activeBetween(
+                $startDateTime->toDateTimeString(),
+                $startDateTime->addMinutes(
+                    (int) session('order.addMinutes') + (int) session('order.place_transport_duration')
+                )->toDateTimeString()
+            )
+            ->get();
+
+        return $currentActiveOrders;
+    }
+
     public function render()
     {
         $orders = [];
         $data = [];
-        $kecamatans = [];
-        $rooms = [];
 
         if($this->selectedPlace && $this->selectedMidwife && isset($this->state['date'])) {
-            $orders = $this->getCurrentExistsOrders();
+            $orders = Order::locked()
+                ->where('place_id', $this->selectedPlace->id)
+                ->whereDate('start_datetime', $this->state['date'])
+                ->when($this->selectedPlace->type === Place::TYPE_HOMECARE,
+                    fn ($query) => $query->where('midwife_user_id', $this->selectedMidwife->id),
+                    fn ($query) => $query->where('room_id', $this->state['roomId'])
+                )
+                ->with('place')
+                ->get();
+
             $data = collect();
             $slots = DB::table('slots')->where('place_id', $this->selectedPlace->id)->orderBy('time')->get();
 
@@ -203,7 +207,7 @@ class CreateOrder extends Component
                 $new = collect(['id' => $slot->id]);
                 $new->put('time', $slot->time);
                 foreach ($orders as $order) {
-                    if (Carbon::parse($this->state['date'] . $slot->time)->between($order->start_datetime, $order->end_datetime)) {
+                    if (Carbon::parse($this->state['date'] . $slot->time)->between($order->start_datetime, $order->end_datetime->addMinutes($order->place->transport_duration))) {
                         $new->put($order->id, 'booked');
                     } else {
                         $new->put($order->id, 'empty');
@@ -223,12 +227,16 @@ class CreateOrder extends Component
             });
         }
 
+        $kecamatans = [];
+
         if($this->selectedClient) {
             $kecamatans = Kecamatan::active()
                 ->whereIn('id', $this->selectedClient->addresses->pluck('kecamatan_id'))
                 ->orderBy('name')
                 ->get();
         }
+
+        $rooms = [];
 
         if($this->selectedPlace) {
             $rooms = Room::active()

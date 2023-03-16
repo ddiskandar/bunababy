@@ -116,7 +116,11 @@
                                                 @php
                                                     $isSelected = $slot['id'] === $state['startTimeId'] ?? '';
                                                     $isAvailable = '';
-                                                    $inRange = \Carbon\Carbon::parse($slot['time'])->isBetween(\Carbon\Carbon::parse($state['startTime']), \Carbon\Carbon::parse($state['startTime'])->addMinutes($state['addMinutes'])); // TODO : add minutes
+                                                    $inRange = \Carbon\Carbon::parse($slot['time'])
+                                                        ->isBetween(
+                                                            \Carbon\Carbon::parse($state['startTime']),
+                                                            \Carbon\Carbon::parse($state['startTime'])
+                                                                ->addMinutes($state['addMinutes'])); // TODO : add minutes
                                                 @endphp
 
                                                 @if ($slot['status'] === 'empty')
@@ -141,7 +145,11 @@
 
                                                 @else
 
-                                                <button class="inline-flex items-center justify-center text-xs font-semibold leading-5 text-red-200 border border-red-200 rounded-full cursor-not-allowed w-14 md:w-20 bg-red-50" >
+                                                <button @class([
+                                                    'inline-flex items-center justify-center text-xs font-semibold leading-5 text-red-200 border border-red-200 rounded-full cursor-not-allowed w-14 md:w-20 bg-red-50',
+                                                    'ring-2 ring-offset-1 ring-bunababy-100/50' => $inRange]
+                                                    )
+                                                >
                                                     <span class="w-2 h-2 mr-1 bg-red-300 rounded-full" ></span>
                                                     <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>
                                                 </button>

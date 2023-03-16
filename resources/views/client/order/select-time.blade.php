@@ -9,114 +9,72 @@
         </div>
     </div>
     <div class="ml-6 -mt-4 divide-y divide-bunababy-50">
-        <div class="py-4">
-            <h3 class="mb-2 text-sm font-semibold">Pagi</h3>
-            <div class="flex flex-wrap gap-2">
-                @foreach ($data['pagi'] as $slot)
-                    @if( \Carbon\Carbon::parse(session('order.date')->toDateString().$slot['time'])->gt(now()))
+        @foreach ($data as $key => $value)
+            <div class="py-4">
+                <h3 class="mb-2 text-sm font-semibold">{{ $key }}</h3>
+                <div class="flex flex-wrap gap-2">
+                    @foreach ($value as $slot)
+                        @if( \Carbon\Carbon::parse(session('order.date')->toDateString().$slot['time'])->gt(now()))
 
-                        @php
-                            $isSelected = $slot['id'] === session('order.start_time_id');
-                            $isAvailable = '';
-                            $inRange = \Carbon\Carbon::parse($slot['time'])->isBetween(\Carbon\Carbon::parse(session('order.start_time')), \Carbon\Carbon::parse(session('order.start_time'))->addMinutes(session('order.addMinutes')));
-                        @endphp
+                            @php
+                                $isSelected = $slot['id'] === session('order.start_time_id');
+                                $isAvailable = '';
+                                $inRange = \Carbon\Carbon::parse($slot['time'])
+                                    ->isBetween(
+                                        \Carbon\Carbon::parse(session('order.start_time')),
+                                        \Carbon\Carbon::parse(session('order.start_time'))
+                                            ->addMinutes(
+                                                (int) session('order.addMinutes') + (int) session('order.place_transport_duration')
+                                            )
+                                    );
+                            @endphp
 
-                        @if ($slot['status'] === 'empty')
-                        <button
-                            wire:click="selectTime({{ $slot['id'] }})"
-                            @class([
-                                'inline-flex items-center justify-center w-14 md:w-20  text-xs font-semibold leading-5 border rounded-full ',
-                                'border-slate-200 ' => ! $isSelected,
-                                'border-transparent bg-bunababy-50 text-bunababy-200' => $isSelected,
-                                'ring-2 ring-offset-1 ring-bunababy-100/50' => $inRange,
-                            ])
-                            >
-                            <span
+                            @if ($slot['status'] === 'empty')
+                            <button
+                                wire:click="selectTime({{ $slot['id'] }})"
                                 @class([
-                                    'w-2 h-2 mr-1 rounded-full ',
-                                    'bg-green-600' => ! $isSelected,
-                                    'bg-bunababy-200' => $isSelected,
+                                    'inline-flex items-center justify-center w-14 md:w-20  text-xs font-semibold leading-5 border rounded-full ',
+                                    'border-slate-200 ' => ! $isSelected,
+                                    'border-transparent bg-bunababy-50 text-bunababy-200' => $isSelected,
+                                    'ring-2 ring-offset-1 ring-bunababy-100/50' => $inRange,
                                 ])
-                            ></span>
-                            <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>
-                        </button>
+                                >
+                                <span
+                                    @class([
+                                        'w-2 h-2 mr-1 rounded-full ',
+                                        'bg-green-600' => ! $isSelected,
+                                        'bg-bunababy-200' => $isSelected,
+                                    ])
+                                ></span>
+                                <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>
+                            </button>
+
+                            @else
+
+                            <button @class([
+                                'inline-flex items-center justify-center text-xs font-semibold leading-5 text-red-200 border border-red-200 rounded-full cursor-not-allowed w-14 md:w-20 bg-red-50',
+                                'ring-2 ring-offset-1 ring-bunababy-100/50' => $inRange]
+                                )
+                            >
+                                <span class="w-2 h-2 mr-1 bg-red-300 rounded-full" ></span>
+                                <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>
+                            </button>
+
+                            @endif
 
                         @else
 
-                        <button class="inline-flex items-center justify-center text-xs font-semibold leading-5 text-red-200 border border-red-200 rounded-full cursor-not-allowed w-14 md:w-20 bg-red-50" >
-                            <span class="w-2 h-2 mr-1 bg-red-300 rounded-full" ></span>
+                        <button class="inline-flex items-center justify-center text-xs font-semibold leading-5 border rounded-full cursor-not-allowed w-14 md:w-20 text-slate-200 border-slate-200 bg-slate-50" >
+                            <span class="w-2 h-2 mr-1 rounded-full bg-slate-300" ></span>
                             <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>
                         </button>
 
                         @endif
 
-                    @else
-
-                    <button class="inline-flex items-center justify-center text-xs font-semibold leading-5 border rounded-full cursor-not-allowed w-14 md:w-20 text-slate-200 border-slate-200 bg-slate-50" >
-                        <span class="w-2 h-2 mr-1 rounded-full bg-slate-300" ></span>
-                        <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>
-                    </button>
-
-                    @endif
-
-                @endforeach
+                    @endforeach
+                </div>
             </div>
-        </div>
-
-        <div class="py-4">
-            <h3 class="mb-2 text-sm font-semibold">Siang</h3>
-            <div class="flex flex-wrap gap-2">
-                @foreach ($data['siang'] as $slot)
-                    @if(\Carbon\Carbon::parse(session('order.date')->toDateString().$slot['time'])->gt(now()))
-
-                        @php
-                            $isSelected = $slot['id'] === session('order.start_time_id');
-                            $isAvailable = '';
-                            $inRange = \Carbon\Carbon::parse($slot['time'])->isBetween(\Carbon\Carbon::parse(session('order.start_time')), \Carbon\Carbon::parse(session('order.start_time'))->addMinutes(session('order.addMinutes')));
-                        @endphp
-
-                        @if ($slot['status'] === 'empty')
-                        <button
-                            wire:click="selectTime({{ $slot['id'] }})"
-                            @class([
-                                'inline-flex items-center justify-center w-14 md:w-20  text-xs font-semibold leading-5 border rounded-full ',
-                                'border-slate-200' => ! $isSelected,
-                                'border-transparent bg-bunababy-50 text-bunababy-200' => $isSelected,
-                                'ring-2 ring-offset-1 ring-bunababy-100/50' => $inRange,
-                            ])
-                            >
-                            <span
-                                @class([
-                                    'w-2 h-2 mr-1 rounded-full ',
-                                    'bg-green-600' => ! $isSelected,
-                                    'bg-bunababy-200' => $isSelected,
-                                ])
-                            ></span>
-                            <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>
-                        </button>
-
-                        @else
-
-                        <button class="inline-flex items-center justify-center text-xs font-semibold leading-5 text-red-200 border border-red-200 rounded-full cursor-not-allowed w-14 md:w-20 bg-red-50" >
-                            <span class="w-2 h-2 mr-1 bg-red-300 rounded-full" ></span>
-                            <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>
-                        </button>
-
-                        @endif
-
-                    @else
-
-                    <button class="inline-flex items-center justify-center text-xs font-semibold leading-5 border rounded-full cursor-not-allowed w-14 md:w-20 text-slate-200 border-slate-200 bg-slate-50" >
-                        <span class="w-2 h-2 mr-1 rounded-full bg-slate-300" ></span>
-                        <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>
-                    </button>
-
-                    @endif
-
-                @endforeach
-            </div>
-        </div>
-
+        @endforeach
     </div>
     @endif
 </div>

@@ -43,7 +43,8 @@ class SelectTime extends Component
             })
             ->whereDate('start_datetime', session('order.date'))
             ->locked()
-            ->select('id', 'start_datetime', 'end_datetime')
+            ->with('place')
+            // ->select('id', 'start_datetime', 'end_datetime')
             ->get();
 
         $slots = DB::table('slots')->where('place_id', session('order.place_id'))->orderBy('time')->get();
@@ -54,7 +55,7 @@ class SelectTime extends Component
             $new = collect(['id' => $slot->id]);
             $new->put('time', $slot->time);
             foreach ($orders as $order) {
-                if (Carbon::parse(session('order.date')->toDateString() . $slot->time)->between($order->start_datetime, $order->end_datetime)) {
+                if (Carbon::parse(session('order.date')->toDateString() . $slot->time)->between($order->start_datetime, $order->end_datetime->addMinutes($order->place->transport_duration))) {
                     $new->put($order->id, 'booked');
                 } else {
                     $new->put($order->id, 'empty');

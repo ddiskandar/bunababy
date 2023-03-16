@@ -7,8 +7,10 @@ use App\Models\Order;
 use App\Models\Place;
 use Carbon\Carbon;
 use Filament\Notifications\Notification;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\Redirector;
 
 class CartSummary extends Component
 {
@@ -21,7 +23,7 @@ class CartSummary extends Component
         'newUser'
     ];
 
-    public function deleteTreatments($id)
+    public function deleteTreatments($id): void
     {
         $treatments = collect(session('order.treatments'))->where('treatment_id', $id);
 
@@ -33,28 +35,12 @@ class CartSummary extends Component
         $this->emit('treatmentDeleted');
     }
 
-    public function checkout()
+    public function checkout(): Redirector|RedirectResponse
     {
-        $startTime = Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'));
-
-        $orders = Order::query()
-            ->when(session('order.place_type') === Place::TYPE_HOMECARE,
-                fn ($query) => $query->where('midwife_user_id', session('order.midwife_user_id')))
-            ->when(session('order.place_type') === Place::TYPE_CLINIC,
-                fn ($query) => $query->where('room_id', session('order.room_id'))
-            )
-            ->whereDate('start_datetime', session('order.date'))
-            ->activeBetween($startTime->toDateTimeString(), $startTime
-                ->addMinutes(
-                    (int) session('order.addMinutes') + (int) session('order.place_transport_duration')
-                )->toDateTimeString()
-            );
-
-        if ($orders->exists()) {
-        Notification::make()
-            ->title('Jadwal Reservasi Bentrok!')
-            ->danger()
-            ->send();
+        if ($this->clashCheck()) {
+            Notification::make()
+                ->title('Slot reservasi tidak cukup tersedia!')
+                ->danger()->send();
 
             return back();
         }
@@ -62,7 +48,28 @@ class CartSummary extends Component
         return to_route('order.checkout');
     }
 
-    public function render()
+    private function clashCheck(): bool
+    {
+        $startDateTime = Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'));
+
+        $currentActiveOrders = Order::query()
+            ->whereDate('start_datetime', session('order.date'))
+            ->where('place_id', session('order.place_id'))
+            ->when(session('order.place_type') === Place::TYPE_HOMECARE,
+                fn ($query) => $query->where('midwife_user_id', session('order.midwife_user_id')),
+                fn ($query) => $query->where('room_id', session('order.room_id'))
+            )
+            ->activeBetween(
+                $startDateTime->toDateTimeString(),
+                $startDateTime->addMinutes(
+                    (int) session('order.addMinutes') + (int) session('order.place_transport_duration')
+                )->toDateTimeString()
+            );
+
+        return $currentActiveOrders->exists();
+    }
+
+    public function render(): \Illuminate\Contracts\View\View
     {
         $treatments = collect(session('order.treatments')) ?? [];
 
