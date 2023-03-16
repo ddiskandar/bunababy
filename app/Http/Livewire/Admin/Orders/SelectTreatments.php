@@ -83,17 +83,6 @@ class SelectTreatments extends Component
 
         $currentActiveOrders =  Order::query()
             ->whereDate('start_datetime', $this->order->start_datetime)
-            ->when($this->order->midwife_user_id,
-                fn ($query) => $query->where('midwife_user_id', $this->order->midwife_user_id)
-            )
-            // ->when($this->order->place->type === Place::TYPE_HOMECARE,
-            //     fn ($query) => $query->where('midwife_user_id', $this->order->midwife_user_id)
-            // )
-            ->when($this->order->place->type === Place::TYPE_CLINIC,
-                fn ($query) => $query
-                    ->where('place_id', $this->order->place_id)
-                    ->where('room_id', $this->order->room_id)
-            )
             ->where('midwife_user_id', $this->order->midwife_user_id)
             ->activeBetween(
                 $this->order->start_datetime->toDateTimeString(),

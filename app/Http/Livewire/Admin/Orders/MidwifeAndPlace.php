@@ -35,6 +35,7 @@ class MidwifeAndPlace extends Component
         'state.note' => 'nullable|string|min:2|max:255',
         'state.share_location' => 'nullable|string|min:2|max:512',
         'state.kecamatan_id' => 'required|exists:kecamatans,id',
+        'state.midwifeId' => 'required|exists:users,id',
     ];
 
     protected $validationAttributes = [
@@ -44,6 +45,7 @@ class MidwifeAndPlace extends Component
         'state.kecamatan_id' => 'Kecamatan',
         'state.note' => 'Catatan',
         'state.share_location' => 'Google Maps',
+        'state.midwifeId' => 'Bidan',
     ];
 
     protected $listeners = ['saved' => '$refresh'];
@@ -146,15 +148,12 @@ class MidwifeAndPlace extends Component
     {
         $currentActiveOrders =  Order::query()
             ->whereDate('start_datetime', $this->order->start_datetime)
-            ->when($this->selectedPlace->type === Place::TYPE_HOMECARE,
-                fn ($query) => $query->where('midwife_user_id', $this->order->midwife_user_id)
-            )->when($this->selectedPlace->type === Place::TYPE_CLINIC,
+            ->where('midwife_user_id', $this->selectedMidwife->id)
+            ->when($this->selectedPlace->type === Place::TYPE_CLINIC,
                 fn ($query) => $query
-                    ->where('place_id', $this->selectedPlace->id)
-                    ->where('room_id', $this->order->room_id)
+                    ->where('place_id', $this->state['placeId'])
+                    ->where('room_id', $this->state['roomId'])
             )
-            ->where('midwife_user_id', $this->order->midwife_user_id)
-            ->select('id', 'start_datetime', 'end_datetime')
             ->activeBetween(
                 $this->order->start_datetime->toDateTimeString(),
                 $this->order->end_datetime
