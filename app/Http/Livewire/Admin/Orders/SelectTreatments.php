@@ -76,48 +76,41 @@ class SelectTreatments extends Component
         $this->emit('saved');
     }
 
-    private function getCurrentExistsOrders()
-    {
-        return Order::locked()
-            ->when($this->order->place->type === Place::TYPE_HOMECARE,
-                fn ($query) => $query->where('midwife_user_id', $this->order->midwife->id)
-            )->when($this->order->place->type === Place::TYPE_CLINIC,
-                fn ($query) => $query
-                    ->where('place_id', $this->order->place_id)
-                    ->where('room_id', $this->order->room_id)
-            )->whereDate('start_datetime', $this->order->start_datetime)
-            ->where('midwife_user_id', $this->order->midwife_user_id)
-            ->select('id', 'start_datetime', 'end_datetime')
-            ->get()
-            ->except($this->order->id);
-    }
-
     public function save()
     {
         $this->validate();
-        $treatment = Treatment::find($this->treatmentId);
+        $treatment = Treatment::where('id', $this->treatmentId)->first();
 
-        // TODO : Check if the time slot is available
-        // $orders = $this->getCurrentExistsOrders();
+        $currentActiveOrders =  Order::query()
+            ->whereDate('start_datetime', $this->order->start_datetime)
+            ->when($this->order->midwife_user_id,
+                fn ($query) => $query->where('midwife_user_id', $this->order->midwife_user_id)
+            )
+            // ->when($this->order->place->type === Place::TYPE_HOMECARE,
+            //     fn ($query) => $query->where('midwife_user_id', $this->order->midwife_user_id)
+            // )
+            ->when($this->order->place->type === Place::TYPE_CLINIC,
+                fn ($query) => $query
+                    ->where('place_id', $this->order->place_id)
+                    ->where('room_id', $this->order->room_id)
+            )
+            ->where('midwife_user_id', $this->order->midwife_user_id)
+            ->activeBetween(
+                $this->order->start_datetime->toDateTimeString(),
+                $this->order->end_datetime
+                    ->addMinutes($this->order->place->transport_duration + $treatment->duration)
+                    ->toDateTimeString()
+            )
+            ->get()
+            ->except($this->order->id);
 
-        // foreach ($orders as $order) {
-        //     $addMinutes = (int) $treatment->duration + (int) $this->order->place->transport_duration;
+        if ($currentActiveOrders->count() > 0) {
+            Notification::make()
+                ->title('Slot waktu tersedia kurang!')
+                ->danger()->send();
 
-        //     if ($order->activeBetween(
-        //             $this->order->start_datetime,
-        //             $this->order->end_datetime
-        //                 ->addMinutes($addMinutes)
-        //         )
-        //         ->exists()) {
-
-        //         Notification::make()
-        //             ->title('Slot waktu tersedia kurang!')
-        //             ->danger()
-        //             ->send();
-
-        //         return back();
-        //     }
-        // }
+            return back();
+        }
 
         $this->order->treatments()->attach($this->treatmentId, [
             'treatment_price' => Price::where('treatment_id', $this->treatmentId)

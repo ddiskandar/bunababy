@@ -144,20 +144,22 @@ class MidwifeAndPlace extends Component
 
     private function getCurrentExistsOrders()
     {
-        $currentActiveOrders =  Order::locked()
+        $currentActiveOrders =  Order::query()
+            ->whereDate('start_datetime', $this->order->start_datetime)
             ->when($this->selectedPlace->type === Place::TYPE_HOMECARE,
                 fn ($query) => $query->where('midwife_user_id', $this->order->midwife_user_id)
             )->when($this->selectedPlace->type === Place::TYPE_CLINIC,
                 fn ($query) => $query
                     ->where('place_id', $this->selectedPlace->id)
                     ->where('room_id', $this->order->room_id)
-            )->whereDate('start_datetime', $this->order->start_datetime)
+            )
             ->where('midwife_user_id', $this->order->midwife_user_id)
             ->select('id', 'start_datetime', 'end_datetime')
             ->activeBetween(
-                $this->order->start_datetime,
+                $this->order->start_datetime->toDateTimeString(),
                 $this->order->end_datetime
                     ->addMinutes($this->order->place->transport_duration)
+                    ->toDateTimeString()
             )
             ->get()
             ->except($this->order->id);
