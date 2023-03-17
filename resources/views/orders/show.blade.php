@@ -4,7 +4,7 @@
         @livewire('admin.orders.order-detail', [$order->id])
 
         @if (auth()->user()->isAdmin())
-            @livewire('admin.orders.midwife-and-place', [$order->id])
+            @livewire('admin.orders.edit-order', [$order->id])
             @livewire('admin.orders.screening', [$order->id])
             @livewire('admin.orders.select-treatments', [$order->id])
             @livewire('admin.orders.payments', [$order->id])
