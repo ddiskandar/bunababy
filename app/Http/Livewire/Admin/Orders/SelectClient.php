@@ -29,8 +29,7 @@ class SelectClient extends Component
     public function render()
     {
         $clients = [];
-        // if ($this->readyToLoad && strlen($this->search) > 2) {
-        if ($this->readyToLoad) {
+        if ($this->readyToLoad && strlen($this->search) > 2) {
             $clients = User::query()
                 ->clients()->active()
                 // ->select('id', 'name')

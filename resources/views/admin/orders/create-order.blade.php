@@ -116,11 +116,15 @@
                                                 @php
                                                     $isSelected = $slot['id'] === $state['startTimeId'] ?? '';
                                                     $isAvailable = '';
-                                                    $inRange = \Carbon\Carbon::parse($slot['time'])
-                                                        ->isBetween(
-                                                            \Carbon\Carbon::parse($state['startTime']),
-                                                            \Carbon\Carbon::parse($state['startTime'])
-                                                                ->addMinutes($state['addMinutes'])); // TODO : add minutes
+                                                    $inRange = '';
+                                                    if(isset($state['startTime'])) {
+                                                        $inRange = \Carbon\Carbon::parse($slot['time'])
+                                                            ->isBetween(
+                                                                \Carbon\Carbon::parse($state['startTime']),
+                                                                \Carbon\Carbon::parse($state['startTime'])
+                                                                ->addMinutes($state['addMinutes']));
+                                                    }
+
                                                 @endphp
 
                                                 @if ($slot['status'] === 'empty')

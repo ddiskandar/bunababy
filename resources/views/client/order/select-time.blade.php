@@ -19,14 +19,17 @@
                             @php
                                 $isSelected = $slot['id'] === session('order.start_time_id');
                                 $isAvailable = '';
-                                $inRange = \Carbon\Carbon::parse($slot['time'])
-                                    ->isBetween(
-                                        \Carbon\Carbon::parse(session('order.start_time')),
-                                        \Carbon\Carbon::parse(session('order.start_time'))
+                                $inRange = '';
+                                if (session()->has('order.start_time')) {
+                                    $inRange = \Carbon\Carbon::parse($slot['time'])
+                                        ->isBetween(
+                                            \Carbon\Carbon::parse(session('order.start_time')),
+                                            \Carbon\Carbon::parse(session('order.start_time'))
                                             ->addMinutes(
                                                 (int) session('order.addMinutes') + (int) session('order.place_transport_duration')
-                                            )
-                                    );
+                                                )
+                                            );
+                                }
                             @endphp
 
                             @if ($slot['status'] === 'empty')
