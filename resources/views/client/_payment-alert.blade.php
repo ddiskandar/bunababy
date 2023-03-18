@@ -1,4 +1,4 @@
-@if (( isset($reservation) AND ! $reservation->isPaid() ) OR session('status'))
+@if (( isset($reservation) && ! $reservation->isPaid() ) || session('status'))
         <!-- Banner (top fixed) -->
         <div
             x-data="{ show: true }" x-show="show"
@@ -12,13 +12,13 @@
             class="sticky inset-x-0 py-4 bg-blue-600 shadow-lg top-[67px] z-60 px-4">
             <div class="flex items-start justify-between">
                 <div class="inline-flex items-start text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6 flex-none" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="flex-none inline-block w-6 h-6" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                         <circle cx="12" cy="12" r="9"></circle>
                         <line x1="12" y1="8" x2="12" y2="12"></line>
                         <line x1="12" y1="16" x2="12.01" y2="16"></line>
                      </svg>
-                    <p class="text-sm ml-2">
+                    <p class="ml-2 text-sm">
                         Anda mempunyai reservasi aktif yang belum lunas dibayar, bila treatment sudah selesai, silahkan untuk segera melunasi sisa pembayaran. <a href="{{ route('order.show', $reservation->no_reg) }}" class="underline hover:opacity-75">bayar sekarang</a>
                     </p>
                 </div>
