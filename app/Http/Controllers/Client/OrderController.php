@@ -46,7 +46,7 @@ class OrderController extends Controller
             ->where('no_reg', $no_reg)
             ->firstOrFail();
 
-        if (!auth()->check() or $order->client_user_id !== auth()->id()) {
+        if (! auth()->check() || (int) $order->client_user_id !== auth()->id()) {
             return to_route('home');
         }
 
