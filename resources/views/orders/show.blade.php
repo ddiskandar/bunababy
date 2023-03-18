@@ -5,9 +5,9 @@
 
         @if (auth()->user()->isAdmin())
             @livewire('admin.orders.edit-order', [$order->id])
-            @livewire('admin.orders.screening', [$order->id])
             @livewire('admin.orders.select-treatments', [$order->id])
             @livewire('admin.orders.payments', [$order->id])
+            @livewire('admin.orders.screening', [$order->id])
         @endif
 
         @if (now()->isAfter($order->start_datetime))

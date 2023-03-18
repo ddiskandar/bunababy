@@ -185,7 +185,6 @@ class CreateOrder extends Component
 
     public function render()
     {
-        $orders = [];
         $data = [];
 
         if($this->selectedPlace && $this->selectedMidwife && isset($this->state['date'])) {

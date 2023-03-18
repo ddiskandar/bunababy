@@ -7,7 +7,9 @@ use App\Models\Kecamatan;
 use App\Models\Order;
 use App\Models\Place;
 use App\Models\Room;
+use App\Models\Slot;
 use App\Models\User;
+use Carbon\Carbon;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -19,6 +21,7 @@ class EditOrder extends Component
 
     public $selectedPlace;
     public $selectedMidwife;
+    public $selectedAddress;
     public $selectedClient;
 
     public $state = [];
@@ -48,7 +51,10 @@ class EditOrder extends Component
         'state.midwifeId' => 'Bidan',
     ];
 
-    protected $listeners = ['saved' => '$refresh'];
+    protected $listeners = [
+        'timeChanged' => '$refresh',
+        'saved' => '$refresh'
+    ];
 
     public function mount(Order $order)
     {
@@ -59,12 +65,18 @@ class EditOrder extends Component
         $this->selectedClient = User::whereId($order->client_user_id)->first();
 
         $this->state['placeId'] = $order->place_id;
+
         $this->setSelectedPlace();
         $this->state['midwifeId'] = $order->midwife_user_id;
         $this->setSelectedMidwife();
 
         $this->state['roomId'] = $order->room_id;
         $this->state['addressId'] = (int) $order->address_id;
+        $this->setSelectedAddress($this->state['addressId']);
+
+        $this->state['date'] = $order->start_datetime->toDateString();
+        $this->state['startTime'] = $order->start_datetime->toTimeString();
+        $this->state['startTimeId'] = DB::table('slots')->where('place_id', $order->place_id)->where('time', $order->start_datetime->toTimeString())->first()->id;
 
         $this->state['totalDuration'] = $order->total_duration;
         $this->state['totalTransport'] = $order->total_transport;
@@ -90,20 +102,28 @@ class EditOrder extends Component
     {
         $this->state['roomId'] = null;
         $this->state['addressId'] = null;
+        $this->state['startTime'] = null;
+        $this->state['startTimeId'] = null;
         $this->state['totalTransport'] = $this->order->total_transport;
     }
 
-    public function setSelectedMidwife()
+    private function setSelectedMidwife()
     {
         $this->selectedMidwife = User::whereId($this->state['midwifeId'])->first();
     }
 
     public function setSelectedAddress($addressId)
     {
+        // TODO : refactor relationship
+        $this->selectedAddress = Address::whereId($addressId)->first();
+
+        $kecamatanDistance = 0;
+        if ($this->selectedAddress){
+            $kecamatanDistance = Kecamatan::whereId($this->selectedAddress->kecamatan_id)->first()->distance;
+        }
+
+        $this->state['totalTransport'] = calculate_transport($kecamatanDistance);
         $this->state['addressId'] = (int) $addressId;
-        $address = Address::whereId($this->state['addressId'])->first(); // TODO : refactor relationship
-        $kecamatan = Kecamatan::whereId($address->kecamatan_id)->first();
-        $this->state['totalTransport'] = calculate_transport($kecamatan->distance);
     }
 
     public function showEditDialog(Address $address)
@@ -119,6 +139,14 @@ class EditOrder extends Component
         $this->state = [];
         $this->showDialog = true;
         $this->dialogEditMode = false;
+    }
+
+    public function selectTime(Slot $slot)
+    {
+        $this->state['startTime'] = $slot->time;
+        $this->state['startTimeId'] = $slot->id;
+
+        $this->emit('timeChanged');
     }
 
     public function save()
@@ -168,6 +196,30 @@ class EditOrder extends Component
 
     public function update()
     {
+        if($this->selectedPlace->type === Place::TYPE_HOMECARE && ! isset($this->state['addressId'])){
+            Notification::make()
+                ->title('Alamat belum dipilih!')
+                ->danger()->send();
+
+            return back();
+        }
+
+        if($this->selectedPlace->type === Place::TYPE_CLINIC && ! isset($this->state['roomId'])){
+            Notification::make()
+                ->title('Ruangan belum dipilih!')
+                ->danger()->send();
+
+            return back();
+        }
+
+        if(! isset($this->state['startTime'])){
+            Notification::make()
+                ->title('Waktu mulai belum dipilih!')
+                ->danger()->send();
+
+            return back();
+        }
+
         $orders = $this->getCurrentExistsOrders();
 
         if ($orders->count() > 0) {
@@ -181,20 +233,15 @@ class EditOrder extends Component
         $this->order->update([
             'midwife_user_id' => $this->state['midwifeId'],
             'place_id' => $this->state['placeId'],
+            'start_datetime' => Carbon::parse(Carbon::parse($this->state['date'])->toDateString() . ' ' . Carbon::parse($this->state['startTime'])->toTimeString()),
+            'end_datetime' => Carbon::parse(Carbon::parse($this->state['date'])->toDateString() . ' ' . Carbon::parse($this->state['startTime'])->toTimeString())->addMinutes($this->order->total_duration),
             'address_id' => $this->state['addressId'],
+            'room_id' => $this->state['roomId'],
         ]);
-
-        if ($this->selectedPlace->type === Place::TYPE_CLINIC){
-            $this->order->update([
-                'room_id' => $this->state['roomId'],
-            ]);
-        }
 
         if ($this->order->place_id !== $this->selectedPlace->id){
             $this->order->update([
-                'total_duration' => $this->state['totalDuration'],
                 'total_transport' => $this->state['totalTransport'],
-                'end_datetime' => $this->order->start_datetime->addMinutes($this->state['totalDuration']),
             ]);
         }
 
@@ -203,6 +250,47 @@ class EditOrder extends Component
 
     public function render()
     {
+        $data = [];
+
+        if($this->selectedPlace && $this->selectedMidwife && isset($this->state['date'])) {
+            $orders = Order::locked()
+                ->where('place_id', $this->selectedPlace->id)
+                ->whereDate('start_datetime', $this->state['date'])
+                ->when($this->selectedPlace->type === Place::TYPE_HOMECARE,
+                    fn ($query) => $query->where('midwife_user_id', $this->selectedMidwife->id),
+                    fn ($query) => $query->where('room_id', $this->state['roomId'])
+                )
+                ->with('place')
+                ->get()
+                ->except($this->order->id);
+
+            $data = collect();
+            $slots = DB::table('slots')->where('place_id', $this->selectedPlace->id)->orderBy('time')->get();
+
+            foreach ($slots as $slot) {
+                $new = collect(['id' => $slot->id]);
+                $new->put('time', $slot->time);
+                foreach ($orders as $order) {
+                    if (Carbon::parse($this->state['date'] . $slot->time)->between($order->start_datetime, $order->end_datetime->addMinutes($order->place->transport_duration))) {
+                        $new->put($order->id, 'booked');
+                    } else {
+                        $new->put($order->id, 'empty');
+                    }
+                }
+                $new->put('status', ($new->contains('booked')) ? 'booked' : 'empty');
+                $new->put('slot', Carbon::parse($slot->time)->gte(Carbon::parse('12:00:00')) ? 'siang' : 'pagi');
+
+                $data->push($new);
+            }
+
+            $data = $data->groupBy(function ($slot) {
+                if ($slot['slot'] === 'pagi') {
+                    return 'pagi';
+                }
+                return 'siang';
+            });
+        }
+
         $midwives = User::active()->midwives()->orderBy('name')->get();
 
         $addresses = Address::where('client_user_id', $this->selectedClient->id)->get();
@@ -220,6 +308,7 @@ class EditOrder extends Component
             'addresses' => $addresses,
             'kecamatans' => DB::table('kecamatans')->orderBy('name')->get(['id', 'name']),
             'rooms' => $rooms,
+            'data' => $data,
         ]);
     }
 }
