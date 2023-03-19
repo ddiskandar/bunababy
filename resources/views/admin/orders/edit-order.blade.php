@@ -133,7 +133,7 @@
                                             @if( \Carbon\Carbon::parse($state['date'].$slot['time'])->gt(now()))
 
                                                 @php
-                                                    $isSelected = $slot['id'] === $state['startTimeId'];
+                                                    $isSelected = (int) $slot['id'] === (int) $state['startTimeId'];
                                                     $isAvailable = '';
                                                     $inRange = '';
                                                     if(isset($state['startTime'])) {

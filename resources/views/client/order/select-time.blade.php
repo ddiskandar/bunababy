@@ -17,7 +17,7 @@
                         @if( \Carbon\Carbon::parse(session('order.date')->toDateString().$slot['time'])->gt(now()))
 
                             @php
-                                $isSelected = $slot['id'] === session('order.start_time_id');
+                                $isSelected = (int) $slot['id'] === (int) session('order.start_time_id');
                                 $isAvailable = '';
                                 $inRange = '';
                                 if (session()->has('order.start_time')) {

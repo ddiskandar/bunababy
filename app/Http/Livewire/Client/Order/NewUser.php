@@ -66,7 +66,7 @@ class NewUser extends Component
         DB::transaction(function () {
 
             $newUser = Arr::where($this->state['families'], function ($item) {
-                return $item['type'] == 'Diri Sendiri';
+                return $item['type'] === 'Diri Sendiri';
             })[0];
 
             $user = User::create([
@@ -94,7 +94,7 @@ class NewUser extends Component
             ]);
 
             $families = Arr::where($this->state['families'], function ($item) {
-                return $item['type'] != 'Diri Sendiri';
+                return $item['type'] !== 'Diri Sendiri';
             });
 
             foreach ($families as $family) {

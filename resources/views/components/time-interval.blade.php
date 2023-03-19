@@ -11,11 +11,11 @@
             @if(true)
 
                 @php
-                    $isSelected = $slot['id'] == session('order.start_time_id');
+                    $isSelected = (int) $slot['id'] === (int) session('order.start_time_id');
                     $isAvailable = '';
                 @endphp
 
-                @if ($slot['status'] == 'empty')
+                @if ($slot['status'] === 'empty')
                 <button
                     wire:click="selectTime({{ $slot['id'] }})"
                     @class([
