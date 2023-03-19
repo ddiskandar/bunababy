@@ -11,15 +11,13 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Filament\Notifications\Notification as FlashNotification;
-use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
-use Livewire\Redirector;
 
 class Confirm extends Component
 {
     public $confirmed = false;
 
-    public function confirm(): Redirector|RedirectResponse
+    public function confirm()
     {
         if ($this->clashCheck()) {
             Notification::make()
@@ -32,7 +30,7 @@ class Confirm extends Component
         $this->orderNow();
     }
 
-    private function clashCheck(): bool
+    private function clashCheck()
     {
         $startDateTime = Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'));
 
