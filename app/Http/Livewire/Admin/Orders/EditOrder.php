@@ -107,7 +107,7 @@ class EditOrder extends Component
         $this->state['totalTransport'] = $this->order->total_transport;
     }
 
-    private function setSelectedMidwife()
+    public function setSelectedMidwife()
     {
         $this->selectedMidwife = User::whereId($this->state['midwifeId'])->first();
     }

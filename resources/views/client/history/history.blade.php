@@ -9,19 +9,39 @@
     <div class="max-w-screen-sm min-h-screen mx-auto my-0">
         <div class="flex flex-wrap justify-center gap-2 py-4 ">
             <button wire:click="$set('filterStatus', '')"
-                class="py-1 text-xs font-semibold px-4 border @if($filterStatus == '') bg-bunababy-200 text-white @else text-bunababy-200 bg-white @endif hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 rounded-full">
+                @class([
+                    'py-1 text-xs font-semibold px-4 border hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 rounded-full',
+                    'bg-bunababy-200 text-white' => $filterStatus === '',
+                    'text-bunababy-200 bg-white' => $filterStatus !== '',
+                ])
+            >
                 Semua
             </button>
             <button wire:click="$set('filterStatus', '2')"
-                class="py-1 text-xs font-semibold px-4 border @if($filterStatus == '2') bg-bunababy-200 text-white @else text-bunababy-200 bg-white @endif hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 rounded-full">
+                @class([
+                    'py-1 text-xs font-semibold px-4 border hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 rounded-full',
+                    'bg-bunababy-200 text-white' => $filterStatus === \App\Models\Order::STATUS_LOCKED,
+                    'text-bunababy-200 bg-white' => $filterStatus !== \App\Models\Order::STATUS_LOCKED,
+                ])
+            >
                 Aktif
             </button>
             <button wire:click="$set('filterStatus', '3')"
-                class="py-1 text-xs font-semibold px-4 border @if($filterStatus == '3') bg-bunababy-200 text-white @else text-bunababy-200 bg-white @endif hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 rounded-full">
+                @class([
+                    'py-1 text-xs font-semibold px-4 border hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 rounded-full',
+                    'bg-bunababy-200 text-white' => $filterStatus === \App\Models\Order::STATUS_FINISHED,
+                    'text-bunababy-200 bg-white' => $filterStatus !== \App\Models\Order::STATUS_FINISHED,
+                ])
+            >
                 Selesai
             </button>
             <button wire:click="$set('filterStatus', '1')"
-                class="py-1 text-xs font-semibold px-4 border @if($filterStatus == '1') bg-bunababy-200 text-white @else text-bunababy-200 bg-white @endif hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 rounded-full">
+                @class([
+                    'py-1 text-xs font-semibold px-4 border hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 rounded-full',
+                    'bg-bunababy-200 text-white' => $filterStatus === \App\Models\Order::STATUS_UNPAID,
+                    'text-bunababy-200 bg-white' => $filterStatus !== \App\Models\Order::STATUS_UNPAID,
+                ])
+            >
                 Pending
             </button>
         </div>
