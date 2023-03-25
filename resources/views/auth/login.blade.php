@@ -24,8 +24,10 @@
             <!-- Validation Errors -->
             <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('login') }}" id="loginForm">
                 @csrf
+
+                <input type="hidden" class="g-recaptcha" name="recaptcha_token" id="recaptcha_token">
 
                 <!-- Email Address -->
                 <div>
@@ -70,5 +72,20 @@
             Belum punya akun? <a href="/register" class="font-semibold text-bunababy-200">Daftar Sekarang</a>
         </div>
     </div>
+
+    @push('scripts')
+        <script>
+            grecaptcha.ready(function () {
+                document.getElementById('loginForm').addEventListener("submit", function (event) {
+                    event.preventDefault();
+                    grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', { action: 'login' })
+                        .then(function (token) {
+                            document.getElementById("recaptcha_token").value = token;
+                            document.getElementById('loginForm').submit();
+                        });
+                });
+            });
+        </script>
+    @endpush
 
 </x-guest-layout>

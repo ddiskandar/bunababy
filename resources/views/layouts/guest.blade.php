@@ -20,10 +20,14 @@
 
         @livewireStyles
 
+        <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+
     </head>
     <body class="font-sans antialiased text-gray-900">
 
         {{ $slot }}
+
+        @stack('scripts')
 
         @livewireScripts
 
