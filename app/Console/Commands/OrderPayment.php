@@ -33,26 +33,26 @@ class OrderPayment extends Command
      */
     public function handle()
     {
-        $orders = Order::where('status', Order::STATUS_LOCKED)
-            ->doesntHave('payments')
+        $orders = Order::locked()
+            // ->doesntHave('payments')
             ->whereDoesntHave('payments', function ($query) {
                 $query->where('status', Payment::STATUS_VERIFIED)
                     ->orWhere('status', Payment::STATUS_UNVERIFIED);
             })
             ->get();
 
-        $options = DB::table('options')->first();
+        $timeout = DB::table('options')->first()->timeout;
+
+        $users = User::query()
+            ->where('type', User::ADMIN)
+            ->orWhere('type', User::OWNER)
+            ->get();
 
         foreach ($orders as $order) {
 
-            if (!$order->isPaid() && (now()->gt($order->created_at->addMinutes($options->timeout)))) {
+            if (!$order->isPaid() && (now()->gt($order->created_at->addMinutes($timeout)))) {
 
                 $order->update(['status' => Order::STATUS_UNPAID]);
-
-                $users = User::query()
-                    ->where('type', User::ADMIN)
-                    ->orWhere('type', User::OWNER)
-                    ->get();
 
                 Notification::send($users, new OrderUnpaid($order));
             }
