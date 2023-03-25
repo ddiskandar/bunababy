@@ -28,7 +28,7 @@ class ClientProfileInformation extends Component
             'state.dob' => 'required|date',
             'state.phone' => 'required|string|min:11|max:14',
             'state.ig' => 'nullable',
-            'photo' => 'nullable|image|max:128',
+            'photo' => 'nullable|image|max:256',
         ];
     }
 
@@ -70,7 +70,7 @@ class ClientProfileInformation extends Component
 
         if (isset($this->photo)) {
             $this->client->profile->update([
-                'photo' => $this->photo->store('photos'),
+                'photo' => $this->photo->storePublicly('photos', 's3'),
             ]);
         }
 

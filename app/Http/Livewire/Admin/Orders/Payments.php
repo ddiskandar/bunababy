@@ -62,7 +62,7 @@ class Payments extends Component
     public function setAdjustment()
     {
         $this->validate([
-            'adjustment_name' => 'required|string|min:3|max:128',
+            'adjustment_name' => 'required|string|min:3|max:256',
             'adjustment_amount' => 'required|numeric',
         ]);
 

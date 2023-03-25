@@ -20,7 +20,7 @@ class EditMidwife extends Component
     protected function rules()
     {
         return [
-            'photo' => 'nullable|image|max:128',
+            'photo' => 'nullable|image|max:256',
             'state.name' => 'required|string|min:2|max:64',
             'state.email' => [
                 'required',
@@ -65,7 +65,7 @@ class EditMidwife extends Component
 
             if ($this->photo) {
                 $this->midwife->profile->update([
-                    'photo' => $this->photo->store('photos')
+                    'photo' => $this->photo->storePublicly('photos', 's3')
                 ]);
             }
 

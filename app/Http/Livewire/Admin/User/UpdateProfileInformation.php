@@ -29,7 +29,7 @@ class UpdateProfileInformation extends Component
             ],
             'state.phone' => 'nullable|string|min:11|max:14',
             'state.ig' => 'nullable',
-            'photo' => 'nullable|image|max:128',
+            'photo' => 'nullable|image|max:256',
         ];
     }
 
@@ -67,7 +67,7 @@ class UpdateProfileInformation extends Component
 
         if (isset($this->photo)) {
             $this->user->profile->update([
-                'photo' => $this->photo->store('photos'),
+                'photo' => $this->photo->storePublicly('photos', 's3'),
             ]);
 
             return redirect()->route('user.profile');
