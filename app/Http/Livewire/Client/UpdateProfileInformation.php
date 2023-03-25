@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Client;
 
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
@@ -28,7 +29,7 @@ class UpdateProfileInformation extends Component
             'state.dob' => 'required|date',
             'state.phone' => 'required|string|min:11|max:14',
             'state.ig' => 'nullable',
-            'photo' => 'nullable|image|max:128',
+            'photo' => 'nullable|image|max:256',
         ];
     }
 
@@ -73,8 +74,12 @@ class UpdateProfileInformation extends Component
         ]);
 
         if (isset($this->photo)) {
+            if($this->user->profile->photo) {
+                Storage::disk('s3')->delete($this->user->profile->photo);
+            }
+
             $this->user->profile->update([
-                'photo' => $this->photo->store('photos'),
+                'photo' => $this->photo->storePublicly('photos', 's3'),
             ]);
         }
 

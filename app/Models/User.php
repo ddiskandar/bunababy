@@ -152,7 +152,7 @@ class User extends Authenticatable
         return $this->google_id && $this->profile->photo
             ? $this->profile->photo
             : (isset($this->profile->photo)
-                ? asset('storage/' . $this->profile->photo)
+                ? "https://is3.cloudhost.id/bunababycare-dev/bunababycare/" . $this->profile->photo
                 : $this->defaultProfilePhotoUrl()
             );
     }
