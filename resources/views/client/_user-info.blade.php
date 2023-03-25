@@ -1,5 +1,5 @@
 <div class="flex items-center justify-start gap-4 py-2">
-    <img src="{{ asset(auth()->user()->profile_photo_url) }}" alt="User Photo" class="inline-block w-12 h-12 rounded-full ">
+    <img src="{{ auth()->user()->profile_photo_url }}" alt="User Photo" class="inline-block w-12 h-12 rounded-full ">
     <div>
         <div class="text-xl font-semibold leading-tight">
             {{ auth()->user()->name }}

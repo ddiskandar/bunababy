@@ -2,7 +2,7 @@
     <x-bottom-tabs>
         <div class="py-8">
             <div class="flex flex-col max-w-xl mx-auto md:flex-row">
-                <img src="{{ asset(auth()->user()->profile_photo_url) }}" alt="User Photo" class="inline-block w-32 h-32 mx-auto mb-6 rounded-full md:mb-0 md:mx-0">
+                <img src="{{ auth()->user()->profile_photo_url }}" alt="User Photo" class="inline-block w-32 h-32 mx-auto mb-6 rounded-full md:mb-0 md:mx-0">
                 <div class="flex-1 ml-6 md:ml-12">
                     <h3 class="mb-1 text-lg font-semibold">
                         {{ auth()->user()->name }}

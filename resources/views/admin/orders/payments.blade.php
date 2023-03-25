@@ -54,7 +54,7 @@
             <x-dialog wire:model="showSetAdjustmentDialog">
                 <form wire:submit.prevent="setAdjustment">
                     <x-title>Adjustment</x-title>
-                    <div class="h-64 mt-2 space-y-3 px-1 overflow-y-auto">
+                    <div class="h-64 px-1 mt-2 space-y-3 overflow-y-auto">
                         <div class="space-y-1">
                             <x-label for="adjustment_name">Nama</x-label>
                             <x-input wire:model.lazy="adjustment_name" class="w-full" type="text" id="adjustment_name" />
@@ -125,7 +125,7 @@
                         @isset ($state['attachment'])
                         <div class="space-y-1">
                             <x-label>Bukti</x-label>
-                            <a href="{{ asset('storage/' . $state['attachment']) }}" target="_blank">
+                            <a href="{{ object_storage_asset($state['attachment']) }}" target="_blank">
                                 <x-secondary-button type="button" class="mt-2">
                                     {{ __('Lihat bukti lampiran') }}
                                 </x-secondary-button>

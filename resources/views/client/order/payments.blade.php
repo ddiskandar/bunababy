@@ -5,7 +5,7 @@
             @forelse ($payments as $payment)
                 <li class="flex items-center gap-6 py-4">
                     <div class="flex-1">
-                        <a href="{{ $payment->attachment ? asset('storage/' . $payment->attachment) : '#' }} " target="_blank">
+                        <a href="{{ $payment->attachment ? object_storage_asset($payment->attachment) : '#' }}" target="_blank">
                             <div class="text-lg font-semibold">{{ rupiah($payment->value) }}</div>
                             <div>{{ $payment->created_at->isoFormat('DD/MM/YYYY hh:mm') . ' WIB' }}</div>
                         </a>
@@ -13,12 +13,12 @@
                     <div
                         @class([
                             'flex items-center w-28 lg:w-64',
-                            'text-yellow-500' => $payment->status() == 'Waiting',
-                            'text-green-600' => $payment->status() == 'Verified',
-                            'text-red-400' => $payment->status() == 'Rejected',
+                            'text-yellow-500' => $payment->status() === 'Waiting',
+                            'text-green-600' => $payment->status() === 'Verified',
+                            'text-red-400' => $payment->status() === 'Rejected',
                         ])
                     >
-                        @if ($payment->status() == 'Verified')
+                        @if ($payment->status() === 'Verified')
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -26,7 +26,7 @@
                                 <path d="M9 12l2 2l4 -4"></path>
                             </svg>
                         </div>
-                        @elseif($payment->status() == 'Waiting')
+                        @elseif($payment->status() === 'Waiting')
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>

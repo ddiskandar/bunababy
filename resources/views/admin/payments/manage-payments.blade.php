@@ -115,12 +115,12 @@
                                 <div
                                     @class([
                                         'flex items-center',
-                                        'text-yellow-500' => $payment->status() == 'Waiting',
-                                        'text-green-600' => $payment->status() == 'Verified',
-                                        'text-red-400' => $payment->status() == 'Rejected',
+                                        'text-yellow-500' => $payment->status() === 'Waiting',
+                                        'text-green-600' => $payment->status() === 'Verified',
+                                        'text-red-400' => $payment->status() === 'Rejected',
                                     ])
                                     >
-                                    @if ($payment->status() == 'Verified')
+                                    @if ($payment->status() === 'Verified')
                                     <div>
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-discount-check" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -128,7 +128,7 @@
                                             <path d="M9 12l2 2l4 -4"></path>
                                         </svg>
                                     </div>
-                                    @elseif($payment->status() == 'Waiting')
+                                    @elseif($payment->status() === 'Waiting')
                                     <div>
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -197,7 +197,7 @@
         <form wire:submit.prevent="save">
             <x-title>Status Pembayaran</x-title>
 
-            <div class="h-64 mt-2 space-y-3 px-1 overflow-y-auto">
+            <div class="h-64 px-1 mt-2 space-y-3 overflow-y-auto">
                 <div class="space-y-1">
                     <x-label for="state.value">Besar Pembayaran</x-label>
                     <x-input wire:model.lazy="state.value" x-mask:dynamic="$money($input, ',')" class="w-full" type="text" id="state.value"/>
@@ -207,7 +207,7 @@
                 @isset ($state['attachment'])
                 <div class="space-y-1">
                     <x-label>Bukti</x-label>
-                    <a href="{{ asset('storage/' . $state['attachment']) }}" target="_blank">
+                    <a href="{{ object_storage_asset($state['attachment']) }}" target="_blank">
                         <x-secondary-button type="button" class="mt-2">
                             {{ __('Lihat bukti lampiran') }}
                         </x-secondary-button>

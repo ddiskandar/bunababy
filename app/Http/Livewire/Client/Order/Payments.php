@@ -78,12 +78,10 @@ class Payments extends Component
             return $this->setErrorBag(['value' => 'Nominal pembayaran harus berupa nilai angka.']);
         }
 
-        $attachment = $this->attachment->store('attachment');
-
         $payment = Payment::create([
             'order_id' => $this->order->id,
             'value' => str_replace('.', '', $this->value),
-            'attachment' => $attachment,
+            'attachment' => $this->attachment->storePublicly('attachments', 's3'),
         ]);
 
         $this->showUploadDialog = false;
