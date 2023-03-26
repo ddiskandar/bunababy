@@ -12,15 +12,14 @@ class TreatmentsCatalog extends Component
 
     public function render()
     {
-        $treatments = Treatment::query()
+        $treatments = Treatment::active()
             ->where('category_id', 'LIKE', '%' . $this->filterCategory)
-            ->active()
             ->orderBy('order')
-            ->with('category')
+            ->select('id', 'name', 'desc', 'duration', 'category_id')
+            ->with('category:id,name')
             ->get();
 
-        $categories = Category::query()
-            ->active()
+        $categories = Category::active()
             ->orderBy('order')
             ->get();
 

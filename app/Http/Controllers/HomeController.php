@@ -10,7 +10,7 @@ class HomeController extends Controller
 {
     public function __invoke()
     {
-        if (auth()->check() && !auth()->user()->isClient()) {
+        if (auth()->check() && ! auth()->user()->isClient()) {
             return redirect()->route('dashboard');
         }
 
@@ -24,12 +24,17 @@ class HomeController extends Controller
             $reservation = auth()->user()->latestReservation;
         }
 
+        $options = DB::table('options')->select(['phone', 'site_name', 'site_location', 'ig'])->first();
+
         return view('client.home', [
             'hasAddress' => $hasAddress,
             'hasPhone' => $hasPhone,
             'profileCompleted' => $profileCompleted,
             'reservation' => $reservation,
-            'phone' => DB::table('options')->select('phone')->first()->phone
+            'phone' => $options->phone,
+            'site_name' => $options->site_name,
+            'site_location' => $options->site_location,
+            'ig' => $options->ig,
         ]);
     }
 }

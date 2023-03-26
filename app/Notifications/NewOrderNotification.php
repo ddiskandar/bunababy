@@ -9,7 +9,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 
-class NewOrder extends Notification
+class NewOrderNotification extends Notification
 {
     use Queueable;
 

@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Client\Order;
 use App\Models\Payment;
 use App\Models\Order;
 use App\Models\User;
-use App\Notifications\NewPayment;
+use App\Notifications\NewPaymentNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Livewire\WithFileUploads;
@@ -91,7 +91,7 @@ class Payments extends Component
             ->orWhere('type', User::OWNER)
             ->get();
 
-        Notification::send($admin, new NewPayment($payment));
+        Notification::send($admin, new NewPaymentNotification($payment));
 
         $this->render();
     }

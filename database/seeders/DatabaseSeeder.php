@@ -5,12 +5,14 @@ namespace Database\Seeders;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Models\Place;
+use App\Models\Price;
 use App\Models\Profile;
 use App\Models\Testimonial;
 use App\Models\Treatment;
 use App\Models\User;
-use App\Notifications\NewOrder;
-use App\Notifications\NewPayment;
+use App\Notifications\NewOrderNotification;
+use App\Notifications\NewPaymentNotification;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Notification;
@@ -151,222 +153,81 @@ class DatabaseSeeder extends Seeder
             15, 16, 17, 18, 19, 20, 21
         ]);
 
-        // for ($i = 31; $i <= 50; $i++) {
+        foreach (range(1, 100) as $i) {
 
-        //     $client = User::factory()->hasProfile()->create([
-        //         'id' => $i
-        //     ]);
+            $client = User::factory()->hasProfile()->create();
 
-        //     $tag = rand(1, 3);
-        //     $client->tags()->attach($tag);
+            $tag = rand(1, 3);
+            $client->tags()->attach($tag);
 
-        //     $address = Address::factory()
-        //         ->create([
-        //             'id' => $i,
-        //             'client_user_id' => $i,
-        //             'label' => 'rumah',
-        //             'is_main' => true,
-        //             'kecamatan_id' => rand(1, 70),
-        //         ]);
+            $address = Address::factory()
+                ->create([
+                    'client_user_id' => $client->id,
+                    'label' => 'rumah',
+                    'is_main' => true,
+                    'kecamatan_id' => rand(1, 70),
+                ]);
 
-        //     $date = today()->subDays($i - 31);
-        //     $midwifeId = 4;
+            $date = today()->addDays($i);
+            $midwifeId = rand(4, 9);
 
-        //     $order = Order::factory()
-        //         ->create([
-        //             'id' => $i,
-        //             'place' => Order::PLACE_CLINIC,
-        //             'no_reg' => $date->isoFormat('YYMMDD') . Order::PLACE_CLINIC . $midwifeId . '0945',
-        //             'invoice' => 'INV/' . $date->isoFormat('YYMMDD') . '/BBC/' . Order::PLACE_CLINIC . $midwifeId . '0945',
-        //             'address_id' => $i,
-        //             'total_price' => 0,
-        //             'total_duration' => 0,
-        //             'total_transport' => 0,
-        //             'midwife_user_id' => $midwifeId,
-        //             'client_user_id' => $i,
-        //             'start_datetime' => Carbon::parse($date->toDateString() . ' ' . '09:45'),
-        //         ]);
+            $rand = random_int(1000000000, 9999999999);
 
-        //     $treatment1 = rand(1, 21);
+            $order = Order::factory()
+                ->create([
+                    'place_id' => Place::TYPE_HOMECARE,
+                    'no_reg' =>$rand,
+                    'invoice' => 'INV/' . $date->isoFormat('YYMMDD') . '/' . $rand,
+                    'address_id' => $address->id,
+                    'total_price' => 0,
+                    'total_duration' => 0,
+                    'total_transport' => 0,
+                    'midwife_user_id' => $midwifeId,
+                    'client_user_id' => $client->id,
+                    'start_datetime' => Carbon::parse($date->toDateString() . ' ' . '09:45'),
+                ]);
 
-        //     $treatment = Treatment::find($treatment1);
+            foreach (range(1, 2) as $index ) {
+                $id = rand(1, 21);
+                $order->treatments()->attach($id, [
+                    'family_name' => $order->client->name,
+                    'family_age' => calculate_age($order->client->profile->dob),
+                    'treatment_duration' => Treatment::find($id)->duration,
+                    'treatment_price' => Price::where('treatment_id', $id)
+                        ->where('place_id', $order->place_id)->value('amount'),
+                ]);
+            }
 
-        //     $order->treatments()->attach([$treatment1], [
-        //         'treatment_price' => $treatment->price,
-        //         'treatment_duration' => $treatment->duration,
-        //     ]);
+            $totalDuration = $order->total_duration + $order->treatments()->sum('duration');
 
-        //     $totalDuration = $order->total_duration + $order->treatments()->sum('duration');
+            $order->update([
+                'total_price' => $order->treatments->sum('pivot.treatment_price'),
+                'total_duration' =>  $totalDuration,
+                'end_datetime' => $order->start_datetime->addMinutes($totalDuration),
+            ]);
 
-        //     $order->update([
-        //         'total_price' => $order->treatments()->sum('price'),
-        //         'total_duration' =>  $totalDuration,
-        //         'end_datetime' => $order->start_datetime->addMinutes($totalDuration),
-        //     ]);
+            $users = User::query()
+                // ->where('type', User::OWNER)
+                ->orWhere('type', User::ADMIN)
+                ->get();
 
-        //     $users = User::where('type', User::OWNER)->orWhere('type', User::ADMIN)->get();
+            Notification::send($users, new NewOrderNotification($order));
 
-        //     Notification::send($users, new NewOrder($order));
+            $payment = Payment::factory()
+                ->create([
+                    'order_id' => $order->id,
+                    'value' => $order->getGrandTotal(),
+                    'status' => Payment::STATUS_VERIFIED
+                ]);
 
-        //     $testimonial = Testimonial::factory()
-        //         ->create([
-        //             'order_id' => $order->id,
-        //         ]);
+            Notification::send($users, new NewPaymentNotification($payment));
 
-        //     $payment = Payment::factory()
-        //         ->create([
-        //             'order_id' => $order->id,
-        //             'value' => $order->getGrandTotal(),
-        //             'status' => Payment::STATUS_VERIFIED
-        //         ]);
+            Testimonial::factory()
+                ->create([
+                    'order_id' => $order->id,
+                ]);
 
-        //     Notification::send($users, new NewPayment($payment));
-        // }
-
-        // for ($i = 51; $i <= 75; $i++) {
-
-        //     $client = User::factory()->hasProfile()->create([
-        //         'id' => $i
-        //     ]);
-
-        //     $tag = rand(1, 3);
-        //     $client->tags()->attach($tag);
-
-        //     $address = Address::factory()
-        //         ->create([
-        //             'id' => $i,
-        //             'client_user_id' => $i,
-        //             'label' => 'rumah',
-        //             'is_main' => true,
-        //             'kecamatan_id' => rand(1, 70),
-        //         ]);
-
-        //     $date = today()->subDays($i - 51);
-        //     $midwifeId = 6;
-
-        //     $order = Order::factory()
-        //         ->create([
-        //             'id' => $i,
-        //             'place' => Order::PLACE_CLIENT,
-        //             'no_reg' => $date->isoFormat('YYMMDD') . Order::PLACE_CLIENT . $midwifeId . '13100',
-        //             'invoice' => 'INV/' . $date->isoFormat('YYMMDD') . '/BBC/' . Order::PLACE_CLIENT . $midwifeId . '1300',
-        //             'address_id' => $i,
-        //             'total_price' => 0,
-        //             'total_duration' => 40,
-        //             'total_transport' => 40000,
-        //             'midwife_user_id' => $midwifeId,
-        //             'client_user_id' => $i,
-        //             'start_datetime' => Carbon::parse($date->toDateString() . ' ' . '13:00'),
-        //         ]);
-
-        //     $treatment1 = rand(1, 21);
-
-        //     $treatment = Treatment::find($treatment1);
-
-        //     $order->treatments()->attach([$treatment1], [
-        //         'treatment_price' => $treatment->price,
-        //         'treatment_duration' => $treatment->duration,
-        //     ]);
-
-        //     $totalDuration = $order->total_duration + $order->treatments()->sum('duration');
-
-        //     $order->update([
-        //         'total_price' => $order->treatments()->sum('price'),
-        //         'total_duration' =>  $totalDuration,
-        //         'end_datetime' => $order->start_datetime->addMinutes($totalDuration),
-        //         'finished_at' => $order->start_datetime,
-        //         'status' => Order::STATUS_FINISHED
-        //     ]);
-
-        //     $users = User::where('type', User::OWNER)->orWhere('type', User::ADMIN)->get();
-
-        //     Notification::send($users, new NewOrder($order));
-
-        //     $testimonial = Testimonial::factory()
-        //         ->create([
-        //             'order_id' => $order->id,
-        //         ]);
-
-        //     $payment = Payment::factory()
-        //         ->create([
-        //             'order_id' => $order->id,
-        //             'value' => $order->getGrandTotal() / 2,
-        //         ]);
-
-        //     Notification::send($users, new NewPayment($payment));
-        // }
-
-
-
-        // // upcoming order
-
-        // for ($i = 9; $i <= 30; $i++) {
-
-        //     $client = User::factory()->hasProfile()->create([
-        //         'id' => $i
-        //     ]);
-
-        //     $tag = rand(1, 3);
-        //     $client->tags()->attach($tag);
-
-        //     $address = Address::factory()
-        //         ->create([
-        //             'id' => $i,
-        //             'client_user_id' => $i,
-        //             'label' => 'rumah',
-        //             'is_main' => true,
-        //             'kecamatan_id' => rand(1, 70),
-        //         ]);
-
-        //     $date = today()->addDays($i - 9);
-        //     $midwifeId = 8;
-
-        //     $order = Order::factory()
-        //         ->create([
-        //             'id' => $i,
-        //             'place' => Order::PLACE_CLIENT,
-        //             'no_reg' => $date->isoFormat('YYMMDD') . Order::PLACE_CLIENT . $midwifeId . '0945',
-        //             'invoice' => 'INV/' . $date->isoFormat('YYMMDD') . '/BBC/' . Order::PLACE_CLIENT . $midwifeId . '0945',
-        //             'address_id' => $i,
-        //             'total_price' => 0,
-        //             'total_duration' => 40,
-        //             'total_transport' => 40000,
-        //             'midwife_user_id' => $midwifeId,
-        //             'client_user_id' => $i,
-        //             'start_datetime' => Carbon::parse($date->toDateString() . ' ' . '09:45'),
-        //         ]);
-
-        //     $treatment1 = rand(1, 21);
-
-        //     $treatment = Treatment::find($treatment1);
-
-        //     $order->treatments()->attach([$treatment1], [
-        //         'treatment_price' => $treatment->price,
-        //         'treatment_duration' => $treatment->duration,
-        //     ]);
-
-        //     $totalDuration = $order->total_duration + $order->treatments()->sum('duration');
-
-        //     $order->update([
-        //         'total_price' => $order->treatments()->sum('price'),
-        //         'total_duration' =>  $totalDuration,
-        //         'end_datetime' => $order->start_datetime->addMinutes($totalDuration),
-        //     ]);
-
-        //     $users = User::where('type', User::OWNER)->orWhere('type', User::ADMIN)->get();
-
-        //     Notification::send($users, new NewOrder($order));
-
-        //     // $testimonial = Testimonial::factory()
-        //     //     ->create([
-        //     //         'order_id' => $order->id,
-        //     //     ]);
-
-        //     // $payment = Payment::factory()
-        //     //     ->create([
-        //     //         'order_id' => $order->id,
-        //     //     ]);
-
-        // }
+            echo " Berhasil Buat User dan Order ke " . $i . PHP_EOL;
+        }
     }
 }

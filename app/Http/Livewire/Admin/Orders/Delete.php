@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Admin\Orders;
 
 use App\Models\Order;
 use App\Models\User;
-use App\Notifications\OrderDeleted;
+use App\Notifications\OrderDeletedNotification;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 
@@ -38,7 +38,7 @@ class Delete extends Component
 
         $owner = User::where('type', User::OWNER)->first();
 
-        $owner->notify(new OrderDeleted(auth()->user(), $this->order, $this->note));
+        $owner->notify(new OrderDeletedNotification(auth()->user(), $this->order, $this->note));
 
         $this->order->delete();
 

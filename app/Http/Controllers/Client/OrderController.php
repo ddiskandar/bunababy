@@ -14,23 +14,23 @@ class OrderController extends Controller
 {
     public function create(): RedirectResponse|Redirector|View
     {
-        if (auth()->check() && !auth()->user()->isClient()) {
+        if (auth()->check() && ! auth()->user()->isClient()) {
             return redirect()->route('dashboard');
         }
 
         if (auth()->check() && is_null(auth()->user()->address)) {
             Notification::make()
-                ->title('Tambah Alamat')
-                ->success()
+                ->title('Lengkapi alamat dulu ya')
+                ->danger()
                 ->send();
 
             return to_route('home');
         }
 
-        if (auth()->check() && (auth()->user()->latestReservation && !auth()->user()->latestReservation->isPaid())) {
+        if (auth()->check() && (auth()->user()->latestReservation && ! auth()->user()->latestReservation->isPaid())) {
             Notification::make()
-                ->title('Ada Reservasi Aktif')
-                ->success()
+                ->title('Ada Reservasi yang masih aktif')
+                ->danger()
                 ->send();
 
             return to_route('home');

@@ -7,7 +7,7 @@
             @livewire('client.order.select-place')
         </x-section>
         <x-section>
-            @if (session('order.place_type') === \App\Models\Place::TYPE_HOMECARE)
+            @if ((int) session('order.place_type') === \App\Models\Place::TYPE_HOMECARE)
                 @livewire('client.order.midwives-availability')
             @else
                 @livewire('client.order.clinics-availability')

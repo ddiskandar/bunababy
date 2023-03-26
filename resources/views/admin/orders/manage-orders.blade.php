@@ -185,7 +185,7 @@
                                 </td>
                                 <td class="p-3 align-top whitespace-nowrap">
                                     <div class="flex items-center justify-center space-x-2 text-gray-400">
-                                        <a href="{{ route('orders.show', $order->id) }}" class="text-slate-400 hover:text-brand-200">
+                                        <a href="{{ route('orders.show', $order->no_reg) }}" class="text-slate-400 hover:text-brand-200">
                                             <x-icon-pencil />
                                         </a>
                                     </div>

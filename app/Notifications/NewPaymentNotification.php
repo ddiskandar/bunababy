@@ -2,27 +2,26 @@
 
 namespace App\Notifications;
 
-use App\Models\Order;
+use App\Models\Payment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\DB;
 
-class OrderUnpaid extends Notification
+class NewPaymentNotification extends Notification
 {
     use Queueable;
 
-    public $order;
+    public $payment;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Order $order)
+    public function __construct(Payment $payment)
     {
-        $this->order = $order;
+        $this->payment = $payment;
     }
 
     /**
@@ -58,17 +57,13 @@ class OrderUnpaid extends Notification
      */
     public function toArray($notifiable)
     {
-        $timeout = DB::table('options')->first()->timeout;
-
         return [
-            'type' => 'unpaid',
-            'order_id' => $this->order->id,
-            'order_client_name' => $this->order->client->name,
-            'order_client_phone' => to_wa_indo($this->order->client->profile->phone),
-            'order_no_reg' => $this->order->no_reg,
-            'order_dp_amount' => rupiah($this->order->getDpAmount()),
-            'order_dp_timeout' => $this->order->created_at->addMinutes($timeout)->isoFormat('dddd, DD MMMM gggg HH:mm'),
-
+            'type'                  => 'payment',
+            'payment_id'            => $this->payment->id,
+            'payment_value'         => rupiah($this->payment->value),
+            'payment_client_name'   => $this->payment->order->client->name,
+            'order_id'              => $this->payment->order->id,
+            'order_no_reg'          => $this->payment->order->no_reg,
         ];
     }
 }

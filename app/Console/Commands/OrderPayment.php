@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\User;
-use App\Notifications\OrderUnpaid;
+use App\Notifications\OrderUnpaidNotification;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -54,7 +54,7 @@ class OrderPayment extends Command
 
                 $order->update(['status' => Order::STATUS_UNPAID]);
 
-                Notification::send($users, new OrderUnpaid($order));
+                Notification::send($users, new OrderUnpaidNotification($order));
             }
         }
     }

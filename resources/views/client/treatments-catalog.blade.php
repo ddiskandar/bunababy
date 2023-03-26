@@ -6,8 +6,8 @@
                 wire:click="$set('filterCategory', '')"
                 @class([
                     'py-1 text-xs font-semibold px-4 border hover:bg-brand-200 hover:text-white transition-all border-brand-200 rounded-full',
-                    'bg-brand-200 text-white' => $filterCategory == '',
-                    'text-brand-200' => $filterCategory != '',
+                    'bg-brand-200 text-white' => $filterCategory === '',
+                    'text-brand-200' => $filterCategory !== '',
                 ])>
                 Semua
             </button>
@@ -16,8 +16,8 @@
                 wire:click="$set('filterCategory', {{ $category->id }})"
                 @class([
                     'py-1 text-xs font-semibold px-4 border hover:bg-brand-200 hover:text-white transition-all border-brand-200 rounded-full',
-                    'bg-brand-200 text-white' => $filterCategory == $category->id,
-                    'text-brand-200' => $filterCategory != $category->id,
+                    'bg-brand-200 text-white' => $filterCategory === $category->id,
+                    'text-brand-200' => $filterCategory !== $category->id,
                 ])>
                 {{ $category->name }}
             </button>
@@ -34,7 +34,7 @@
                 <h3 class="text-lg font-bold leading-tight">
                     {{ $treatment->name }}
                 </h3>
-                <p class="h-32 overflow-y-auto text-sm  text-slate-600">{{ $treatment->desc }}</p>
+                <p class="h-32 overflow-y-auto text-sm text-slate-600">{{ $treatment->desc }}</p>
                 <p class="text-xs font-semibold text-slate-600">Durasi {{ $treatment->duration }} menit</p>
             </div>
             {{-- <div>
@@ -42,7 +42,7 @@
             </div> --}}
         </div>
         @endforeach
-        <div class=" snap-start">
+        <div class="snap-start">
         </div>
     </div>
 </div>

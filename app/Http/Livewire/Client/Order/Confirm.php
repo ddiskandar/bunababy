@@ -6,7 +6,7 @@ use App\Models\Family;
 use App\Models\Order;
 use App\Models\Place;
 use App\Models\User;
-use App\Notifications\NewOrder;
+use App\Notifications\NewOrderNotification;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
@@ -104,7 +104,7 @@ class Confirm extends Component
                 ->orWhere('type', User::OWNER)
                 ->get();
 
-            Notification::send($admin, new NewOrder($order));
+            Notification::send($admin, new NewOrderNotification($order));
 
             FlashNotification::make()
                 ->title('Order created!')
