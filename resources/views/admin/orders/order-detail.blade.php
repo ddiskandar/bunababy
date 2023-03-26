@@ -18,7 +18,7 @@
                         {{ $order->no_reg }}
                     </div>
                     @if (auth()->user()->isAdmin() || true)
-                    <a href="{{ route('order.invoice', $order->no_reg) }}" target="_blank" class="text-sm font-semibold text-bunababy-200">
+                    <a href="{{ route('order.invoice', $order->no_reg) }}" target="_blank" class="text-sm font-semibold text-brand-200">
                         Lihat Invoice
                     </a>
                     @endif
@@ -26,7 +26,7 @@
             </div>
             <div class="flex items-center justify-start mt-4 space-x-4 md:mt-0 md:justify-end">
                 @if ($order->status === \App\Models\Order::STATUS_UNPAID)
-                <button wire:click="activate" class="text-xs font-semibold uppercase text-bunababy-200">
+                <button wire:click="activate" class="text-xs font-semibold uppercase text-brand-200">
                     Aktifkan
                 </button>
                 @endif
@@ -103,7 +103,7 @@
                     <div>{{ $order->address->full_address ?? '-' }}</div>
                     <div class="py-2">{{ $order->address->note ?? '' }}</div>
                     @if (isset($order->address->share_location))
-                        <a href="{{ $order->address->share_location }}" class="flex items-center text-bunababy-200" target="_blank">
+                        <a href="{{ $order->address->share_location }}" class="flex items-center text-brand-200" target="_blank">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path d="M18 6l0 .01"></path>
@@ -125,7 +125,7 @@
                 <dd class="mt-1 text-gray-900">
                     <div class="flex flex-wrap gap-1">
                         @foreach ($order->treatments as $treatment)
-                        <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 border rounded-full text-bunababy-200 bg-bunababy-50 border-bunababy-100">
+                        <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 border rounded-full text-brand-200 bg-brand-50 border-brand-100">
                             {{ $treatment->name . ', ' . $treatment->pivot->family_name . ' / ' . $treatment->pivot->family_age  }}
                         </div>
                         @endforeach
@@ -149,7 +149,7 @@
                 </dt>
                 <dd class="flex items-center gap-2 mt-1 text-gray-900">
                     <span>{{ $order->client->profile->phone }}</span>
-                    <a class="flex text-bunababy-200" href="https://api.whatsapp.com/send?phone={{ to_wa_indo($order->client->profile->phone) }}&text=Halo+Buna+{{ $order->client->name }}" target="_blank">
+                    <a class="flex text-brand-200" href="https://api.whatsapp.com/send?phone={{ to_wa_indo($order->client->profile->phone) }}&text=Halo+Buna+{{ $order->client->name }}" target="_blank">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-whatsapp" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"></path>

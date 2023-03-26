@@ -8,14 +8,14 @@
     >
 
         <div class="flex items-center ">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-bunababy-200" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-brand-200" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <circle cx="12" cy="11" r="3"></circle>
                 <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
              </svg>
             <span class="ml-2">{{ $kecamatan->name ?? 'Pilih Lokasi' }}</span>
         </div>
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-bunababy-200" viewBox="0 0 20 20" fill="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-brand-200" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
         </svg>
 
@@ -25,7 +25,7 @@
         <div wire:init="load">
             @guest
             <div class="py-2 text-sm">
-                <a class="font-semibold text-bunababy-100" href="{{ route('login') }}">Login</a> untuk lihat alamat anda
+                <a class="font-semibold text-brand-100" href="{{ route('login') }}">Login</a> untuk lihat alamat anda
             </div>
             @endguest
 
@@ -33,7 +33,7 @@
                 <input
                 wire:model="search"
                 x-ref="input"
-                class="block w-full px-3 py-2 text-sm leading-6 border rounded-full border-bunababy-50 focus:border-bunababy-50 focus:outline-0 focus:ring-0 "
+                class="block w-full px-3 py-2 text-sm leading-6 border rounded-full border-brand-50 focus:border-brand-50 focus:outline-0 focus:ring-0 "
                 type="text"
                 id="tk-form-elements-name"
                 autocomplete="off"

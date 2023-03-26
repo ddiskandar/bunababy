@@ -31,7 +31,7 @@
 
     <div class="py-4">
         <x-title>Treatment dan Rincian Pembayaran</x-title>
-        <ul class="divide-y divide-bunababy-50">
+        <ul class="divide-y divide-brand-50">
             @foreach ($order->treatments as $treatment)
                 <li class="flex items-center justify-between py-2 text-sm">
                     <div>
@@ -47,7 +47,7 @@
             @endforeach
         </ul>
 
-        <div class="pt-2 mt-2 text-sm border-t border-bunababy-50">
+        <div class="pt-2 mt-2 text-sm border-t border-brand-50">
             <div class="flex justify-between py-2">
                 <div>Subtotal</div>
                 <div>{{ rupiah($order->total_price) }}</div>

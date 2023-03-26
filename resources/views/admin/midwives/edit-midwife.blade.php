@@ -62,7 +62,7 @@
             <div class="space-y-1">
                 <div class="inline-flex items-center ml-2">
                     <div class="flex items-center h-5 ">
-                        <input type="checkbox" wire:model.defer="state.active" name="state.active" class="w-12 transition-all duration-150 ease-out rounded-full cursor-pointer form-switch h-7 text-bunababy-200 focus:ring focus:ring-bunababy-200 focus:ring-opacity-50">
+                        <input type="checkbox" wire:model.defer="state.active" name="state.active" class="w-12 transition-all duration-150 ease-out rounded-full cursor-pointer form-switch h-7 text-brand-200 focus:ring focus:ring-brand-200 focus:ring-opacity-50">
                     </div>
                     <div class="ml-2 ">
                         <x-label   for="state.active">Aktif</x-label>

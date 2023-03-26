@@ -41,7 +41,7 @@ $id = $id ?? md5($attributes->wire('model'));
             <button
                 x-on:click="show = false"
                 class="absolute z-30 p-2 bg-white rounded-full -top-12 right-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 rotate-45 stroke-bunababy-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 rotate-45 stroke-brand-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                 </svg>
             </button>

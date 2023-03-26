@@ -1,4 +1,4 @@
-<div class="w-full p-6 bg-white border rounded shadow-lg border-bunababy-50 shadow-bunababy-50">
+<div class="w-full p-6 bg-white border rounded shadow-lg border-brand-50 shadow-brand-50">
     <div class="flex flex-col gap-3 mb-4 lg:flex-row lg:justify-between">
         <div class="flex items-center gap-2">
             <svg class="w-8 h-8 text-slate-500" fill="none" viewBox="0 0 24 24">
@@ -17,7 +17,7 @@
             <div @class([
                 'inline-flex px-6 py-1 leading-4 font-semibold text-white text-xs rounded-full',
                 'bg-orange-400' => $reservation->status === \App\Models\Order::STATUS_UNPAID,
-                'bg-bunababy-100' => $reservation->status === \App\Models\Order::STATUS_LOCKED,
+                'bg-brand-100' => $reservation->status === \App\Models\Order::STATUS_LOCKED,
                 'bg-blue-400' => $reservation->status === \App\Models\Order::STATUS_FINISHED,
             ])>{{ $reservation->getStatusString() }}</div>
         </div>
@@ -55,7 +55,7 @@
         </div>
     </div>
     <div class="mt-6">
-        <a href="{{ $route }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-bunababy-100 bg-bunababy-200">
+        <a href="{{ $route }}" class="inline-block w-full py-2 font-semibold text-center text-white transition-all rounded-full hover:bg-brand-100 bg-brand-200">
             {{ $label }}
         </a>
     </div>

@@ -1,5 +1,5 @@
 <div class="relative">
-    <div class="sticky top-0 z-20 px-4 py-4 text-white shadow bg-bunababy-200 shadow-bunababy-50">
+    <div class="sticky top-0 z-20 px-4 py-4 text-white shadow bg-brand-200 shadow-brand-50">
         <div class="flex items-center justify-between max-w-screen-sm mx-auto">
             <a href="{{ route('client.profile') }}">
                 <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">
@@ -21,18 +21,18 @@
         <ul class="py-4 space-y-4">
             @forelse ( $addresses as $address)
             <li @class([
-                    'w-full p-6 bg-white border rounded shadow-lg shadow-bunababy-50',
+                    'w-full p-6 bg-white border rounded shadow-lg shadow-brand-50',
                     'border-slate-100' => $address->is_main,
-                    'border-bunababy-100' => $address->is_main == true,
+                    'border-brand-100' => $address->is_main == true,
                 ])>
                 <div class="flex items-center mb-2">
                     <div  >
                         <div class="text-xl font-semibold capitalize">{{ $address->label }}</div>
                     </div>
                     @if ($address->is_main)
-                        <div class="inline-flex px-4 py-1 ml-2 text-xs font-semibold leading-4 rounded-full text-bunababy-200 bg-bunababy-50 ">Utama</div>
+                        <div class="inline-flex px-4 py-1 ml-2 text-xs font-semibold leading-4 rounded-full text-brand-200 bg-brand-50 ">Utama</div>
                     @else
-                        <button class="ml-2 text-sm font-semibold text-bunababy-200"
+                        <button class="ml-2 text-sm font-semibold text-brand-200"
                             wire:click="setAsMainAddress({{ $address->id }})"
                             >
                             Jadikan Alamat utama
@@ -43,7 +43,7 @@
                     {{ $address->full_address }}
                 </div>
                 <div class="py-2">
-                    <button class="text-sm font-semibold text-bunababy-200"
+                    <button class="text-sm font-semibold text-brand-200"
                         wire:click="showEditDialog({{ $address->id }})"
                     >
                         Ubah Alamat
@@ -81,7 +81,7 @@
 
                 <div class="space-y-1">
                     <x-label for="state.kecamatan_id">Kecamatan</x-label>
-                    <select @if ($dialogEditMode) disabled @endif wire:model.defer="state.kecamatan_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.kecamatan_id">
+                    <select @if ($dialogEditMode) disabled @endif wire:model.defer="state.kecamatan_id" class="w-full rounded-md border-brand-50 focus:border-brand-100 focus:ring-0 focus:ring-brand-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.kecamatan_id">
                         <option value="" selected>-- Pilih salah satu</option>
                         @foreach ($kecamatans as $kecamatan)
                             <option value="{{ $kecamatan->id }}">{{ $kecamatan->name }}</option>

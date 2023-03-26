@@ -1,6 +1,6 @@
 <x-client-layout>
     <div class="relative">
-        <div class="sticky top-0 z-20 px-4 py-4 text-white shadow bg-bunababy-200 shadow-bunababy-50">
+        <div class="sticky top-0 z-20 px-4 py-4 text-white shadow bg-brand-200 shadow-brand-50">
             <div class="flex items-center justify-between max-w-screen-sm mx-auto">
                 <a href="{{ route('client.history') }}">
                     <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">
@@ -17,14 +17,14 @@
             <x-section>
                 <div class="flex items-center justify-between ">
                     <div >
-                        <div class="text-sm font-semibold leading-loose text-bunababy-400">ID Transaksi</div>
+                        <div class="text-sm font-semibold leading-loose text-brand-400">ID Transaksi</div>
                         <div class="flex space-x-2 ">
                             <div class="font-semibold">{{ $order->no_reg }}</div>
                         </div>
                     </div>
                     <div>
                         <a href="{{ route('order.invoice', $order->no_reg) }}" target="_blank"
-                            class="flex items-center w-full py-2 text-sm text-center text-bunababy-200"
+                            class="flex items-center w-full py-2 text-sm text-center text-brand-200"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>

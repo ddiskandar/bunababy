@@ -1,7 +1,7 @@
 <div>
     <div>
         <x-title>Riwayat Upload Bukti Transfer</x-title>
-        <ul class="divide-y divide-bunababy-50">
+        <ul class="divide-y divide-brand-50">
             @forelse ($payments as $payment)
                 <li class="flex items-center gap-6 py-4">
                     <div class="flex-1">
@@ -51,7 +51,7 @@
                 <li
                     class="flex flex-col items-center py-6">
                     <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-bunababy-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-brand-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
                         </svg>
                     </div>
@@ -65,7 +65,7 @@
     @if (! $order->isPaid())
         @if ($isLocked)
         <div class="py-6 text-xs text-slate-600">
-            Bila dalam waktu maksimal 30 menit upload bukti transaksi anda belum dikonfirmasi, silahkan untuk segera <a href="https://api.whatsapp.com/send?phone={{ to_wa_indo($phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+{{ auth()->user()->name ?? '' }}.+Mohon+segera+konfirmasi+pembayaran+{{ $order->no_reg }}." class="font-semibold text-bunababy-200">menghubungi Admin</a>
+            Bila dalam waktu maksimal 30 menit upload bukti transaksi anda belum dikonfirmasi, silahkan untuk segera <a href="https://api.whatsapp.com/send?phone={{ to_wa_indo($phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+{{ auth()->user()->name ?? '' }}.+Mohon+segera+konfirmasi+pembayaran+{{ $order->no_reg }}." class="font-semibold text-brand-200">menghubungi Admin</a>
         </div>
         @endif
 
@@ -75,12 +75,12 @@
                     <button
                         wire:click="$set('showUploadDialog', true)"
                         type="button"
-                        class="block w-full py-3 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
+                        class="block w-full py-3 text-center text-white rounded-full shadow-xl bg-brand-200 shadow-brand-100/50"
                     >+ Upload Bukti</button>
 
                     <div class="py-6 text-xs text-center text-slate-600">
                         Bila kesulitan upload bukti transfer melalui aplikasi ini, silahkan dapat
-                        <a href="https://api.whatsapp.com/send?phone={{ to_wa_indo($phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+{{ auth()->user()->name ?? '' }}.+Mau+mengirim+bukti+transfer+dengan+ID+transaksi+%2A{{ $order->no_reg }}%2A." class="font-semibold text-bunababy-200">
+                        <a href="https://api.whatsapp.com/send?phone={{ to_wa_indo($phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+{{ auth()->user()->name ?? '' }}.+Mau+mengirim+bukti+transfer+dengan+ID+transaksi+%2A{{ $order->no_reg }}%2A." class="font-semibold text-brand-200">
                             mengirimkan ke Admin lewat WA.
                         </a>
                     </div>
@@ -104,7 +104,7 @@
                             </div>
 
                             <div class="py-4">
-                                <button class="flex items-center justify-center w-full transition duration-150 ease-in-out rounded-full shadow-xl h-14 disabled:opacity-25 bg-bunababy-200 shadow-bunababy-100/50"
+                                <button class="flex items-center justify-center w-full transition duration-150 ease-in-out rounded-full shadow-xl h-14 disabled:opacity-25 bg-brand-200 shadow-brand-100/50"
                                     type="submit"
                                     wire:loading.attr="disabled"
                                     @disabled( !$value || !$attachment)

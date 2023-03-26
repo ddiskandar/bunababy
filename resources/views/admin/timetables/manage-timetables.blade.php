@@ -25,7 +25,7 @@
                 </div> --}}
 
                 <div class="flex items-center gap-4 mt-3 text-sm text-center sm:mt-0 sm:text-right">
-                    <input wire:model="selectedMonth" type="month" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50"  />
+                    <input wire:model="selectedMonth" type="month" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-brand-100 focus:ring-0 focus:ring-brand-50"  />
                     <div class="inline-flex">
                         <button wire:click="prevMonth" type="button" class="inline-flex items-center justify-center px-2 py-1 -mr-px space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded-l shadow-sm focus:outline-none active:z-1 focus:z-1 hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 hover:shadow focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-white active:border-white active:shadow-none">
                             <svg class="inline-block w-5 h-5 -mx-1 hi-solid hi-chevron-left" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
@@ -39,7 +39,7 @@
                 <div class="flex space-x-2">
                     @if (auth()->user()->isAdmin())
                     <div class="w-36">
-                        <select wire:model="filterMidwife" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
+                        <select wire:model="filterMidwife" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-brand-100 focus:ring-0 ">
                             <option value="" selected="selected">Semua Bidan</option>
                             @foreach ($midwives as $midwife)
                             <option value="{{ $midwife->id }}">{{ $midwife->name }}</option>
@@ -48,7 +48,7 @@
                     </div>
                     @endif
                     <div class=" w-36">
-                        <select wire:model="filterType" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
+                        <select wire:model="filterType" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-brand-100 focus:ring-0 ">
                             <option value="" selected="selected">Semua Type</option>
                             <option value="1">Libur</option>
                             <option value="2">Lembur</option>
@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="w-16 ">
-                        <select wire:model="perPage" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
+                        <select wire:model="perPage" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-brand-100 focus:ring-0 ">
                             <option value="3">3</option>
                             <option value="8" selected="selected">8</option>
                             <option value="15">15</option>
@@ -67,7 +67,7 @@
                 </div>
                 @if (auth()->user()->isAdmin())
                 <div>
-                    <button wire:click="showAddNewTimetableDialog" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-bunababy-100">
+                    <button wire:click="showAddNewTimetableDialog" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-brand-100">
                         + Tambah Baru
                     </button>
                 </div>
@@ -79,7 +79,7 @@
                 <div class="absolute inset-y-0 left-0 flex items-center justify-center w-10 my-px ml-px text-gray-500 rounded-l pointer-events-none">
                     <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 hi-solid hi-search"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                 </div>
-                <input wire:model="filterSearch" class="block w-full py-1 pl-10 pr-3 text-sm leading-6 border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="search" placeholder="Mencari berdasarkan catatan ..." />
+                <input wire:model="filterSearch" class="block w-full py-1 pl-10 pr-3 text-sm leading-6 border border-gray-200 rounded focus:border-brand-100 focus:ring-0 focus:ring-brand-50" type="search" placeholder="Mencari berdasarkan catatan ..." />
             </div>
         </div>
         <!-- END Card Header -->
@@ -155,10 +155,10 @@
                             <td class="p-3 text-center whitespace-nowrap">
                                 @if (auth()->user()->isAdmin())
                                 <div class="flex items-center justify-center space-x-2">
-                                    <button wire:click="ShowEditTimetableDialog({{ $timetable->id }})" class="text-slate-400 hover:text-bunababy-200">
+                                    <button wire:click="ShowEditTimetableDialog({{ $timetable->id }})" class="text-slate-400 hover:text-brand-200">
                                         <x-icon-pencil />
                                     </button>
-                                    <button wire:click="delete('{{ $timetable->id }}')" onclick="confirm('Yakin mau dihapus?') || event.stopImmediatePropagation()" class="text-slate-400 hover:text-bunababy-200">
+                                    <button wire:click="delete('{{ $timetable->id }}')" onclick="confirm('Yakin mau dihapus?') || event.stopImmediatePropagation()" class="text-slate-400 hover:text-brand-200">
                                         <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.75 7.75L7.59115 17.4233C7.68102 18.4568 8.54622 19.25 9.58363 19.25H14.4164C15.4538 19.25 16.319 18.4568 16.4088 17.4233L17.25 7.75"></path>
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 7.5V6.75C9.75 5.64543 10.6454 4.75 11.75 4.75H12.25C13.3546 4.75 14.25 5.64543 14.25 6.75V7.5"></path>
@@ -202,7 +202,7 @@
             <div class="h-64 mt-2 space-y-3 overflow-y-auto">
                 <div class="space-y-1">
                     <x-label for="state.midwife_user_id">Bidan</x-label>
-                    <select wire:model.lazy="state.midwife_user_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.midwife_user_id">
+                    <select wire:model.lazy="state.midwife_user_id" class="w-full rounded-md border-brand-50 focus:border-brand-100 focus:ring-0 focus:ring-brand-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.midwife_user_id">
                         <option value="" selected>-- Pilih salah satu</option>
                         @foreach ($midwives as $midwife)
                             <option value="{{ $midwife->id }}">{{ $midwife->name }}</option>
@@ -217,7 +217,7 @@
                 </div>
                 <div class="space-y-1">
                     <x-label for="state.type">Tipe</x-label>
-                    <select wire:model.lazy="state.type" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.type">
+                    <select wire:model.lazy="state.type" class="w-full rounded-md border-brand-50 focus:border-brand-100 focus:ring-0 focus:ring-brand-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.type">
                         <option value="" selected>-- Pilih salah satu</option>
                         <option value="1">Libur</option>
                         <option value="2">Lembur</option>
@@ -228,7 +228,7 @@
                 @if (isset($state['type']) && (int) $state['type'] === \App\Models\Timetable::TYPE_CLINIC)
                 <div class="space-y-1">
                     <x-label for="state.place_id">Tempat</x-label>
-                    <select wire:model.lazy="state.place_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.place_id">
+                    <select wire:model.lazy="state.place_id" class="w-full rounded-md border-brand-50 focus:border-brand-100 focus:ring-0 focus:ring-brand-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.place_id">
                         <option value="" selected>-- Pilih salah satu</option>
                         @foreach ($places as $place)
                             <option value="{{ $place->id }}">{{ $place->name }}</option>

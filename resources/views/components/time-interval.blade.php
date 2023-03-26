@@ -21,14 +21,14 @@
                     @class([
                         'inline-flex items-center justify-center w-16  text-xs font-semibold leading-5 border rounded-full ',
                         'border-slate-200' => ! $isSelected,
-                        'border-bunababy-200 bg-bunababy-50 text-bunababy-200' => $isSelected,
+                        'border-brand-200 bg-brand-50 text-brand-200' => $isSelected,
                     ])
                     >
                     <span
                         @class([
                             'w-2 h-2 mr-2 rounded-full ',
                             'bg-green-600' => ! $isSelected,
-                            'bg-bunababy-200' => $isSelected,
+                            'bg-brand-200' => $isSelected,
                         ])
                     ></span>
                     <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>

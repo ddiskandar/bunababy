@@ -1,5 +1,5 @@
 <div x-data="{ showDialog: @entangle('showDialog') }" class="relative">
-    <div class="sticky top-0 z-20 px-4 py-4 text-white shadow bg-bunababy-200 shadow-bunababy-50">
+    <div class="sticky top-0 z-20 px-4 py-4 text-white shadow bg-brand-200 shadow-brand-50">
         <div class="flex items-center justify-between max-w-screen-sm mx-auto">
             <a href="{{ route('client.notifications') }}">
                 <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">

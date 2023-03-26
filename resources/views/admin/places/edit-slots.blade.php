@@ -6,7 +6,7 @@
         <div class="space-y-1">
             <div class="flex flex-wrap gap-2 py-2">
                 @forelse ($slots as $slot)
-                    <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 rounded-full text-bunababy-200 bg-bunababy-50">
+                    <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 rounded-full text-brand-200 bg-brand-50">
                         <span>{{ \Carbon\Carbon::parse($slot->time)->format('H:i') }}</span>
                         <button
                             wire:click="delete({{ $slot->id }})"

@@ -1,5 +1,5 @@
 <div class="relative">
-    <div class="sticky top-0 z-20 px-4 py-4 text-white shadow bg-bunababy-200 shadow-bunababy-50">
+    <div class="sticky top-0 z-20 px-4 py-4 text-white shadow bg-brand-200 shadow-brand-50">
         <div class="flex items-center justify-between max-w-screen-sm mx-auto">
             <a href="{{ route('client.profile') }}">
                 <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">
@@ -20,7 +20,7 @@
     <div class="max-w-screen-sm min-h-screen mx-auto my-0">
         <ul class="py-6 space-y-4">
             @forelse ( auth()->user()->families as $family)
-            <li class="w-full p-6 bg-white border rounded shadow-lg border-bunababy-50 shadow-bunababy-50">
+            <li class="w-full p-6 bg-white border rounded shadow-lg border-brand-50 shadow-brand-50">
                 <div class="flex items-center mb-2">
                     <div  >
                         <div class="text-xl font-semibold">{{ $family->name }}</div>
@@ -45,7 +45,7 @@
                 <div class="py-2">
                     <button
                         wire:click="showEditDialog({{ $family->id }})"
-                        class="text-sm font-semibold text-bunababy-200"
+                        class="text-sm font-semibold text-brand-200"
                         >
                         Ubah Data
                     </button>
@@ -78,7 +78,7 @@
 
                 <div class="space-y-1">
                     <x-label for="state.type">Hubungan keluarga</x-label>
-                    <select wire:model.defer="state.type" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.type">
+                    <select wire:model.defer="state.type" class="w-full rounded-md border-brand-50 focus:border-brand-100 focus:ring-0 focus:ring-brand-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.type">
                         <option value="" selected>-- Pilih salah satu</option>
                         <option value="Anak">Anak</option>
                         <option value="Pasangan">Pasangan</option>

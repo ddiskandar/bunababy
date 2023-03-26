@@ -4,7 +4,7 @@
         <x-title>Daftar Treatment Yang Dilayani</x-title>
         <div class="flex flex-wrap gap-2 py-2">
             @forelse ($room->treatments as $treatment)
-                <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 rounded-full text-bunababy-200 bg-bunababy-50">
+                <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 rounded-full text-brand-200 bg-brand-50">
                     <span>{{ $treatment->name }}</span>
                     <button
                         wire:click="delete({{ $treatment->id }})"
@@ -22,7 +22,7 @@
     <form wire:submit.prevent="add">
         <div class="mt-4 space-y-1">
             <x-label for="treatmentId">Tambah Treatment baru</x-label>
-            <select wire:model.defer="treatmentId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="treatmentId">
+            <select wire:model.defer="treatmentId" class="w-full rounded-md border-brand-50 focus:border-brand-100 focus:ring-0 focus:ring-brand-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="treatmentId">
                 <option value="" selected>-- Pilih salah satu</option>
                 @foreach ($filteredTreatments as $treatment)
                     <option value="{{ $treatment->id }}">{{ $treatment->name }}</option>

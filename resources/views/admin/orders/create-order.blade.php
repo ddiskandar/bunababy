@@ -16,7 +16,7 @@
                     @if ($selectedClient)
                     <div class="space-y-1">
                         <x-label for="state.kecamatanId">Kecamatan</x-label>
-                        <select wire:model="state.kecamatanId" wire:change="setSelectedKecamatan" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.kecamatanId">
+                        <select wire:model="state.kecamatanId" wire:change="setSelectedKecamatan" class="w-full rounded-md border-brand-50 focus:border-brand-100 focus:ring-0 focus:ring-brand-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.kecamatanId">
                             <option value="" selected>-- Pilih salah satu</option>
                             @foreach ($kecamatans as $kecamatan)
                                 <option value="{{ $kecamatan->id }}">{{ $kecamatan->name }}</option>
@@ -29,7 +29,7 @@
                     @if ($selectedKecamatan)
                     <div class="space-y-1">
                         <x-label for="state.placeId">Tempat</x-label>
-                        <select wire:model="state.placeId" wire:change="setSelectedPlace" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.placeId">
+                        <select wire:model="state.placeId" wire:change="setSelectedPlace" class="w-full rounded-md border-brand-50 focus:border-brand-100 focus:ring-0 focus:ring-brand-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.placeId">
                             @foreach ($places as $place)
                             <option value="{{ $place->id }}">{{ $place->name }}</option>
                             @endforeach
@@ -41,7 +41,7 @@
                     @if ($selectedPlace && $selectedPlace->type === \App\Models\Place::TYPE_CLINIC)
                     <div class="space-y-1">
                         <x-label for="state.roomId">Ruangan</x-label>
-                        <select wire:model="state.roomId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.roomId">
+                        <select wire:model="state.roomId" class="w-full rounded-md border-brand-50 focus:border-brand-100 focus:ring-0 focus:ring-brand-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.roomId">
                             <option value="">--Pilih salah satu</option>
                             @foreach ($rooms as $room)
                             <option value="{{ $room->id }}">{{ $room->name }}</option>
@@ -62,7 +62,7 @@
                     @if (isset($state['date']))
                     <div class="inline-flex items-center">
                         <div class="flex items-center h-5 ">
-                            <input type="checkbox" wire:model.lazy="showAllMidwives" name="showAllMidwives" class="w-12 transition-all duration-150 ease-out rounded-full cursor-pointer form-switch h-7 text-bunababy-200 focus:ring focus:ring-bunababy-200 focus:ring-opacity-50">
+                            <input type="checkbox" wire:model.lazy="showAllMidwives" name="showAllMidwives" class="w-12 transition-all duration-150 ease-out rounded-full cursor-pointer form-switch h-7 text-brand-200 focus:ring focus:ring-brand-200 focus:ring-opacity-50">
                         </div>
                         <div class="ml-4">
                             <x-label for="showAllMidwives">
@@ -81,7 +81,7 @@
                     @if (isset($state['date']))
                         <div class="space-y-1">
                             <x-label for="state.midwifeId">Bidan</x-label>
-                            <select wire:model="state.midwifeId" wire:change="setSelectedMidwife" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.midwifeId">
+                            <select wire:model="state.midwifeId" wire:change="setSelectedMidwife" class="w-full rounded-md border-brand-50 focus:border-brand-100 focus:ring-0 focus:ring-brand-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.midwifeId">
                                 <option value="" selected>-- Pilih salah satu</option>
                                 @if ($showAllMidwives)
                                     @foreach ($midwives as $midwife)
@@ -105,7 +105,7 @@
                     @if ($selectedMidwife)
                     <div class="space-y-1">
                         <x-label for="time">Waktu Treatment</x-label>
-                        <div class="-mt-4 divide-y divide-bunababy-50">
+                        <div class="-mt-4 divide-y divide-brand-50">
                             @foreach ($data as $key => $value)
                                 <div class="py-4">
                                     <h3 class="mb-2 text-sm font-semibold">{{ $key }}</h3>
@@ -133,15 +133,15 @@
                                                     @class([
                                                         'inline-flex items-center justify-center w-14 md:w-20  text-xs font-semibold leading-5 border rounded-full ',
                                                         'border-slate-200 ' => ! $isSelected,
-                                                        'border-transparent bg-bunababy-50 text-bunababy-200' => $isSelected,
-                                                        'ring-2 ring-offset-1 ring-bunababy-100/50' => $inRange,
+                                                        'border-transparent bg-brand-50 text-brand-200' => $isSelected,
+                                                        'ring-2 ring-offset-1 ring-brand-100/50' => $inRange,
                                                     ])
                                                     >
                                                     <span
                                                         @class([
                                                             'w-2 h-2 mr-1 rounded-full ',
                                                             'bg-green-600' => ! $isSelected,
-                                                            'bg-bunababy-200' => $isSelected,
+                                                            'bg-brand-200' => $isSelected,
                                                         ])
                                                     ></span>
                                                     <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>
@@ -151,7 +151,7 @@
 
                                                 <button @class([
                                                     'inline-flex items-center justify-center text-xs font-semibold leading-5 text-red-200 border border-red-200 rounded-full cursor-not-allowed w-14 md:w-20 bg-red-50',
-                                                    'ring-2 ring-offset-1 ring-bunababy-100/50' => $inRange]
+                                                    'ring-2 ring-offset-1 ring-brand-100/50' => $inRange]
                                                     )
                                                 >
                                                     <span class="w-2 h-2 mr-1 bg-red-300 rounded-full" ></span>

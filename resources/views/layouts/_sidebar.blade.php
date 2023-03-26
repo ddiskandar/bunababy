@@ -14,7 +14,7 @@
     <div class="flex items-center justify-between flex-none w-full h-16 px-4 lg:justify-center">
 
         <!-- Brand -->
-        <div class="block text-lg font-semibold text-bunababy-400">
+        <div class="block text-lg font-semibold text-brand-400">
             <a href="/dashboard"><img src="/images/logo.svg" alt="Logo"></a>
         </div>
         <!-- END Brand -->
@@ -49,7 +49,7 @@
                     <span class="py-2 grow">Dashboard</span>
                 </x-nav-link>
 
-                <div class="px-3 pt-5 pb-2 text-xs font-medium tracking-wider uppercase text-bunababy-300">Bidan</div>
+                <div class="px-3 pt-5 pb-2 text-xs font-medium tracking-wider uppercase text-brand-300">Bidan</div>
                 <x-nav-link :href="route('orders')" :active="request()->is('orders*')">
                     <span class="flex items-center flex-none opacity-50">
                         <svg class="inline-block w-6 h-6" fill="none" viewBox="0 0 24 24">
@@ -69,7 +69,7 @@
                 </x-nav-link>
 
                 @if (auth()->user()->isAdmin())
-                <div class="px-3 pt-5 pb-2 text-xs font-medium tracking-wider uppercase text-bunababy-300">ADMIN</div>
+                <div class="px-3 pt-5 pb-2 text-xs font-medium tracking-wider uppercase text-brand-300">ADMIN</div>
                 <x-nav-link :href="route('notifications')" :active="request()->is('notifications*')">
                     <span class="flex items-center flex-none opacity-50">
                         <svg class="inline-block w-6 h-6 hi-outline hi-clipboard-list" fill="none" viewBox="0 0 24 24">
@@ -128,7 +128,7 @@
                 @endif
 
                 @if(auth()->user()->isOwner())
-                <div class="px-3 pt-5 pb-2 text-xs font-medium tracking-wider uppercase text-bunababy-300">SISTEM</div>
+                <div class="px-3 pt-5 pb-2 text-xs font-medium tracking-wider uppercase text-brand-300">SISTEM</div>
                 <x-nav-link :href="route('midwives')" :active="request()->is('midwives*')">
                     <span class="flex items-center flex-none opacity-50">
                         <svg class="inline-block w-6 h-6 " fill="none" viewBox="0 0 24 24">

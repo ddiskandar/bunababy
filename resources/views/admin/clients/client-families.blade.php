@@ -63,7 +63,7 @@
                     </div>
                     <div class="space-y-1">
                         <x-label   for="state.type">Hubungan keluarga</x-label>
-                        <select wire:model.defer="state.type" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.type">
+                        <select wire:model.defer="state.type" class="w-full rounded-md border-brand-50 focus:border-brand-100 focus:ring-0 focus:ring-brand-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.type">
                             <option value="" selected>-- Pilih salah satu</option>
                             <option value="Anak">Anak</option>
                             <option value="Pasangan">Pasangan</option>

@@ -11,7 +11,7 @@
 }
 
 .filament-notifications-notification {
-    @apply py-2 text-white border-transparent rounded-full bg-bunababy-200;
+    @apply py-2 text-white border-transparent rounded-full bg-brand-200;
 }
 
 .filament-notifications-icon {

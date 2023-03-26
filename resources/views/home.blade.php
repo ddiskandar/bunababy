@@ -27,7 +27,7 @@
                     </a>
                 </nav>
 
-                <div class="flex items-center justify-center space-x-2 text-bunababy-200 hover:text-bunababy-100">
+                <div class="flex items-center justify-center space-x-2 text-brand-200 hover:text-brand-100">
                     @auth
                         <a href="/me" class="px-3 py-2 font-medium ">
                         <span>Home</span>
@@ -36,7 +36,7 @@
                         <a href="/login" class="px-3 py-2 font-medium">
                             <span>Login</span>
                         </a>
-                        <a href="/register" class="px-6 py-1 font-medium text-white rounded-full bg-bunababy-200">
+                        <a href="/register" class="px-6 py-1 font-medium text-white rounded-full bg-brand-200">
                             <span>Daftar</span>
                         </a>
                     @endauth
@@ -60,7 +60,7 @@
                 </p>
                 <div class="mt-6">
                     <a href="{{ route('order.create') }}" class="inline-block" >
-                        <div class="flex items-center gap-3 px-8 py-3 text-white transition duration-150 ease-in-out rounded-full shadow-xl disabled:opacity-25 bg-bunababy-200 shadow-bunababy-100/50">
+                        <div class="flex items-center gap-3 px-8 py-3 text-white transition duration-150 ease-in-out rounded-full shadow-xl disabled:opacity-25 bg-brand-200 shadow-brand-100/50">
                             <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 11.25V8.75C19.25 7.64543 18.3546 6.75 17.25 6.75H6.75C5.64543 6.75 4.75 7.64543 4.75 8.75V17.25C4.75 18.3546 5.64543 19.25 6.75 19.25H11.25M17 14.75V19.25M19.25 17H14.75M8 4.75V8.25M16 4.75V8.25M7.75 10.75H16.25"></path>
                             </svg>
@@ -178,12 +178,12 @@
         <div class="px-4 py-12 mx-auto max-w-7xl sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
         <h2 class="text-3xl font-extrabold tracking-tight text-gray-600 sm:text-4xl">
             <span class="block">Mau pesan treatment?</span>
-            <span class="block text-bunababy-400">Langsung klik tombol pesan treatment sekarang.</span>
+            <span class="block text-brand-400">Langsung klik tombol pesan treatment sekarang.</span>
         </h2>
         <div class="flex mt-8 lg:mt-0 lg:flex-shrink-0">
             <div class="inline-flex">
                 <a href="{{ route('order.create') }}" class="inline-block" >
-                    <div class="flex items-center gap-3 px-8 py-3 text-white transition duration-150 ease-in-out rounded-full shadow-xl disabled:opacity-25 bg-bunababy-200 shadow-bunababy-100/50">
+                    <div class="flex items-center gap-3 px-8 py-3 text-white transition duration-150 ease-in-out rounded-full shadow-xl disabled:opacity-25 bg-brand-200 shadow-brand-100/50">
                         <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 11.25V8.75C19.25 7.64543 18.3546 6.75 17.25 6.75H6.75C5.64543 6.75 4.75 7.64543 4.75 8.75V17.25C4.75 18.3546 5.64543 19.25 6.75 19.25H11.25M17 14.75V19.25M19.25 17H14.75M8 4.75V8.25M16 4.75V8.25M7.75 10.75H16.25"></path>
                         </svg>

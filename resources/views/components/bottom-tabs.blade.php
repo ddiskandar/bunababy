@@ -4,12 +4,12 @@
 
     <div>
         <div class="mb-20"></div>
-        <ul class="fixed bottom-0 z-10 flex justify-around w-full max-w-screen-sm py-3 bg-white border-t border-bunababy-50 backdrop-blur-sm">
+        <ul class="fixed bottom-0 z-10 flex justify-around w-full max-w-screen-sm py-3 bg-white border-t border-brand-50 backdrop-blur-sm">
             <li>
                 <a href="{{ route('home') }}"
                     @class([
-                        'flex flex-col items-center cursor-pointer hover:text-bunababy-200',
-                        'text-bunababy-200' => Route::is('home'),
+                        'flex flex-col items-center cursor-pointer hover:text-brand-200',
+                        'text-brand-200' => Route::is('home'),
                         'text-gray-400 ' => ! Route::is('home'),
                     ])>
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -24,8 +24,8 @@
             <li>
                 <a href="{{ route('client.history') }}"
                     @class([
-                        'flex flex-col items-center cursor-pointer hover:text-bunababy-200',
-                        'text-bunababy-200' => Route::is('client.history'),
+                        'flex flex-col items-center cursor-pointer hover:text-brand-200',
+                        'text-brand-200' => Route::is('client.history'),
                         'text-gray-400 ' => ! Route::is('client.history'),
                     ])>
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -41,7 +41,7 @@
             </li>
             {{-- <li>
                 <a href="{{ route('order.create') }}"
-                    class="flex flex-col items-center p-2 border-2 rounded-full cursor-pointer bg-bunababy-200 border-bunababy-200 text-bunababy-200 hover:text-bunababy-200"
+                    class="flex flex-col items-center p-2 border-2 rounded-full cursor-pointer bg-brand-200 border-brand-200 text-brand-200 hover:text-brand-200"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -57,8 +57,8 @@
             <li>
                 <a href="{{ route('client.notifications') }}"
                     @class([
-                        'flex flex-col items-center cursor-pointer hover:text-bunababy-200',
-                        'text-bunababy-200' => Route::is('client.notifications'),
+                        'flex flex-col items-center cursor-pointer hover:text-brand-200',
+                        'text-brand-200' => Route::is('client.notifications'),
                         'text-gray-400 ' => ! Route::is('client.notifications'),
                     ])>
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -72,8 +72,8 @@
             <li>
                 <a href="{{ route('client.profile') }}"
                     @class([
-                        'flex flex-col items-center cursor-pointer hover:text-bunababy-200',
-                        'text-bunababy-200' => Route::is('client.profile'),
+                        'flex flex-col items-center cursor-pointer hover:text-brand-200',
+                        'text-brand-200' => Route::is('client.profile'),
                         'text-gray-400 ' => ! Route::is('client.profile'),
                     ])>
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">

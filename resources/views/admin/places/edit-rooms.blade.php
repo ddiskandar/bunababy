@@ -3,7 +3,7 @@
     <x-slot name="description">Daftar Ruangan dan treatment yang dilayani</x-slot>
 
     <x-slot name="content">
-        <div class="space-y-2 divide-y divide-bunababy-50">
+        <div class="space-y-2 divide-y divide-brand-50">
             @foreach ($rooms as $room)
                 @livewire('admin.places.edit-room-treatments', [$room->id], key($room->id))
             @endforeach

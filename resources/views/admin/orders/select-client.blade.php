@@ -22,7 +22,7 @@
             <input
             wire:model="search"
             x-ref="input"
-            class="block w-full px-3 py-2 text-sm leading-6 border rounded-full border-bunababy-50 focus:border-bunababy-50 focus:outline-0 focus:ring-0 "
+            class="block w-full px-3 py-2 text-sm leading-6 border rounded-full border-brand-50 focus:border-brand-50 focus:outline-0 focus:ring-0 "
             type="text"
             id="search-client"
             autocomplete="off"
@@ -30,7 +30,7 @@
         </div>
 
         <div class="flex flex-col overflow-hidden border divide-y border-slate-100">
-            <div class="relative w-full mx-auto -my-px overflow-auto bg-white divide-y divide-bunababy-50 h-80 ring-1 ring-slate-900/5">
+            <div class="relative w-full mx-auto -my-px overflow-auto bg-white divide-y divide-brand-50 h-80 ring-1 ring-slate-900/5">
                 @forelse ($clients as $client )
                 <button
                     type="button"
@@ -44,7 +44,7 @@
                     </div>
                 </button>
                 @empty
-                <div class="flex flex-col items-center justify-center mt-10 text-sm text-bunababy-300" >
+                <div class="flex flex-col items-center justify-center mt-10 text-sm text-brand-300" >
                     @if (strlen($search) <= 2)
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 icon icon-tabler icon-tabler-user-search " width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>

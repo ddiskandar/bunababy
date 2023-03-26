@@ -1,7 +1,7 @@
 <x-section>
     <form wire:submit.prevent="save">
         <div class="pt-2 pb-6">
-            <div class="flex items-center mb-6 text-bunababy-400">
+            <div class="flex items-center mb-6 text-brand-400">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 icon icon-tabler icon-tabler-address-book" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z"></path>
@@ -49,7 +49,7 @@
                         <x-input-error for="state.families.{{ $index }}.dob" class="mt-2" />
                     </div>
 
-                    <div class="col-span-6 border-b border-bunababy-50"></div>
+                    <div class="col-span-6 border-b border-brand-50"></div>
                 @endforeach
 
                 <!-- Alamat -->
@@ -97,7 +97,7 @@
         </div>
 
         <div class="py-6">
-            <div class="flex items-center mb-4 text-bunababy-400">
+            <div class="flex items-center mb-4 text-brand-400">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 icon icon-tabler icon-tabler-user-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
@@ -134,7 +134,7 @@
             </div>
 
             <div class="py-6">
-                <button class="flex items-center justify-center w-full text-center text-white transition duration-150 ease-in-out rounded-full shadow-xl h-14 disabled:opacity-25 bg-bunababy-200 shadow-bunababy-100/50"
+                <button class="flex items-center justify-center w-full text-center text-white transition duration-150 ease-in-out rounded-full shadow-xl h-14 disabled:opacity-25 bg-brand-200 shadow-brand-100/50"
                     wire:loading.attr="disabled" wire:target="save"
                 >
                     <span wire:loading wire:target="save">

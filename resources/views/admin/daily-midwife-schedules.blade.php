@@ -56,7 +56,7 @@
                                 <div @class([
                                 'inline-flex px-6 py-1 leading-4 font-semibold text-white text-xs rounded-full',
                                 'bg-orange-400' => $schedule->status == '1',
-                                'bg-bunababy-100' => $schedule->status == '2',
+                                'bg-brand-100' => $schedule->status == '2',
                                 'bg-blue-400' => $schedule->status == '3',
                             ])>
                                 {{ $schedule->getStatusString() }}

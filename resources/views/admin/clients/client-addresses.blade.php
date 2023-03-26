@@ -24,7 +24,7 @@
                                         @endif
 
                                     </div>
-                                    <div class="py-3 text-sm font-semibold text-bunababy-200" wire:click="showEditAddressDialog({{ $address->id }})">
+                                    <div class="py-3 text-sm font-semibold text-brand-200" wire:click="showEditAddressDialog({{ $address->id }})">
                                         Edit Alamat
                                     </div>
                                 </div>
@@ -35,7 +35,7 @@
                                         <div class="py-2">{{ $address->note ?? '' }}</div>
                                     </div>
                                     @if (isset($address->share_location))
-                                        <a href="{{ $address->share_location }}" class="flex items-center text-bunababy-200" target="_blank">
+                                        <a href="{{ $address->share_location }}" class="flex items-center text-brand-200" target="_blank">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                 <path d="M18 6l0 .01"></path>
@@ -85,7 +85,7 @@
                     </div>
                     <div class="space-y-1">
                         <x-label for="state.kecamatan_id">Kecamatan</x-label>
-                        <select wire:model.defer="state.kecamatan_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.kecamatan_id">
+                        <select wire:model.defer="state.kecamatan_id" class="w-full rounded-md border-brand-50 focus:border-brand-100 focus:ring-0 focus:ring-brand-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.kecamatan_id">
                             <option value="" selected>-- Pilih salah satu</option>
                             @foreach ($kecamatans as $kecamatan)
                                 <option value="{{ $kecamatan->id }}">{{ $kecamatan->name }}</option>

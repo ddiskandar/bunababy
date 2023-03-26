@@ -1,7 +1,7 @@
 <x-client-layout>
     <x-bottom-tabs>
         <div class="sticky top-0 z-20">
-            <div class="py-3 bg-white border-b border-bunababy-50">
+            <div class="py-3 bg-white border-b border-brand-50">
                 <div class="flex items-center justify-between px-6 mx-auto">
                     <div>
                         <a href="/"><img src="/images/logo.svg" alt="Logo"></a>
@@ -25,7 +25,7 @@
             <x-section>
                 @if (!$reservation || $reservation->getStatusString() === 'Selesai')
                     <a href="{{ route('order.create') }}">
-                        <button class="flex items-center justify-center w-full gap-3 px-8 py-1 mb-4 text-white transition duration-150 ease-in-out rounded-full bg-bunababy-200 hover:opacity-80 ">
+                        <button class="flex items-center justify-center w-full gap-3 px-8 py-1 mb-4 text-white transition duration-150 ease-in-out rounded-full bg-brand-200 hover:opacity-80 ">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <rect x="4" y="5" width="16" height="16" rx="2"></rect>

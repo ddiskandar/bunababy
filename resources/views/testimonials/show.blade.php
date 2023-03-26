@@ -1,6 +1,6 @@
 <x-client-layout>
     <div class="relative">
-        <div class="sticky top-0 z-20 px-4 py-4 text-white shadow bg-bunababy-200 shadow-bunababy-50">
+        <div class="sticky top-0 z-20 px-4 py-4 text-white shadow bg-brand-200 shadow-brand-50">
             <div class="flex items-center justify-between max-w-screen-sm mx-auto">
                 <a href="{{ route('client.history') }}">
                     <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24">
@@ -32,7 +32,7 @@
                         <div @class([
                             'inline-flex px-6 py-1 leading-4 font-semibold text-white text-xs rounded-full',
                             'bg-orange-400' => $reservation->status == '1',
-                            'bg-bunababy-100' => $reservation->status == '2',
+                            'bg-brand-100' => $reservation->status == '2',
                             'bg-blue-400' => $reservation->status == '3',
                         ])>{{ $reservation->getStatusString() }}</div>
                     </div>
@@ -73,7 +73,7 @@
                 </div>
 
                 @if ($reservation->testimonial()->exists())
-                    <div class="py-4 border-t border-bunababy-50">
+                    <div class="py-4 border-t border-brand-50">
                         <x-title>Ulasan anda</x-title>
                         <div class="py-2">
                             <div class="flex space-x-0">
@@ -93,7 +93,7 @@
                         </div>
                     </div>
                 @else
-                    <div class="py-4 border-t border-bunababy-50">
+                    <div class="py-4 border-t border-brand-50">
                         @livewire('client.order.add-review', ['reservation' => $reservation])
                     </div>
                 @endif

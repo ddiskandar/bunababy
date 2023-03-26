@@ -4,7 +4,7 @@
         <div class="text-sm">Besar Pembayaran DP (50%)</div>
         <div class="flex items-center justify-between mb-4 ">
             <div class="text-3xl font-semibold text-red-600">{{ rupiah($order->getDpAmount()) }}</div>
-            <div class="flex items-center gap-2 cursor-pointer text-bunababy-200" x-data x-on:click="
+            <div class="flex items-center gap-2 cursor-pointer text-brand-200" x-data x-on:click="
                 window.navigator.clipboard.writeText({{ $order->getDpAmount() }});
                 new Notification()
                     .success()
@@ -24,7 +24,7 @@
         <div class="text-sm">Total Keseluruhan Yang Harus Dibayar</div>
         <div class="flex items-center justify-between mb-4 ">
             <div class="text-3xl font-semibold text-red-600">{{ rupiah($order->getGrandTotal()) }}</div>
-            <div class="flex items-center gap-2 cursor-pointer text-bunababy-200" x-data x-on:click="
+            <div class="flex items-center gap-2 cursor-pointer text-brand-200" x-data x-on:click="
                 window.navigator.clipboard.writeText({{ $order->getGrandTotal() }});
                 new Notification()
                     .success()
@@ -65,7 +65,7 @@
             <div class="font-semibold">
                 {{ $order->no_reg }}
             </div>
-            <div class="flex items-center gap-2 cursor-pointer text-bunababy-200" x-data x-on:click="
+            <div class="flex items-center gap-2 cursor-pointer text-brand-200" x-data x-on:click="
                 window.navigator.clipboard.writeText({{ $order->no_reg }});
                 new Notification()
                     .success()

@@ -69,7 +69,7 @@
         </div>
 
         <div class="w-full px-6 py-4 mb-6 overflow-hidden text-sm text-center bg-white shadow-md sm:max-w-lg sm:rounded-lg">
-            Belum punya akun? <a href="/register" class="font-semibold text-bunababy-200">Daftar Sekarang</a>
+            Belum punya akun? <a href="/register" class="font-semibold text-brand-200">Daftar Sekarang</a>
         </div>
     </div>
 

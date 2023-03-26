@@ -1,7 +1,7 @@
 <div>
     @if (session()->has('order.start_time_id'))
 
-    <div class="inline-flex items-center mb-4 text-bunababy-400">
+    <div class="inline-flex items-center mb-4 text-brand-400">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
             <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
         </svg>
@@ -11,12 +11,12 @@
     <div class="w-full bg-white" x-data="{selected:1}">
         <ul class="shadow-box">
             @foreach ($categories as $category)
-                <li class="relative border-b border-bunababy-50">
+                <li class="relative border-b border-brand-50">
                     <button type="button" class="w-full px-6 py-4 text-left" @click="selected !== {{ $loop->iteration }} ? selected = {{ $loop->iteration }} : selected = null">
                         <div class="flex items-center justify-between">
-                            <span class="font-semibold text-bunababy-200">{{ $category['name'] }}</span>
+                            <span class="font-semibold text-brand-200">{{ $category['name'] }}</span>
                             <span :class=" selected !== {{ $loop->iteration }} ? ' rotate-180' : ''" class="transition-all duration-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-bunababy-200" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-brand-200" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <path d="M6 15l6 -6l6 6"></path>
                                 </svg>
@@ -43,7 +43,7 @@
                                     <div class="flex items-start justify-between mt-2">
                                         <div>
                                                 @forelse ($pemesans as $key => $pemesan)
-                                                <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 rounded-full text-bunababy-200 bg-bunababy-50">
+                                                <div class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 rounded-full text-brand-200 bg-brand-50">
                                                     <span>{{ $pemesan['family_name'] }}</span>
                                                     <button
                                                         wire:click="deleteTreatment({{ $key }}, {{ $treatment['id'] }})"
@@ -65,7 +65,7 @@
                                                     wire:click="confirmAddTreatment({{ $treatment['id'] }})"
 
                                                 >
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-bunababy-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-brand-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                   </svg>
                                             </button>
@@ -73,7 +73,7 @@
                                         @else
                                         <button
                                                 wire:click="confirmAddTreatment({{ $treatment['id'] }})"
-                                                class="px-4 py-1 text-xs text-white rounded-full bg-bunababy-200"
+                                                class="px-4 py-1 text-xs text-white rounded-full bg-brand-200"
                                             >Tambah
                                         </button>
                                         @endif
@@ -97,7 +97,7 @@
         <div class="sm:flex sm:items-start">
             <div class="w-full">
                 <x-title>Tambah treatment berikut</x-title>
-                <div class="p-4 border rounded bg-bunababy-50/10 border-bunababy-50" >
+                <div class="p-4 border rounded bg-brand-50/10 border-brand-50" >
                 <div>
                     <h3 class="text-xl font-semibold leading-6" id="modal-title">{{ $currentTreatment['name'] }}</h3>
                     {{-- <div class="mt-2">

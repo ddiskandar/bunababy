@@ -1,5 +1,5 @@
 <div class="relative">
-    <div class="sticky top-0 z-20 px-4 py-4 text-white shadow bg-bunababy-200 shadow-bunababy-50">
+    <div class="sticky top-0 z-20 px-4 py-4 text-white shadow bg-brand-200 shadow-brand-50">
         <div class="flex items-center justify-between max-w-screen-sm mx-auto">
             <h1 class="flex-1 font-semibold md:text-center">Riwayat Reservasi</h1>
         </div>
@@ -10,36 +10,36 @@
         <div class="flex flex-wrap justify-center gap-2 py-4 ">
             <button wire:click="$set('filterStatus', '')"
                 @class([
-                    'py-1 text-xs font-semibold px-4 border hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 rounded-full',
-                    'bg-bunababy-200 text-white' => $filterStatus === '',
-                    'text-bunababy-200 bg-white' => $filterStatus !== '',
+                    'py-1 text-xs font-semibold px-4 border hover:bg-brand-200 hover:text-white transition-all border-brand-200 rounded-full',
+                    'bg-brand-200 text-white' => $filterStatus === '',
+                    'text-brand-200 bg-white' => $filterStatus !== '',
                 ])
             >
                 Semua
             </button>
             <button wire:click="$set('filterStatus', '2')"
                 @class([
-                    'py-1 text-xs font-semibold px-4 border hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 rounded-full',
-                    'bg-bunababy-200 text-white' => $filterStatus === \App\Models\Order::STATUS_LOCKED,
-                    'text-bunababy-200 bg-white' => $filterStatus !== \App\Models\Order::STATUS_LOCKED,
+                    'py-1 text-xs font-semibold px-4 border hover:bg-brand-200 hover:text-white transition-all border-brand-200 rounded-full',
+                    'bg-brand-200 text-white' => $filterStatus === \App\Models\Order::STATUS_LOCKED,
+                    'text-brand-200 bg-white' => $filterStatus !== \App\Models\Order::STATUS_LOCKED,
                 ])
             >
                 Aktif
             </button>
             <button wire:click="$set('filterStatus', '3')"
                 @class([
-                    'py-1 text-xs font-semibold px-4 border hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 rounded-full',
-                    'bg-bunababy-200 text-white' => $filterStatus === \App\Models\Order::STATUS_FINISHED,
-                    'text-bunababy-200 bg-white' => $filterStatus !== \App\Models\Order::STATUS_FINISHED,
+                    'py-1 text-xs font-semibold px-4 border hover:bg-brand-200 hover:text-white transition-all border-brand-200 rounded-full',
+                    'bg-brand-200 text-white' => $filterStatus === \App\Models\Order::STATUS_FINISHED,
+                    'text-brand-200 bg-white' => $filterStatus !== \App\Models\Order::STATUS_FINISHED,
                 ])
             >
                 Selesai
             </button>
             <button wire:click="$set('filterStatus', '1')"
                 @class([
-                    'py-1 text-xs font-semibold px-4 border hover:bg-bunababy-200 hover:text-white transition-all border-bunababy-200 rounded-full',
-                    'bg-bunababy-200 text-white' => $filterStatus === \App\Models\Order::STATUS_UNPAID,
-                    'text-bunababy-200 bg-white' => $filterStatus !== \App\Models\Order::STATUS_UNPAID,
+                    'py-1 text-xs font-semibold px-4 border hover:bg-brand-200 hover:text-white transition-all border-brand-200 rounded-full',
+                    'bg-brand-200 text-white' => $filterStatus === \App\Models\Order::STATUS_UNPAID,
+                    'text-brand-200 bg-white' => $filterStatus !== \App\Models\Order::STATUS_UNPAID,
                 ])
             >
                 Pending
@@ -59,7 +59,7 @@
     <div class="fixed inset-x-0 bottom-24 z-90">
         <div class="flex items-center justify-center">
             <a href="{{ route('order.create') }}"
-                class="flex items-center px-6 py-2 border-white rounded-full shadow-lg cursor-pointer shadow-bunababy-200/25 border-3 bg-bunababy-200 text-bunababy-200 hover:text-bunababy-200"
+                class="flex items-center px-6 py-2 border-white rounded-full shadow-lg cursor-pointer shadow-brand-200/25 border-3 bg-brand-200 text-brand-200 hover:text-brand-200"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>

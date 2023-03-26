@@ -135,7 +135,7 @@
 
                         <div class="space-y-1">
                             <x-label   for="state.status">Status</x-label>
-                            <select wire:model.lazy="state.status" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.status">
+                            <select wire:model.lazy="state.status" class="w-full rounded-md border-brand-50 focus:border-brand-100 focus:ring-0 focus:ring-brand-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.status">
                                 <option value="" selected>-- Pilih salah satu</option>
                                 <option value="2">Approved</option>
                                 <option value="3">Reject</option>

@@ -12,7 +12,7 @@
 
                 <div class="flex space-x-2">
                     <div class="mt-3 text-center sm:mt-0 sm:text-right w-36">
-                        <select wire:model="filterStatus" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
+                        <select wire:model="filterStatus" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-brand-100 focus:ring-0 ">
                             <option value="" selected="selected">Semua Status</option>
                             <option value="1">Aktif</option>
                             <option value="0">Tidak Aktif</option>
@@ -20,7 +20,7 @@
                     </div>
 
                     <div class="w-16 mt-3 text-center sm:mt-0 sm:text-right">
-                        <select wire:model="perPage" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
+                        <select wire:model="perPage" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-brand-100 focus:ring-0 ">
                             <option value="3">3</option>
                             <option value="6" selected>6</option>
                             <option value="15">15</option>
@@ -30,7 +30,7 @@
                 </div>
 
                 <div>
-                    <a href="{{ route('midwives.create') }}" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-bunababy-100">
+                    <a href="{{ route('midwives.create') }}" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-brand-100">
                         + Tambah Baru
                     </a>
 
@@ -43,7 +43,7 @@
                 <div class="absolute inset-y-0 left-0 flex items-center justify-center w-10 my-px ml-px text-gray-500 rounded-l pointer-events-none">
                     <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 hi-solid hi-search"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                 </div>
-                <input wire:model="filterSearch" class="block w-full py-1 pl-10 pr-3 text-sm leading-6 border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-50" type="search" placeholder="Mencari berdasarkan nama, atau wilayah ..." />
+                <input wire:model="filterSearch" class="block w-full py-1 pl-10 pr-3 text-sm leading-6 border border-gray-200 rounded focus:border-brand-100 focus:ring-0 focus:ring-brand-50" type="search" placeholder="Mencari berdasarkan nama, atau wilayah ..." />
             </div>
         </div>
         <!-- END Card Header -->
@@ -120,7 +120,7 @@
                             </td>
                             <td class="p-3 text-center align-top whitespace-nowrap">
                                 <div class="flex justify-center space-x-2">
-                                    <a href="{{ route('midwives.edit', $midwife->id) }}" class="text-slate-400 hover:text-bunababy-200">
+                                    <a href="{{ route('midwives.edit', $midwife->id) }}" class="text-slate-400 hover:text-brand-200">
                                         <x-icon-pencil/>
                                     </a>
                                 </div>
@@ -179,7 +179,7 @@
             </div>
             <div class="space-y-1">
                 <x-label   for="state.category_id">Kategory</x-label>
-                <select wire:model.lazy="state.category_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.category_id">
+                <select wire:model.lazy="state.category_id" class="w-full rounded-md border-brand-50 focus:border-brand-100 focus:ring-0 focus:ring-brand-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.category_id">
                     <option value="" selected>-- Pilih salah satu</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -195,7 +195,7 @@
             <div class="py-4 space-y-1">
                 <div class="inline-flex items-center ml-2">
                     <div class="flex items-center h-5 ">
-                        <input type="checkbox" wire:model.lazy="state.active" name="state.active" class="w-12 transition-all duration-150 ease-out rounded-full cursor-pointer form-switch h-7 text-bunababy-200 focus:ring focus:ring-bunababy-200 focus:ring-opacity-50">
+                        <input type="checkbox" wire:model.lazy="state.active" name="state.active" class="w-12 transition-all duration-150 ease-out rounded-full cursor-pointer form-switch h-7 text-brand-200 focus:ring focus:ring-brand-200 focus:ring-opacity-50">
                     </div>
                     <div class="ml-2 ">
                         <x-label for="state.active">Aktif</x-label>
@@ -209,7 +209,7 @@
             <button
                 wire:click="save"
                 type="button"
-                class="block w-full py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
+                class="block w-full py-2 text-center text-white rounded-full shadow-xl bg-brand-200 shadow-brand-100/50"
             >Simpan</button>
         </div>
 

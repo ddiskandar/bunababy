@@ -19,10 +19,10 @@
     </div>
 @else
     <div class="py-4">
-        <div class="overflow-hidden bg-white border rounded-md border-bunababy-100">
-            <div class="flex justify-between px-4 py-5 border-b sm:px-6 border-bunababy-50">
+        <div class="overflow-hidden bg-white border rounded-md border-brand-100">
+            <div class="flex justify-between px-4 py-5 border-b sm:px-6 border-brand-50">
                 <div>
-                    <h3 class="font-semibold leading-6 text-md text-bunababy-400">
+                    <h3 class="font-semibold leading-6 text-md text-brand-400">
                         Sedikit lagi, lengkapi profil
                     </h3>
                     <p class="max-w-2xl mt-1 text-sm text-gray-900">
@@ -32,11 +32,11 @@
             </div>
 
             <nav aria-label="Progress">
-                <ol class="divide-y rounded-md divide-bunababy-50 md:flex md:divide-y-0">
+                <ol class="divide-y rounded-md divide-brand-50 md:flex md:divide-y-0">
                     <li class="relative md:flex-1 md:flex">
                         <a href="{{ route('client.profile.edit') }}" class="flex items-center w-full group">
                             <span class="flex items-center px-6 py-4 text-sm font-medium">
-                                <span class="flex items-center justify-center flex-shrink-0 w-10 h-10 rounded-full bg-bunababy-400 group-hover:bg-bunababy-300">
+                                <span class="flex items-center justify-center flex-shrink-0 w-10 h-10 rounded-full bg-brand-400 group-hover:bg-brand-300">
                                     <svg class="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                                     </svg>
@@ -46,7 +46,7 @@
                         </a>
 
                         <div class="absolute top-0 right-0 hidden w-5 h-full md:block" aria-hidden="true">
-                            <svg class="w-full h-full text-bunababy-50" viewBox="0 0 22 80" fill="none" preserveAspectRatio="none">
+                            <svg class="w-full h-full text-brand-50" viewBox="0 0 22 80" fill="none" preserveAspectRatio="none">
                                 <path d="M0 -2L20 40L0 82" vector-effect="non-scaling-stroke" stroke="currentcolor" stroke-linejoin="round"></path>
                             </svg>
                         </div>
@@ -59,13 +59,13 @@
                                 <span
                                     @class([
                                         'flex-shrink-0 w-10 h-10 flex items-center justify-center  rounded-full',
-                                        'border-2 border-bunababy-200' => ! $hasPhone,
-                                        'bg-bunababy-400 group-hover:bg-bunababy-300' => $hasPhone,
+                                        'border-2 border-brand-200' => ! $hasPhone,
+                                        'bg-brand-400 group-hover:bg-brand-300' => $hasPhone,
                                     ])
                                     aria-current="step"
                                 >
                                     @if (! $hasPhone)
-                                        <span class="text-bunababy-200">02</span>
+                                        <span class="text-brand-200">02</span>
                                     @else
                                         <svg class="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
@@ -76,7 +76,7 @@
                                 <span
                                     @class([
                                         'ml-4 text-sm font-medium ',
-                                        'text-bunababy-200' => ! $hasPhone,
+                                        'text-brand-200' => ! $hasPhone,
                                         'text-gray-900' => $hasPhone
                                     ])
                                 >
@@ -86,7 +86,7 @@
                         </a>
 
                         <div class="absolute top-0 right-0 hidden w-5 h-full md:block" aria-hidden="true">
-                            <svg class="w-full h-full text-bunababy-50" viewBox="0 0 22 80" fill="none" preserveAspectRatio="none">
+                            <svg class="w-full h-full text-brand-50" viewBox="0 0 22 80" fill="none" preserveAspectRatio="none">
                                 <path d="M0 -2L20 40L0 82" vector-effect="non-scaling-stroke" stroke="currentcolor" stroke-linejoin="round"></path>
                             </svg>
                         </div>
@@ -99,13 +99,13 @@
                                 <span
                                     @class([
                                         'flex-shrink-0 w-10 h-10 flex items-center justify-center  rounded-full',
-                                        'border-2 border-bunababy-200' => ! $hasAddress,
-                                        'bg-bunababy-400 group-hover:bg-bunababy-300' => $hasAddress,
+                                        'border-2 border-brand-200' => ! $hasAddress,
+                                        'bg-brand-400 group-hover:bg-brand-300' => $hasAddress,
                                     ])
                                     aria-current="step"
                                 >
                                     @if (! $hasAddress)
-                                        <span class="text-bunababy-200">03</span>
+                                        <span class="text-brand-200">03</span>
                                     @else
                                         <svg class="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
@@ -116,7 +116,7 @@
                                 <span
                                     @class([
                                         'ml-4 text-sm font-medium ',
-                                        'text-bunababy-200' => ! $hasAddress,
+                                        'text-brand-200' => ! $hasAddress,
                                         'text-gray-900' => $hasAddress
                                     ])
                                 >

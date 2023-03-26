@@ -5,7 +5,7 @@
         <div class="max-w-lg space-y-4">
             <div class="space-y-1">
                 <x-label for="state.placeId">Tempat</x-label>
-                <select wire:model="state.placeId" wire:change="setSelectedPlace" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.placeId">
+                <select wire:model="state.placeId" wire:change="setSelectedPlace" class="w-full rounded-md border-brand-50 focus:border-brand-100 focus:ring-0 focus:ring-brand-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.placeId">
                     @foreach ($places as $place)
                     <option value="{{ $place->id }}">{{ $place->name }}</option>
                     @endforeach
@@ -16,7 +16,7 @@
             @if ($selectedPlace && $selectedPlace->type === \App\Models\Place::TYPE_CLINIC)
             <div class="space-y-1">
                 <x-label for="state.roomId">Ruangan</x-label>
-                <select wire:model="state.roomId" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.roomId">
+                <select wire:model="state.roomId" class="w-full rounded-md border-brand-50 focus:border-brand-100 focus:ring-0 focus:ring-brand-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.roomId">
                     <option value="">--Pilih salah satu</option>
                     @foreach ($rooms as $room)
                     <option value="{{ $room->id }}">{{ $room->name }}</option>
@@ -55,7 +55,7 @@
                                         </div>
 
                                         @if (isset($state['addressId']) && $state['addressId'] === $address->id)
-                                        <div class="text-sm font-semibold text-bunababy-200"
+                                        <div class="text-sm font-semibold text-brand-200"
                                             wire:click="showEditDialog({{ $address->id }})"
                                         >
                                             Edit Alamat
@@ -69,7 +69,7 @@
                                         @if (isset($state['addressId']) && $state['addressId'] === $address->id)
                                             <div class="py-2">{{ $address->note ?? '' }}</div>
                                             @if (isset($address->share_location))
-                                                <a href="{{ $address->share_location }}" class="flex items-center text-bunababy-200" target="_blank">
+                                                <a href="{{ $address->share_location }}" class="flex items-center text-brand-200" target="_blank">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                         <path d="M18 6l0 .01"></path>
@@ -111,7 +111,7 @@
             @if (isset($state['date']))
             <div class="space-y-1">
                 <x-label for="state.midwifeId">Bidan</x-label>
-                <select wire:model="state.midwifeId" wire:change="setSelectedMidwife" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.midwifeId">
+                <select wire:model="state.midwifeId" wire:change="setSelectedMidwife" class="w-full rounded-md border-brand-50 focus:border-brand-100 focus:ring-0 focus:ring-brand-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.midwifeId">
                     <option value="" selected>-- Belum ada yang dipilih</option>
                     @foreach ($midwives as $midwife)
                         <option value="{{ $midwife->id }}">{{ $midwife->name }}</option>
@@ -124,7 +124,7 @@
             @if ($selectedMidwife)
                     <div class="space-y-1">
                         <x-label for="time">Waktu Treatment</x-label>
-                        <div class="-mt-4 divide-y divide-bunababy-50">
+                        <div class="-mt-4 divide-y divide-brand-50">
                             @foreach ($data as $key => $value)
                                 <div class="py-4">
                                     <h3 class="mb-2 text-sm font-semibold">{{ $key }}</h3>
@@ -152,15 +152,15 @@
                                                     @class([
                                                         'inline-flex items-center justify-center w-14 md:w-20  text-xs font-semibold leading-5 border rounded-full ',
                                                         'border-slate-200 ' => ! $isSelected,
-                                                        'border-transparent bg-bunababy-50 text-bunababy-200' => $isSelected,
-                                                        'ring-2 ring-offset-1 ring-bunababy-100/50' => $inRange,
+                                                        'border-transparent bg-brand-50 text-brand-200' => $isSelected,
+                                                        'ring-2 ring-offset-1 ring-brand-100/50' => $inRange,
                                                     ])
                                                     >
                                                     <span
                                                         @class([
                                                             'w-2 h-2 mr-1 rounded-full ',
                                                             'bg-green-600' => ! $isSelected,
-                                                            'bg-bunababy-200' => $isSelected,
+                                                            'bg-brand-200' => $isSelected,
                                                         ])
                                                     ></span>
                                                     <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>
@@ -170,7 +170,7 @@
 
                                                 <button @class([
                                                     'inline-flex items-center justify-center text-xs font-semibold leading-5 text-red-200 border border-red-200 rounded-full cursor-not-allowed w-14 md:w-20 bg-red-50',
-                                                    'ring-2 ring-offset-1 ring-bunababy-100/50' => $inRange]
+                                                    'ring-2 ring-offset-1 ring-brand-100/50' => $inRange]
                                                     )
                                                 >
                                                     <span class="w-2 h-2 mr-1 bg-red-300 rounded-full" ></span>
@@ -228,7 +228,7 @@
 
                     <div class="space-y-1">
                         <x-label for="state.kecamatan_id">Kecamatan</x-label>
-                        <select @if ($dialogEditMode) disabled @endif wire:model.defer="state.kecamatan_id" class="w-full rounded-md border-bunababy-50 focus:border-bunababy-100 focus:ring-0 focus:ring-bunababy-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.kecamatan_id">
+                        <select @if ($dialogEditMode) disabled @endif wire:model.defer="state.kecamatan_id" class="w-full rounded-md border-brand-50 focus:border-brand-100 focus:ring-0 focus:ring-brand-100 focus:ring-opacity-50 disabled:bg-slate-100 disabled:opacity-75" type="text" id="state.kecamatan_id">
                             <option value="" selected>-- Pilih salah satu</option>
                             @foreach ($kecamatans as $kecamatan)
                                 <option value="{{ $kecamatan->id }}">{{ $kecamatan->name }}</option>

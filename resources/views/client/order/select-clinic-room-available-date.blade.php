@@ -1,11 +1,11 @@
-<div class="px-4 py-2 border rounded border-bunababy-50"
+<div class="px-4 py-2 border rounded border-brand-50"
     x-data="{ expanded: false }"
 >
     <div class="flex items-center justify-between ">
         <div>
             <span class="font-medium">{{ $room->name }}</span>
         </div>
-        <button class="flex items-center px-4 py-1 text-xs border rounded-full cursor-pointer text-bunababy-100 border-bunababy-100"
+        <button class="flex items-center px-4 py-1 text-xs border rounded-full cursor-pointer text-brand-100 border-brand-100"
             x-on:click="expanded =! expanded"
         >
             <span class="font-semibold"><span class="hidden md:inline-block">Pilih </span> Jadwal</span>
@@ -25,7 +25,7 @@
         x-transition:leave-start="opacity-100 transform scale-y-100 translate-y-0"
         x-transition:leave-end="opacity-0 transform scale-y-0 -translate-y-1/2"
     >
-        <div class="flex items-center justify-between py-8 mt-4 border-t border-bunababy-50">
+        <div class="flex items-center justify-between py-8 mt-4 border-t border-brand-50">
             <div wire:click="prevMonth" class="cursor-pointer ">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
             </div>
@@ -62,13 +62,13 @@
                         </div>
 
                     @elseif($day['status'] == 'tersedia')
-                        <div class="flex flex-col items-center px-4 py-2 rounded cursor-pointer hover:bg-bunababy-50">
+                        <div class="flex flex-col items-center px-4 py-2 rounded cursor-pointer hover:bg-brand-50">
                             <span>{{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}</span>
                             <div class="w-3 h-3 bg-blue-400 border-2 border-white rounded-full"></div>
                         </div>
 
                     @else
-                        <div class="flex flex-col items-center px-4 py-2 rounded cursor-pointer hover:bg-bunababy-50">
+                        <div class="flex flex-col items-center px-4 py-2 rounded cursor-pointer hover:bg-brand-50">
                             <span>{{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}</span>
                             <div class="w-3 h-3 bg-green-400 border-2 border-white rounded-full"></div>
                         </div>

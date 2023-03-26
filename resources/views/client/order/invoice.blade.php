@@ -24,7 +24,7 @@
                     </div>
 
                     <div class="print:hidden">
-                        <button onclick="window.print()" type="button" class="inline-flex items-center justify-center px-6 py-2 space-x-2 font-semibold leading-5 text-white border rounded-full focus:outline-none border-bunababy-200 bg-bunababy-200 hover:bg-bunababy-100 hover:border-bunababy-100 focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-gray-200 active:border-gray-200">
+                        <button onclick="window.print()" type="button" class="inline-flex items-center justify-center px-6 py-2 space-x-2 font-semibold leading-5 text-white border rounded-full focus:outline-none border-brand-200 bg-brand-200 hover:bg-brand-100 hover:border-brand-100 focus:ring focus:ring-gray-500 focus:ring-opacity-25 active:bg-gray-200 active:border-gray-200">
                             <svg class="inline-block w-6 h-6 " fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 10.75H19.25V17.25C19.25 18.3546 18.3546 19.25 17.25 19.25H6.75C5.64543 19.25 4.75 18.3546 4.75 17.25V10.75Z"></path>
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.75 10.5V4.75H17.25V10.5"></path>
@@ -146,10 +146,10 @@
                     </tr>
                     @endif
                     <tr>
-                        <td colspan="2" class="py-2 font-bold text-right uppercase border-y border-bunababy-50">
+                        <td colspan="2" class="py-2 font-bold text-right uppercase border-y border-brand-50">
                             Total Tagihan
                         </td>
-                        <td class="py-2 font-semibold text-right border-y border-bunababy-50">
+                        <td class="py-2 font-semibold text-right border-y border-brand-50">
                             {{ rupiah($order->getGrandTotal()) }}
                         </td>
                     </tr>

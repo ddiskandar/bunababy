@@ -4,7 +4,7 @@
             @foreach ($families as $family)
                 <button
                     wire:click="selectFamily({{ $family['id'] }})"
-                    class="flex items-center justify-between w-full p-4 text-gray-700 hover:text-gray-700 hover:bg-bunababy-50/20 active:bg-white" >
+                    class="flex items-center justify-between w-full p-4 text-gray-700 hover:text-gray-700 hover:bg-brand-50/20 active:bg-white" >
                     <div class="flex items-center space-x-4">
                         <svg class="w-8 h-8 text-slate-400" fill="none" viewBox="0 0 24 24">
                             <circle cx="12" cy="8" r="3.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></circle>
@@ -27,12 +27,12 @@
         @auth
         <div x-show="! add"
             class="py-4 text-sm text-slate-400">
-            Belum ada di daftar? <a href="{{ route('client.families') }}" class="font-semibold text-bunababy-200">Tambah anggota di halaman profil keluarga</a> terlebih dahulu
+            Belum ada di daftar? <a href="{{ route('client.families') }}" class="font-semibold text-brand-200">Tambah anggota di halaman profil keluarga</a> terlebih dahulu
         </div>
         @else
         <div x-show="! add"
             class="py-4 text-sm text-slate-400">
-            Belum ada di daftar? <button x-on:click="add = true" class="font-semibold text-bunababy-200">Tambah profil keluarga</button>
+            Belum ada di daftar? <button x-on:click="add = true" class="font-semibold text-brand-200">Tambah profil keluarga</button>
         </div>
         @endauth
 
@@ -41,7 +41,7 @@
         x-init="add = true"
         class="flex flex-col items-center py-6">
         <div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-bunababy-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-brand-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
             </svg>
         </div>
@@ -64,7 +64,7 @@
                 type="text"
                 name="price"
                 id="price"
-                class="block w-full pr-12 text-sm border-gray-300 rounded-md focus:ring-bunababy-100 focus:border-bunababy-100"
+                class="block w-full pr-12 text-sm border-gray-300 rounded-md focus:ring-brand-100 focus:border-brand-100"
                 placeholder="{{ session()->has('order.families') ? 'Nama' : 'Nama Anda' }}">
             @if (session()->has('order.families'))
                 <div class="absolute inset-y-0 right-0 flex items-center">
@@ -73,7 +73,7 @@
                         wire:model="type"
                         id="currency"
                         name="currency"
-                        class="h-full py-0 pl-2 text-sm text-gray-500 bg-transparent border-transparent rounded-md focus:ring-bunababy-100 focus:border-bunababy-100 pr-7">
+                        class="h-full py-0 pl-2 text-sm text-gray-500 bg-transparent border-transparent rounded-md focus:ring-brand-100 focus:border-brand-100 pr-7">
                         <option value="Anak" selected>Anak</option>
                         <option value="Pasangan">Pasangan</option>
                         <option value="Orang tua">Orang tua</option>
@@ -92,7 +92,7 @@
                 wire.loading.attr="disabled"
                 wire:click="addFamily()"
                 type="button"
-                class="w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm disabled:opacity-25 bg-bunababy-200 hover:bg-bunababy-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-bunababy-200 ">
+                class="w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm disabled:opacity-25 bg-brand-200 hover:bg-brand-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-200 ">
             Tambah
             </button>
             <!-- END Button (small) -->

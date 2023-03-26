@@ -10,12 +10,12 @@
             </div>
             <div class="flex flex-col gap-2 mt-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-end">
 
-                <a href="{{ route('clients') }}" class="text-xs font-medium uppercase text-slate-400 hover:text-bunababy-200 ">
+                <a href="{{ route('clients') }}" class="text-xs font-medium uppercase text-slate-400 hover:text-brand-200 ">
                     Atur Pelanggan
                 </a>
 
                 <div class="w-36">
-                    <select wire:model="filterStatus" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-bunababy-100 focus:ring-0 ">
+                    <select wire:model="filterStatus" class="block w-full px-2 py-1 text-sm border border-gray-200 rounded focus:border-brand-100 focus:ring-0 ">
                         <option value="" selected="selected">Semua Status</option>
                         <option value="1">Aktif</option>
                         <option value="0">Tidak Aktif</option>
@@ -23,7 +23,7 @@
                 </div>
 
                 <div>
-                    <button wire:click="showAddNewTagDialog" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-bunababy-100">
+                    <button wire:click="showAddNewTagDialog" type="button" class="inline-flex items-center justify-center px-2 py-1 space-x-2 text-sm font-semibold leading-5 text-gray-800 bg-white border border-gray-300 rounded focus:outline-none hover:text-gray-800 hover:bg-gray-100 hover:border-gray-300 focus:ring-0 active:bg-white active:border-brand-100">
                         + Tambah Baru
                     </button>
 
@@ -73,7 +73,7 @@
                             </td>
                             <td class="p-3 text-center align-top">
                                 <div class="flex justify-center space-x-2">
-                                    <button wire:click="showEditTagDialog({{ $tag->id }})" class="text-slate-400 hover:text-bunababy-200">
+                                    <button wire:click="showEditTagDialog({{ $tag->id }})" class="text-slate-400 hover:text-brand-200">
                                         <x-icon-pencil/>
                                     </button>
                                 </div>
@@ -129,7 +129,7 @@
             <button
                 wire:click="save"
                 type="button"
-                class="block w-full py-2 text-center text-white rounded-full shadow-xl bg-bunababy-200 shadow-bunababy-100/50"
+                class="block w-full py-2 text-center text-white rounded-full shadow-xl bg-brand-200 shadow-brand-100/50"
             >Simpan</button>
         </div>
 

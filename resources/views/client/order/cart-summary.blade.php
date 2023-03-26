@@ -1,5 +1,5 @@
 <div>
-    <div class="fixed bottom-0 z-10 w-full max-w-screen-sm px-6 py-3 bg-white border-t border-bunababy-50">
+    <div class="fixed bottom-0 z-10 w-full max-w-screen-sm px-6 py-3 bg-white border-t border-brand-50">
         <div class="relative flex justify-between py-1">
             <div class="w-2/3">
                 <div class="">
@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            <button class="flex-shrink-0 w-32 px-6 py-2 ml-2 font-medium text-center text-white transition duration-150 ease-in-out rounded-full shadow-xl disabled:opacity-25 bg-bunababy-200 shadow-bunababy-100/50"
+            <button class="flex-shrink-0 w-32 px-6 py-2 ml-2 font-medium text-center text-white transition duration-150 ease-in-out rounded-full shadow-xl disabled:opacity-25 bg-brand-200 shadow-brand-100/50"
                 wire:click="checkout"
                 wire:loading.attr="disabled"
                 @disabled(!session()->has('order.treatments') || session('order.treatments') === [])
@@ -40,7 +40,7 @@
                 Treatment
             </div>
             <div>
-                <ul class="h-48 my-2 overflow-y-auto divide-y divide-bunababy-50">
+                <ul class="h-48 my-2 overflow-y-auto divide-y divide-brand-50">
                     @forelse ($treatments as $name => $treatment)
                     <li class="py-2 text-sm opacity-80">
                         <div class="font-semibold">{{ $name }}</div>
@@ -61,7 +61,7 @@
                     @endforelse
                 </ul>
 
-                <div class="pt-2 border-t border-bunababy-50">
+                <div class="pt-2 border-t border-brand-50">
                     <div class="flex justify-between py-1 text-sm">
                         <div>Sub Total</div>
                         <div>{{ $data['total_price'] }}</div>
