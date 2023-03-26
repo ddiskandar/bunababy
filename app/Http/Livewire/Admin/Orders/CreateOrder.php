@@ -158,7 +158,7 @@ class CreateOrder extends Component
 
             session()->forget('order');
 
-            return to_route('orders.show', $order->id);
+            return to_route('orders.show', $order->no_reg);
         });
     }
 
