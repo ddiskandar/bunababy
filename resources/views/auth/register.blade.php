@@ -51,7 +51,7 @@
 
             <!-- Password -->
             <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+                <x-label for="password" :value="__('Password (min 8 karakter)')" />
                 <x-input id="password" class="block w-full mt-1"
                                 type="password"
                                 name="password"
@@ -60,7 +60,7 @@
 
             <!-- Confirm Password -->
             <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
+                <x-label for="password_confirmation" :value="__('Ulangi Password')" />
                 <x-input id="password_confirmation" class="block w-full mt-1"
                                 type="password"
                                 name="password_confirmation" required />

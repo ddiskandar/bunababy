@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UpdateProfileInformation extends Component
 {
@@ -66,6 +67,10 @@ class UpdateProfileInformation extends Component
         ]);
 
         if (isset($this->photo)) {
+            if($this->user->profile->photo) {
+                Storage::disk('s3')->delete($this->user->profile->photo);
+            }
+
             $this->user->profile->update([
                 'photo' => $this->photo->storePublicly('photos', 's3'),
             ]);
@@ -74,6 +79,21 @@ class UpdateProfileInformation extends Component
         }
 
         $this->emit('saved');
+    }
+
+    public function deleteProfilePhoto()
+    {
+        if(!$this->user->profile->photo) {
+            return back();
+        }
+
+        Storage::disk('s3')->delete($this->user->profile->photo);
+
+        $this->user->profile->update([
+            'photo' => null,
+        ]);
+
+        return redirect()->route('user.profile');
     }
 
     public function render()
