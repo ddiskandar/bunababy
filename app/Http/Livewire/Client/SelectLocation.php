@@ -50,6 +50,10 @@ class SelectLocation extends Component
     public function load()
     {
         $this->readyToLoad = true;
+    }
+
+    public function showModal()
+    {
         $this->showModalPicker = true;
     }
 

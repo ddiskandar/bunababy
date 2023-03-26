@@ -4,7 +4,7 @@
     <button
         type="button"
         class="flex items-center justify-between w-full py-4 "
-        wire:click="load"
+        wire:click="showModal"
     >
 
         <div class="flex items-center ">
@@ -22,46 +22,47 @@
     </button>
 
     <x-dialog wire:model="showModalPicker">
+        <div wire:init="load">
+            @guest
+            <div class="py-2 text-sm">
+                <a class="font-semibold text-bunababy-100" href="{{ route('login') }}">Login</a> untuk lihat alamat anda
+            </div>
+            @endguest
 
-        @guest
-        <div class="py-2 text-sm">
-            <a class="font-semibold text-bunababy-100" href="{{ route('login') }}">Login</a> untuk lihat alamat anda
-        </div>
-        @endguest
+            <div class="py-3" >
+                <input
+                wire:model="search"
+                x-ref="input"
+                class="block w-full px-3 py-2 text-sm leading-6 border rounded-full border-bunababy-50 focus:border-bunababy-50 focus:outline-0 focus:ring-0 "
+                type="text"
+                id="tk-form-elements-name"
+                autocomplete="off"
+                placeholder="Cari berdasarkan nama kecamatan" />
+            </div>
 
-        <div class="py-3">
-            <input
-            wire:model="search"
-            x-ref="input"
-            class="block w-full px-3 py-2 text-sm leading-6 border rounded-full border-bunababy-50 focus:border-bunababy-50 focus:outline-0 focus:ring-0 "
-            type="text"
-            id="tk-form-elements-name"
-            autocomplete="off"
-            placeholder="Cari berdasarkan nama kecamatan" />
-        </div>
+            <div class="flex flex-col overflow-hidden border divide-y border-slate-100">
+                <div class="relative w-full mx-auto -my-px overflow-auto bg-white h-80 ring-1 ring-slate-900/5">
+                    @foreach ($kabupatens as $kabupaten)
+                    <div class="relative">
+                        <div class="sticky top-0 flex items-center px-4 py-3 text-sm font-semibold text-slate-900 bg-slate-50/90 backdrop-blur-sm ring-1 ring-slate-900/10 ">
+                            {{ $kabupaten->name }}
+                        </div>
+                        <div class="divide-y ">
+                            @foreach ($kabupaten->kecamatans as $kecamatan )
+                                <div
+                                    wire:click="setLocation({{ $kecamatan->id }})"
+                                    x-on:click="open = false"
+                                    class="flex items-center gap-4 p-4 cursor-pointer">
+                                    <strong class="text-sm font-medium text-slate-900 ">
+                                        {{ $kecamatan->name }}
+                                    </strong>
+                                </div>
+                            @endforeach
 
-        <div class="flex flex-col overflow-hidden border divide-y border-slate-100">
-            <div class="relative w-full mx-auto -my-px overflow-auto bg-white h-80 ring-1 ring-slate-900/5">
-                @foreach ($kabupatens as $kabupaten)
-                <div class="relative">
-                    <div class="sticky top-0 flex items-center px-4 py-3 text-sm font-semibold text-slate-900 bg-slate-50/90 backdrop-blur-sm ring-1 ring-slate-900/10 ">
-                        {{ $kabupaten->name }}
+                        </div>
                     </div>
-                    <div class="divide-y ">
-                        @foreach ($kabupaten->kecamatans as $kecamatan )
-                            <div
-                                wire:click="setLocation({{ $kecamatan->id }})"
-                                x-on:click="open = false"
-                                class="flex items-center gap-4 p-4 cursor-pointer">
-                                <strong class="text-sm font-medium text-slate-900 ">
-                                    {{ $kecamatan->name }}
-                                </strong>
-                            </div>
-                        @endforeach
-
-                    </div>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
         </div>
     </x-dialog>
