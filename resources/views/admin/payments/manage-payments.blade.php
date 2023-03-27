@@ -86,7 +86,7 @@
                                 <p class="text-slate-600">{{ $payment->order->client->address }}</p>
                             </td>
                             <td class="p-3 ">
-                                <a href="{{ route('orders.show', $payment->order->id) }}">
+                                <a href="{{ route('orders.show', $payment->order->no_reg) }}">
                                     <p class="font-medium text-brand-200">
                                         {{ $payment->order->no_reg }}
                                     </p>

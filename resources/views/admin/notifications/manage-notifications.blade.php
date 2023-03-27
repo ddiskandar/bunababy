@@ -93,7 +93,7 @@
                             >
                                 <div  >
                                     <div class="py-2 space-y-3 grow text-slate-800">
-                                       @if ($notification->data['type'] == 'order')
+                                       @if ($notification->data['type'] === 'order')
                                        <div class="flex justify-between">
                                             <div>
                                                 <span
@@ -149,7 +149,7 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        @elseif ($notification->data['type'] == 'payment')
+                                        @elseif ($notification->data['type'] === 'payment')
                                         <div class="flex justify-between">
                                             <div>
                                                 <span
@@ -203,7 +203,7 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        @elseif ($notification->data['type'] == 'unpaid')
+                                        @elseif ($notification->data['type'] === 'unpaid')
                                             <div class="flex justify-between">
                                                 <div>
                                                     <span
@@ -258,7 +258,7 @@
                                                 </div>
                                             </div>
 
-                                            @elseif ($notification->data['type'] == 'orderDeleted')
+                                            @elseif ($notification->data['type'] === 'orderDeleted')
                                             <div class="flex justify-between">
                                                 <div>
                                                     <span
