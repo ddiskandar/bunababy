@@ -15,7 +15,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('no_reg')->unique();
+            $table->unsignedInteger('no_reg')->unique();
             $table->string('invoice')->unique();
             $table->foreignId('place_id')->constrained('places')->onDelete('cascade');
             $table->foreignId('room_id')->nullable();
