@@ -171,12 +171,12 @@ class DatabaseSeeder extends Seeder
             $date = today()->addDays($i);
             $midwifeId = rand(4, 9);
 
-            $rand = random_int(1000000000, 9999999999);
+            $rand = (string) random_int(1000000000, 9999999999);
 
             $order = Order::factory()
                 ->create([
                     'place_id' => Place::TYPE_HOMECARE,
-                    'no_reg' =>$rand,
+                    'no_reg' => $rand,
                     'invoice' => 'INV/' . $date->isoFormat('YYMMDD') . '/' . $rand,
                     'address_id' => $address->id,
                     'total_price' => 0,

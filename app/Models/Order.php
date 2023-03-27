@@ -169,7 +169,7 @@ class Order extends Model
 
     public function getNoReg()
     {
-        return 12345;
+        return (string) random_int(1111111111, 9999999999);
     }
 
     public function getInvoice($randomInt)
