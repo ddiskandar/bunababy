@@ -135,7 +135,7 @@ class CreateOrder extends Component
 
             $order = new Order();
             $order->no_reg = $order->getNoReg();
-            $order->invoice = $order->getInvoice();
+            $order->invoice = $order->getInvoice($order->no_reg);
             $order->place_id = session('order.place_id');
             $order->client_user_id = $this->selectedClient->id;
             $order->total_price = $order->getTotalPrice();

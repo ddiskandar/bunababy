@@ -3,7 +3,7 @@
         <x-slot name="title">Pembayaran</x-slot>
 
         <x-slot name="content">
-            <ul class="space-y-3 text-sm divide-y divide-slate-50">
+            <ul class="max-w-lg space-y-3 text-sm divide-y divide-slate-50">
                 <li>
                     <div class="flex justify-between">
                     <div>Total Treatment</div>
@@ -81,7 +81,7 @@
         <x-slot name="title">Riwayat Pembayaran</x-slot>
 
         <x-slot name="content">
-            <div>
+            <div class="max-w-lg">
                 <div class="divide-y divide-slate-50 ">
                     @forelse ($order->payments as $payment)
                     <div class="flex items-center justify-between py-2 text-sm">

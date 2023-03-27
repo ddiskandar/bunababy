@@ -72,7 +72,12 @@ class SelectTreatments extends Component
             'total_price' => $this->order->treatments()->sum('treatment_price'),
         ]);
 
-        $this->emit('saved');
+        $this->refreshPage();
+    }
+
+    private function refreshPage()
+    {
+        return to_route('orders.show', $this->order->no_reg);
     }
 
     public function save()
@@ -127,7 +132,8 @@ class SelectTreatments extends Component
 
         $this->state = [];
         $this->selectedFamily = [];
-        $this->emit('saved');
+
+        $this->refreshPage();
     }
 
     public function render()
