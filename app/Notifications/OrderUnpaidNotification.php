@@ -65,7 +65,6 @@ class OrderUnpaidNotification extends Notification
             'order_id' => $this->order->id,
             'order_client_name' => $this->order->client->name,
             'order_client_phone' => to_wa_indo($this->order->client->profile->phone),
-            'order_no_reg' => $this->order->no_reg,
             'order_dp_amount' => rupiah($this->order->getDpAmount()),
             'order_dp_timeout' => $this->order->created_at->addMinutes($timeout)->isoFormat('dddd, DD MMMM gggg HH:mm'),
 

@@ -13,8 +13,8 @@ Route::get('/order/checkout', App\Http\Controllers\Client\OrderCheckoutControlle
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/invoice/{order:no_reg}', App\Http\Controllers\OrderInvoiceController::class)->name('order.invoice');
-    Route::get('/reservation/{order:no_reg}', [App\Http\Controllers\Client\OrderController::class, 'show'])->name('order.show');
+    Route::get('/invoice/{order}', App\Http\Controllers\OrderInvoiceController::class)->name('order.invoice');
+    Route::get('/reservation/{order}', [App\Http\Controllers\Client\OrderController::class, 'show'])->name('order.show');
 
     // Client...
     Route::middleware(['client'])->group(function () {
@@ -25,7 +25,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/addresses', App\Http\Livewire\Client\ManageAddresses::class)->name('client.addresses');
         Route::get('/families', App\Http\Livewire\Client\ManageFamilies::class)->name('client.families');
         Route::get('/change-password', App\Http\Livewire\Client\ChangePassword::class)->name('client.change-password');
-        Route::get('/reservation/{order:no_reg}/testimonial', [App\Http\Controllers\TestimonialsController::class, 'show'])->name('client.testimonial');
+        Route::get('/reservation/{order}/testimonial', [App\Http\Controllers\TestimonialsController::class, 'show'])->name('client.testimonial');
     });
 
     // Dashboard
@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['midwife'])->group(function () {
         Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'show'])->name('calendar');
         Route::get('/orders/create', [App\Http\Controllers\OrdersController::class, 'create'])->name('orders.create');
-        Route::get('/orders/{order:no_reg}', [App\Http\Controllers\OrdersController::class, 'show'])->name('orders.show');
+        Route::get('/orders/{order}', [App\Http\Controllers\OrdersController::class, 'show'])->name('orders.show');
         Route::get('/orders', [App\Http\Controllers\OrdersController::class, 'index'])->name('orders');
         Route::get('/timetables', [App\Http\Controllers\TimetableController::class, 'index'])->name('timetables');
         // Route::get('/clinic', [App\Http\Controllers\ClinicController::class, 'index'])->name('clinic');

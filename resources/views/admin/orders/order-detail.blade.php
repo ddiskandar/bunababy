@@ -15,10 +15,10 @@
                 <div class="flex items-center justify-start gap-2 md:gap-4 md:justify-between">
                     <div class="hidden md:block">•</div>
                     <div>
-                        {{ $order->no_reg }}
+                        {{ $order->id }}
                     </div>
                     @if (auth()->user()->isAdmin() || true)
-                    <a href="{{ route('order.invoice', $order->no_reg) }}" target="_blank" class="text-sm font-semibold text-brand-200">
+                    <a href="{{ route('order.invoice', $order->id) }}" target="_blank" class="text-sm font-semibold text-brand-200">
                         Lihat Invoice
                     </a>
                     @endif

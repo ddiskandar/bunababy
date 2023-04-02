@@ -77,7 +77,7 @@ class SelectTreatments extends Component
 
     private function refreshPage()
     {
-        return to_route('orders.show', $this->order->no_reg);
+        return to_route('orders.show', $this->order->id);
     }
 
     public function save()

@@ -39,7 +39,7 @@ class AddReview extends Component
             ]
         );
 
-        return to_route('client.testimonial', $this->order->no_reg);
+        return to_route('client.testimonial', $this->order->id);
     }
 
     public function render()

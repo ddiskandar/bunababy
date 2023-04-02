@@ -14,17 +14,16 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
-            $table->string('no_reg')->unique();
+            $table->id()->startingValue(1002347811);
             $table->string('invoice')->unique();
             $table->foreignId('place_id')->constrained('places')->onDelete('cascade');
             $table->foreignId('room_id')->nullable();
             $table->foreignId('client_user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('midwife_user_id')->nullable();
             $table->foreignId('address_id')->nullable();
-            $table->integer('total_price');
-            $table->integer('total_duration')->default(0);
-            $table->integer('total_transport')->default(0);
+            $table->unsignedInteger('total_price');
+            $table->unsignedInteger('total_duration')->default(0);
+            $table->unsignedInteger('total_transport')->default(0);
             $table->integer('adjustment_amount')->default(0);
             $table->string('adjustment_name')->nullable();
             $table->timestamp('start_datetime')->nullable();

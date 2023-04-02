@@ -16,7 +16,7 @@ class CardOrder extends Component
     {
         $this->$reservation = $reservation;
 
-        $this->route = route('order.show', $this->reservation->no_reg);
+        $this->route = route('order.show', $this->reservation->id);
 
         if ($this->reservation->status == '1'){
             $this->label = 'Bayar DP';
@@ -26,10 +26,10 @@ class CardOrder extends Component
             $this->label = 'Lihat Treatment';
         } elseif ($reservation->testimonial()->exists()){
             $this->label = 'Lihat Ulasan';
-            $this->route = route('client.testimonial', $this->reservation->no_reg);
+            $this->route = route('client.testimonial', $this->reservation->id);
         } else {
             $this->label = 'Beri Ulasan';
-            $this->route = route('client.testimonial', $this->reservation->no_reg);
+            $this->route = route('client.testimonial', $this->reservation->id);
         }
     }
 

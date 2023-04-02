@@ -91,7 +91,7 @@ class ManageTestimonials extends Component
                 $query->whereHas('order', function ($query) {
                     $query->whereHas('client', function ($query) {
                         $query->where('name', 'LIKE', '%' . $this->filterSearch . '%');
-                    })->orWhere('no_reg', 'LIKE', '%' . $this->filterSearch . '%');
+                    })->orWhere('id', 'LIKE', '%' . $this->filterSearch . '%');
                 })
                     ->orWhere('description', 'LIKE', '%' . $this->filterSearch . '%');
             })
@@ -100,7 +100,7 @@ class ManageTestimonials extends Component
             })
             ->where('rate', 'LIKE', '%' . $this->filterRate . '%')
             ->with(
-                'order:id,client_user_id,midwife_user_id,start_datetime,no_reg',
+                'order:id,client_user_id,midwife_user_id,start_datetime',
                 'order.midwife',
                 'order.client',
                 'order.client.profile:user_id,photo'

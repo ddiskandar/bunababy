@@ -108,7 +108,7 @@
                             </td>
                             <td class="w-32 p-3 align-top ">
                                 <a href="{{ route('orders.show', $testimonial->order->id) }}">
-                                    <p class="font-semibold text-brand-200">{{ $testimonial->order->no_reg }}</p>
+                                    <p class="font-semibold text-brand-200">{{ $testimonial->order->id }}</p>
                                 </a>
                                 <p class="text-slate-600">{{ $testimonial->order->start_datetime->isoFormat('DD MMM YYYY') }}</p>
                             </td>

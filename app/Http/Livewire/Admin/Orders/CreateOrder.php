@@ -134,8 +134,6 @@ class CreateOrder extends Component
             $startDateTime = Carbon::parse(session('order.date')->toDateString() . ' ' . session('order.start_time'));
 
             $order = new Order();
-            $order->no_reg = $order->getNoReg();
-            $order->invoice = $order->getInvoice($order->no_reg);
             $order->place_id = session('order.place_id');
             $order->client_user_id = $this->selectedClient->id;
             $order->total_price = $order->getTotalPrice();
@@ -158,7 +156,7 @@ class CreateOrder extends Component
 
             session()->forget('order');
 
-            return to_route('orders.show', $order->no_reg);
+            return to_route('orders.show', $order->id);
         });
     }
 

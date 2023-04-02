@@ -63,10 +63,10 @@
         <div class="text-sm">Mohon tuliskan berita / referensi :</div>
         <div class="flex items-center justify-between mb-4 ">
             <div class="font-semibold">
-                {{ $order->no_reg }}
+                {{ $order->id }}
             </div>
             <div class="flex items-center gap-2 cursor-pointer text-brand-200" x-data x-on:click="
-                window.navigator.clipboard.writeText({{ $order->no_reg }});
+                window.navigator.clipboard.writeText({{ $order->id }});
                 new Notification()
                     .success()
                     .title('Copied')

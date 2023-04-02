@@ -41,7 +41,7 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
         $query = Order::query()
             ->when(auth()->user()->isMidwife(), fn ($query) => $query->where('midwife_user_id', auth()->id()))
             ->where(fn ($query) => $query
-                ->where('no_reg', 'LIKE', '%' . $this->filterSearch . '%')
+                ->where('id', 'LIKE', '%' . $this->filterSearch . '%')
                 ->orWhereHas('client', fn ($query) => $query
                     ->where('name', 'LIKE', '%' . $this->filterSearch . '%')
                     ->orWhereHas('addresses.kecamatan', fn ($query) => $query
@@ -71,7 +71,7 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
     public function headings(): array
     {
         return [
-            '#',
+            'ID',
             'Tanggal',
             'Tempat',
             'Client',
@@ -106,7 +106,7 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
         }
 
         return [
-            $order->no_reg,
+            $order->id,
             $order->start_datetime->isoFormat('DD/MM/YYYY'),
             $order->place->name,
             $order->client->name,

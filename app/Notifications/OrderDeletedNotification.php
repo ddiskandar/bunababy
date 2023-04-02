@@ -65,7 +65,6 @@ class OrderDeletedNotification extends Notification
         return [
             'type' => 'orderDeleted',
             'user_name' => $this->user->name,
-            'order_no_reg' => $this->order->no_reg,
             'order_date' => $this->order->start_datetime->isoFormat('DD/MMM/YYYY'),
             'order_client_name' => $this->order->client->name,
             'note' => $this->note,

@@ -121,7 +121,7 @@
                                 'text-slate-400' => ! $order->active,
                             ])>
                                 <td class="p-3 pl-6 align-top whitespace-nowrap">
-                                    <p class="font-bold text-brand-200">{{ $order->no_reg }}</p>
+                                    <p class="font-bold text-brand-200">{{ $order->id }}</p>
                                     <p class="font-semibold">{{ $order->start_datetime->isoFormat('ddd, DD MMM') }}</p>
                                     <p class="">{{ $order->getTime() }}</p>
                                 </td>
@@ -185,7 +185,7 @@
                                 </td>
                                 <td class="p-3 align-top whitespace-nowrap">
                                     <div class="flex items-center justify-center space-x-2 text-gray-400">
-                                        <a href="{{ route('orders.show', $order->no_reg) }}" class="text-slate-400 hover:text-brand-200">
+                                        <a href="{{ route('orders.show', $order->id) }}" class="text-slate-400 hover:text-brand-200">
                                             <x-icon-pencil />
                                         </a>
                                     </div>

@@ -39,13 +39,8 @@ class OrderController extends Controller
         return view('client.order.create');
     }
 
-    public function show($no_reg)
+    public function show(Order $order)
     {
-        $order = Order::query()
-            ->with('treatments', 'place')
-            ->where('no_reg', $no_reg)
-            ->firstOrFail();
-
         if (! auth()->check() || (int) $order->client_user_id !== auth()->id()) {
             return to_route('home');
         }

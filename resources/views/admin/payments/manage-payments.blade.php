@@ -133,9 +133,9 @@
                             <td class="p-3 align-top ">
                                 <p class="font-semibold truncate w-52 text-slate-800">{{ $payment->order->client->name }}</p>
                                 <p class="text-slate-600">{{ $payment->order->client->address }}</p>
-                                <a href="{{ route('orders.show', $payment->order->no_reg) }}">
+                                <a href="{{ route('orders.show', $payment->order->id) }}">
                                     <p class="font-medium text-brand-200">
-                                        {{ $payment->order->no_reg }}
+                                        {{ $payment->order->id }}
                                     </p>
                                 </a>
                             </td>

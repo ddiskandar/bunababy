@@ -210,7 +210,6 @@ class ShowCalendar extends Component
             )
             ->select([
                 'id',
-                'no_reg',
                 'client_user_id',
                 'midwife_user_id',
                 'start_datetime',
@@ -231,7 +230,6 @@ class ShowCalendar extends Component
                 'row-start' => $this->rowStart[$order->start_datetime->isoFormat('HH:mm')],
                 'row-span' => (int) round($order->start_datetime->diffInMinutes($order->end_datetime) / 15),
                 'id' => $order->id,
-                'no_reg' => $order->no_reg,
                 'client_name' => $order->client->name,
                 'time' => $order->start_datetime->isoFormat('HH:mm') . ' - ' . $order->end_datetime->isoFormat('HH:mm') . ' WIB',
                 'treatments' => $order->treatments->implode('name', ', '),

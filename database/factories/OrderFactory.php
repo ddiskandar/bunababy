@@ -18,8 +18,6 @@ class OrderFactory extends Factory
     {
 
         return [
-            'no_reg' => 'A' . '1' . str_replace('-', '', today()->toDateString()) . rand(111, 999),
-            'invoice' => 'INV/' . str_replace('-', '', today()->toDateString()) . '/BBC/' . rand(1111111111, 9999999999),
             'client_user_id' => User::factory(['type' => User::CLIENT]),
             'midwife_user_id' => User::factory(['type' => User::MIDWIFE]),
             'address_id' => Address::factory(),

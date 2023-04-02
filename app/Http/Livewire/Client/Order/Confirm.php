@@ -56,8 +56,6 @@ class Confirm extends Component
         DB::transaction(function () {
 
             $order = new Order();
-            $order->no_reg = $order->getNoReg();
-            $order->invoice = $order->getInvoice($order->no_reg);
             $order->place_id = session('order.place_id');
             $order->client_user_id = auth()->id();
             $order->total_price = $order->getTotalPrice();
@@ -111,7 +109,7 @@ class Confirm extends Component
                 ->success()
                 ->send();
 
-            return redirect()->route('order.show', $order->no_reg);
+            return redirect()->route('order.show', $order->id);
         });
     }
 

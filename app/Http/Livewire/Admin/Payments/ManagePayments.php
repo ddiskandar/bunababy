@@ -112,7 +112,7 @@ class ManagePayments extends Component
             ->where(function ($query) {
                 $query->where('value', 'LIKE', '%' . $this->filterSearch . '%')
                     ->orWhereHas('order', function ($query) {
-                        $query->where('no_reg', 'LIKE', '%' . $this->filterSearch . '%')
+                        $query->where('id', 'LIKE', '%' . $this->filterSearch . '%')
                             ->orWhereHas('client', function ($query) {
                                 $query->where('name', 'LIKE', '%' . $this->filterSearch . '%');
                             });

@@ -176,8 +176,6 @@ class DatabaseSeeder extends Seeder
             $order = Order::factory()
                 ->create([
                     'place_id' => Place::TYPE_HOMECARE,
-                    'no_reg' => $rand,
-                    'invoice' => 'INV/' . $date->isoFormat('YYMMDD') . '/' . $rand,
                     'address_id' => $address->id,
                     'total_price' => 0,
                     'total_duration' => 0,

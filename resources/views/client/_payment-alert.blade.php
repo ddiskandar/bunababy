@@ -19,7 +19,7 @@
                         <line x1="12" y1="16" x2="12.01" y2="16"></line>
                      </svg>
                     <p class="ml-2 text-sm">
-                        Anda mempunyai reservasi aktif yang belum lunas dibayar, bila treatment sudah selesai, silahkan untuk segera melunasi sisa pembayaran. <a href="{{ route('order.show', $reservation->no_reg) }}" class="underline hover:opacity-75">bayar sekarang</a>
+                        Anda mempunyai reservasi aktif yang belum lunas dibayar, bila treatment sudah selesai, silahkan untuk segera melunasi sisa pembayaran. <a href="{{ route('order.show', $reservation->id) }}" class="underline hover:opacity-75">bayar sekarang</a>
                     </p>
                 </div>
                 <div class="flex items-center ml-2">

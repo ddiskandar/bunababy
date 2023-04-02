@@ -101,7 +101,7 @@ class ManageOrders extends Component
         $query = Order::query()
             ->when(auth()->user()->isMidwife(), fn ($query) => $query->where('midwife_user_id', auth()->id()))
             ->where(fn ($query) => $query
-                ->where('no_reg', 'LIKE', '%' . $this->filterSearch . '%')
+                ->where('id', 'LIKE', '%' . $this->filterSearch . '%')
                 ->orWhereHas('client', fn ($query) => $query
                     ->where('name', 'LIKE', '%' . $this->filterSearch . '%')
                     ->orWhereHas('addresses.kecamatan', fn ($query) => $query

@@ -76,7 +76,6 @@ class NewOrderNotification extends Notification
         return [
             'type' => 'order',
             'order_id' => $this->order->id,
-            'order_no_reg' => $this->order->no_reg,
             'order_datetime' => $this->order->start_datetime->isoFormat('dddd, DD MMMM gggg HH:mm - ') . $this->order->end_datetime->isoFormat('HH:mm') . ' WIB',
             'order_grand_total' => rupiah($this->order->getGrandTotal()),
             'order_dp_amount' => rupiah($this->order->getDpAmount()),

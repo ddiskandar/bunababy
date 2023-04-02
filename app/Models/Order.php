@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class Order extends Model
 {
@@ -32,6 +31,15 @@ class Order extends Model
         'status' => 'integer',
         'finished_at' => 'datetime'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($order) {
+            $order->invoice = 'INV/' . Carbon::parse($order->start_datetime)->isoFormat('YYMMDD') . '/' . $order->id;
+        });
+    }
 
     public function place(): BelongsTo
     {
@@ -165,16 +173,6 @@ class Order extends Model
     public function numberStartTime()
     {
         return session('order.place_id') . sprintf('%02d', session('order.midwife_user_id')) . session('order.start_time')[0] . session('order.start_time')[1] . session('order.start_time')[3] . session('order.start_time')[4];
-    }
-
-    public function getNoReg()
-    {
-        return (string) random_int(1111111111, 9999999999);
-    }
-
-    public function getInvoice($randomInt)
-    {
-        return 'INV/' . session('order.date')->isoFormat('YYMMDD') . '/' . $randomInt;
     }
 
     public function getTotalTransport()
