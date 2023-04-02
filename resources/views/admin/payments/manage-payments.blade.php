@@ -48,8 +48,8 @@
                 <table class="min-w-full text-sm align-middle">
                 <thead>
                     <tr class="bg-slate-50">
-                        <th class="p-3 pl-6 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
-                            Client
+                        <th class="p-3 pl-6 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
+                            Pembayaran
                         </th>
                         <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
                             Order / Tanggal
@@ -57,17 +57,11 @@
                         <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
                             Besar Bayar / Sisa
                         </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
-                            Pembayaran
-                        </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
-                            Status
-                        </th>
-                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400 ">
-                            Verificator
+                        <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
+                            Att
                         </th>
                         <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-slate-400">
-                            Catatan
+                            Verificator / Catatan
                         </th>
                         <th class="p-3 text-xs font-medium tracking-wider text-center uppercase text-slate-400">
                             Actions
@@ -81,37 +75,7 @@
                             'bg-slate-50/30' => $loop->even,
                             'text-slate-400' => ! $payment->active,
                         ])>
-                            <td class="table-cell p-3 pl-6 whitespace-nowrap">
-                                <p class="font-semibold truncate w-52 text-slate-800">{{ $payment->order->client->name }}</p>
-                                <p class="text-slate-600">{{ $payment->order->client->address }}</p>
-                            </td>
-                            <td class="p-3 ">
-                                <a href="{{ route('orders.show', $payment->order->no_reg) }}">
-                                    <p class="font-medium text-brand-200">
-                                        {{ $payment->order->no_reg }}
-                                    </p>
-                                </a>
-                                <p class="text-slate-600">{{ $payment-> order->start_datetime->isoFormat('DD MMM YYYY') }}</p>
-                            </td>
-                            <td class="p-3 ">
-                                <p class="text-slate-800">{{ rupiah($payment->order->getGrandTotal()) }}</p>
-                                @if ($payment->order->getRemainingPayment() > 0)
-                                <p class="text-red-600">{{ rupiah($payment->order->getRemainingPayment()) }}</p>
-                                @else
-                                <div class="flex items-center">
-                                    <span class="text-green-800">
-                                        Lunas
-                                    </span>
-                                    <svg class="w-4 h-4 ml-1 text-green-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                    </svg>
-                                </div>
-                                @endif
-                            </td>
-                            <td class="p-3 ">
-                                <p class="font-semibold text-slate-800">{{ rupiah($payment->value) }}</p>
-                            </td>
-                            <td class="p-3 whitespace-nowrap">
+                            <td class="flex items-center py-3 pl-6 align-top whitespace-nowrap">
                                 <div
                                     @class([
                                         'flex items-center',
@@ -135,7 +99,7 @@
                                             <circle cx="12" cy="12" r="9"></circle>
                                             <line x1="12" y1="8" x2="12" y2="12"></line>
                                             <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                                         </svg>
+                                        </svg>
                                     </div>
                                     @else
                                     <div>
@@ -143,21 +107,55 @@
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <circle cx="12" cy="12" r="9"></circle>
                                             <line x1="5.7" y1="5.7" x2="18.3" y2="18.3"></line>
-                                         </svg>
+                                        </svg>
                                     </div>
                                     @endif
-                                    <div class="ml-1">{{ $payment->status() }}</div>
                                 </div>
+                                <div class="px-3 font-semibold text-slate-800">{{ rupiah($payment->value) }}</div>
                             </td>
-                            <td class="p-3 ">
-                                <p class="text-slate-800">
+                            <td class="p-3 align-top ">
+
+                                <p class="text-slate-800">{{ rupiah($payment->order->getGrandTotal()) }}</p>
+
+                                @if ($payment->order->getRemainingPayment() > 0)
+                                    <p class="text-red-600">{{ rupiah($payment->order->getRemainingPayment()) }}</p>
+                                @else
+                                    <div class="flex items-center">
+                                        <span class="text-green-800">
+                                            Lunas
+                                        </span>
+                                        <svg class="w-4 h-4 ml-1 text-green-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
+                                @endif
+                            </td>
+                            <td class="p-3 align-top ">
+                                <p class="font-semibold truncate w-52 text-slate-800">{{ $payment->order->client->name }}</p>
+                                <p class="text-slate-600">{{ $payment->order->client->address }}</p>
+                                <a href="{{ route('orders.show', $payment->order->no_reg) }}">
+                                    <p class="font-medium text-brand-200">
+                                        {{ $payment->order->no_reg }}
+                                    </p>
+                                </a>
+                            </td>
+                            <td class="table-cell p-3 align-top whitespace-nowrap">
+                               @if ($payment->attachment)
+                                <a href="{{ $payment->attachment }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-paperclip" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5"></path>
+                                    </svg>
+                                </a>
+                               @endif
+                            </td>
+                            <td class="p-3 align-top ">
+                                <p class="font-medium text-slate-800">
                                     {{ $payment->verificator->name ?? '-' }}
                                 </p>
+                                <p class="text-slate-600">{{ $payment->note }}</p>
                             </td>
-                            <td class="p-3 ">
-                                <p class="text-slate-800">{{ $payment->note }}</p>
-                            </td>
-                            <td class="p-3 text-center whitespace-nowrap">
+                            <td class="p-3 text-center align-top whitespace-nowrap">
                                 <div class="flex justify-center space-x-2">
                                     @if ($payment->status() === 'Waiting' || auth()->user()->isOwner())
                                     <button wire:click="showEditPaymentDialog({{ $payment->id }})" class="text-slate-400 hover:text-brand-200">
