@@ -232,7 +232,7 @@ class ShowCalendar extends Component
                 'row-span' => (int) round($order->startDateTime->diffInMinutes($order->endDateTime) / 15),
                 'id' => $order->id,
                 'client_name' => $order->client->name,
-                'time' => $order->getFullTime(),
+                'time' => $order->getLongTime(),
                 'treatments' => $order->treatments->implode('name', ', '),
                 'status' => $order->getStatusString(),
                 'finished_at' => $order->finished_at,
