@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 // Home
 Route::get('/', App\Http\Controllers\HomeController::class)->name('home');
 
-// make an order
+// Create new order by client
 Route::get('/order/create', [App\Http\Controllers\Client\OrderController::class, 'create'])->name('order.create');
 Route::get('/order/cart', App\Http\Controllers\Client\OrderCartController::class)->name('order.cart');
 Route::get('/order/check', App\Http\Controllers\Client\OrderCheckController::class)->name('order.check');

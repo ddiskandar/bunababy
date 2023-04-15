@@ -11,6 +11,12 @@ class Room extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'place_id',
+        'active',
+    ];
+
     public $timestamps = false;
 
     public function place(): BelongsTo

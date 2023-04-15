@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Admin\Places;
 use App\Models\Place;
 use App\Models\Room;
 use App\Models\User;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -41,6 +42,17 @@ class EditRoomTreatments extends Component
     {
         $this->room->treatments()->detach([$id]);
         $this->emit('saved');
+    }
+
+    public function deleteThisRoom()
+    {
+        $this->room->delete();
+
+        $this->emit('saved');
+        Notification::make()
+            ->title('berhasil dihapus')
+            ->danger()
+            ->send();
     }
 
     public function render()

@@ -140,18 +140,6 @@
                     </span>
                     <span class="py-2 grow">Bidan</span>
                 </x-nav-link>
-                <x-nav-link :href="route('places')" :active="request()->is('places*')">
-                    <span class="flex items-center flex-none opacity-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M10.828 9.828a4 4 0 1 0 -5.656 0l2.828 2.829l2.828 -2.829z"></path>
-                            <path d="M8 7l0 .01"></path>
-                            <path d="M18.828 17.828a4 4 0 1 0 -5.656 0l2.828 2.829l2.828 -2.829z"></path>
-                            <path d="M16 15l0 .01"></path>
-                         </svg>
-                    </span>
-                    <span class="py-2 grow">Tempat</span>
-                </x-nav-link>
                 <x-nav-link :href="route('treatments')" :active="request()->is('treatments*')">
                     <span class="flex items-center flex-none opacity-50">
                         <svg class="inline-block w-6 h-6 " fill="none" viewBox="0 0 24 24">
@@ -174,7 +162,18 @@
                     </span>
                     <span class="py-2 grow">Wilayah</span>
                 </x-nav-link>
-
+                <x-nav-link :href="route('places')" :active="request()->is('places*')">
+                    <span class="flex items-center flex-none opacity-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M10.828 9.828a4 4 0 1 0 -5.656 0l2.828 2.829l2.828 -2.829z"></path>
+                            <path d="M8 7l0 .01"></path>
+                            <path d="M18.828 17.828a4 4 0 1 0 -5.656 0l2.828 2.829l2.828 -2.829z"></path>
+                            <path d="M16 15l0 .01"></path>
+                         </svg>
+                    </span>
+                    <span class="py-2 grow">Tempat</span>
+                </x-nav-link>
                 <x-nav-link :href="route('settings')" :active="request()->is('settings*')">
                     <span class="flex items-center flex-none opacity-50">
                         <svg class="inline-block w-6 h-6 hi-outline hi-cog" fill="none" viewBox="0 0 24 24">

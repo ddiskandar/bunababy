@@ -217,6 +217,8 @@
     </div>
     <!-- END Card -->
 
+    @if (auth()->user()->isOwner())
+
     <div class="mt-8">
         <!-- Simple Statistics Grid -->
         <div class="grid grid-cols-1 gap-4 md:grid-cols-4 ">
@@ -237,8 +239,7 @@
             </div>
             <!-- END Card: Simple Widget -->
 
-            @if (auth()->user()->isAdmin())
-                <!-- Card: Simple Widget -->
+            <!-- Card: Simple Widget -->
             <div class="flex flex-col overflow-hidden bg-white rounded shadow-sm">
                 <!-- Card Body: Simple Widget -->
                 <div class="w-full p-5 lg:p-6 grow">
@@ -288,9 +289,10 @@
                 <!-- END Card Body: Simple Widget -->
                 </div>
                 <!-- END Card: Simple Widget -->
-            @endif
         </div>
         <!-- END Simple Statistics Grid -->
     </div>
+
+    @endif
 
 </div>

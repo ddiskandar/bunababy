@@ -26,8 +26,8 @@ class CreateOrdersTable extends Migration
             $table->unsignedInteger('total_transport')->default(0);
             $table->integer('adjustment_amount')->default(0);
             $table->string('adjustment_name')->nullable();
-            $table->timestamp('start_datetime')->nullable();
-            $table->timestamp('end_datetime')->nullable();
+            $table->time('start_datetime')->nullable();
+            $table->time('end_datetime')->nullable();
             $table->string('screening')->nullable();
             $table->tinyInteger('status')->default(2);
             $table->timestamp('finished_at')->nullable();

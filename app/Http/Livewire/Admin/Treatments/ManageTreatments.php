@@ -131,8 +131,6 @@ class ManageTreatments extends Component
             }
         });
 
-
-
         $this->showDialog = false;
         Notification::make()
             ->title('Berhasil disimpan')
@@ -147,7 +145,6 @@ class ManageTreatments extends Component
                 $query
                     ->where('name', 'LIKE', '%' . $this->filterSearch . '%')
                     ->orWhere('desc', 'LIKE', '%' . $this->filterSearch . '%')
-                    // ->orWhere('price', 'LIKE', '%' . $this->filterSearch . '%')
                     ->orWhere('duration', 'LIKE', '%' . $this->filterSearch . '%');
             })
             ->Where('category_id', 'LIKE', '%' . $this->filterCategory . '%')
