@@ -10,7 +10,7 @@
             @livewire('admin.orders.screening', [$order->id])
         @endif
 
-        @if (now()->isAfter($order->start_datetime))
+        @if (now()->isAfter($order->startDateTime))
             @livewire('admin.orders.set-status', [$order->id])
         @endif
 

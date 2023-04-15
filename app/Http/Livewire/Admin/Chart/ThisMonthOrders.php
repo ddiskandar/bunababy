@@ -33,7 +33,7 @@ class ThisMonthOrders extends Component
         }
 
         $thisMonthOrders = Order::query()
-            ->whereMonth('start_datetime', Carbon::parse($this->selectedMonth))
+            ->whereMonth('date', Carbon::parse($this->selectedMonth))
             ->where('status', 'LIKE', '%' . $this->filterStatus)
             ->get();
 
@@ -43,7 +43,7 @@ class ThisMonthOrders extends Component
             $data = [];
             foreach ($period as $date) {
                 $data[] = $thisMonthOrders->where('midwife_user_id', $id)
-                    ->filter(fn ($item) => $date->isSameDay($item->start_datetime))
+                    ->filter(fn ($item) => $date->isSameDay($item->startDateTime))
                     ->count();
             }
             $this->datasets[] = [

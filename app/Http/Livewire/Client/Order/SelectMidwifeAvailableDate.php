@@ -86,9 +86,9 @@ class SelectMidwifeAvailableDate extends Component
 
         $schedules = Order::query()
             ->where('midwife_user_id', $this->midwife->id)
-            ->whereBetween('start_datetime', [Carbon::parse($this->selectedMonth)->startOfMonth()->startOfWeek(), Carbon::parse($this->selectedMonth)->endOfMonth()->endOfWeek()])
+            ->whereBetween('date', [Carbon::parse($this->selectedMonth)->startOfMonth()->startOfWeek(), Carbon::parse($this->selectedMonth)->endOfMonth()->endOfWeek()])
             ->locked()
-            ->select('id', 'place_id', 'midwife_user_id', 'status', 'start_datetime', 'end_datetime')
+            ->select('id', 'place_id', 'midwife_user_id', 'status', 'date', 'start_time', 'end_time')
             ->get();
 
         $timetables = Timetable::query()
@@ -115,9 +115,9 @@ class SelectMidwifeAvailableDate extends Component
 
             foreach ($schedules as $order) {
 
-                if ($order->start_datetime->format('m-d') === $date->format('m-d')) {
+                if ($order->startDateTime->format('m-d') === $date->format('m-d')) {
                     foreach ($this->slots as $slot) {
-                        if (Carbon::parse($date->toDateString() . $slot->time)->between($order->start_datetime, $order->end_datetime)) {
+                        if (Carbon::parse($date->toDateString() . $slot->time)->between($order->startDateTime, $order->endDateTime)) {
                             $new->put($slot->time, 'booked');
                         } elseif ($new->has($slot->time)) {
                             //

@@ -18,8 +18,8 @@ class DashboardController extends Controller
         $data = [];
 
         if (auth()->user()->isMidwife()) {
-            $data['locked'] = DB::table('orders')->where('midwife_user_id', auth()->id())->whereDate('start_datetime', today())->where('status', Order::STATUS_LOCKED)->count();
-            $data['finished'] = DB::table('orders')->where('midwife_user_id', auth()->id())->whereDate('start_datetime', today())->where('status', Order::STATUS_FINISHED)->count();
+            $data['locked'] = DB::table('orders')->where('midwife_user_id', auth()->id())->whereDate('date', today())->where('status', Order::STATUS_LOCKED)->count();
+            $data['finished'] = DB::table('orders')->where('midwife_user_id', auth()->id())->whereDate('date', today())->where('status', Order::STATUS_FINISHED)->count();
 
             return view('dashboard.midwife', [
                 'data' => $data,

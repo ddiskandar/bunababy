@@ -5,7 +5,6 @@ namespace App\Http\Livewire\Admin\Orders;
 use App\Exports\OrdersExport;
 use App\Models\Order;
 use App\Models\User;
-use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
@@ -109,7 +108,7 @@ class ManageOrders extends Component
                     )
                 )
             )
-            ->whereBetween('start_datetime', [$this->filterFromDate, Carbon::parse($this->filterToDate)->addDay()->toDateString()])
+            ->whereBetween('date', [$this->filterFromDate, $this->filterToDate])
             ->where('place_id', 'LIKE', '%' . $this->filterPlace . '%')
             ->where('status', 'LIKE', '%' . $this->filterStatus . '%')
             ->when($this->filterMidwife === "belumDipilih",
@@ -124,7 +123,7 @@ class ManageOrders extends Component
         $data['total_transport'] = $summary->sum('total_transport');
         $data['grand_total'] = $data['total_price'] + $data['total_transport'];
 
-        $orders = $query->latest('start_datetime')
+        $orders = $query->latest('date')
             ->simplePaginate($this->perPage);
 
         $midwives = DB::table('users')->where('type', User::MIDWIFE)->get();

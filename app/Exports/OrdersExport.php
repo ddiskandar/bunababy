@@ -49,7 +49,7 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
                     )
                 )
             )
-            ->whereBetween('start_datetime', [$this->filterFromDate, Carbon::parse($this->filterToDate)->addDay()->toDateString()])
+            ->whereBetween('date', [$this->filterFromDate, Carbon::parse($this->filterToDate)->addDay()->toDateString()])
             ->where('place_id', 'LIKE', '%' . $this->filterPlace . '%')
             ->where('status', 'LIKE', '%' . $this->filterStatus . '%')
             ->when($this->filterMidwife === "belumDipilih",
@@ -97,7 +97,7 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
 
         $status = '';
 
-        if ($timetables->contains('date', Carbon::parse($order->start_datetime->toDateString()))) {
+        if ($timetables->contains('date', Carbon::parse($order->startDateTime->toDateString()))) {
             foreach ($timetables as $timetable) {
                 if ($timetable->midwife_user_id === $order->midwife_user_id) {
                     $status = $timetable->getTypeString();
@@ -107,7 +107,7 @@ class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSi
 
         return [
             $order->id,
-            $order->start_datetime->isoFormat('DD/MM/YYYY'),
+            $order->startDateTime->isoFormat('DD/MM/YYYY'),
             $order->place->name,
             $order->client->name,
             $order->midwife->name ?? '-',

@@ -33,7 +33,7 @@ class TodayOrders extends Component
 
     public function updateData()
     {
-        $ordersOnSelectedDay = Order::whereDate('start_datetime', $this->selectedDay)->get();
+        $ordersOnSelectedDay = Order::whereDate('date', $this->selectedDay)->get();
         $this->ordersFinished = [];
         $this->ordersActive = [];
         $this->ordersPending = [];

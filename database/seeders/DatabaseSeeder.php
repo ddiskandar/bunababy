@@ -182,7 +182,8 @@ class DatabaseSeeder extends Seeder
                     'total_transport' => 0,
                     'midwife_user_id' => $midwifeId,
                     'client_user_id' => $client->id,
-                    'start_datetime' => Carbon::parse($date->toDateString() . ' ' . '09:45'),
+                    'date' => Carbon::parse($date->toDateString()),
+                    'start_time' => Carbon::createFromTime(8, 0, 0)->toTimeString(),
                 ]);
 
             foreach (range(1, 2) as $index ) {
@@ -201,7 +202,7 @@ class DatabaseSeeder extends Seeder
             $order->update([
                 'total_price' => $order->treatments->sum('pivot.treatment_price'),
                 'total_duration' =>  $totalDuration,
-                'end_datetime' => $order->start_datetime->addMinutes($totalDuration),
+                'end_time' => $order->startDateTime->addMinutes($totalDuration)->toTimeString(),
             ]);
 
             $users = User::query()

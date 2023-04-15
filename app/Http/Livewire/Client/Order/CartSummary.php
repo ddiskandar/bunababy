@@ -53,7 +53,7 @@ class CartSummary extends Component
         $startDateTime = Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'));
 
         $currentActiveOrders = Order::query()
-            ->whereDate('start_datetime', session('order.date'))
+            ->whereDate('date', session('order.date'))
             ->where('place_id', session('order.place_id'))
             ->when(session('order.place_type') === Place::TYPE_HOMECARE,
                 fn ($query) => $query->where('midwife_user_id', session('order.midwife_user_id')),

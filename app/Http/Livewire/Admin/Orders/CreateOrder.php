@@ -131,15 +131,14 @@ class CreateOrder extends Component
 
         DB::transaction(function () {
 
-            $startDateTime = Carbon::parse(session('order.date')->toDateString() . ' ' . session('order.start_time'));
-
             $order = new Order();
             $order->place_id = session('order.place_id');
             $order->client_user_id = $this->selectedClient->id;
             $order->total_price = $order->getTotalPrice();
             $order->total_duration = $order->getTotalDuration();
-            $order->start_datetime = $startDateTime;
-            $order->end_datetime = $startDateTime;
+            $order->date = Carbon::parse(session('order.date')->toDateString());
+            $order->start_time = session('order.start_time');
+            $order->end_time = session('order.start_time');
             $order->status = Order::STATUS_LOCKED;
 
             if (session('order.place_type') === Place::TYPE_HOMECARE) {
@@ -166,7 +165,7 @@ class CreateOrder extends Component
 
         $currentActiveOrders = Order::query()
             ->where('place_id', session('order.place_id'))
-            ->whereDate('start_datetime', session('order.date'))
+            ->whereDate('date', session('order.date'))
             ->when(session('order.place_type') === Place::TYPE_HOMECARE,
                 fn ($query) => $query->where('midwife_user_id', session('order.midwife_user_id')),
                 fn ($query) => $query->where('room_id', session('order.room_id'))
@@ -188,7 +187,7 @@ class CreateOrder extends Component
         if($this->selectedPlace && $this->selectedMidwife && isset($this->state['date'])) {
             $orders = Order::locked()
                 ->where('place_id', $this->selectedPlace->id)
-                ->whereDate('start_datetime', $this->state['date'])
+                ->whereDate('date', $this->state['date'])
                 ->when($this->selectedPlace->type === Place::TYPE_HOMECARE,
                     fn ($query) => $query->where('midwife_user_id', $this->selectedMidwife->id),
                     fn ($query) => $query->where('room_id', $this->state['roomId'])
@@ -203,7 +202,7 @@ class CreateOrder extends Component
                 $new = collect(['id' => $slot->id]);
                 $new->put('time', $slot->time);
                 foreach ($orders as $order) {
-                    if (Carbon::parse($this->state['date'] . $slot->time)->between($order->start_datetime, $order->end_datetime->addMinutes($order->place->transport_duration))) {
+                    if (Carbon::parse($this->state['date'] . $slot->time)->between($order->startDateTime, $order->endDateTime->addMinutes($order->place->transport_duration))) {
                         $new->put($order->id, 'booked');
                     } else {
                         $new->put($order->id, 'empty');

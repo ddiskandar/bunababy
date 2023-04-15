@@ -70,9 +70,9 @@ class SelectClinicRoomAvailableDate extends Component
         $schedules = Order::query()
             ->where('place_id', $this->room->place->id)
             ->where('room_id', $this->room->id)
-            ->whereBetween('start_datetime', [Carbon::parse($this->selectedMonth)->startOfMonth()->startOfWeek(), Carbon::parse($this->selectedMonth)->endOfMonth()->endOfWeek()])
+            ->whereBetween('startDateTime', [Carbon::parse($this->selectedMonth)->startOfMonth()->startOfWeek(), Carbon::parse($this->selectedMonth)->endOfMonth()->endOfWeek()])
             ->locked()
-            ->select('id', 'place_id', 'room_id', 'status', 'start_datetime', 'end_datetime')
+            ->select('id', 'place_id', 'room_id', 'status', 'startDateTime', 'endDateTime')
             ->get();
 
         $data = collect();
@@ -82,9 +82,9 @@ class SelectClinicRoomAvailableDate extends Component
 
             foreach ($schedules as $order) {
 
-                if ($order->start_datetime->format('m-d') == $date->format('m-d')) {
+                if ($order->startDateTime->format('m-d') == $date->format('m-d')) {
                     foreach ($this->slots as $slot) {
-                        if (Carbon::parse($date->toDateString() . $slot->time)->between($order->start_datetime, $order->end_datetime)) {
+                        if (Carbon::parse($date->toDateString() . $slot->time)->between($order->startDateTime, $order->endDateTime)) {
                             $new->put($slot->time, 'booked');
                         } elseif ($new->has($slot->time)) {
                             //

@@ -35,7 +35,7 @@ class Confirm extends Component
         $startDateTime = Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'));
 
         $currentActiveOrders = Order::query()
-            ->whereDate('start_datetime', session('order.date'))
+            ->whereDate('date', session('order.date'))
             ->where('place_id', session('order.place_id'))
             ->when(session('order.place_type') === Place::TYPE_HOMECARE,
                 fn ($query) => $query->where('midwife_user_id', session('order.midwife_user_id')),
@@ -60,8 +60,8 @@ class Confirm extends Component
             $order->client_user_id = auth()->id();
             $order->total_price = $order->getTotalPrice();
             $order->total_duration = $order->getTotalDuration();
-            $order->start_datetime = Carbon::parse(session('order.date')->toDateString() . ' ' . session('order.start_time'));
-            $order->end_datetime = $order->start_datetime->addMinutes(session('order.addMinutes'));
+            $order->startDateTime = Carbon::parse(session('order.date')->toDateString() . ' ' . session('order.start_time'));
+            $order->endDateTime = $order->startDateTime->addMinutes(session('order.addMinutes'));
             $order->status = Order::STATUS_LOCKED;
 
             if (session('order.place_type') === Place::TYPE_HOMECARE) {

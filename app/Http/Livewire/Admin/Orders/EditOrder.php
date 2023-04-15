@@ -74,9 +74,9 @@ class EditOrder extends Component
         $this->state['addressId'] = (int) $order->address_id;
         $this->setSelectedAddress($this->state['addressId']);
 
-        $this->state['date'] = $order->start_datetime->toDateString();
-        $this->state['startTime'] = $order->start_datetime->toTimeString();
-        $this->state['startTimeId'] = DB::table('slots')->where('place_id', $order->place_id)->where('time', $order->start_datetime->toTimeString())->first()->id;
+        $this->state['date'] = $order->startDateTime->toDateString();
+        $this->state['startTime'] = $order->startDateTime->toTimeString();
+        $this->state['startTimeId'] = DB::table('slots')->where('place_id', $order->place_id)->where('time', $order->startDateTime->toTimeString())->first()->id;
 
         $this->state['totalDuration'] = $order->total_duration;
         $this->state['totalTransport'] = $order->total_transport;
@@ -175,7 +175,7 @@ class EditOrder extends Component
     private function getCurrentExistsOrders()
     {
         $currentActiveOrders =  Order::query()
-            ->whereDate('start_datetime', $this->order->start_datetime)
+            ->whereDate('date', $this->order->date)
             ->where('midwife_user_id', $this->selectedMidwife->id)
             ->when($this->selectedPlace->type === Place::TYPE_CLINIC,
                 fn ($query) => $query
@@ -183,8 +183,8 @@ class EditOrder extends Component
                     ->where('room_id', $this->state['roomId'])
             )
             ->activeBetween(
-                $this->order->start_datetime->toDateTimeString(),
-                $this->order->end_datetime
+                $this->order->startDateTime->toDateTimeString(),
+                $this->order->endDateTime
                     ->addMinutes($this->order->place->transport_duration)
                     ->toDateTimeString()
             )
@@ -233,8 +233,9 @@ class EditOrder extends Component
         $this->order->update([
             'midwife_user_id' => $this->state['midwifeId'],
             'place_id' => $this->state['placeId'],
-            'start_datetime' => Carbon::parse(Carbon::parse($this->state['date'])->toDateString() . ' ' . Carbon::parse($this->state['startTime'])->toTimeString()),
-            'end_datetime' => Carbon::parse(Carbon::parse($this->state['date'])->toDateString() . ' ' . Carbon::parse($this->state['startTime'])->toTimeString())->addMinutes($this->order->total_duration),
+            'date' => $this->state['date'],
+            'start_time' => $this->state['startTime'],
+            'end_time' => Carbon::parse($this->state['startTime'])->addMinutes($this->order->total_duration)->toTimeString(),
             'address_id' => $this->state['addressId'],
             'room_id' => $this->state['roomId'],
         ]);
@@ -255,7 +256,7 @@ class EditOrder extends Component
         if($this->selectedPlace && $this->selectedMidwife && isset($this->state['date'])) {
             $orders = Order::locked()
                 ->where('place_id', $this->selectedPlace->id)
-                ->whereDate('start_datetime', $this->state['date'])
+                ->whereDate('date', $this->state['date'])
                 ->when($this->selectedPlace->type === Place::TYPE_HOMECARE,
                     fn ($query) => $query->where('midwife_user_id', $this->selectedMidwife->id),
                     fn ($query) => $query->where('room_id', $this->state['roomId'])
@@ -271,7 +272,7 @@ class EditOrder extends Component
                 $new = collect(['id' => $slot->id]);
                 $new->put('time', $slot->time);
                 foreach ($orders as $order) {
-                    if (Carbon::parse($this->state['date'] . $slot->time)->between($order->start_datetime, $order->end_datetime->addMinutes($order->place->transport_duration))) {
+                    if (Carbon::parse($this->state['date'] . $slot->time)->between($order->startDateTime, $order->endDateTime->addMinutes($order->place->transport_duration))) {
                         $new->put($order->id, 'booked');
                     } else {
                         $new->put($order->id, 'empty');

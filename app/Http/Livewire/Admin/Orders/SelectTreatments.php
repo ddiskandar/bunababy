@@ -67,8 +67,8 @@ class SelectTreatments extends Component
 
         $this->order->update([
             'total_duration' => $this->order->total_duration - $treatment->duration,
-            'start_datetime' => $this->order->start_datetime,
-            'end_datetime' => $this->order->end_datetime->subMinutes($treatment->duration),
+            'startDateTime' => $this->order->startDateTime,
+            'endDateTime' => $this->order->endDateTime->subMinutes($treatment->duration),
             'total_price' => $this->order->treatments()->sum('treatment_price'),
         ]);
 
@@ -95,11 +95,11 @@ class SelectTreatments extends Component
         $treatment = Treatment::where('id', $this->state['treatmentId'])->first();
 
         $currentActiveOrders =  Order::query()
-            ->whereDate('start_datetime', $this->order->start_datetime)
+            ->whereDate('startDateTime', $this->order->startDateTime)
             ->where('midwife_user_id', $this->order->midwife_user_id)
             ->activeBetween(
-                $this->order->start_datetime->toDateTimeString(),
-                $this->order->end_datetime
+                $this->order->startDateTime->toDateTimeString(),
+                $this->order->endDateTime
                     ->addMinutes($this->order->place->transport_duration + $treatment->duration)
                     ->toDateTimeString()
             )
@@ -125,8 +125,8 @@ class SelectTreatments extends Component
 
         $this->order->update([
             'total_duration' => $this->order->total_duration + $treatment->duration,
-            'start_datetime' => $this->order->start_datetime,
-            'end_datetime' => $this->order->end_datetime->addMinutes($treatment->duration),
+            'startDateTime' => $this->order->startDateTime,
+            'endDateTime' => $this->order->endDateTime->addMinutes($treatment->duration),
             'total_price' => $this->order->treatments()->sum('treatment_price'),
         ]);
 

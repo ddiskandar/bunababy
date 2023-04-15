@@ -26,10 +26,10 @@ class Order extends Model
         'total_duration' => 'integer',
         'total_transport' => 'integer',
         'adjustment_amount' => 'integer',
-        'start_datetime' => 'datetime',
-        'end_datetime' => 'datetime',
         'status' => 'integer',
-        'finished_at' => 'datetime'
+        'finished_at' => 'datetime',
+        'startDateTime' => 'datetime',
+        'endDateTime' => 'datetime',
     ];
 
     protected static function boot()
@@ -37,7 +37,7 @@ class Order extends Model
         parent::boot();
 
         static::saving(function ($order) {
-            $order->invoice = 'INV/' . Carbon::parse($order->start_datetime)->isoFormat('YYMMDD') . '/' . $order->id;
+            $order->invoice = 'INV/' . Carbon::parse($order->startDateTime)->isoFormat('YYMMDD') . '/' . $order->id;
         });
     }
 
@@ -93,6 +93,16 @@ class Order extends Model
         $query->where('status', self::STATUS_FINISHED);
     }
 
+    public function getStartDateTimeAttribute()
+    {
+        return Carbon::parse(Carbon::parse($this->date)->toDateString() . ' ' . $this->start_time);
+    }
+
+    public function getEndDateTimeAttribute()
+    {
+        return Carbon::parse(Carbon::parse($this->date)->toDateString() . ' ' . $this->end_time);
+    }
+
     public function getStatusString()
     {
         return $this->status === self::STATUS_FINISHED
@@ -113,12 +123,12 @@ class Order extends Model
     {
         $query->where(function ($query) use ($from, $to) {
             $query
-                ->whereBetween('start_datetime', [$from, $to])
-                ->orWhereBetween('end_datetime', [$from, $to])
+                ->whereBetween('start_time', [$from, $to])
+                ->orWhereBetween('end_time', [$from, $to])
                 ->orWhere(function ($query) use ($from, $to) {
                     $query
-                        ->where('start_datetime', '<', $from)
-                        ->where('end_datetime', '>', $to);
+                        ->where('start_time', '<', $from)
+                        ->where('end_time', '>', $to);
                 });
         });
     }
@@ -209,6 +219,27 @@ class Order extends Model
 
     public function getTime()
     {
-        return $this->start_datetime->isoFormat('HH:mm') . ' - ' . $this->end_datetime->isoFormat('HH:mm');
+        return Carbon::parse($this->start_time)->isoFormat('HH:mm') . ' - ' . Carbon::parse($this->end_time)->isoFormat('HH:mm');
     }
+
+    public function getLongTime()
+    {
+        return $this->getTime(). ' WIB';
+    }
+
+    public function getLongDate()
+    {
+        return Carbon::parse($this->date)->isoFormat('dddd, DD MMMM YYYY');
+    }
+
+    public function getShortDate()
+    {
+        return Carbon::parse($this->date)->isoFormat('ddd, DD MMM');
+    }
+
+    public function getLongDateTime()
+    {
+        return $this->getLongDate() . ' ' . $this->getLongTime();
+    }
+
 }

@@ -200,7 +200,7 @@ class ShowCalendar extends Component
         $schedules = collect();
 
         $orders = Order::query()
-            ->whereDate('start_datetime', $this->selectedDay)
+            ->whereDate('date', $this->selectedDay)
             ->with(
                 'client:id,name',
                 'treatments:id,name',
@@ -212,8 +212,9 @@ class ShowCalendar extends Component
                 'id',
                 'client_user_id',
                 'midwife_user_id',
-                'start_datetime',
-                'end_datetime',
+                'date',
+                'start_time',
+                'end_time',
                 'status',
                 'finished_at',
                 'address_id',
@@ -227,11 +228,11 @@ class ShowCalendar extends Component
                 'col-start' => ($order->place->type === Place::TYPE_CLINIC && $order->midwife_user_id === null)
                     ? $this->colStart['clinics'][$order->room_id]
                     : $this->colStart['midwives'][$order->midwife_user_id],
-                'row-start' => $this->rowStart[$order->start_datetime->isoFormat('HH:mm')],
-                'row-span' => (int) round($order->start_datetime->diffInMinutes($order->end_datetime) / 15),
+                'row-start' => $this->rowStart[$order->startDateTime->isoFormat('HH:mm')],
+                'row-span' => (int) round($order->startDateTime->diffInMinutes($order->endDateTime) / 15),
                 'id' => $order->id,
                 'client_name' => $order->client->name,
-                'time' => $order->start_datetime->isoFormat('HH:mm') . ' - ' . $order->end_datetime->isoFormat('HH:mm') . ' WIB',
+                'time' => $order->getFullTime(),
                 'treatments' => $order->treatments->implode('name', ', '),
                 'status' => $order->getStatusString(),
                 'finished_at' => $order->finished_at,
