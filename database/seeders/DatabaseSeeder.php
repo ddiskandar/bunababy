@@ -153,6 +153,12 @@ class DatabaseSeeder extends Seeder
             15, 16, 17, 18, 19, 20, 21
         ]);
 
+        echo " Creating Orders ... " . PHP_EOL;
+
+        $bar = $this->command->getOutput()->createProgressBar(100);
+
+        $bar->start();
+
         foreach (range(1, 100) as $i) {
 
             $client = User::factory()->hasProfile()->create();
@@ -226,7 +232,9 @@ class DatabaseSeeder extends Seeder
                     'order_id' => $order->id,
                 ]);
 
-            echo " Berhasil Buat User dan Order ke " . $i . PHP_EOL;
+            $bar->advance();
         }
+
+        $bar->finish();
     }
 }
