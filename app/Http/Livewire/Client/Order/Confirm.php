@@ -98,11 +98,7 @@ class Confirm extends Component
 
             session()->forget('order');
 
-            $admin = User::where('type', User::ADMIN)
-                ->orWhere('type', User::OWNER)
-                ->get();
-
-            Notification::send($admin, new NewOrderNotification($order));
+            event(new \App\Events\NewOrderCreated($order));
 
             FlashNotification::make()
                 ->title('Order created!')
