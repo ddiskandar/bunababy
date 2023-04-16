@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Events\NewOrderCreated;
+use App\Events\NewPaymentCreated;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\Payment;
@@ -11,11 +13,8 @@ use App\Models\Profile;
 use App\Models\Testimonial;
 use App\Models\Treatment;
 use App\Models\User;
-use App\Notifications\NewOrderNotification;
-use App\Notifications\NewPaymentNotification;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Notification;
 
 class DatabaseSeeder extends Seeder
 {
@@ -177,8 +176,6 @@ class DatabaseSeeder extends Seeder
             $date = today()->addDays($i);
             $midwifeId = rand(4, 9);
 
-            $rand = (string) random_int(1000000000, 9999999999);
-
             $order = Order::factory()
                 ->create([
                     'place_id' => Place::TYPE_HOMECARE,
@@ -211,13 +208,6 @@ class DatabaseSeeder extends Seeder
                 'end_time' => $order->startDateTime->addMinutes($totalDuration)->toTimeString(),
             ]);
 
-            $users = User::query()
-                // ->where('type', User::OWNER)
-                ->orWhere('type', User::ADMIN)
-                ->get();
-
-            Notification::send($users, new NewOrderNotification($order));
-
             $payment = Payment::factory()
                 ->create([
                     'order_id' => $order->id,
@@ -225,12 +215,13 @@ class DatabaseSeeder extends Seeder
                     'status' => Payment::STATUS_VERIFIED
                 ]);
 
-            Notification::send($users, new NewPaymentNotification($payment));
-
             Testimonial::factory()
                 ->create([
                     'order_id' => $order->id,
                 ]);
+
+            event(new NewOrderCreated($order));
+            event(new NewPaymentCreated($payment));
 
             $bar->advance();
         }
