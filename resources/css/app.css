@@ -2,10 +2,6 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-[x-cloak] {
-    display: none !important;
-}
-
 .filament-notifications {
     @apply bottom-24;
 }

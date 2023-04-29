@@ -1,48 +1,54 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Bunababy') }}</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        @include('layouts._favicons')
+    <title>{{ config('app.name', 'Bunababy') }}</title>
 
-        <!-- Inter web font from Google -->
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    @include('layouts._favicons')
 
-        <!-- Styles -->
-        @vite('resources/css/app.css')
+    <!-- Inter web font from Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 
-        <!-- Alpine.js -->
-        @vite('resources/js/app.js')
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
 
-         @livewireStyles
-    </head>
-    <body class="font-sans antialiased">
-        <div
-            id="page-container"
-            class="flex flex-col w-full min-h-screen mx-auto bg-gray-100 lg:pl-64"
-            x-data="{ userDropdownOpen: false, mobileSidebarOpen: false, desktopSidebarOpen: true }"
-            x-bind:class="{ 'lg:pl-64' : desktopSidebarOpen }"
-        >
+    <!-- Styles -->
+    @vite('resources/css/app.css')
 
-            @include('layouts._sidebar')
-            @include('layouts._header')
+    <!-- Alpine.js -->
+    @vite('resources/js/app.js')
 
-            <main id="page-content" class="flex flex-col flex-auto max-w-full pt-16">
-                <div class="w-full p-4 mx-auto max-w-10xl lg:p-8">
-                    {{ $slot }}
-                </div>
-            </main>
+    @livewireStyles
+</head>
 
-            @include('layouts._footer')
+<body class="font-sans antialiased">
+    <div id="page-container" class="flex flex-col w-full min-h-screen mx-auto bg-gray-100 lg:pl-64"
+        x-data="{ userDropdownOpen: false, mobileSidebarOpen: false, desktopSidebarOpen: true }" x-bind:class="{ 'lg:pl-64': desktopSidebarOpen }">
 
-        </div>
+        @include('layouts._sidebar')
+        @include('layouts._header')
 
-        @stack('scripts')
-        @livewireScripts
-        @livewire('notifications')
-    </body>
+        <main id="page-content" class="flex flex-col flex-auto max-w-full pt-16">
+            <div class="w-full p-4 mx-auto max-w-10xl lg:p-8">
+                {{ $slot }}
+            </div>
+        </main>
+
+        @include('layouts._footer')
+
+    </div>
+
+    @stack('scripts')
+    @livewireScripts
+    @livewire('notifications')
+</body>
+
 </html>
