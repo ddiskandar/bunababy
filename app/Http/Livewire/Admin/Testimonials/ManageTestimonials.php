@@ -100,7 +100,7 @@ class ManageTestimonials extends Component
             })
             ->where('rate', 'LIKE', '%' . $this->filterRate . '%')
             ->with(
-                'order:id,client_user_id,midwife_user_id,startDateTime',
+                'order:id,client_user_id,midwife_user_id,date',
                 'order.midwife',
                 'order.client',
                 'order.client.profile:user_id,photo'
