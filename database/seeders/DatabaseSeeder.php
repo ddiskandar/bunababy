@@ -152,7 +152,7 @@ class DatabaseSeeder extends Seeder
             15, 16, 17, 18, 19, 20, 21
         ]);
 
-        echo " Creating Orders ... " . PHP_EOL;
+        $this->command->info("Creating orders ...\n");
 
         $bar = $this->command->getOutput()->createProgressBar(100);
 

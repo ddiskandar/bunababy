@@ -11,8 +11,7 @@ class ThisMonthOrders extends Component
 {
     public $readyToLoad = false;
     public $selectedMonth;
-    public $labels;
-    public $datasets;
+    public $data;
     public $filterStatus = '';
     public $midwives;
 
@@ -25,19 +24,19 @@ class ThisMonthOrders extends Component
 
     public function updateData()
     {
+        $this->data = [];
+
         $period = Carbon::parse($this->selectedMonth)->startOfMonth()
             ->DaysUntil(Carbon::parse($this->selectedMonth)->endOfMonth());
 
         foreach ($period as $date) {
-            $this->labels[] = $date->isoFormat('D');
+            $this->data['labels'][] = $date->isoFormat('D');
         }
 
         $thisMonthOrders = Order::query()
             ->whereMonth('date', Carbon::parse($this->selectedMonth))
             ->where('status', 'LIKE', '%' . $this->filterStatus)
             ->get();
-
-        $this->datasets = [];
 
         foreach ($this->midwives as $id => $midwife) {
             $data = [];
@@ -46,7 +45,7 @@ class ThisMonthOrders extends Component
                     ->filter(fn ($item) => $date->isSameDay($item->startDateTime))
                     ->count();
             }
-            $this->datasets[] = [
+            $this->data['datasets'][] = [
                 'label' => $midwife,
                 'data' => $data,
                 'cubicInterpolationMode' => 'monotone',
