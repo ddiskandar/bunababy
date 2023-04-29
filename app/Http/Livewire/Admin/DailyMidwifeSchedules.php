@@ -28,7 +28,7 @@ class DailyMidwifeSchedules extends Component
     {
         $schedules = Order::query()
                 ->where('midwife_user_id', auth()->id())
-                ->whereDate('startDateTime', $this->selectedDay)
+                ->whereDate('date', $this->selectedDay)
                 ->where(function ($query) {
                     $query->where('status', Order::STATUS_LOCKED)
                     ->orWhere('status', Order::STATUS_FINISHED);
@@ -38,8 +38,9 @@ class DailyMidwifeSchedules extends Component
                     'place_id',
                     'midwife_user_id',
                     'client_user_id',
-                    'startDateTime',
-                    'endDateTime',
+                    'date',
+                    'start_time',
+                    'end_time',
                     'address_id',
                     'status'
                 )
@@ -50,7 +51,7 @@ class DailyMidwifeSchedules extends Component
                     'treatments:id,name',
                     'address.kecamatan:id,name'
                 )
-                ->orderBy('startDateTime', 'ASC')
+                ->orderBy('start_time', 'ASC')
                 ->get();
 
         // dd($schedules);

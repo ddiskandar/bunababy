@@ -19,7 +19,7 @@
                     <div>
                         {{ $order->id }}
                     </div>
-                    @if (auth()->user()->isAdmin() || true)
+                    @if (auth()->user()->isAdmin())
                         <a href="{{ route('order.invoice', $order->id) }}" target="_blank"
                             class="text-sm font-semibold text-brand-200">
                             Lihat Invoice

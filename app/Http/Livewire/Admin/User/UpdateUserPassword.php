@@ -36,7 +36,7 @@ class UpdateUserPassword extends Component
             return $this->errorCurrentPasswordMessage = 'Password sekarang yang anda berikan tidak sesuai.';
         }
 
-        $this->user->forceFill([
+        $this->user->update([
             'password' => Hash::make($this->password),
         ]);
 
