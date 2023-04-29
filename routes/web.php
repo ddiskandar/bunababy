@@ -29,7 +29,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Dashboard
-    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'show'])->name('dashboard');
+    Route::get('/dashboard', App\Http\Controllers\DashboardController::class)->name('dashboard');
 
     Route::middleware(['midwife'])->group(function () {
         Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'show'])->name('calendar');

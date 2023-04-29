@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function show()
+    public function __invoke()
     {
         if (auth()->user()->isClient()) {
             return redirect()->route('home');
