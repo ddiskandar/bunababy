@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 if(!function_exists('object_storage_asset')) {
     function object_storage_asset($value)
     {
-        return "https://is3.cloudhost.id/bunababycare-dev/bunababycare-dev/" . $value;
+        return env('OBJECT_STORAGE_ASSET', 'https://is3.cloudhost.id/bunababycare/bunababycare/') . $value;
     }
 }
 
