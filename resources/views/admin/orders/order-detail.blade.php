@@ -130,14 +130,13 @@
                     Treatment
                 </dt>
                 <dd class="mt-1 text-gray-900">
-                    <div class="flex flex-wrap gap-1">
+                    <ul class="ml-5 list-decimal">
                         @foreach ($order->treatments as $treatment)
-                            <div
-                                class="inline-flex items-center px-4 py-1 space-x-1 text-xs font-semibold leading-4 border rounded-full text-brand-200 bg-brand-50 border-brand-100">
+                            <li>
                                 {{ $treatment->name . ', ' . $treatment->pivot->family_name . ' / ' . $treatment->pivot->family_age }}
-                            </div>
+                            </li>
                         @endforeach
-                    </div>
+                    </ul>
                 </dd>
             </div>
             <div class="sm:col-span-1">
