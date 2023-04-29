@@ -11,13 +11,15 @@ class History extends Component
 
     public function render()
     {
-        $query = Order::query()
+        $reservations = Order::query()
             ->where('client_user_id', auth()->id())
-            ->where('status', 'like', '%' . $this->filterStatus . '%');
+            ->where('status', 'like', '%' . $this->filterStatus . '%')->get();
 
-        $reservations = $query->get();
-
-        $hasActiveReservation = $query->where('status', Order::STATUS_LOCKED)->count() > 0;
+        $hasActiveReservation = Order::query()
+            ->where('client_user_id', auth()->id())
+            ->where('status', Order::STATUS_LOCKED)
+            ->orWhere('status', Order::STATUS_UNPAID)
+            ->count() > 0;
 
         return view('client.history.history', [
             'reservations' => $reservations,
