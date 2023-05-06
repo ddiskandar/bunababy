@@ -4,9 +4,7 @@ namespace App\Http\Livewire\Admin\Places;
 
 use App\Models\Place;
 use App\Models\Room;
-use App\Models\User;
 use Filament\Notifications\Notification;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class EditRooms extends Component

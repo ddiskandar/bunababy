@@ -25,7 +25,7 @@ class ManagePlaces extends Component
     protected $queryString = [
         'filterSearch' => ['except' => ''],
         'page' => ['except' => 1],
-        'perPage' => ['except' => 3],
+        'perPage' => ['except' => 5],
         'filterStatus' => ['except' => ''],
     ];
 
