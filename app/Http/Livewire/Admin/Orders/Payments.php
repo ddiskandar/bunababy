@@ -7,15 +7,21 @@ use App\Models\Payment;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Payments extends Component
 {
+    use WithFileUploads;
+
     public $order;
     public $adjustment_name;
     public $adjustment_amount;
     public $state = [];
+    public $payment;
 
     public $showDialog = false;
+    public $dialogEditMode = false;
+
     public $showSetAdjustmentDialog = false;
     public $successMessage = false;
 
@@ -26,7 +32,7 @@ class Payments extends Component
     protected $rules = [
         'state.status' => 'required|in:1,2,3',
         'state.value' => 'required|numeric',
-        // 'state.attachment' => 'nullable|image|max:1024',
+        'state.attachment' => 'nullable|image|max:1024',
         'state.note' => 'nullable|max:64',
     ];
 
@@ -50,12 +56,22 @@ class Payments extends Component
     {
         $this->showDialog = true;
         $this->state = [];
+        $this->dialogEditMode = false;
         $this->state['status'] = Payment::STATUS_VERIFIED;
     }
 
     public function showEditPaymentDialog(Payment $payment)
     {
-        $this->state = $payment->toArray();
+        $this->payment = $payment;
+
+        $this->state['id'] = $payment->id;
+        $this->state['order_id'] = $payment->order_id;
+        $this->state['status'] = $payment->status;
+        $this->state['value'] = $payment->value;
+        $this->state['note'] = $payment->note;
+        $this->state['attachment'] = null;
+
+        $this->dialogEditMode = true;
         $this->showDialog = true;
     }
 
@@ -83,7 +99,6 @@ class Payments extends Component
     public function save()
     {
         $this->validate();
-        // dd('here');
 
         DB::transaction(function () {
             Payment::updateOrCreate(
@@ -97,6 +112,7 @@ class Payments extends Component
                     'verified_at' => now(),
                     'note' => $this->state['note'] ?? '',
                     'verified_by_id' => auth()->id(),
+                    'attachment' => $this->state['attachment'] ? $this->state['attachment']->storePublicly('attachments', 's3') : $this->payment->attachment,
                 ]
             );
 
