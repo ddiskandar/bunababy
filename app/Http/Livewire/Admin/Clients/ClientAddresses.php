@@ -71,7 +71,7 @@ class ClientAddresses extends Component
     {
         $this->validate();
 
-        Address::updateOrCreate(
+        $address = Address::updateOrCreate(
             [
                 'id' => $this->state['id'] ?? Address::max('id') + 1,
             ],
@@ -85,6 +85,11 @@ class ClientAddresses extends Component
                 'share_location' => $this->state['share_location'] ?? NULL,
             ]
         );
+
+        $addresses = Address::where('client_user_id', $this->client->id)->get();
+        if (!$addresses->contains('is_main', 1)) {
+            $address->update(['is_main' => true]);
+        }
 
         $this->emit('saved');
 

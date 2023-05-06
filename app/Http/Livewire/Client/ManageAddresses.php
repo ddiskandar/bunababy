@@ -66,7 +66,7 @@ class ManageAddresses extends Component
         foreach ($this->addresses as $address) {
             $address->update(['is_main' => false]);
 
-            if ($address->id == $id) {
+            if ($address->id === $id) {
                 $address->update(['is_main' => true]);
             }
         }
