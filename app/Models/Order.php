@@ -32,12 +32,13 @@ class Order extends Model
         'endDateTime' => 'datetime',
     ];
 
-    protected static function boot()
+    protected static function booted(): void
     {
         parent::boot();
 
-        static::saving(function ($order) {
-            $order->invoice = 'INV/' . Carbon::parse($order->startDateTime)->isoFormat('YYMMDD') . '/' . $order->id;
+        static::created(function ($order) {
+            $order->invoice = 'INV/' . $order->startDateTime->isoFormat('YYMMDD') . '/' . $order->id;
+            $order->save();
         });
     }
 
@@ -179,6 +180,11 @@ class Order extends Model
     }
 
     // Create Order
+
+    public function createNewOrder()
+    {
+        //
+    }
 
     public function numberStartTime()
     {

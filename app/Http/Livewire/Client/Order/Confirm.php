@@ -60,8 +60,9 @@ class Confirm extends Component
             $order->client_user_id = auth()->id();
             $order->total_price = $order->getTotalPrice();
             $order->total_duration = $order->getTotalDuration();
-            $order->startDateTime = Carbon::parse(session('order.date')->toDateString() . ' ' . session('order.start_time'));
-            $order->endDateTime = $order->startDateTime->addMinutes(session('order.addMinutes'));
+            $order->date = Carbon::parse(session('order.date')->toDateString());
+            $order->start_time = Carbon::parse(session('order.start_time'))->toTimeString();
+            $order->end_time = $order->startDateTime->addMinutes(session('order.addMinutes'))->toTimeString();
             $order->status = Order::STATUS_LOCKED;
 
             if (session('order.place_type') === Place::TYPE_HOMECARE) {
