@@ -20,6 +20,7 @@ class TreatmentsCatalog extends Component
             ->get();
 
         $categories = Category::active()
+            ->select('id', 'name')
             ->orderBy('order')
             ->get();
 

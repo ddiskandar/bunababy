@@ -59,6 +59,8 @@ class SelectLocation extends Component
 
     public function render()
     {
+        $kabupatens = collect();
+
         if ($this->readyToLoad) {
             $kabupatens = Kabupaten::query()
                 ->where(function ($query) {
@@ -70,8 +72,6 @@ class SelectLocation extends Component
                     $query->where('name', 'LIKE', $this->search . '%');
                 })
                 ->get();
-        } else {
-            $kabupatens = collect();
         }
 
         return view('client.select-location', [

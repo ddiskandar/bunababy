@@ -11,20 +11,15 @@ use Livewire\Component;
 
 class SelectMidwifeAvailableDate extends Component
 {
+    public $readyToLoad = false;
     public $selectedMonth;
     public $slots;
     public $midwife;
 
-    public function mount($midwife_user_id)
+    public function mount($midwife_user_id, $slots)
     {
-
         $this->selectedMonth = now()->format('Y-M');
-
-        $this->slots = Slot::query()
-            ->where('place_id', session('order.place_id'))
-            ->orderBy('time')
-            ->get();
-
+        $this->slots = $slots;
         $this->midwife = User::find($midwife_user_id);
     }
 
@@ -73,71 +68,79 @@ class SelectMidwifeAvailableDate extends Component
         return to_route('order.cart');
     }
 
+    public function load()
+    {
+        $this->readyToLoad = true;
+    }
+
     public function render()
     {
-        $period = Carbon::parse($this->selectedMonth)
-            ->startOfMonth()
-            ->startOfWeek()
-            ->DaysUntil(
-                Carbon::parse($this->selectedMonth)
-                    ->endOfMonth()
-                    ->endOfWeek()
-            );
-
-        $schedules = Order::query()
-            ->where('midwife_user_id', $this->midwife->id)
-            ->whereBetween('date', [Carbon::parse($this->selectedMonth)->startOfMonth()->startOfWeek(), Carbon::parse($this->selectedMonth)->endOfMonth()->endOfWeek()])
-            ->locked()
-            ->select('id', 'place_id', 'midwife_user_id', 'status', 'date', 'start_time', 'end_time')
-            ->get();
-
-        $timetables = Timetable::query()
-            ->where('midwife_user_id', $this->midwife->id)
-            ->whereBetween('date', [Carbon::parse($this->selectedMonth)->startOfMonth()->startOfWeek(), Carbon::parse($this->selectedMonth)->endOfMonth()->endOfWeek()])
-            ->where(function ($query) {
-                $query->where('type', Timetable::TYPE_LEAVE)
-                    ->orWhere('type', Timetable::TYPE_CLINIC);
-            })
-            ->get();
-
         $data = collect();
 
-        foreach ($period as $date) {
-            $new = collect(['date' => $date]);
+        if ($this->readyToLoad) {
+            $period = Carbon::parse($this->selectedMonth)
+                ->startOfMonth()
+                ->startOfWeek()
+                ->DaysUntil(
+                    Carbon::parse($this->selectedMonth)
+                        ->endOfMonth()
+                        ->endOfWeek()
+                );
 
-            foreach ($timetables as $timetable) {
-                if ($timetable->date->format('m-d') === $date->format('m-d')) {
-                    foreach ($this->slots as $slot) {
-                        $new->put($slot->time, 'booked');
-                    }
-                }
-            }
+            $schedules = Order::query()
+                ->where('midwife_user_id', $this->midwife->id)
+                ->whereBetween('date', [Carbon::parse($this->selectedMonth)->startOfMonth()->startOfWeek(), Carbon::parse($this->selectedMonth)->endOfMonth()->endOfWeek()])
+                ->locked()
+                ->select('id', 'place_id', 'midwife_user_id', 'status', 'date', 'start_time', 'end_time')
+                ->get();
 
-            foreach ($schedules as $order) {
+            $timetables = Timetable::query()
+                ->where('midwife_user_id', $this->midwife->id)
+                ->whereBetween('date', [Carbon::parse($this->selectedMonth)->startOfMonth()->startOfWeek(), Carbon::parse($this->selectedMonth)->endOfMonth()->endOfWeek()])
+                ->where(function ($query) {
+                    $query->where('type', Timetable::TYPE_LEAVE)
+                        ->orWhere('type', Timetable::TYPE_CLINIC);
+                })
+                ->get();
 
-                if ($order->startDateTime->format('m-d') === $date->format('m-d')) {
-                    foreach ($this->slots as $slot) {
-                        if (Carbon::parse($date->toDateString() . $slot->time)->between($order->startDateTime, $order->endDateTime)) {
+
+            foreach ($period as $date) {
+                $new = collect(['date' => $date]);
+
+                foreach ($timetables as $timetable) {
+                    if ($timetable->date->format('m-d') === $date->format('m-d')) {
+                        foreach ($this->slots as $slot) {
                             $new->put($slot->time, 'booked');
-                        } elseif ($new->has($slot->time)) {
-                            //
-                        } else {
-                            $new->put($slot->time, 'empty');
                         }
                     }
                 }
+
+                foreach ($schedules as $order) {
+
+                    if ($order->startDateTime->format('m-d') === $date->format('m-d')) {
+                        foreach ($this->slots as $slot) {
+                            if (Carbon::parse($date->toDateString() . $slot->time)->between($order->startDateTime, $order->endDateTime)) {
+                                $new->put($slot->time, 'booked');
+                            } elseif ($new->has($slot->time)) {
+                                //
+                            } else {
+                                $new->put($slot->time, 'empty');
+                            }
+                        }
+                    }
+                }
+
+                $new->put(
+                    'status',
+                    ($new->doesntContain('empty') and $new->doesntContain('booked'))
+                        ? 'kosong'
+                        : ($new->doesntContain('empty')
+                            ? 'penuh'
+                            : 'tersedia')
+                );
+
+                $data->push($new);
             }
-
-            $new->put(
-                'status',
-                ($new->doesntContain('empty') and $new->doesntContain('booked'))
-                    ? 'kosong'
-                    : ($new->doesntContain('empty')
-                        ? 'penuh'
-                        : 'tersedia')
-            );
-
-            $data->push($new);
         }
 
         return view('client.order.select-midwife-available-date', [

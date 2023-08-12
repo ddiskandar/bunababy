@@ -3,46 +3,39 @@
 namespace App\Http\Livewire\Client\Order;
 
 use App\Models\Kecamatan;
+use App\Models\Slot;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class MidwivesAvailability extends Component
 {
     public $kecamatan;
     public $midwives;
-    public $availableMidwives;
-    public $notAvailableMidwives;
+    public $slots;
 
-    protected $listeners  = [
-        'locationChanged',
-    ];
+    protected $listeners = ['locationChanged'];
 
     public function mount()
     {
-
         if (session()->has('order.kecamatan_id')) {
-
             $this->kecamatan = Kecamatan::query()
                 ->where('id', session('order.kecamatan_id'))
                 ->select('id', 'name')
-                ->with([
-                    'midwives' => fn ($query) => $query->active(),
-                    'midwives.profile'
-                ])
+                ->with('midwives:id')
                 ->first();
 
-            $this->availableMidwives = User::query()
-                ->midwives()->active()
-                ->whereIn('id', $this->kecamatan->midwives->pluck('id'))
-                ->pluck('id');
+            $this->slots = Slot::query()
+                ->where('place_id', session('order.place_id'))
+                ->get();
 
-            $this->notAvailableMidwives = User::query()
+            $midwives = User::query()
                 ->midwives()->active()
-                ->with('profile')
-                ->whereNotIn('id', $this->kecamatan->midwives->pluck('id'))
+                ->with('profile:user_id,photo')
                 ->select('id', 'name')
                 ->get();
+
+            $this->midwives['available'] = $midwives->whereIn('id', $this->kecamatan->midwives->pluck('id'));
+            $this->midwives['notAvailable'] = $midwives->whereNotIn('id', $this->kecamatan->midwives->pluck('id'));
         }
     }
 

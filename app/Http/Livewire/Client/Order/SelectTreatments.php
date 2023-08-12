@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Client\Order;
 
-use App\Models\Category;
 use App\Models\Place;
 use App\Models\Room;
 use App\Models\Treatment;
@@ -158,8 +157,6 @@ class SelectTreatments extends Component
                 ];
             });
         }
-
-        // dd($availableTreatments);
 
         return view('client.order.select-treatments', [
             'categories' => $categories,

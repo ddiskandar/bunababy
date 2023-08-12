@@ -1,35 +1,45 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Bunababy') }}</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        @include('layouts._favicons')
+    <title>{{ config('app.name', 'Bunababy') }}</title>
 
-        <!-- Inter web font from Google -->
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    @include('layouts._favicons')
 
-        <!-- Styles -->
-        @vite('resources/css/app.css')
+    <!-- Inter web font from Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 
-        <!-- Scripts -->
-        @vite('resources/js/app.js')
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
 
-        @livewireStyles
+    <!-- Styles -->
+    @vite('resources/css/app.css')
 
-        <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+    <!-- Scripts -->
+    @vite('resources/js/app.js')
 
-    </head>
-    <body class="font-sans antialiased text-gray-900">
+    @livewireStyles
 
-        {{ $slot }}
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
 
-        @stack('scripts')
+</head>
 
-        @livewireScripts
+<body class="font-sans antialiased text-gray-900">
 
-    </body>
+    {{ $slot }}
+
+    @stack('scripts')
+
+    @livewireScripts
+
+</body>
+
 </html>
