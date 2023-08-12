@@ -4,12 +4,9 @@ namespace App\Http\Livewire\Admin\Orders;
 
 use App\Models\Family;
 use App\Models\Order;
-use Carbon\Carbon;
-use App\Models\Place;
 use App\Models\Price;
 use App\Models\Treatment;
 use Filament\Notifications\Notification;
-use Illuminate\Support\Arr;
 use Livewire\Component;
 
 class SelectTreatments extends Component
@@ -67,8 +64,7 @@ class SelectTreatments extends Component
 
         $this->order->update([
             'total_duration' => $this->order->total_duration - $treatment->duration,
-            'startDateTime' => $this->order->startDateTime,
-            'endDateTime' => $this->order->endDateTime->subMinutes($treatment->duration),
+            'end_time' => $this->order->endDateTime->subMinutes($treatment->duration)->toTimeString(),
             'total_price' => $this->order->treatments()->sum('treatment_price'),
         ]);
 
@@ -95,7 +91,7 @@ class SelectTreatments extends Component
         $treatment = Treatment::where('id', $this->state['treatmentId'])->first();
 
         $currentActiveOrders =  Order::query()
-            ->whereDate('startDateTime', $this->order->startDateTime)
+            ->whereDate('date', $this->order->startDateTime)
             ->where('midwife_user_id', $this->order->midwife_user_id)
             ->activeBetween(
                 $this->order->startDateTime->toDateTimeString(),
@@ -125,8 +121,7 @@ class SelectTreatments extends Component
 
         $this->order->update([
             'total_duration' => $this->order->total_duration + $treatment->duration,
-            'startDateTime' => $this->order->startDateTime,
-            'endDateTime' => $this->order->endDateTime->addMinutes($treatment->duration),
+            'end_time' => $this->order->endDateTime->addMinutes($treatment->duration)->toTimeString(),
             'total_price' => $this->order->treatments()->sum('treatment_price'),
         ]);
 

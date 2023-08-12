@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Clients;
 
 use App\Models\User;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
@@ -51,6 +52,18 @@ class ClientProfileInformation extends Component
         $this->state['dob'] = $this->client->profile->dob ? $this->client->profile->dob->toDateString() : null;
         $this->state['phone'] = $this->client->profile->phone;
         $this->state['ig'] = $this->client->profile->ig;
+    }
+
+    public function resetPassword()
+    {
+        $this->client->update([
+            'password' => bcrypt('12345678'),
+        ]);
+
+        Notification::make()
+            ->title('Password : 12345678')
+            ->success()
+            ->send();
     }
 
     public function save()

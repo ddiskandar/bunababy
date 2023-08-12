@@ -3,12 +3,10 @@
 
     <x-slot name="content">
         <form wire:submit.prevent="save" class="max-w-lg space-y-6">
-            <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
+            <div x-data="{ photoName: null, photoPreview: null }" class="col-span-6 sm:col-span-4">
                 <!-- Profile Photo File Input -->
-                <input type="file" class="hidden"
-                            wire:model="photo"
-                            x-ref="photo"
-                            x-on:change="
+                <input type="file" class="hidden" wire:model="photo" x-ref="photo"
+                    x-on:change="
                                     photoName = $refs.photo.files[0].name;
                                     const reader = new FileReader();
                                     reader.onload = (e) => {
@@ -21,13 +19,14 @@
 
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
-                    <img src="{{ $client->profile_photo_url }}" alt="{{ $client->name }}" class="object-cover w-20 h-20 rounded-full">
+                    <img src="{{ $client->profile_photo_url }}" alt="{{ $client->name }}"
+                        class="object-cover w-20 h-20 rounded-full">
                 </div>
 
                 <!-- New Profile Photo Preview -->
                 <div class="mt-2" x-show="photoPreview" style="display: none;">
                     <span class="block w-20 h-20 bg-center bg-no-repeat bg-cover rounded-full"
-                            x-bind:style="'background-image: url(\'' + photoPreview + '\');'">
+                        x-bind:style="'background-image: url(\'' + photoPreview + '\');'">
                     </span>
                 </div>
 
@@ -53,6 +52,13 @@
                 <x-label for="state.email">Alamat Email</x-label>
                 <x-input wire:model.lazy="state.email" class="w-full" type="email" id="state.email" />
                 <x-input-error for="state.email" class="mt-2" />
+            </div>
+            <div class="space-y-1">
+                <x-secondary-button type="button" wire:click="resetPassword"
+                    onclick="confirm('Yakin mau direset?') || event.stopImmediatePropagation()"
+                    wire:loading.attr="disabled">
+                    {{ __('Reset Password') }}
+                </x-secondary-button>
             </div>
             <div class="space-y-1">
                 <x-label for="state.dob">Tanggal Lahir</x-label>

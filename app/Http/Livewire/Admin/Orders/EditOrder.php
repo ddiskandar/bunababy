@@ -32,22 +32,22 @@ class EditOrder extends Component
     public $dialogEditMode = false;
 
     protected $rules = [
-        'state.label' => 'required|string|min:3|max:32',
-        'state.address' => 'required|string|min:3|max:255',
-        'state.desa' => 'required|string|min:2|max:32',
-        'state.note' => 'nullable|string|min:2|max:255',
-        'state.share_location' => 'nullable|string|min:2|max:512',
-        'state.kecamatan_id' => 'required|exists:kecamatans,id',
+        'state.address.label' => 'required|string|min:3|max:32',
+        'state.address.address' => 'required|string|min:3|max:255',
+        'state.address.desa' => 'required|string|min:2|max:32',
+        'state.address.note' => 'nullable|string|min:2|max:255',
+        'state.address.share_location' => 'nullable|string|min:2|max:512',
+        'state.address.kecamatan_id' => 'required|exists:kecamatans,id',
         'state.midwifeId' => 'required|exists:users,id',
     ];
 
     protected $validationAttributes = [
-        'state.label' => 'Label alamat',
-        'state.address' => 'Kampung/Jalan',
-        'state.desa' => 'Desa',
-        'state.kecamatan_id' => 'Kecamatan',
-        'state.note' => 'Catatan',
-        'state.share_location' => 'Google Maps',
+        'state.address.label' => 'Label alamat',
+        'state.address.address' => 'Kampung/Jalan',
+        'state.address.desa' => 'Desa',
+        'state.address.kecamatan_id' => 'Kecamatan',
+        'state.address.note' => 'Catatan',
+        'state.address.share_location' => 'Google Maps',
         'state.midwifeId' => 'Bidan',
     ];
 
@@ -129,14 +129,14 @@ class EditOrder extends Component
     public function showEditDialog(Address $address)
     {
         $this->resetErrorBag();
-        $this->state = $address->toArray();
+        $this->state['address'] = $address->toArray();
         $this->showDialog = true;
         $this->dialogEditMode = true;
     }
 
     public function addNewAddress()
     {
-        $this->state = [];
+        $this->state['address'] = [];
         $this->showDialog = true;
         $this->dialogEditMode = false;
     }
@@ -155,16 +155,16 @@ class EditOrder extends Component
 
         Address::updateOrCreate(
             [
-                'id' => $this->state['id'] ?? time(),
+                'id' => $this->state['address']['id'] ?? time(),
                 'client_user_id' => $this->selectedClient->id,
-                'kecamatan_id' => $this->state['kecamatan_id'],
+                'kecamatan_id' => $this->state['address']['kecamatan_id'],
             ],
             [
-                'label' => $this->state['label'],
-                'address' => $this->state['address'],
-                'desa' => $this->state['desa'],
-                'note' => $this->state['note'] ?? '',
-                'share_location' => $this->state['share_location'] ?? '',
+                'label' => $this->state['address']['label'],
+                'address' => $this->state['address']['address'],
+                'desa' => $this->state['address']['desa'],
+                'note' => $this->state['address']['note'] ?? null,
+                'share_location' => $this->state['address']['share_location'] ?? null,
             ]
         );
 
