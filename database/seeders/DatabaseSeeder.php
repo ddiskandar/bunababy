@@ -193,7 +193,7 @@ class DatabaseSeeder extends Seeder
                 $id = rand(1, 21);
                 $order->treatments()->attach($id, [
                     'family_name' => $order->client->name,
-                    'family_age' => calculate_age($order->client->profile->dob),
+                    'family_age' => calculateAge($order->client->profile->dob),
                     'treatment_duration' => Treatment::find($id)->duration,
                     'treatment_price' => Price::where('treatment_id', $id)
                         ->where('place_id', $order->place_id)->value('amount'),

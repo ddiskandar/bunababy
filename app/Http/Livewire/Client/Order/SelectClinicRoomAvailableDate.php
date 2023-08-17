@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Room;
 use App\Models\Slot;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Livewire\Component;
 
 class SelectClinicRoomAvailableDate extends Component
@@ -61,57 +62,71 @@ class SelectClinicRoomAvailableDate extends Component
         $this->readyToLoad = true;
     }
 
+    private function getSchedules()
+    {
+        return Order::query()
+            ->where('place_id', session('order.place_id'))
+            ->where('room_id', $this->room['id'])
+            ->whereBetween('date', [
+                Carbon::parse($this->selectedMonth)->startOfMonth()->startOfWeek(),
+                Carbon::parse($this->selectedMonth)->endOfMonth()->endOfWeek()
+            ])
+            ->locked()
+            ->select('id', 'place_id', 'room_id', 'status', 'date', 'start_time', 'end_time')
+            ->get();
+    }
+
+    private function getStatus($slotBooked)
+    {
+        if ($slotBooked->doesntContain('empty') && $slotBooked->doesntContain('booked')) {
+            return 'kosong';
+        }
+        return $slotBooked->contains('empty') ? 'tersedia' : 'penuh';
+    }
+
     public function render()
     {
         $data = collect();
 
         if ($this->readyToLoad) {
-            $period = Carbon::parse($this->selectedMonth)
-                ->startOfMonth()
-                ->startOfWeek()
+            $period = CarbonImmutable::parse($this->selectedMonth)
+                ->startOfMonth()->startOfWeek()
                 ->DaysUntil(
-                    Carbon::parse($this->selectedMonth)
-                        ->endOfMonth()
-                        ->endOfWeek()
+                    CarbonImmutable::parse($this->selectedMonth)
+                        ->endOfMonth()->endOfWeek()
                 );
 
-            $schedules = Order::query()
-                ->where('place_id', session('order.place_id'))
-                ->where('room_id', $this->room['id'])
-                ->whereBetween('date', [Carbon::parse($this->selectedMonth)->startOfMonth()->startOfWeek(), Carbon::parse($this->selectedMonth)->endOfMonth()->endOfWeek()])
-                ->locked()
-                ->select('id', 'place_id', 'room_id', 'status', 'date', 'start_time', 'end_time')
-                ->get();
-
+            $schedules = $this->getSchedules();
 
             foreach ($period as $date) {
-                $new = collect(['date' => $date]);
+                $newDate = collect([
+                    'path' => $date->format('Y/m/d'),
+                    'date' => $date,
+                    'day' => $date->day,
+                    'withinMonth' => $date->isSameMonth(Carbon::parse($this->selectedMonth)),
+                    'available' => $date->gte(today()),
+                ]);
+
+                $slotBooked = collect([]);
 
                 foreach ($schedules as $order) {
-
-                    if ($order->startDateTime->format('m-d') === $date->format('m-d')) {
+                    if ($order->startDateTime->isSameDay($date)) {
                         foreach ($this->slots as $slot) {
-                            if (Carbon::parse($date->toDateString() . $slot->time)->between($order->startDateTime, $order->endDateTime)) {
-                                $new->put($slot->time, 'booked');
-                            } elseif ($new->has($slot->time)) {
-                                //
+                            if (Carbon::parse($date->toDateString() . $slot->time)
+                                ->between($order->startDateTime, $order->endDateTime)) {
+                                $slotBooked->put($slot->time, 'booked');
                             } else {
-                                $new->put($slot->time, 'empty');
+                                $slotBooked->put($slot->time, 'empty');
                             }
                         }
                     }
                 }
 
-                $new->put(
-                    'status',
-                    ($new->doesntContain('empty') and $new->doesntContain('booked'))
-                        ? 'kosong'
-                        : ($new->doesntContain('empty')
-                            ? 'penuh'
-                            : 'tersedia')
-                );
+                $status = $this->getStatus($slotBooked);
 
-                $data->push($new);
+                $newDate->put('status', $status);
+
+                $data->push($newDate);
             }
         }
 

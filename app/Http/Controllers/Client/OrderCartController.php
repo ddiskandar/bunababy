@@ -21,15 +21,18 @@ class OrderCartController extends Controller
             session()->put('order.status', 'AuthUser');
         }
 
-        if (session()->missing('order.place_type') || session()->missing('order.place_id') || session()->missing('order.date') || session()->missing('order.kecamatan_id')) {
-            Notification::make()
-                ->title('Pilih lokasi dulu ya')
-                ->danger()
-                ->send();
+        if (!$this->hasSelectedLocation()){
+            Notification::make()->title('Pilih lokasi dulu ya')->danger()->send();
 
             return redirect()->route('order.create');
         }
 
         return view('client.order.cart');
+    }
+
+    private function hasSelectedLocation()
+    {
+        return session()->has('order.place_type') || session()->has('order.place_id')
+            || session()->has('order.date') || session()->has('order.kecamatan_id');
     }
 }

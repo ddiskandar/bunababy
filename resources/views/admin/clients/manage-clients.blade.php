@@ -121,7 +121,7 @@
                                         <span class="font-semibold">{{ $client->profile->phone ?? '-' }}</span>
                                         @isset($client->profile->phone)
                                             <a class="flex items-center text-brand-200"
-                                                href="https://api.whatsapp.com/send?phone={{ to_wa_indo($client->profile->phone) }}&text=Halo+Buna+{{ $client->name }}"
+                                                href="https://api.whatsapp.com/send?phone={{ toWaIndo($client->profile->phone) }}&text=Halo+Buna+{{ $client->name }}"
                                                 target="_blank">
                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                     class="icon icon-tabler icon-tabler-brand-whatsapp" width="24"

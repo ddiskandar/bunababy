@@ -24,6 +24,6 @@ class Family extends Model
 
     public function getAgeAttribute()
     {
-        return calculate_age($this->dob);
+        return calculateAge($this->dob);
     }
 }

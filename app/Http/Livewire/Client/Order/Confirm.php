@@ -83,10 +83,10 @@ class Confirm extends Component
                 $client = $families->where('id', $treatment['family_id'])->first();
 
                 if ($client['type'] === 'Diri Sendiri') {
-                    $age = calculate_age(auth()->user()->profile->dob);
+                    $age = calculateAge(auth()->user()->profile->dob);
                 } else {
                     $family = Family::find($treatment['family_id']);
-                    $age = calculate_age($family->dob);
+                    $age = calculateAge($family->dob);
                 }
 
                 $order->treatments()->attach($treatment['treatment_id'], [

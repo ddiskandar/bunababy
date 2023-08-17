@@ -157,7 +157,7 @@
                     <dd class="flex items-center gap-2 mt-1 text-gray-900">
                         <span>{{ $order->client->profile->phone }}</span>
                         <a class="flex text-brand-200"
-                            href="https://api.whatsapp.com/send?phone={{ to_wa_indo($order->client->profile->phone) }}&text=Halo+Buna+{{ $order->client->name }}"
+                            href="https://api.whatsapp.com/send?phone={{ toWaIndo($order->client->profile->phone) }}&text=Halo+Buna+{{ $order->client->name }}"
                             target="_blank">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-whatsapp"
                                 width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5"

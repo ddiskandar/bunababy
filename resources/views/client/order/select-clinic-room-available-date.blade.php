@@ -50,36 +50,32 @@
             <div class="text-sm font-semibold text-center text-gray-500">Jum</div>
             <div class="text-sm font-semibold text-center text-gray-500">Sab</div>
             <div class="text-sm font-semibold text-center text-gray-500">Min</div>
-            @foreach ($data as $day)
-                @if (\Carbon\Carbon::parse($day['date'])->gte(today()))
-                    <div wire:click="selectDate({!! \Carbon\Carbon::parse($day['date'])->isoFormat('DD') !!}, {!! \Carbon\Carbon::parse($day['date'])->isoFormat('MM') !!}, {!! \Carbon\Carbon::parse($day['date'])->isoFormat('YYYY') !!})"
-                        @if (\Carbon\Carbon::parse($day['date'])->isSameMonth(\Carbon\Carbon::parse($selectedMonth))) class="flex flex-col items-center justify-center text-gray-700"
-                        @else
-                            class="flex flex-col items-center justify-center text-gray-300" @endif>
+            @foreach ($data as $date)
+                @if ($date['available'])
+                    <div wire:click="selectDate('{{ $date['path'] }}')" @class([
+                        'flex flex-col items-center justify-center',
+                        'text-gray-700' => $date['withinMonth'],
+                        'text-gray-300' => !$date['withinMonth'],
+                    ])>
 
-                        @if ($day['status'] === 'penuh')
-                            <div class="flex flex-col items-center px-4 py-2 cursor-not-allowed">
-                                <span>{{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}</span>
-                                <div class="w-3 h-3 bg-red-400 border-2 border-white rounded-full"></div>
-                            </div>
-                        @elseif($day['status'] === 'tersedia')
-                            <div class="flex flex-col items-center px-4 py-2 rounded cursor-pointer hover:bg-brand-50">
-                                <span>{{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}</span>
-                                <div class="w-3 h-3 bg-blue-400 border-2 border-white rounded-full"></div>
-                            </div>
-                        @else
-                            <div class="flex flex-col items-center px-4 py-2 rounded cursor-pointer hover:bg-brand-50">
-                                <span>{{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}</span>
-                                <div class="w-3 h-3 bg-green-400 border-2 border-white rounded-full"></div>
-                            </div>
-                        @endif
-
+                        <div @class([
+                            'flex flex-col items-center px-4 py-2',
+                            'rounded cursor-pointer hover:bg-brand-50' => $date['status'] !== 'penuh',
+                            'cursor-not-allowed' => $date['status'] === 'penuh',
+                        ])>
+                            <span>{{ $date['day'] }}</span>
+                            <div @class([
+                                'w-3 h-3 border-2 border-white rounded-full',
+                                'bg-green-400' => $date['status'] === 'kosong',
+                                'bg-blue-400' => $date['status'] === 'tersedia',
+                                'bg-red-400' => $date['status'] === 'penuh',
+                            ])></div>
+                        </div>
                     </div>
                 @else
-                    <div class="flex flex-col items-center justify-center text-gray-300 cursor-not-allowed"
-                        wire:click="selectDate({!! \Carbon\Carbon::parse($day['date'])->isoFormat('DD') !!}, {!! \Carbon\Carbon::parse($day['date'])->isoFormat('MM') !!}, {!! \Carbon\Carbon::parse($day['date'])->isoFormat('YYYY') !!})">
+                    <div class="flex flex-col items-center justify-center text-gray-300 cursor-not-allowed">
                         <div class="px-4 py-2">
-                            {{ \Carbon\Carbon::parse($day['date'])->isoFormat('DD') }}
+                            {{ $date['day'] }}
                         </div>
                     </div>
                 @endif

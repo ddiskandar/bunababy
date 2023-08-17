@@ -79,10 +79,7 @@ class SelectTreatments extends Component
     public function save()
     {
         if (! $this->order->midwife_user_id) {
-            Notification::make()
-                ->title('Bidan belum dipilih!')
-                ->danger()->send();
-
+            Notification::make()->title('Bidan belum dipilih!')->danger()->send();
             return back();
         }
 
@@ -90,7 +87,7 @@ class SelectTreatments extends Component
 
         $treatment = Treatment::where('id', $this->state['treatmentId'])->first();
 
-        $currentActiveOrders =  Order::query()
+        $currentActiveOrders = Order::query()
             ->whereDate('date', $this->order->startDateTime)
             ->where('midwife_user_id', $this->order->midwife_user_id)
             ->activeBetween(
@@ -103,10 +100,7 @@ class SelectTreatments extends Component
             ->except($this->order->id);
 
         if ($currentActiveOrders->count() > 0) {
-            Notification::make()
-                ->title('Slot waktu tersedia kurang!')
-                ->danger()->send();
-
+            Notification::make()->title('Slot waktu tersedia kurang!')->danger()->send();
             return back();
         }
 

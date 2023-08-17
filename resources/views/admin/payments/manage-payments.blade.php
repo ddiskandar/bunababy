@@ -172,7 +172,7 @@
                                 </td>
                                 <td class="table-cell p-3 align-top whitespace-nowrap">
                                     @if ($payment->attachment)
-                                        <a href="{{ object_storage_asset($payment->attachment) }}" target="_blank">
+                                        <a href="{{ objectStorageAsset($payment->attachment) }}" target="_blank">
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                 class="icon icon-tabler icon-tabler-paperclip" width="24"
                                                 height="24" viewBox="0 0 24 24" stroke-width="1.5"
@@ -246,7 +246,7 @@
                 @isset($state['attachment'])
                     <div class="space-y-1">
                         <x-label>Bukti</x-label>
-                        <a href="{{ object_storage_asset($state['attachment']) }}" target="_blank">
+                        <a href="{{ objectStorageAsset($state['attachment']) }}" target="_blank">
                             <x-secondary-button type="button" class="mt-2">
                                 {{ __('Lihat bukti lampiran') }}
                             </x-secondary-button>

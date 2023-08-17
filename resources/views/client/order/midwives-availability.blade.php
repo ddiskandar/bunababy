@@ -3,7 +3,14 @@
         <x-title>Cari Jadwal Bidan untuk {{ $kecamatan->name }}</x-title>
         <div class="space-y-4">
             @foreach ($midwives['available'] as $midwife)
-                @livewire('client.order.select-midwife-available-date', ['midwife_user_id' => $midwife->id, 'slots' => $slots], key($midwife->id))
+                @livewire(
+                    'client.order.select-midwife-available-date',
+                    [
+                        'midwifeUserId' => $midwife->id,
+                        'slots' => $slots,
+                    ],
+                    key($midwife->id)
+                )
             @endforeach
 
             @foreach ($midwives['notAvailable'] as $midwife)

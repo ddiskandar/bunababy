@@ -99,7 +99,7 @@ class User extends Authenticatable
 
     public function getAgeAttribute()
     {
-        return calculate_age($this->profile->dob);
+        return calculateAge($this->profile->dob);
     }
 
     // order untuk Bidan
@@ -152,7 +152,7 @@ class User extends Authenticatable
         return $this->google_id && $this->profile->photo
             ? $this->profile->photo
             : (isset($this->profile->photo)
-                ? object_storage_asset($this->profile->photo)
+                ? objectStorageAsset($this->profile->photo)
                 : $this->defaultProfilePhotoUrl()
             );
     }

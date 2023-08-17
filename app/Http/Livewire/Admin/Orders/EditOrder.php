@@ -76,7 +76,10 @@ class EditOrder extends Component
 
         $this->state['date'] = $order->startDateTime->toDateString();
         $this->state['startTime'] = $order->startDateTime->toTimeString();
-        $this->state['startTimeId'] = DB::table('slots')->where('place_id', $order->place_id)->where('time', $order->startDateTime->toTimeString())->first()->id;
+        $this->state['startTimeId'] = DB::table('slots')
+            ->where('place_id', $order->place_id)
+            ->where('time', $order->startDateTime->toTimeString())
+            ->first()->id;
 
         $this->state['totalDuration'] = $order->total_duration;
         $this->state['totalTransport'] = $order->total_transport;
@@ -87,12 +90,14 @@ class EditOrder extends Component
         $this->resetOnPlaceChange();
         $this->selectedPlace = Place::whereId($this->state['placeId'])->first();
         if ($this->order->place_id !== $this->selectedPlace->id) {
-            if ($this->order->place->type === Place::TYPE_HOMECARE && $this->selectedPlace->type === Place::TYPE_CLINIC){
+            if ( $this->order->place->type === Place::TYPE_HOMECARE
+                && $this->selectedPlace->type === Place::TYPE_CLINIC ){
                 $this->state['totalDuration'] = $this->order->total_duration - $this->selectedPlace->transport_duration;
                 $this->state['totalTransport'] = 0;
             }
 
-            if ($this->order->place->type === Place::TYPE_CLINIC && $this->selectedPlace->type === Place::TYPE_HOMECARE){
+            if ( $this->order->place->type === Place::TYPE_CLINIC
+                && $this->selectedPlace->type === Place::TYPE_HOMECARE ){
                 $this->state['totalDuration'] = $this->order->total_duration + $this->selectedPlace->transport_duration;
             }
         }
@@ -122,7 +127,7 @@ class EditOrder extends Component
             $kecamatanDistance = Kecamatan::whereId($this->selectedAddress->kecamatan_id)->first()->distance;
         }
 
-        $this->state['totalTransport'] = calculate_transport($kecamatanDistance);
+        $this->state['totalTransport'] = calculateTransport($kecamatanDistance);
         $this->state['addressId'] = (int) $addressId;
     }
 
@@ -174,7 +179,7 @@ class EditOrder extends Component
 
     private function getCurrentExistsOrders()
     {
-        $currentActiveOrders =  Order::query()
+        return Order::query()
             ->whereDate('date', $this->order->date)
             ->where('midwife_user_id', $this->selectedMidwife->id)
             ->when($this->selectedPlace->type === Place::TYPE_CLINIC,
@@ -190,43 +195,39 @@ class EditOrder extends Component
             )
             ->get()
             ->except($this->order->id);
+    }
 
-        return $currentActiveOrders;
+    private function updateAble()
+    {
+        $error = null;
+
+        if ($this->selectedPlace->type === Place::TYPE_HOMECARE && ! isset($this->state['addressId'])){
+            $error = 'Alamat belum dipilih!';
+        }
+
+        if ($this->selectedPlace->type === Place::TYPE_CLINIC && ! isset($this->state['roomId'])){
+            $error = 'Ruangan belum dipilih!';
+        }
+
+        if (! isset($this->state['startTime'])){
+            $error = 'Waktu mulai belum dipilih!';
+        }
+
+        return $error;
     }
 
     public function update()
     {
-        if($this->selectedPlace->type === Place::TYPE_HOMECARE && ! isset($this->state['addressId'])){
-            Notification::make()
-                ->title('Alamat belum dipilih!')
-                ->danger()->send();
-
-            return back();
-        }
-
-        if($this->selectedPlace->type === Place::TYPE_CLINIC && ! isset($this->state['roomId'])){
-            Notification::make()
-                ->title('Ruangan belum dipilih!')
-                ->danger()->send();
-
-            return back();
-        }
-
-        if(! isset($this->state['startTime'])){
-            Notification::make()
-                ->title('Waktu mulai belum dipilih!')
-                ->danger()->send();
-
+        $error = $this->updateAble();
+        if (!$error){
+            Notification::make()->title($error)->danger()->send();
             return back();
         }
 
         $orders = $this->getCurrentExistsOrders();
 
         if ($orders->count() > 0) {
-            Notification::make()
-                ->title('Slot waktu tersedia kurang!')
-                ->danger()->send();
-
+            Notification::make()->title('Slot waktu tersedia kurang!')->danger()->send();
             return back();
         }
 
@@ -235,7 +236,9 @@ class EditOrder extends Component
             'place_id' => $this->state['placeId'],
             'date' => $this->state['date'],
             'start_time' => $this->state['startTime'],
-            'end_time' => Carbon::parse($this->state['startTime'])->addMinutes($this->order->total_duration)->toTimeString(),
+            'end_time' => Carbon::parse($this->state['startTime'])
+                ->addMinutes($this->order->total_duration)
+                ->toTimeString(),
             'address_id' => $this->state['addressId'],
             'room_id' => $this->state['roomId'],
         ]);
@@ -272,7 +275,9 @@ class EditOrder extends Component
                 $new = collect(['id' => $slot->id]);
                 $new->put('time', $slot->time);
                 foreach ($orders as $order) {
-                    if (Carbon::parse($this->state['date'] . $slot->time)->between($order->startDateTime, $order->endDateTime->addMinutes($order->place->transport_duration))) {
+                    if (Carbon::parse($this->state['date'] . $slot->time)
+                        ->between($order->startDateTime, $order->endDateTime
+                        ->addMinutes($order->place->transport_duration))) {
                         $new->put($order->id, 'booked');
                     } else {
                         $new->put($order->id, 'empty');

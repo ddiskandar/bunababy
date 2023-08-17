@@ -197,7 +197,7 @@ class Order extends Model
         throw_if(!$place, \Exception::class, 'Place not found');
 
         if ($place->type === Place::TYPE_HOMECARE) {
-            return calculate_transport(session('order.kecamatan_distance'));
+            return calculateTransport(session('order.kecamatan_distance'));
         }
 
         return 0;

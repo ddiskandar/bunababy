@@ -3,10 +3,10 @@
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
-if(!function_exists('object_storage_asset')) {
-    function object_storage_asset($value)
+if(!function_exists('objectStorageAsset')) {
+    function objectStorageAsset($value)
     {
-        return env('OBJECT_STORAGE_ASSET', 'https://is3.cloudhost.id/bunababycare/bunababycare/') . $value;
+        return env('objectStorageAsset', 'https://is3.cloudhost.id/bunababycare/bunababycare/') . $value;
     }
 }
 
@@ -28,8 +28,8 @@ if (!function_exists('tanggal')) {
     }
 }
 
-if (!function_exists('tanggal_indo')) {
-    function tanggal_indo($value)
+if (!function_exists('tanggalIndo')) {
+    function tanggalIndo($value)
     {
         return $value->isoFormat('D MMMM G');
     }
@@ -42,8 +42,8 @@ if (!function_exists('waktu')) {
     }
 }
 
-if (!function_exists('to_wa_indo')) {
-    function to_wa_indo($value)
+if (!function_exists('toWaIndo')) {
+    function toWaIndo($value)
     {
         if (substr($value, 0, 2) == '08') {
             return substr_replace($value, '62', 0, 1);
@@ -53,29 +53,41 @@ if (!function_exists('to_wa_indo')) {
     }
 }
 
-if (!function_exists('calculate_transport')) {
-    function calculate_transport($distance)
+if (!function_exists('calculateTransport')) {
+    function calculateTransport($distance)
     {
-        if ($distance <= 2) {
-            return 15000;
-        } elseif ($distance <= 3) {
-            return 18000;
-        } elseif ($distance <= 5) {
-            return 25000;
-        } elseif ($distance <= 7) {
-            return 30000;
-        } elseif ($distance <= 9) {
-            return 33000;
-        } elseif ($distance <= 20) {
-            return 38000;
-        } else {
-            return 40000;
+        $transportCost = null;
+
+        switch (true) {
+            case $distance <= 2:
+                $transportCost = 15000;
+                break;
+            case $distance <= 3:
+                $transportCost = 18000;
+                break;
+            case $distance <= 5:
+                $transportCost = 25000;
+                break;
+            case $distance <= 7:
+                $transportCost = 30000;
+                break;
+            case $distance <= 9:
+                $transportCost = 33000;
+                break;
+            case $distance <= 20:
+                $transportCost = 38000;
+                break;
+            default:
+                $transportCost = 40000;
+                break;
         }
+
+        return $transportCost;
     }
 }
 
-if (!function_exists('calculate_age')) {
-    function calculate_age($dob)
+if (!function_exists('calculateAge')) {
+    function calculateAge($dob)
     {
         $age = Carbon::parse($dob)->diffInYears();
         $string = $age . ' tahun';

@@ -136,7 +136,7 @@
                         @if ($dialogEditMode && isset($payment->attachment))
                             <div class="space-y-1">
                                 <x-label>Bukti</x-label>
-                                <a href="{{ object_storage_asset($payment->attachment) }}" target="_blank">
+                                <a href="{{ objectStorageAsset($payment->attachment) }}" target="_blank">
                                     <x-secondary-button type="button" class="mt-2">
                                         {{ __('Lihat bukti lampiran') }}
                                     </x-secondary-button>
