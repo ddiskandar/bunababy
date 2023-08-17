@@ -10,6 +10,7 @@ use App\Models\Room;
 use App\Models\Slot;
 use App\Models\User;
 use Carbon\Carbon;
+use Error;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -197,59 +198,63 @@ class EditOrder extends Component
             ->except($this->order->id);
     }
 
-    private function updateAble()
+    private function hasErrorMessage()
     {
-        $error = null;
+        $errorMessage = '';
 
         if ($this->selectedPlace->type === Place::TYPE_HOMECARE && ! isset($this->state['addressId'])){
-            $error = 'Alamat belum dipilih!';
+            $errorMessage = 'Alamat belum dipilih!';
         }
 
         if ($this->selectedPlace->type === Place::TYPE_CLINIC && ! isset($this->state['roomId'])){
-            $error = 'Ruangan belum dipilih!';
+            $errorMessage = 'Ruangan belum dipilih!';
         }
 
         if (! isset($this->state['startTime'])){
-            $error = 'Waktu mulai belum dipilih!';
+            $errorMessage = 'Waktu mulai belum dipilih!';
         }
 
-        return $error;
+        return $errorMessage;
     }
 
     public function update()
     {
-        $error = $this->updateAble();
-        if (!$error){
-            Notification::make()->title($error)->danger()->send();
-            return back();
-        }
+        try {
+            $errorMessage = $this->hasErrorMessage();
 
-        $orders = $this->getCurrentExistsOrders();
+            if ($errorMessage !== ''){
+                throw new Error($errorMessage);
+            }
 
-        if ($orders->count() > 0) {
-            Notification::make()->title('Slot waktu tersedia kurang!')->danger()->send();
-            return back();
-        }
+            $orders = $this->getCurrentExistsOrders();
 
-        $this->order->update([
-            'midwife_user_id' => $this->state['midwifeId'],
-            'place_id' => $this->state['placeId'],
-            'date' => $this->state['date'],
-            'start_time' => $this->state['startTime'],
-            'end_time' => Carbon::parse($this->state['startTime'])
-                ->addMinutes($this->order->total_duration)
-                ->toTimeString(),
-            'address_id' => $this->state['addressId'],
-            'room_id' => $this->state['roomId'],
-        ]);
+            if ($orders->count() > 0) {
+                throw new Error('Slot waktu tersedia kurang!');
+            }
 
-        if ($this->order->place_id !== $this->selectedPlace->id){
             $this->order->update([
-                'total_transport' => $this->state['totalTransport'],
+                'midwife_user_id' => $this->state['midwifeId'],
+                'place_id' => $this->state['placeId'],
+                'date' => $this->state['date'],
+                'start_time' => $this->state['startTime'],
+                'end_time' => Carbon::parse($this->state['startTime'])
+                    ->addMinutes($this->order->total_duration)
+                    ->toTimeString(),
+                'address_id' => $this->state['addressId'],
+                'room_id' => $this->state['roomId'],
             ]);
-        }
 
-        $this->emit('saved');
+            if ($this->order->place_id !== $this->selectedPlace->id){
+                $this->order->update([
+                    'total_transport' => $this->state['totalTransport'],
+                ]);
+            }
+
+            $this->emit('saved');
+
+        } catch (\Throwable $th) {
+            Notification::make()->title($th->getMessage())->danger()->send();
+        }
     }
 
     public function render()

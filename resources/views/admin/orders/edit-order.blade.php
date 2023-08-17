@@ -44,10 +44,13 @@
                                 <button type="button"
                                     class="relative px-4 py-3 inline-flex w-full rounded-lg {{ $index > 0 ? 'border-t border-gray-200 rounded-t-none' : '' }} {{ !$loop->last ? 'rounded-b-none' : '' }}"
                                     wire:click="setSelectedAddress('{{ $address->id }}')">
-                                    <div
-                                        class="{{ isset($state['addressId']) && $state['addressId'] !== $address->id ? 'opacity-50' : '' }}">
+                                    <div @class([
+                                        'w-full',
+                                        'opacity-50' =>
+                                            isset($state['addressId']) && $state['addressId'] !== $address->id,
+                                    ])>
                                         <!-- Role Name -->
-                                        <div class="flex items-center justify-between">
+                                        <div class="flex items-center justify-between w-full">
                                             <div class="flex items-center space-x-2">
                                                 <div
                                                     class="text-sm capitalize text-gray-600 {{ isset($state['addressId']) && $state['addressId'] === $address->id ? 'font-semibold' : '' }}">
