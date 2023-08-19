@@ -33,7 +33,7 @@
                     </button>
                 </div>
             @empty
-                <div class="text-sm text-red-600">Belum ada wilayah yang dipilih</div>
+                <div class="text-sm text-red-600">Belum ada treatment yang dipilih</div>
             @endforelse
         </div>
     </div>

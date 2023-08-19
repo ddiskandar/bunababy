@@ -20,8 +20,8 @@ class TodayOrders extends Component
 
     public function mount()
     {
-        $this->midwives = User::midwives()->pluck('name', 'id');
-        $this->labels = User::midwives()->pluck('name');
+        $this->midwives = User::midwives()->active()->pluck('name', 'id');
+        $this->labels = User::midwives()->active()->pluck('name');
         $this->selectedDay = today()->toDateString();
         $this->updateData();
     }
@@ -33,15 +33,24 @@ class TodayOrders extends Component
 
     public function updateData()
     {
-        $ordersOnSelectedDay = Order::whereDate('date', $this->selectedDay)->get();
+        $ordersOnSelectedDay = Order::whereDate('date', $this->selectedDay)->select('midwife_user_id', 'status')->get();
         $this->ordersFinished = [];
         $this->ordersActive = [];
         $this->ordersPending = [];
 
         foreach ($this->midwives as $id => $midwife) {
-            $this->ordersFinished[] = $ordersOnSelectedDay->where('midwife_user_id', $id)->where('status', Order::STATUS_FINISHED)->count();
-            $this->ordersActive[] = $ordersOnSelectedDay->where('midwife_user_id', $id)->where('status', Order::STATUS_LOCKED)->count();
-            $this->ordersPending[] = $ordersOnSelectedDay->where('midwife_user_id', $id)->where('status', Order::STATUS_UNPAID)->count();
+            $this->ordersFinished[] = $ordersOnSelectedDay
+                ->where('midwife_user_id', $id)
+                ->where('status', Order::STATUS_FINISHED)
+                ->count();
+            $this->ordersActive[] = $ordersOnSelectedDay
+                ->where('midwife_user_id', $id)
+                ->where('status', Order::STATUS_LOCKED)
+                ->count();
+            $this->ordersPending[] = $ordersOnSelectedDay
+                ->where('midwife_user_id', $id)
+                ->where('status', Order::STATUS_UNPAID)
+                ->count();
         }
         $this->emit('today-orders-updated');
     }

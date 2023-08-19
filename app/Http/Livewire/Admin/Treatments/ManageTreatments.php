@@ -4,14 +4,17 @@ namespace App\Http\Livewire\Admin\Treatments;
 
 use App\Models\Place;
 use App\Models\Price;
+use App\Models\Setting;
 use App\Models\Treatment;
 use Filament\Notifications\Notification;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class ManageTreatments extends Component
 {
+    use AuthorizesRequests;
     use WithPagination;
 
     public $perPage = 3;
@@ -85,6 +88,7 @@ class ManageTreatments extends Component
 
     public function showAddNewTreatmentDialog()
     {
+        $this->resetErrorBag();
         $this->showDialog = true;
         $this->state = [];
         $this->state['active'] = true;
@@ -92,6 +96,7 @@ class ManageTreatments extends Component
 
     public function ShowEditTreatmentDialog(Treatment $treatment)
     {
+        $this->resetErrorBag();
         $this->state = $treatment->toArray();
         foreach ($this->places as $place) {
             $this->state['prices'][$place->id] = $treatment->prices->where('place_id', $place->id)->value('amount');
@@ -103,39 +108,45 @@ class ManageTreatments extends Component
     {
         $this->validate();
 
-        DB::transaction(function () {
-            $treatment = Treatment::updateOrCreate(
-                [
-                    'id' => $this->state['id'] ?? Treatment::max('id') + 1,
-                ],
-                [
-                    'category_id' => $this->state['category_id'],
-                    'name' => $this->state['name'],
-                    'duration' => $this->state['duration'],
-                    'desc' => $this->state['desc'],
-                    'order' => $this->state['order'],
-                    'active' => $this->state['active'],
-                ]
-            );
+        try {
+            $this->authorize('manage-treatments');
 
-            foreach ($this->state['prices'] as $placeId => $amount) {
-                Price::updateOrCreate(
+            DB::transaction(function () {
+                $treatment = Treatment::updateOrCreate(
                     [
-                        'treatment_id' => $this->state['id'] ?? $treatment->id,
-                        'place_id' => $placeId,
+                        'id' => $this->state['id'] ?? Treatment::max('id') + 1,
                     ],
                     [
-                        'amount' => $amount,
+                        'category_id' => $this->state['category_id'],
+                        'name' => $this->state['name'],
+                        'duration' => $this->state['duration'],
+                        'desc' => $this->state['desc'],
+                        'order' => $this->state['order'],
+                        'active' => $this->state['active'],
                     ]
                 );
-            }
-        });
 
-        $this->showDialog = false;
-        Notification::make()
-            ->title('Berhasil disimpan')
-            ->success()
-            ->send();
+                foreach ($this->state['prices'] as $placeId => $amount) {
+                    Price::updateOrCreate(
+                        [
+                            'treatment_id' => $this->state['id'] ?? $treatment->id,
+                            'place_id' => $placeId,
+                        ],
+                        [
+                            'amount' => $amount,
+                        ]
+                    );
+                }
+            });
+
+            $this->showDialog = false;
+
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()

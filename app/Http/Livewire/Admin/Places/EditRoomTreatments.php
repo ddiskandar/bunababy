@@ -4,13 +4,17 @@ namespace App\Http\Livewire\Admin\Places;
 
 use App\Models\Place;
 use App\Models\Room;
+use App\Models\Setting;
 use App\Models\User;
 use Filament\Notifications\Notification;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class EditRoomTreatments extends Component
 {
+    use AuthorizesRequests;
+
     public $room;
     public $treatmentId = '';
 
@@ -33,26 +37,52 @@ class EditRoomTreatments extends Component
     public function add()
     {
         $this->validate();
-        $this->room->treatments()->attach([$this->treatmentId]);
-        $this->treatmentId = '';
-        $this->emit('saved');
+
+        try {
+            $this->authorize('manage-places');
+
+            $this->room->treatments()->attach([$this->treatmentId]);
+            $this->treatmentId = '';
+            $this->emit('saved');
+
+            Notification::make()->title('Berhasil disimpan')->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function delete($id)
     {
-        $this->room->treatments()->detach([$id]);
-        $this->emit('saved');
+        try {
+            $this->authorize('manage-places');
+
+            $this->room->treatments()->detach([$id]);
+            $this->emit('saved');
+
+            Notification::make()->title('Berhasil disimpan')->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function deleteThisRoom()
     {
-        $this->room->delete();
+        try {
+            $this->authorize('manage-places');
 
-        $this->emit('saved');
-        Notification::make()
-            ->title('berhasil dihapus')
-            ->danger()
-            ->send();
+            $this->room->delete();
+
+            $this->emit('saved');
+            Notification::make()->title('Berhasil dihapus')->danger()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()

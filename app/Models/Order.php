@@ -106,12 +106,13 @@ class Order extends Model
 
     public function getStatusString()
     {
-        return $this->status === self::STATUS_FINISHED
-            ? 'Selesai'
-            : ($this->status === self::STATUS_LOCKED
-                ? 'Aktif'
-                : 'Pending'
-            );
+        $ref = [
+            self::STATUS_FINISHED => 'Selesai',
+            self::STATUS_LOCKED => 'Aktif',
+            self::STATUS_UNPAID => 'Pending',
+        ];
+
+        return $ref[$this->status];
     }
 
     public function scopeActiveBetween($query, $from, $to)
@@ -176,19 +177,17 @@ class Order extends Model
 
     public function getGrandTotal()
     {
-        return ($this->total_price + $this->total_transport + $this->adjustment_amount);
-    }
-
-    // Create Order
-
-    public function createNewOrder()
-    {
-        //
+        return $this->total_price + $this->total_transport + $this->adjustment_amount;
     }
 
     public function numberStartTime()
     {
-        return session('order.place_id') . sprintf('%02d', session('order.midwife_user_id')) . session('order.start_time')[0] . session('order.start_time')[1] . session('order.start_time')[3] . session('order.start_time')[4];
+        return session('order.place_id')
+            . sprintf('%02d', session('order.midwife_user_id'))
+            . session('order.start_time')[0]
+            . session('order.start_time')[1]
+            . session('order.start_time')[3]
+            . session('order.start_time')[4];
     }
 
     public function getTotalTransport()
@@ -210,7 +209,8 @@ class Order extends Model
 
     public function getTotalDuration()
     {
-        return collect(session('order.treatments'))->sum('treatment_duration') + session('order.place_transport_duration');
+        return collect(session('order.treatments'))
+            ->sum('treatment_duration') + session('order.place_transport_duration');
     }
 
     public function getStartTime()
@@ -225,7 +225,8 @@ class Order extends Model
 
     public function getTime()
     {
-        return Carbon::parse($this->start_time)->isoFormat('HH:mm') . ' - ' . Carbon::parse($this->end_time)->isoFormat('HH:mm');
+        return Carbon::parse($this->start_time)->isoFormat('HH:mm') . ' - ' . Carbon::parse($this->end_time)
+            ->isoFormat('HH:mm');
     }
 
     public function getLongTime()

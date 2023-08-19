@@ -3,10 +3,15 @@
 namespace App\Http\Livewire\Admin\Setting;
 
 use App\Models\Option;
+use App\Models\Setting as ModelsSetting;
+use Filament\Notifications\Notification;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class Setting extends Component
 {
+    use AuthorizesRequests;
+
     public $state = [];
 
     public $rules = [
@@ -26,11 +31,19 @@ class Setting extends Component
     {
         $this->validate();
 
-        Option::where('id', 1)->update([
-            'timeout' => $this->state['timeout'],
-        ]);
+        try {
+            $this->authorize('edit-settings');
 
-        $this->emit('saved');
+            Option::where('id', 1)->update([
+                'timeout' => $this->state['timeout'],
+            ]);
+
+            $this->emit('saved');
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(ModelsSetting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()

@@ -28,7 +28,14 @@ class Address extends Model
 
     public function getFullAddressAttribute(): string
     {
-        return $this->address . " Desa/Kel. " . $this->desa . " Kec. " . $this->kecamatan->name . " " . $this->kecamatan->kabupaten->name;
+        return $this->address
+            . " Desa/Kel. "
+            . $this->desa
+            . " Kec. "
+            . $this->kecamatan->name
+            . " "
+            . $this->kecamatan->kabupaten->name
+            ;
     }
 
     public function scopeMainAddress($query)

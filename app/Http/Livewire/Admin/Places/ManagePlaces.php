@@ -2,14 +2,16 @@
 
 namespace App\Http\Livewire\Admin\Places;
 
-use App\Models\Place;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Filament\Notifications\Notification;
-use Illuminate\Support\Facades\DB;
-use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Component;
+use App\Models\Setting;
+use App\Models\Place;
 
 class ManagePlaces extends Component
 {
+    use AuthorizesRequests;
     use WithPagination;
 
     public $perPage = 5;
@@ -39,11 +41,6 @@ class ManagePlaces extends Component
         'state.desc' => 'Deskripsi',
     ];
 
-    public function mount()
-    {
-        //
-    }
-
     public function updatingPerPage()
     {
         $this->resetPage();
@@ -65,11 +62,11 @@ class ManagePlaces extends Component
         $this->state = [];
     }
 
-    public function ShowEditPlaceDialog(Place $Place)
+    public function ShowEditPlaceDialog(Place $place)
     {
-        $this->state = $Place->toArray();
+        $this->state = $place->toArray();
         foreach ($this->places as $place) {
-            $this->state['prices'][$place->id] = $Place->prices->where('place_id', $place->id)->value('amount');
+            $this->state['prices'][$place->id] = $place->prices->where('place_id', $place->id)->value('amount');
         }
         $this->showDialog = true;
     }
@@ -78,7 +75,9 @@ class ManagePlaces extends Component
     {
         $this->validate();
 
-        DB::transaction(function () {
+        try {
+            $this->authorize('manage-places');
+
             Place::updateOrCreate(
                 [
                     'id' => $this->state['id'] ?? Place::max('id') + 1,
@@ -91,13 +90,15 @@ class ManagePlaces extends Component
                     'active' => false,
                 ]
             );
-        });
 
-        $this->showDialog = false;
-        Notification::make()
-            ->title('Berhasil disimpan')
-            ->success()
-            ->send();
+            $this->showDialog = false;
+
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()

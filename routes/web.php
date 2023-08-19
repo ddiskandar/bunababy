@@ -56,18 +56,25 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/midwives', [App\Http\Controllers\MidwivesController::class, 'index'])
                 ->name('midwives');
         Route::get('/treatments', App\Http\Controllers\TreatmentsController::class)
+                ->can('manage-treatments')
                 ->name('treatments');
+        Route::get('/treatments/categories', App\Http\Controllers\TreatmentCategoriesController::class)
+                ->can('manage-treatments')
+                ->name('categories');
         Route::get('/places', [App\Http\Controllers\PlaceController::class, 'index'])
+                ->can('manage-places')
                 ->name('places');
         Route::get('/places/{place}/edit', [App\Http\Controllers\PlaceController::class, 'edit'])
+                ->can('manage-places')
                 ->name('places.edit');
-        Route::get('/treatments/categories', App\Http\Controllers\TreatmentCategoriesController::class)
-                ->name('categories');
         Route::get('/wilayah', App\Http\Controllers\KecamatanController::class)
+                ->can('manage-wilayah')
                 ->name('wilayah');
         Route::get('/wilayah/kabupaten', App\Http\Controllers\KabupatenController::class)
+                ->can('manage-wilayah')
                 ->name('kabupaten');
         Route::get('/settings', App\Http\Controllers\SettingController::class)
+                ->can('manage-settings')
                 ->name('settings');
     });
 

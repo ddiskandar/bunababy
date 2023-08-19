@@ -2,13 +2,17 @@
 
 namespace App\Http\Livewire\Admin\Places;
 
-use App\Models\Place;
-use App\Models\Slot;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Filament\Notifications\Notification;
 use Livewire\Component;
+use App\Models\Place;
+use App\Models\Setting;
+use App\Models\Slot;
 
 class EditSlots extends Component
 {
+    use AuthorizesRequests;
+
     public $place;
     public $time;
 
@@ -17,7 +21,7 @@ class EditSlots extends Component
     ];
 
     protected $validationAttributes = [
-        'time' => 'Wilayah'
+        'time' => 'Slot Waktu'
     ];
 
     protected $listeners = ['saved' => '$refresh'];
@@ -30,17 +34,38 @@ class EditSlots extends Component
     public function add()
     {
         $this->validate();
-        $this->place->slots()->create([
-            'time' => $this->time
-        ]);
-        $this->emit('saved');
+
+        try {
+            $this->authorize('manage-places');
+
+            $this->place->slots()->create([
+                'time' => $this->time
+            ]);
+
+            $this->reset('time');
+
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function delete($id)
     {
-        $slot = Slot::find($id);
-        $slot->delete();
-        $this->emit('saved');
+        try {
+            $this->authorize('manage-places');
+
+            $slot = Slot::find($id);
+            $slot->delete();
+
+            Notification::make()->title(Setting::DELETED_MESSAGE)->danger()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()

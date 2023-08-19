@@ -6,16 +6,16 @@
         <form wire:submit.prevent="save" class="space-y-6 max-w-lg">
 
             @isset($order->finished_at)
-            <div class="space-y-1">
-                <x-label for="finished_at">Selesai</x-label>
-                <span>{{ $order->finished_at->isoFormat('dddd, DD MMMM gggg H:mm') }}</span>
-            </div>
+                <div class="space-y-1">
+                    <x-label for="finished_at">Selesai</x-label>
+                    <span>{{ $order->finished_at->isoFormat('dddd, DD MMMM gggg H:mm') }}</span>
+                </div>
             @endisset
 
             <div class="space-y-1">
-                <x-label for="finished_at"> @isset($order->finished_at)<span>Edit</span>@endif Waktu Selesai</x-label>
-                <x-input wire:model.defer="finished_at" class="w-full" type="time" id="finished_at" min="08:00" />
-                <x-input-error for="finished_at" class="mt-2" />
+                <x-label for="finishedAt"> @isset($order->finished_at)<span>Edit</span>@endif Waktu Selesai</x-label>
+                <x-input wire:model.defer="finishedAt" class="w-full" type="time" id="finishedAt" min="08:00" />
+                <x-input-error for="finishedAt" class="mt-2" />
             </div>
 
             <div class="flex items-center">

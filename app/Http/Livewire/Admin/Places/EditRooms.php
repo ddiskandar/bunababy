@@ -4,11 +4,15 @@ namespace App\Http\Livewire\Admin\Places;
 
 use App\Models\Place;
 use App\Models\Room;
+use App\Models\Setting;
 use Filament\Notifications\Notification;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class EditRooms extends Component
 {
+    use AuthorizesRequests;
+
     public $place;
 
     public $state = [];
@@ -47,25 +51,30 @@ class EditRooms extends Component
     {
         $this->validate();
 
-        Room::updateOrCreate(
-            [
-                'id' => $this->state['id'] ?? Room::max('id') + 1,
-            ],
-            [
-                'name' => $this->state['name'],
-                'place_id' => $this->place->id,
-                'active' => $this->state['active'] ?? false,
-            ]
-        );
+        try {
+            $this->authorize('manage-places');
 
-        $this->emit('saved');
+            Room::updateOrCreate(
+                [
+                    'id' => $this->state['id'] ?? Room::max('id') + 1,
+                ],
+                [
+                    'name' => $this->state['name'],
+                    'place_id' => $this->place->id,
+                    'active' => $this->state['active'] ?? false,
+                ]
+            );
 
-        $this->showDialog = false;
+            $this->emit('saved');
 
-        Notification::make()
-            ->title('berhasil disimpan')
-            ->success()
-            ->send();
+            $this->showDialog = false;
+
+            Notification::make()->title('Berhasil disimpan')->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()

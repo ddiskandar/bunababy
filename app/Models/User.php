@@ -94,7 +94,8 @@ class User extends Authenticatable
 
     public function kecamatans(): BelongsToMany
     {
-        return $this->belongsToMany(Kecamatan::class, 'kecamatan_user', 'midwife_user_id', 'kecamatan_id')->orderBy('name');
+        return $this->belongsToMany(Kecamatan::class, 'kecamatan_user', 'midwife_user_id', 'kecamatan_id')
+            ->orderBy('name');
     }
 
     public function getAgeAttribute()
@@ -149,12 +150,13 @@ class User extends Authenticatable
 
     public function getProfilePhotoUrlAttribute()
     {
-        return $this->google_id && $this->profile->photo
-            ? $this->profile->photo
-            : (isset($this->profile->photo)
-                ? objectStorageAsset($this->profile->photo)
-                : $this->defaultProfilePhotoUrl()
-            );
+        if ($this->google_id && $this->profile->photo) {
+            return $this->profile->photo;
+        }
+
+        return isset($this->profile->photo)
+            ? objectStorageAsset($this->profile->photo)
+            : $this->defaultProfilePhotoUrl();
     }
 
     protected function defaultProfilePhotoUrl()

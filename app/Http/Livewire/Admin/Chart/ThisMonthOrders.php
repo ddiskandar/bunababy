@@ -17,7 +17,7 @@ class ThisMonthOrders extends Component
 
     public function mount()
     {
-        $this->midwives = User::midwives()->pluck('name', 'id');
+        $this->midwives = User::midwives()->active()->pluck('name', 'id');
         $this->selectedMonth = today()->isoFormat('YYYY-MM');
         $this->updateData();
     }

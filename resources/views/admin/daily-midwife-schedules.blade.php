@@ -54,9 +54,7 @@
                                             <polyline points="12 7 12 12 15 15"></polyline>
                                         </svg>
                                         <div class="text-sm font-medium">
-                                            <div>
-                                                {{ $schedule->startDateTime->isoFormat('HH:mm') . ' - ' . $schedule->endDateTime->isoFormat('HH:mm') }}
-                                                WIB</div>
+                                            <div>{{ $schedule->getLongTime() }}</div>
                                         </div>
                                     </div>
                                     <div class="ml-6">
@@ -75,9 +73,9 @@
                             <div class="flex justify-end md:w-1/3">
                                 <div @class([
                                     'inline-flex px-6 py-1 leading-4 font-semibold text-white text-xs rounded-full',
-                                    'bg-orange-400' => $schedule->status == '1',
-                                    'bg-brand-100' => $schedule->status == '2',
-                                    'bg-blue-400' => $schedule->status == '3',
+                                    'bg-orange-400' => $schedule->status === \App\Models\Order::STATUS_UNPAID,
+                                    'bg-brand-100' => $schedule->status === \App\Models\Order::STATUS_LOCKED,
+                                    'bg-blue-400' => $schedule->status === \App\Models\Order::STATUS_FINISHED,
                                 ])>
                                     {{ $schedule->getStatusString() }}
                                 </div>

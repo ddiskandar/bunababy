@@ -4,12 +4,16 @@ namespace App\Http\Livewire\Admin\Wilayah;
 
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
+use App\Models\Setting;
 use Filament\Notifications\Notification;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class ManageKecamatan extends Component
 {
+    use AuthorizesRequests;
+
     use WithPagination;
 
     public $perPage = 8;
@@ -66,6 +70,7 @@ class ManageKecamatan extends Component
 
     public function showCreateNewKecamatanDialog()
     {
+        $this->errorBag = [];
         $this->showDialog = true;
         $this->state = [];
         $this->state['active'] = true;
@@ -81,23 +86,29 @@ class ManageKecamatan extends Component
     {
         $this->validate();
 
-        Kecamatan::updateOrCreate(
-            [
-                'id' => $this->state['id'] ?? Kecamatan::max('id') + 1,
-            ],
-            [
-                'kabupaten_id' => $this->state['kabupaten_id'],
-                'name' => $this->state['name'],
-                'distance' => $this->state['distance'],
-                'active' => $this->state['active'],
-            ]
-        );
+        try {
+            $this->authorize('manage-wilayah');
 
-        $this->showDialog = false;
-        Notification::make()
-            ->title('Berhasil disimpan')
-            ->success()
-            ->send();
+            Kecamatan::updateOrCreate(
+                [
+                    'id' => $this->state['id'] ?? Kecamatan::max('id') + 1,
+                ],
+                [
+                    'kabupaten_id' => $this->state['kabupaten_id'],
+                    'name' => $this->state['name'],
+                    'distance' => $this->state['distance'],
+                    'active' => $this->state['active'],
+                ]
+            );
+
+            $this->showDialog = false;
+
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()

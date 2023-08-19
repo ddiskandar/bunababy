@@ -1,5 +1,5 @@
 <x-action-section>
-    <x-slot name="title">General Settings</x-slot>
+    <x-slot name="title">Pengaturan Umum</x-slot>
 
     <x-slot name="content">
         <form wire:submit.prevent="save" class="space-y-6">

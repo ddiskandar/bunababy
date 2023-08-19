@@ -3,21 +3,23 @@
 namespace App\Http\Livewire\Admin\Orders;
 
 use App\Models\Order;
+use App\Models\Setting;
 use Carbon\Carbon;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 
 class SetStatus extends Component
 {
     public $order;
 
-    public $finished_at;
+    public $finishedAt;
 
     protected $rules = [
-        'finished_at' => 'required'
+        'finishedAt' => 'required'
     ];
 
     protected $validationAttributes = [
-        'finished_at' => 'Waktu selesai'
+        'finishedAt' => 'Waktu selesai'
     ];
 
     public function mount(Order $order)
@@ -29,12 +31,17 @@ class SetStatus extends Component
     {
         $this->validate();
 
-        $this->order->update([
-            'finished_at' => Carbon::createFromFormat('H:i', $this->finished_at),
-            'status' => Order::STATUS_FINISHED,
-        ]);
+        try {
+            $this->order->update([
+                'finished_at' => Carbon::createFromFormat('H:i', $this->finishedAt),
+                'status' => Order::STATUS_FINISHED,
+            ]);
 
-        $this->emit('saved');
+            $this->emit('saved');
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()

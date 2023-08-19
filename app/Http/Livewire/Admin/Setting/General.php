@@ -3,10 +3,15 @@
 namespace App\Http\Livewire\Admin\Setting;
 
 use App\Models\Option;
+use App\Models\Setting;
+use Filament\Notifications\Notification;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class General extends Component
 {
+    use AuthorizesRequests;
+
     public $state = [];
 
     public $rules = [
@@ -34,15 +39,23 @@ class General extends Component
     {
         $this->validate();
 
-        Option::where('id', 1)->update([
-            'site_name' => $this->state['site_name'],
-            'site_location' => $this->state['site_location'],
-            'site_desc' => $this->state['site_desc'],
-            'ig' => $this->state['ig'],
-            'phone' => $this->state['phone'],
-        ]);
+        try {
+            $this->authorize('edit-settings');
 
-        $this->emit('saved');
+            Option::where('id', 1)->update([
+                'site_name' => $this->state['site_name'],
+                'site_location' => $this->state['site_location'],
+                'site_desc' => $this->state['site_desc'],
+                'ig' => $this->state['ig'],
+                'phone' => $this->state['phone'],
+            ]);
+
+            $this->emit('saved');
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()

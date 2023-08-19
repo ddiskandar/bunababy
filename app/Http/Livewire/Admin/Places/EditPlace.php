@@ -3,11 +3,14 @@
 namespace App\Http\Livewire\Admin\Places;
 
 use App\Models\Place;
-use Illuminate\Support\Facades\DB;
+use App\Models\Setting;
+use Filament\Notifications\Notification;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class EditPlace extends Component
 {
+    use AuthorizesRequests;
     public $place;
 
     public $state = [];
@@ -39,7 +42,9 @@ class EditPlace extends Component
     {
         $this->validate();
 
-        DB::transaction(function () {
+        try {
+            $this->authorize('manage-places');
+
             $this->place->update([
                 'name' => $this->state['name'],
                 'desc' => $this->state['desc'],
@@ -47,7 +52,11 @@ class EditPlace extends Component
             ]);
 
             $this->emit('saved');
-        });
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()

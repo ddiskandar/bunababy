@@ -3,24 +3,22 @@
     <x-slot name="description">Daftar Ruangan dan treatment yang dilayani</x-slot>
 
     <x-slot name="content">
-        <div class="space-y-1">
-            <div class="max-w-lg">
-                <div class="relative z-0 space-y-2">
-                    @forelse ($rooms as $index => $room)
-                        <div
-                            class="relative px-4 w-full border border-gray-200 rounded-lg focus:z-10 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 {{ $index > 0 ? 'border-t border-gray-200 rounded-t-none' : '' }} {{ !$loop->last ? 'rounded-b-none' : '' }}">
-                            @livewire('admin.places.edit-room-treatments', [$room->id], key($room->id))
-                        </div>
-                    @empty
-                        <div class="text-sm text-red-600">Belum ada ruangan</div>
-                    @endforelse
-                </div>
-            </div>
-        </div>
-
-        <x-secondary-button wire:click="showAddNewRoomDialog" class="mt-2 mr-2" type="button">
+        <x-secondary-button wire:click="showAddNewRoomDialog" type="button">
             {{ __('Tambah Ruangan Baru') }}
         </x-secondary-button>
+
+        <div class="max-w-lg mt-4">
+            <div class="relative z-0 space-y-2">
+                @forelse ($rooms as $index => $room)
+                    <div
+                        class="relative px-4 w-full border border-gray-200 rounded-lg focus:z-10 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 {{ $index > 0 ? 'border-t border-gray-200 rounded-t-none' : '' }} {{ !$loop->last ? 'rounded-b-none' : '' }}">
+                        @livewire('admin.places.edit-room-treatments', [$room->id], key($room->id))
+                    </div>
+                @empty
+                    <div class="text-sm text-red-600">Belum ada ruangan</div>
+                @endforelse
+            </div>
+        </div>
 
         <x-dialog wire:model="showDialog">
             <form wire:submit.prevent="save">
@@ -28,8 +26,7 @@
                 <div class="h-64 px-1 mt-2 space-y-3 overflow-y-auto">
                     <div class="space-y-1">
                         <x-label for="state.name">Nama</x-label>
-                        <x-input wire:model.defer="state.name" class="w-full" type="text" id="state.name"
-                            autofocus />
+                        <x-input wire:model.defer="state.name" class="w-full" type="text" id="state.name" autofocus />
                         <x-input-error for="state.name" class="mt-2" />
                     </div>
                     <div class="py-4 space-y-1">
