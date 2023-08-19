@@ -41,5 +41,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('manage-treatments', function (User $user) {
             return $user->isOwner();
         });
+
+        Gate::define('manage-midwives', function (User $user) {
+            return $user->isOwner();
+        });
     }
 }

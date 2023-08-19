@@ -2,12 +2,17 @@
 
 namespace App\Http\Livewire\Admin\Midwives;
 
+use App\Models\Setting;
 use App\Models\User;
+use Filament\Notifications\Notification;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class CreateMidwife extends Component
 {
+    use AuthorizesRequests;
+
     public $state = [];
 
     public $rules = [
@@ -26,22 +31,29 @@ class CreateMidwife extends Component
     {
         $this->validate();
 
-        DB::transaction(function () {
-            $user = User::create([
-                'name' => $this->state['name'],
-                'email' => $this->state['email'],
-                'type' => User::MIDWIFE,
-                'password' => bcrypt('12345678'),
-            ]);
+        try {
+            $this->authorize('manage-midwives');
 
-            $user->profile()->create([
-                'phone' => $this->state['phone'],
-            ]);
+            DB::transaction(function () {
+                $user = User::create([
+                    'name' => $this->state['name'],
+                    'email' => $this->state['email'],
+                    'type' => User::MIDWIFE,
+                    'password' => bcrypt('12345678'),
+                ]);
 
-            $this->emit('saved');
+                $user->profile()->create([
+                    'phone' => $this->state['phone'],
+                ]);
 
-            return redirect()->route('midwives.edit', $user->id);
-        });
+                Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+                return redirect()->route('midwives.edit', $user->id);
+            });
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()

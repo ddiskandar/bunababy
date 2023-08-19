@@ -2,12 +2,17 @@
 
 namespace App\Http\Livewire\Admin\Midwives;
 
-use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use App\Models\Setting;
+use App\Models\User;
 
 class EditWilayahMidwife extends Component
 {
+    use AuthorizesRequests;
+
     public $midwife;
     public $kecamatanId = '';
 
@@ -29,15 +34,34 @@ class EditWilayahMidwife extends Component
     public function add()
     {
         $this->validate();
-        $this->midwife->kecamatans()->attach([$this->kecamatanId]);
-        $this->kecamatanId = '';
-        $this->emit('saved');
+
+        try {
+            $this->authorize('manage-midwives');
+
+            $this->midwife->kecamatans()->attach([$this->kecamatanId]);
+            $this->kecamatanId = '';
+            $this->emit('saved');
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function delete($id)
     {
-        $this->midwife->kecamatans()->detach([$id]);
-        $this->emit('saved');
+        try {
+            $this->authorize('manage-midwives');
+
+            $this->midwife->kecamatans()->detach([$id]);
+            $this->emit('saved');
+            Notification::make()->title(Setting::DELETED_MESSAGE)->danger()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()

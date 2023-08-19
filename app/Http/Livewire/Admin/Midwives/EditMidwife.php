@@ -2,14 +2,18 @@
 
 namespace App\Http\Livewire\Admin\Midwives;
 
-use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
-use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\Component;
+use App\Models\Setting;
+use App\Models\User;
 
 class EditMidwife extends Component
 {
+    use AuthorizesRequests;
     use WithFileUploads;
 
     public $photo;
@@ -48,29 +52,56 @@ class EditMidwife extends Component
         $this->state['phone'] = $user->profile->phone;
     }
 
+    public function resetPassword()
+    {
+        try {
+            $this->authorize('manage-midwives');
+
+            $newPassword = '12345678';
+
+            $this->midwife->update([
+                'password' => bcrypt($newPassword),
+            ]);
+
+            Notification::make()->title('Password : ' . $newPassword)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
+    }
+
     public function save()
     {
         $this->validate();
 
-        DB::transaction(function () {
-            $this->midwife->update([
-                'name' => $this->state['name'],
-                'email' => $this->state['email'],
-                'active' => $this->state['active'],
-            ]);
+        try {
+            $this->authorize('manage-midwives');
 
-            $this->midwife->profile->update([
-                'phone' => $this->state['phone'],
-            ]);
-
-            if ($this->photo) {
-                $this->midwife->profile->update([
-                    'photo' => $this->photo->storePublicly('photos', 's3')
+            DB::transaction(function () {
+                $this->midwife->update([
+                    'name' => $this->state['name'],
+                    'email' => $this->state['email'],
+                    'active' => $this->state['active'],
                 ]);
-            }
 
-            $this->emit('saved');
-        });
+                $this->midwife->profile->update([
+                    'phone' => $this->state['phone'],
+                ]);
+
+                if ($this->photo) {
+                    $this->midwife->profile->update([
+                        'photo' => $this->photo->storePublicly('photos', 's3')
+                    ]);
+                }
+
+                $this->emit('saved');
+            });
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()

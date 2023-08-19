@@ -50,10 +50,13 @@ Route::middleware(['auth'])->group(function () {
     // Owner..
     Route::middleware(['owner'])->group(function () {
         Route::get('/midwives/create', [App\Http\Controllers\MidwivesController::class, 'create'])
+                ->can('manage-midwives')
                 ->name('midwives.create');
         Route::get('/midwives/{midwife}/edit', [App\Http\Controllers\MidwivesController::class, 'edit'])
+                ->can('manage-midwives')
                 ->name('midwives.edit');
         Route::get('/midwives', [App\Http\Controllers\MidwivesController::class, 'index'])
+                ->can('manage-midwives')
                 ->name('midwives');
         Route::get('/treatments', App\Http\Controllers\TreatmentsController::class)
                 ->can('manage-treatments')
