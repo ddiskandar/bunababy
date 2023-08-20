@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin\Payments;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Filament\Notifications\Notification;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use Livewire\Component;
 use App\Models\Payment;
@@ -14,15 +15,16 @@ class ManagePayments extends Component
 {
     use AuthorizesRequests;
     use WithPagination;
+    use WithFileUploads;
 
     public $perPage = 8;
-
     public $showDialog = false;
 
     public $filterSearch;
     public $filterStatus;
 
     public $state = [];
+    public $attachment;
     public $order;
 
     protected $queryString = [
@@ -95,6 +97,9 @@ class ManagePayments extends Component
                     'verified_by_id' => auth()->id(),
                     'verified_at' => now(),
                     'note' => $this->state['note'] ?? '',
+                    'attachment' => $this->attachment
+                            ? $this->attachment->storePublicly('attachments', 's3')
+                            : $this->state['attachment'],
                 ]
             );
 
@@ -105,6 +110,8 @@ class ManagePayments extends Component
             $this->showDialog = false;
 
             $this->emit('saved');
+
+            $this->reset('attachment', 'state', 'order');
 
             Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
 

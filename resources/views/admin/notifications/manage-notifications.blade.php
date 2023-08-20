@@ -7,18 +7,17 @@
                 <h3 class="font-semibold">
                     Notifikasi
                 </h3>
-                @if (auth()->user()->isOwner())
+                @can('delete-all-notifications')
                     <button wire:click="deleteAllNotifications"
                         onclick="confirm('Yakin semua notifikasi mau dihapus?') || event.stopImmediatePropagation()"
                         class="ml-4 text-sm text-gray-400">
                         Hapus Semua
                     </button>
-                @endif
+                @endcan
             </div>
             <div class="flex flex-col gap-2 mt-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-end">
 
                 <div class="flex items-center space-x-2 space-x-reverse sm:space-x-2">
-
                 </div>
 
                 <div class="flex space-x-2">
@@ -94,7 +93,7 @@
                         @forelse ($notifications as $notification)
                             <tr class="group">
                                 <td @class([
-                                    'p-3 pl-6 ',
+                                    'p-3 pl-6',
                                     '' => isset($notification->read_at),
                                     'bg-yellow-50' => is_null($notification->read_at),
                                 ])>
@@ -104,7 +103,6 @@
                                                 <div class="flex justify-between">
                                                     <div>
                                                         <span @class([
-                                                            '',
                                                             '' => isset($notification->read_at),
                                                             'font-semibold' => is_null($notification->read_at),
                                                         ])>
@@ -200,7 +198,6 @@
                                                 <div class="flex justify-between">
                                                     <div>
                                                         <span @class([
-                                                            '',
                                                             '' => isset($notification->read_at),
                                                             'font-semibold' => is_null($notification->read_at),
                                                         ])>
@@ -294,7 +291,6 @@
                                                 <div class="flex justify-between">
                                                     <div>
                                                         <span @class([
-                                                            '',
                                                             '' => isset($notification->read_at),
                                                             'font-semibold' => is_null($notification->read_at),
                                                         ])>
@@ -387,7 +383,6 @@
                                                 <div class="flex justify-between">
                                                     <div>
                                                         <span @class([
-                                                            '',
                                                             '' => isset($notification->read_at),
                                                             'font-semibold' => is_null($notification->read_at),
                                                         ])>

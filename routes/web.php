@@ -86,6 +86,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/orders/create', [App\Http\Controllers\OrdersController::class, 'create'])
                 ->name('orders.create');
         Route::get('/notifications', [App\Http\Controllers\NotificationsController::class, 'index'])
+                ->can('manage-notifications')
                 ->name('notifications');
         Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'show'])
                 ->can('view-calendar')

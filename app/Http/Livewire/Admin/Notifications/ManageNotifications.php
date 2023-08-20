@@ -2,14 +2,17 @@
 
 namespace App\Http\Livewire\Admin\Notifications;
 
-use Filament\Notifications\Notification;
+use App\Models\Setting;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Notifications\DatabaseNotification;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
-use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Component;
 
 class ManageNotifications extends Component
 {
+    use AuthorizesRequests;
     use WithPagination;
 
     public $perPage = 8;
@@ -53,72 +56,108 @@ class ManageNotifications extends Component
 
     public function markAsRead($notificationId)
     {
-        $notification = DatabaseNotification::findOrFail($notificationId);
-        $notification->markAsRead();
-        $this->emit('refreshSidebar');
+        try {
+            $this->authorize('manage-notifications');
+
+            $notification = DatabaseNotification::findOrFail($notificationId);
+            $notification->markAsRead();
+
+            $this->emit('refreshSidebar');
+
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function markAsUnRead($notificationId)
     {
-        $notification = DatabaseNotification::findOrFail($notificationId);
-        $notification->update(['read_at' => NULL]);
-        $this->emit('refreshSidebar');
+        try {
+            $this->authorize('manage-notifications');
+
+            $notification = DatabaseNotification::findOrFail($notificationId);
+            $notification->update(['read_at' => null]);
+
+            $this->emit('refreshSidebar');
+
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function delete($notificationId)
     {
-        $notification = DatabaseNotification::findOrFail($notificationId);
-        $notification->delete();
-        Notification::make()
-            ->title('Deleted successfully')
-            ->success()
-            ->send();
-        $this->emit('refreshSidebar');
+        try {
+            $this->authorize('manage-notifications');
+
+            $notification = DatabaseNotification::findOrFail($notificationId);
+            $notification->delete();
+
+            $this->emit('refreshSidebar');
+
+            Notification::make()->title(Setting::DELETED_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function deleteSelectedNotificatons()
     {
-        foreach ($this->selectedNotifications as $notification => $boolean) {
-            if ($boolean) {
-                $notification = DatabaseNotification::find($notification);
-                $notification->delete();
+        try {
+            $this->authorize('manage-notifications');
+
+            foreach ($this->selectedNotifications as $notification => $boolean) {
+                if ($boolean) {
+                    $notification = DatabaseNotification::find($notification);
+                    $notification->delete();
+                }
             }
+
+            $this->selectedNotifications = '';
+
+            $this->emit('refreshSidebar');
+
+            Notification::make()->title(Setting::DELETED_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
         }
-
-        $this->selectedNotifications = '';
-
-        Notification::make()
-            ->title('Berhasil disimpan')
-            ->success()
-            ->send();
-        $this->emit('refreshSidebar');
     }
 
     public function deleteAllNotifications()
     {
-        auth()->user()->notifications()->delete();
-        Notification::make()
-            ->title('Deleted successfully')
-            ->success()
-            ->send();
-        $this->emit('refreshSidebar');
-    }
+        try {
+            $this->authorize('manage-notifications');
 
-    public function save()
-    {
-        $this->validate();
+            auth()->user()->notifications()->delete();
+
+            $this->emit('refreshSidebar');
+
+            Notification::make()->title(Setting::DELETED_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()
     {
-        if ($this->filterStatus == 'unread') {
+        if ($this->filterStatus === 'unread') {
             $query = auth()->user()->unreadNotifications();
-        } else if ($this->filterStatus == 'read') {
+        } elseif ($this->filterStatus === 'read') {
             $query = auth()->user()->readNotifications();
         } else {
             $query = auth()->user()->notifications();
         }
-
 
         $notifications = $query
             ->where('data', 'LIKE', '%' . $this->filterSearch . '%')
