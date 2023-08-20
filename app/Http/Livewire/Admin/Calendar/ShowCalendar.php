@@ -2,12 +2,12 @@
 
 namespace App\Http\Livewire\Admin\Calendar;
 
+use Livewire\Component;
+use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Place;
 use App\Models\Room;
 use App\Models\User;
-use Carbon\Carbon;
-use Livewire\Component;
 
 class ShowCalendar extends Component
 {
@@ -20,10 +20,115 @@ class ShowCalendar extends Component
 
     public function mount()
     {
-
         $this->selectedDay = today()->toDateString();
 
-        $this->times = collect([
+        $this->times = $this->getTimes();
+
+        $midwives = User::active()->midwives()
+            ->select(['id', 'name'])
+            ->orderBy('id', 'ASC')
+            ->get();
+
+        $rooms = Room::active()->orderBy('id', 'ASC')
+            ->with('place:id,name')
+            ->get();
+
+        $this->titles = collect();
+
+        $this->colStart = collect([
+            'midwives' => collect([]),
+            'clinics' => collect([]),
+        ]);
+
+        $i = 2 ;
+        foreach ($midwives as $midwife) {
+            $this->colStart['midwives']->put($midwife->id, $i);
+            $this->titles->push(['col-start' => $i, 'name' => $midwife->name]);
+            $i++;
+        }
+
+        $i = 2 + $midwives->count();
+        foreach ($rooms as $room) {
+            $this->colStart['clinics']->put($room->id, $i);
+            $this->titles->push(['col-start' => $i, 'name' => $room->name . ' - ' . $room->place->name]);
+            $i++;
+        }
+
+        $this->colStart->toArray();
+
+        $this->rowStart = $this->getRowStart();
+    }
+
+    private function getRowStart()
+    {
+        return collect([
+            '08:00' => '2',
+            '08:15' => '3',
+            '08:30' => '4',
+            '08:45' => '5',
+            '09:00' => '6',
+            '09:15' => '7',
+            '09:30' => '8',
+            '09:45' => '9',
+            '10:00' => '10',
+            '10:15' => '11',
+            '10:30' => '12',
+            '10:45' => '13',
+            '11:00' => '14',
+            '11:15' => '15',
+            '11:30' => '16',
+            '11:45' => '17',
+            '12:00' => '18',
+            '12:15' => '19',
+            '12:30' => '20',
+            '12:45' => '21',
+            '13:00' => '22',
+            '13:15' => '23',
+            '13:30' => '24',
+            '13:45' => '25',
+            '14:00' => '26',
+            '14:15' => '27',
+            '14:30' => '28',
+            '14:45' => '29',
+            '15:00' => '30',
+            '15:15' => '31',
+            '15:30' => '32',
+            '15:45' => '33',
+            '16:00' => '34',
+            '16:15' => '35',
+            '16:30' => '36',
+            '16:45' => '37',
+            '17:00' => '38',
+            '17:15' => '39',
+            '17:30' => '40',
+            '17:45' => '41',
+            '18:00' => '42',
+            '18:15' => '43',
+            '18:30' => '44',
+            '18:45' => '45',
+            '19:00' => '46',
+            '19:15' => '47',
+            '19:30' => '48',
+            '19:45' => '49',
+            '20:00' => '50',
+            '20:15' => '51',
+            '20:30' => '52',
+            '20:45' => '53',
+            '21:00' => '54',
+            '21:15' => '55',
+            '21:30' => '56',
+            '21:45' => '57',
+            '22:00' => '58',
+            '22:15' => '59',
+            '22:30' => '60',
+            '22:45' => '61',
+            '23:00' => '62',
+        ])->toArray();
+    }
+
+    private function getTimes()
+    {
+        return collect([
             ['time' => '08:00', 'row-start' => '2'],
             ['time' => '', 'row-start' => '3'],
             ['time' => '08:30', 'row-start' => '4'],
@@ -85,103 +190,6 @@ class ShowCalendar extends Component
             ['time' => '22:30', 'row-start' => '60'],
             ['time' => '', 'row-start' => '61'],
             ['time' => '23:00', 'row-start' => '62'],
-        ])->toArray();
-
-        $midwives = User::active()->midwives()
-            ->select(['id', 'name'])
-            ->orderBy('id', 'ASC')
-            ->get();
-
-        $rooms = Room::active()->orderBy('id', 'ASC')
-            ->with('place:id,name')
-            ->get();
-
-        $this->titles = collect();
-        $this->colStart = collect([
-            'midwives' => collect([]),
-            'clinics' => collect([]),
-        ]);
-
-        // $this->colStart->put(1, 2);
-
-        $i = 2 ;
-        foreach ($midwives as $midwife) {
-            $this->colStart['midwives']->put($midwife->id, $i);
-            $this->titles->push(['col-start' => $i, 'name' => $midwife->name]);
-            $i++;
-        }
-
-        $i = 2 + $midwives->count();
-        foreach ($rooms as $room) {
-            $this->colStart['clinics']->put($room->id, $i);
-            $this->titles->push(['col-start' => $i, 'name' => $room->name . ' - ' . $room->place->name]);
-            $i++;
-        }
-
-        $this->colStart->toArray();
-
-        $this->rowStart = collect([
-            '08:00' => '2',
-            '08:15' => '3',
-            '08:30' => '4',
-            '08:45' => '5',
-            '09:00' => '6',
-            '09:15' => '7',
-            '09:30' => '8',
-            '09:45' => '9',
-            '10:00' => '10',
-            '10:15' => '11',
-            '10:30' => '12',
-            '10:45' => '13',
-            '11:00' => '14',
-            '11:15' => '15',
-            '11:30' => '16',
-            '11:45' => '17',
-            '12:00' => '18',
-            '12:15' => '19',
-            '12:30' => '20',
-            '12:45' => '21',
-            '13:00' => '22',
-            '13:15' => '23',
-            '13:30' => '24',
-            '13:45' => '25',
-            '14:00' => '26',
-            '14:15' => '27',
-            '14:30' => '28',
-            '14:45' => '29',
-            '15:00' => '30',
-            '15:15' => '31',
-            '15:30' => '32',
-            '15:45' => '33',
-            '16:00' => '34',
-            '16:15' => '35',
-            '16:30' => '36',
-            '16:45' => '37',
-            '17:00' => '38',
-            '17:15' => '39',
-            '17:30' => '40',
-            '17:45' => '41',
-            '18:00' => '42',
-            '18:15' => '43',
-            '18:30' => '44',
-            '18:45' => '45',
-            '19:00' => '46',
-            '19:15' => '47',
-            '19:30' => '48',
-            '19:45' => '49',
-            '20:00' => '50',
-            '20:15' => '51',
-            '20:30' => '52',
-            '20:45' => '53',
-            '21:00' => '54',
-            '21:15' => '55',
-            '21:30' => '56',
-            '21:45' => '57',
-            '22:00' => '58',
-            '22:15' => '59',
-            '22:30' => '60',
-            '22:45' => '61',
-            '22:00' => '62',
         ])->toArray();
     }
 

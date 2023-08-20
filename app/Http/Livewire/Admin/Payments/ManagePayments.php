@@ -2,14 +2,17 @@
 
 namespace App\Http\Livewire\Admin\Payments;
 
-use App\Models\Order;
-use App\Models\Payment;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Filament\Notifications\Notification;
-use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Component;
+use App\Models\Payment;
+use App\Models\Order;
+use App\Models\Setting;
 
 class ManagePayments extends Component
 {
+    use AuthorizesRequests;
     use WithPagination;
 
     public $perPage = 8;
@@ -60,6 +63,7 @@ class ManagePayments extends Component
 
     public function showEditPaymentDialog(Payment $payment)
     {
+        $this->resetErrorBag();
         $this->state = $payment->toArray();
         $this->order = $payment->order;
         $this->showDialog = true;
@@ -69,40 +73,45 @@ class ManagePayments extends Component
     {
         $this->validate();
 
-        if ($this->state['status'] === Payment::STATUS_UNVERIFIED) {
-            return $this->setErrorBag(['state.status' => 'Status pembayaran harus dipilih.']);
+        try {
+            $this->authorize('manage-payments');
+
+            if ($this->state['status'] === Payment::STATUS_UNVERIFIED) {
+                return $this->setErrorBag(['state.status' => 'Status pembayaran harus dipilih.']);
+            }
+
+            if (isset($this->state['value']) && !is_numeric(str_replace('.', '', $this->state['value']))) {
+                return $this->setErrorBag(['state.value' => 'Besar pembayaran harus berupa nilai angka.']);
+            }
+
+            Payment::updateOrCreate(
+                [
+                    'id' => $this->state['id'] ?? Payment::max('id') + 1,
+                    'order_id' => $this->order->id,
+                ],
+                [
+                    'value' => str_replace('.', '', $this->state['value']),
+                    'status' => $this->state['status'] ?? Payment::STATUS_VERIFIED,
+                    'verified_by_id' => auth()->id(),
+                    'verified_at' => now(),
+                    'note' => $this->state['note'] ?? '',
+                ]
+            );
+
+            $this->order->update([
+                'status' => Order::STATUS_LOCKED,
+            ]);
+
+            $this->showDialog = false;
+
+            $this->emit('saved');
+
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
         }
-
-        if (isset($this->state['value']) && !is_numeric(str_replace('.', '', $this->state['value']))) {
-            return $this->setErrorBag(['state.value' => 'Besar pembayaran harus berupa nilai angka.']);
-        }
-
-        Payment::updateOrCreate(
-            [
-                'id' => $this->state['id'] ?? Payment::max('id') + 1,
-                'order_id' => $this->order->id,
-            ],
-            [
-                'value' => str_replace('.', '', $this->state['value']),
-                'status' => $this->state['status'] ?? Payment::STATUS_VERIFIED,
-                'verified_at' => now(),
-                'note' => $this->state['note'] ?? '',
-                'verified_by_id' => auth()->id(),
-            ]
-        );
-
-        $this->order->update([
-            'status' => Order::STATUS_LOCKED,
-        ]);
-
-        $this->showDialog = false;
-
-        Notification::make()
-            ->title('Berhasil disimpan')
-            ->success()
-            ->send();
-
-        $this->emit('saved');
     }
 
     public function render()

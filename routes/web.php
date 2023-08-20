@@ -85,11 +85,13 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['admin'])->group(function () {
         Route::get('/orders/create', [App\Http\Controllers\OrdersController::class, 'create'])
                 ->name('orders.create');
-        Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'show'])
-                ->name('calendar');
         Route::get('/notifications', [App\Http\Controllers\NotificationsController::class, 'index'])
                 ->name('notifications');
+        Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'show'])
+                ->can('view-calendar')
+                ->name('calendar');
         Route::get('/payments', [App\Http\Controllers\PaymentsController::class, 'index'])
+                ->can('manage-payments')
                 ->name('payments');
         Route::get('/testimonials', [App\Http\Controllers\TestimonialsController::class, 'index'])
                 ->can('manage-testimonials')

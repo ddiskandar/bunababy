@@ -57,5 +57,13 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('delete-testimonials', function (User $user) {
             return $user->isOwner();
         });
+
+        Gate::define('manage-payments', function (User $user) {
+            return $user->isOwner() || $user->isAdmin();
+        });
+
+        Gate::define('view-calendar', function (User $user) {
+            return $user->isOwner() || $user->isAdmin();
+        });
     }
 }
