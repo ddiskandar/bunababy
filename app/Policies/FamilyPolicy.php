@@ -41,7 +41,7 @@ class FamilyPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->isClient();
     }
 
     /**

@@ -3,11 +3,12 @@
 namespace App\Http\Livewire\Client;
 
 use Filament\Notifications\Notification;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Livewire\Component;
-use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Livewire\WithFileUploads;
+use Livewire\Component;
+use App\Models\Setting;
 
 class UpdateProfileInformation extends Component
 {
@@ -57,39 +58,43 @@ class UpdateProfileInformation extends Component
     {
         $this->validate();
 
-        $this->user->update([
-            'name' => $this->state['name'],
-        ]);
+        try {
+            abort_if($this->user->id !== auth()->id(), 403);
 
-        if (is_null(auth()->user()->google_id)) {
             $this->user->update([
-                'email' => $this->state['email'],
+                'name' => $this->state['name'],
             ]);
-        }
 
-        $this->user->profile->update([
-            'dob' => $this->state['dob'],
-            'phone' => $this->state['phone'],
-            'ig' => $this->state['ig'],
-        ]);
-
-        if (isset($this->photo)) {
-            if($this->user->profile->photo) {
-                Storage::disk('s3')->delete($this->user->profile->photo);
+            if (is_null(auth()->user()->google_id)) {
+                $this->user->update([
+                    'email' => $this->state['email'],
+                ]);
             }
 
             $this->user->profile->update([
-                'photo' => $this->photo->storePublicly('photos', 's3'),
+                'dob' => $this->state['dob'],
+                'phone' => $this->state['phone'],
+                'ig' => $this->state['ig'],
             ]);
+
+            if (isset($this->photo)) {
+                if($this->user->profile->photo) {
+                    Storage::disk('s3')->delete($this->user->profile->photo);
+                }
+
+                $this->user->profile->update([
+                    'photo' => $this->photo->storePublicly('photos', 's3'),
+                ]);
+            }
+
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+            return to_route('client.profile');
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
         }
-
-        Notification::make()
-            ->title('Berhasil disimpan')
-            ->success()
-            ->duration(3000)
-            ->send();
-
-        return to_route('client.profile');
     }
 
     public function getUserProperty()
