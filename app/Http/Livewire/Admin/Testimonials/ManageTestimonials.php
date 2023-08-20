@@ -2,14 +2,19 @@
 
 namespace App\Http\Livewire\Admin\Testimonials;
 
+use App\Models\Setting;
 use App\Models\Testimonial;
 use App\Models\User;
+use Filament\Notifications\Notification;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 
 class ManageTestimonials extends Component
 {
+    use AuthorizesRequests;
+
     use WithPagination;
 
     public $perPage = 3;
@@ -81,7 +86,17 @@ class ManageTestimonials extends Component
 
     public function delete(Testimonial $testimonial)
     {
-        $testimonial->delete();
+        try {
+            $this->authorize('manage-testimonials');
+
+            $testimonial->delete();
+
+            Notification::make()->title(Setting::DELETED_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()

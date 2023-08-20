@@ -92,6 +92,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/payments', [App\Http\Controllers\PaymentsController::class, 'index'])
                 ->name('payments');
         Route::get('/testimonials', [App\Http\Controllers\TestimonialsController::class, 'index'])
+                ->can('manage-testimonials')
                 ->name('testimonials');
         Route::get('/clients/tags', [App\Http\Controllers\ClientsTagsController::class, 'show'])
                 ->can('manage-clients')
