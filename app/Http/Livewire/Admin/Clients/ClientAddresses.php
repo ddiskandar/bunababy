@@ -2,14 +2,18 @@
 
 namespace App\Http\Livewire\Admin\Clients;
 
-use Livewire\Component;
-use App\Models\Address;
-use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
+use Livewire\Component;
+use App\Models\Address;
+use App\Models\Setting;
+use App\Models\User;
 
 class ClientAddresses extends Component
 {
+    use AuthorizesRequests;
+
     public $state = [];
 
     public $client;
@@ -46,61 +50,81 @@ class ClientAddresses extends Component
 
     public function showAddNewAddressDialog()
     {
+        $this->resetErrorBag();
         $this->showDialog = true;
         $this->state = [];
     }
 
     public function showEditAddressDialog(Address $address)
     {
+        $this->resetErrorBag();
         $this->state = $address->toArray();
         $this->showDialog = true;
     }
 
     public function setAddressAsMain(Address $address)
     {
-        $this->client->addresses()->update([
-            'is_main' => false
-        ]);
+        try {
+            $this->authorize('manage-clients');
 
-        $address->update([
-            'is_main' => true
-        ]);
+            DB::transaction(function() use ($address) {
+                $this->client->addresses()->update([
+                    'is_main' => false
+                ]);
+
+                $address->update([
+                    'is_main' => true
+                ]);
+            });
+
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function save()
     {
         $this->validate();
 
-        $address = Address::updateOrCreate(
-            [
-                'id' => $this->state['id'] ?? Address::max('id') + 1,
-            ],
-            [
-                'client_user_id' => $this->client->id,
-                'label' => $this->state['label'],
-                'address' => $this->state['address'],
-                'desa' => $this->state['desa'],
-                'kecamatan_id' => $this->state['kecamatan_id'],
-                'note' => $this->state['note'] ?? NULL,
-                'share_location' => $this->state['share_location'] ?? NULL,
-            ]
-        );
+        try {
+            $this->authorize('manage-clients');
 
-        $addresses = Address::where('client_user_id', $this->client->id)->get();
-        if (!$addresses->contains('is_main', 1)) {
-            $address->update(['is_main' => true]);
+            $address = Address::updateOrCreate(
+                [
+                    'id' => $this->state['id'] ?? Address::max('id') + 1,
+                ],
+                [
+                    'client_user_id' => $this->client->id,
+                    'label' => $this->state['label'],
+                    'address' => $this->state['address'],
+                    'desa' => $this->state['desa'],
+                    'kecamatan_id' => $this->state['kecamatan_id'],
+                    'note' => $this->state['note'] ?? null,
+                    'share_location' => $this->state['share_location'] ?? null,
+                ]
+            );
+
+            $addresses = Address::where('client_user_id', $this->client->id)->get();
+
+            if (!$addresses->contains('is_main', 1)) {
+                $address->update(['is_main' => true]);
+            }
+
+            $this->emit('saved');
+
+            $this->showDialog = false;
+
+            $this->showAddNewAddressForm = false;
+
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
         }
-
-        $this->emit('saved');
-
-        $this->showDialog = false;
-
-        Notification::make()
-            ->title('berhasil disimpan')
-            ->success()
-            ->send();
-
-        $this->showAddNewAddressForm = false;
     }
 
     public function render()

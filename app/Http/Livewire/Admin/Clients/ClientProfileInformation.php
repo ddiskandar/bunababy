@@ -2,14 +2,17 @@
 
 namespace App\Http\Livewire\Admin\Clients;
 
-use App\Models\User;
+use App\Models\Setting;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Filament\Notifications\Notification;
-use Livewire\Component;
-use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
+use Livewire\WithFileUploads;
+use Livewire\Component;
+use App\Models\User;
 
 class ClientProfileInformation extends Component
 {
+    use AuthorizesRequests;
     use WithFileUploads;
 
     public $client;
@@ -26,7 +29,7 @@ class ClientProfileInformation extends Component
                 'email',
                 Rule::unique('users', 'email')->ignore($this->client->id)
             ],
-            'state.dob' => 'required|date',
+            'state.dob' => 'nullable|date',
             'state.phone' => 'required|string|min:11|max:14',
             'state.ig' => 'nullable',
             'photo' => 'nullable|image|max:256',
@@ -56,38 +59,53 @@ class ClientProfileInformation extends Component
 
     public function resetPassword()
     {
-        $this->client->update([
-            'password' => bcrypt('12345678'),
-        ]);
+        try {
+            $this->authorize('manage-clients');
 
-        Notification::make()
-            ->title('Password : 12345678')
-            ->success()
-            ->send();
+            $this->client->update([
+                'password' => bcrypt('12345678'),
+            ]);
+
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function save()
     {
         $this->validate();
 
-        $this->client->update([
-            'name' => $this->state['name'],
-            'email' => $this->state['email'],
-        ]);
+        try {
+            $this->authorize('manage-clients');
 
-        $this->client->profile->update([
-            'dob' => $this->state['dob'],
-            'phone' => $this->state['phone'],
-            'ig' => $this->state['ig'],
-        ]);
-
-        if (isset($this->photo)) {
-            $this->client->profile->update([
-                'photo' => $this->photo->storePublicly('photos', 's3'),
+            $this->client->update([
+                'name' => $this->state['name'],
+                'email' => $this->state['email'],
             ]);
-        }
 
-        $this->emit('saved');
+            $this->client->profile->update([
+                'dob' => $this->state['dob'] ?? null,
+                'phone' => $this->state['phone'],
+                'ig' => $this->state['ig'],
+            ]);
+
+            if (isset($this->photo)) {
+                $this->client->profile->update([
+                    'photo' => $this->photo->storePublicly('photos', 's3'),
+                ]);
+            }
+
+            $this->emit('saved');
+
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()

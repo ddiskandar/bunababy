@@ -2,11 +2,16 @@
 
 namespace App\Http\Livewire\Admin\Clients;
 
-use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Filament\Notifications\Notification;
 use Livewire\Component;
+use App\Models\Setting;
+use App\Models\User;
 
 class DeleteClient extends Component
 {
+    use AuthorizesRequests;
+
     public $showDialog = false;
     public $user;
 
@@ -22,8 +27,19 @@ class DeleteClient extends Component
 
     public function delete()
     {
-        $this->user->delete();
-        return to_route('clients');
+        try {
+            $this->authorize('manage-clients');
+
+            $this->user->delete();
+
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+            return to_route('clients');
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()

@@ -94,12 +94,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/testimonials', [App\Http\Controllers\TestimonialsController::class, 'index'])
                 ->name('testimonials');
         Route::get('/clients/tags', [App\Http\Controllers\ClientsTagsController::class, 'show'])
+                ->can('manage-clients')
                 ->name('clients.tags');
         Route::get('/clients/create', [App\Http\Controllers\ClientsController::class, 'create'])
+                ->can('manage-clients')
                 ->name('clients.create');
         Route::get('/clients/{client}', [App\Http\Controllers\ClientsController::class, 'show'])
+                ->can('manage-clients')
                 ->name('clients.show');
         Route::get('/clients', [App\Http\Controllers\ClientsController::class, 'index'])
+                ->can('manage-clients')
                 ->name('clients');
     });
 

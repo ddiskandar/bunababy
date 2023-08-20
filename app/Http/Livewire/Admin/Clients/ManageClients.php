@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire\Admin\Clients;
 
-use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Component;
+use App\Models\User;
 
 class ManageClients extends Component
 {

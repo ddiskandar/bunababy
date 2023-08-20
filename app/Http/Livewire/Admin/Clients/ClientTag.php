@@ -2,13 +2,17 @@
 
 namespace App\Http\Livewire\Admin\Clients;
 
-use App\Models\Tag;
-use App\Models\User;
-use Livewire\Component;
+use App\Models\Setting;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
+use Livewire\Component;
+use App\Models\User;
+use Filament\Notifications\Notification;
 
 class ClientTag extends Component
 {
+    use AuthorizesRequests;
+
     public $client;
     public $tagId;
 
@@ -31,15 +35,36 @@ class ClientTag extends Component
     {
         $this->validate();
 
-        $this->client->tags()->attach($this->tagId);
-        $this->tagId = null;
-        $this->emit('saved');
+        try {
+            $this->authorize('manage-clients');
+
+            $this->client->tags()->attach($this->tagId);
+            $this->tagId = null;
+            $this->emit('saved');
+
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function deleteTag($id)
     {
-        $this->client->tags()->detach($id);
-        $this->emit('saved');
+        try {
+            $this->authorize('manage-clients');
+
+            $this->client->tags()->detach($id);
+
+            $this->emit('saved');
+
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
 
