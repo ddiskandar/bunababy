@@ -3,11 +3,15 @@
 namespace App\Http\Livewire\Client;
 
 use App\Models\Family;
+use App\Models\Setting;
 use Filament\Notifications\Notification;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class ManageFamilies extends Component
 {
+    use AuthorizesRequests;
+
     public $state = [];
     public $showDialog = false;
 
@@ -23,12 +27,9 @@ class ManageFamilies extends Component
         'state.type' => 'Hubungan keluarga',
     ];
 
-    public function mount()
-    {
-    }
-
     public function showEditDialog(Family $family)
     {
+        $this->resetErrorBag();
         $this->state = $family->toArray();
         $this->state['dob'] = $family->dob->toDateString();
         $this->showDialog = true;
@@ -36,6 +37,7 @@ class ManageFamilies extends Component
 
     public function addNewFamily()
     {
+        $this->resetErrorBag();
         $this->state = [];
         $this->showDialog = true;
     }
@@ -44,24 +46,29 @@ class ManageFamilies extends Component
     {
         $this->validate();
 
-        Family::updateOrCreate(
-            [
-                'id' => $this->state['id'] ?? time(),
-                'client_user_id' => auth()->id(),
-            ],
-            [
-                'name' => $this->state['name'],
-                'dob' => $this->state['dob'],
-                'type' => $this->state['type'],
-            ]
+        try {
+            $this->authorize('create', Family::class);
 
-        );
-        $this->showDialog = false;
+            Family::updateOrCreate(
+                [
+                    'id' => $this->state['id'] ?? time(),
+                    'client_user_id' => auth()->id(),
+                ],
+                [
+                    'name' => $this->state['name'],
+                    'dob' => $this->state['dob'],
+                    'type' => $this->state['type'],
+                ]
 
-        Notification::make()
-            ->title('Berhasil disimpan')
-            ->success()
-            ->send();
+            );
+            $this->showDialog = false;
+
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()

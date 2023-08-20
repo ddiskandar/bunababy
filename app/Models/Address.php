@@ -10,6 +10,8 @@ class Address extends Model
 {
     use HasFactory;
 
+    const MAIN_ADDRESS = 1;
+
     protected $casts = [
         'is_main' => 'boolean',
     ];

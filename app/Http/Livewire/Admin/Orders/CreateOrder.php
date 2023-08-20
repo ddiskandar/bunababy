@@ -2,14 +2,17 @@
 
 namespace App\Http\Livewire\Admin\Orders;
 
+use App\Exceptions\NoSlotException;
 use App\Models\Kecamatan;
 use App\Models\Order;
 use App\Models\Place;
 use App\Models\Room;
+use App\Models\Setting;
 use App\Models\Slot;
 use App\Models\Timetable;
 use App\Models\User;
 use Carbon\Carbon;
+use Error;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -44,12 +47,19 @@ class CreateOrder extends Component
 
     public function setSelectedPlace()
     {
-        if (! isset($this->state['placeId'])) {
-            $this->state['placeId'] = 1;
-        }
-        $this->selectedPlace = Place::whereId($this->state['placeId'])->first();
+        try {
+            if (! isset($this->state['placeId'])) {
+                $this->state['placeId'] = 1;
+            }
 
-        $this->resetOnPlaceChange();
+            $this->selectedPlace = Place::whereId($this->state['placeId'])->first();
+
+            $this->resetOnPlaceChange();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     private function setAddMinutes()
@@ -92,56 +102,60 @@ class CreateOrder extends Component
 
     public function save()
     {
-        session()->put('order', [
-            'place_id' => $this->selectedPlace->id,
-            'place_type' => $this->selectedPlace->type,
-            'place_transport_duration' => $this->selectedPlace->transport_duration,
-            'room_id' => $this->state['roomId'] ?? null,
-            'midwife_user_id' => $this->selectedMidwife->id,
-            'start_time_id' => $this->state['startTimeId'],
-            'start_time' => $this->state['startTime'],
-            'date' => Carbon::parse($this->state['date']),
-            'addMinutes' => $this->selectedPlace->transport_duration,
-            'kecamatan_distance' => $this->selectedKecamatan->distance,
-            'order.treatments' => [],
-        ]);
+        try {
+            session()->put('order', [
+                'place_id' => $this->selectedPlace->id,
+                'place_type' => $this->selectedPlace->type,
+                'place_transport_duration' => $this->selectedPlace->transport_duration,
+                'room_id' => $this->state['roomId'] ?? null,
+                'midwife_user_id' => $this->selectedMidwife->id,
+                'start_time_id' => $this->state['startTimeId'],
+                'start_time' => $this->state['startTime'],
+                'date' => Carbon::parse($this->state['date']),
+                'addMinutes' => $this->selectedPlace->transport_duration,
+                'kecamatan_distance' => $this->selectedKecamatan->distance,
+                'order.treatments' => [],
+            ]);
 
-        if ($this->currentActiveOrders()->exists()) {
-            Notification::make()
-                ->title('Slot reservasi tidak cukup tersedia!')
-                ->danger()->send();
+            if ($this->currentActiveOrders()->exists()) {
+                throw new NoSlotException('Slot reservasi tersedia tidak cukup!');
+            }
 
-            return back();
+            DB::transaction(function () {
+
+                $order = new Order();
+                $order->place_id = session('order.place_id');
+                $order->client_user_id = $this->selectedClient->id;
+                $order->total_price = $order->getTotalPrice();
+                $order->total_duration = $order->getTotalDuration();
+                $order->date = Carbon::parse(session('order.date')->toDateString());
+                $order->start_time = session('order.start_time');
+                $order->end_time = session('order.start_time');
+                $order->status = Order::STATUS_LOCKED;
+
+                if (session('order.place_type') === Place::TYPE_HOMECARE) {
+                    $order->total_transport = $order->getTotalTransport();
+                    $order->midwife_user_id = session('order.midwife_user_id');
+                    $order->address_id = session('order.address_id');
+                }
+
+                if (session('order.place_type') === Place::TYPE_CLINIC) {
+                    $order->room_id = session('order.room_id');
+                }
+
+                $order->save();
+
+                session()->forget('order');
+
+                return to_route('orders.show', $order->id);
+            });
+
+        } catch (NoSlotException $th) {
+            Notification::make()->title($th->getMessage())->danger()->send();
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
         }
-
-        DB::transaction(function () {
-
-            $order = new Order();
-            $order->place_id = session('order.place_id');
-            $order->client_user_id = $this->selectedClient->id;
-            $order->total_price = $order->getTotalPrice();
-            $order->total_duration = $order->getTotalDuration();
-            $order->date = Carbon::parse(session('order.date')->toDateString());
-            $order->start_time = session('order.start_time');
-            $order->end_time = session('order.start_time');
-            $order->status = Order::STATUS_LOCKED;
-
-            if (session('order.place_type') === Place::TYPE_HOMECARE) {
-                $order->total_transport = $order->getTotalTransport();
-                $order->midwife_user_id = session('order.midwife_user_id');
-                $order->address_id = session('order.address_id');
-            }
-
-            if (session('order.place_type') === Place::TYPE_CLINIC) {
-                $order->room_id = session('order.room_id');
-            }
-
-            $order->save();
-
-            session()->forget('order');
-
-            return to_route('orders.show', $order->id);
-        });
     }
 
     private function currentActiveOrders()
