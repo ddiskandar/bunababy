@@ -2,11 +2,12 @@
 
 namespace App\Http\Livewire\Admin\User;
 
-use Livewire\Component;
-use Livewire\WithFileUploads;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Auth;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
+use Livewire\WithFileUploads;
+use Livewire\Component;
+use App\Models\Setting;
 
 class UpdateProfileInformation extends Component
 {
@@ -56,44 +57,58 @@ class UpdateProfileInformation extends Component
     {
         $this->validate();
 
-        $this->user->update([
-            'name' => $this->state['name'],
-            'email' => $this->state['email'],
-        ]);
+        try {
 
-        $this->user->profile->update([
-            'phone' => $this->state['phone'],
-            'ig' => $this->state['ig'],
-        ]);
-
-        if (isset($this->photo)) {
-            if($this->user->profile->photo) {
-                Storage::disk('s3')->delete($this->user->profile->photo);
-            }
-
-            $this->user->profile->update([
-                'photo' => $this->photo->storePublicly('photos', 's3'),
+            $this->user->update([
+                'name' => $this->state['name'],
+                'email' => $this->state['email'],
             ]);
 
-            return redirect()->route('user.profile');
-        }
+            $this->user->profile->update([
+                'phone' => $this->state['phone'],
+                'ig' => $this->state['ig'],
+            ]);
 
-        $this->emit('saved');
+            if (isset($this->photo)) {
+                if($this->user->profile->photo) {
+                    Storage::disk('s3')->delete($this->user->profile->photo);
+                }
+
+                $this->user->profile->update([
+                    'photo' => $this->photo->storePublicly('photos', 's3'),
+                ]);
+
+                return redirect()->route('user.profile');
+            }
+
+            $this->emit('saved');
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function deleteProfilePhoto()
     {
-        if(!$this->user->profile->photo) {
-            return back();
+        try {
+
+            if(!$this->user->profile->photo) {
+                return back();
+            }
+
+            Storage::disk('s3')->delete($this->user->profile->photo);
+
+            $this->user->profile->update([
+                'photo' => null,
+            ]);
+
+            return redirect()->route('user.profile');
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
         }
-
-        Storage::disk('s3')->delete($this->user->profile->photo);
-
-        $this->user->profile->update([
-            'photo' => null,
-        ]);
-
-        return redirect()->route('user.profile');
     }
 
     public function render()

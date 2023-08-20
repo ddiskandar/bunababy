@@ -73,5 +73,13 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('delete-all-notifications', function (User $user) {
             return $user->isOwner();
         });
+
+        Gate::define('manage-orders', function (User $user) {
+            return $user->isOwner() || $user->isAdmin();
+        });
+
+        Gate::define('set-order-status', function (User $user) {
+            return $user->isOwner() || $user->isAdmin() || $user->isMidwife();
+        });
     }
 }

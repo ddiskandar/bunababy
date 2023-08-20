@@ -2,16 +2,19 @@
 
 namespace App\Http\Livewire\Admin\Orders;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Filament\Notifications\Notification;
+use Livewire\Component;
+use Error;
+use App\Models\Treatment;
 use App\Models\Family;
 use App\Models\Order;
 use App\Models\Price;
-use App\Models\Treatment;
-use Error;
-use Filament\Notifications\Notification;
-use Livewire\Component;
 
 class SelectTreatments extends Component
 {
+    use AuthorizesRequests;
+
     public $order;
     public $families;
     public $selectedFamily;
@@ -60,6 +63,8 @@ class SelectTreatments extends Component
     public function delete($id)
     {
         try {
+            $this->authorize('manage-orders');
+
             $this->order->treatments()->detach($id);
 
             $treatment = Treatment::find($id);
@@ -86,6 +91,8 @@ class SelectTreatments extends Component
     public function save()
     {
         try {
+            $this->authorize('manage-orders');
+
             if (!$this->order->midwife_user_id) {
                throw new Error('Bidan belum dipilih!');
             }

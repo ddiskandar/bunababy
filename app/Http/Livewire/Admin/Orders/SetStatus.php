@@ -6,10 +6,13 @@ use App\Models\Order;
 use App\Models\Setting;
 use Carbon\Carbon;
 use Filament\Notifications\Notification;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class SetStatus extends Component
 {
+    use AuthorizesRequests;
+
     public $order;
 
     public $finishedAt;
@@ -32,6 +35,8 @@ class SetStatus extends Component
         $this->validate();
 
         try {
+            $this->authorize('set-order-status');
+
             $this->order->update([
                 'finished_at' => Carbon::createFromFormat('H:i', $this->finishedAt),
                 'status' => Order::STATUS_FINISHED,

@@ -2,16 +2,18 @@
 
 namespace App\Http\Livewire\Admin\User;
 
+use App\Models\Setting;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
 class UpdateUserPassword extends Component
 {
-    public $user;
     public $errorCurrentPasswordMessage;
-    public $current_password;
-    public $password;
     public $password_confirmation;
+    public $current_password;
+    public $user;
+    public $password;
 
     protected $rules = [
         'current_password' => 'required',
@@ -32,19 +34,25 @@ class UpdateUserPassword extends Component
     {
         $this->validate();
 
-        if (! isset($this->current_password) || ! Hash::check($this->current_password, $this->user->password)) {
-            return $this->errorCurrentPasswordMessage = 'Password sekarang yang anda berikan tidak sesuai.';
+        try {
+            if (! isset($this->current_password) || ! Hash::check($this->current_password, $this->user->password)) {
+                return $this->errorCurrentPasswordMessage = 'Password sekarang yang anda berikan tidak sesuai.';
+            }
+
+            $this->user->update([
+                'password' => Hash::make($this->password),
+            ]);
+
+            $this->current_password = '';
+            $this->password = '';
+            $this->password_confirmation = '';
+
+            $this->emit('saved');
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
         }
-
-        $this->user->update([
-            'password' => Hash::make($this->password),
-        ]);
-
-        $this->current_password = '';
-        $this->password = '';
-        $this->password_confirmation = '';
-
-        $this->emit('saved');
     }
 
     public function render()

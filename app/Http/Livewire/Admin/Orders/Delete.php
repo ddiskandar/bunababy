@@ -2,14 +2,18 @@
 
 namespace App\Http\Livewire\Admin\Orders;
 
-use App\Models\Order;
-use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Notifications\OrderDeletedNotification;
 use Filament\Notifications\Notification;
 use Livewire\Component;
+use App\Models\Setting;
+use App\Models\Order;
+use App\Models\User;
 
 class Delete extends Component
 {
+    use AuthorizesRequests;
+
     public $showDialog = false;
     public $order;
     public $note;
@@ -36,18 +40,24 @@ class Delete extends Component
     {
         $this->validate();
 
-        $owner = User::where('type', User::OWNER)->first();
+        try {
+            $this->authorize('manage-orders');
 
-        $owner->notify(new OrderDeletedNotification(auth()->user(), $this->order, $this->note));
+            $owner = User::where('type', User::OWNER)->first();
 
-        $this->order->delete();
+            $owner->notify(new OrderDeletedNotification(auth()->user(), $this->order, $this->note));
 
-        Notification::make()
-            ->title('Berhasil disimpan')
-            ->success()
-            ->send();
+            $this->order->delete();
 
-        return to_route('orders');
+            Notification::make()->title(Setting::DELETED_MESSAGE)->danger()->send();
+
+            return to_route('orders');
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
+
     }
 
     public function render()

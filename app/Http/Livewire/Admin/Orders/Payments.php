@@ -2,15 +2,18 @@
 
 namespace App\Http\Livewire\Admin\Orders;
 
-use App\Models\Order;
-use App\Models\Payment;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
-use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\Component;
+use App\Models\Setting;
+use App\Models\Payment;
+use App\Models\Order;
 
 class Payments extends Component
 {
+    use AuthorizesRequests;
     use WithFileUploads;
 
     public $order;
@@ -82,51 +85,66 @@ class Payments extends Component
             'adjustment_amount' => 'required|numeric',
         ]);
 
-        $this->order->update([
-            'adjustment_name' => $this->adjustment_name,
-            'adjustment_amount' => $this->adjustment_amount,
-        ]);
+        try {
+            $this->authorize('manage-payments');
 
-        Notification::make()
-            ->title('Berhasil disimpan')
-            ->success()
-            ->send();
+            $this->order->update([
+                'adjustment_name' => $this->adjustment_name,
+                'adjustment_amount' => $this->adjustment_amount,
+            ]);
 
-        $this->showSetAdjustmentDialog = false;
-        $this->emit('saved');
+            $this->showSetAdjustmentDialog = false;
+
+            $this->emit('saved');
+
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function save()
     {
         $this->validate();
 
-        DB::transaction(function () {
-            Payment::updateOrCreate(
-                [
-                    'id' => $this->state['id'] ?? Payment::max('id') + 1,
-                    'order_id' => $this->order->id,
-                ],
-                [
-                    'value' => $this->state['value'],
-                    'status' => $this->state['status'] ?? Payment::STATUS_VERIFIED,
-                    'verified_at' => now(),
-                    'note' => $this->state['note'] ?? '',
-                    'verified_by_id' => auth()->id(),
-                    'attachment' => $this->state['attachment'] ? $this->state['attachment']->storePublicly('attachments', 's3') : $this->payment->attachment,
-                ]
-            );
+        try {
+            $this->authorize('manage-payments');
 
-            $this->order->update([
-                'status' => Order::STATUS_LOCKED,
-            ]);
-        });
+            DB::transaction(function () {
+                Payment::updateOrCreate(
+                    [
+                        'id' => $this->state['id'] ?? Payment::max('id') + 1,
+                        'order_id' => $this->order->id,
+                    ],
+                    [
+                        'value' => $this->state['value'],
+                        'status' => $this->state['status'] ?? Payment::STATUS_VERIFIED,
+                        'verified_at' => now(),
+                        'note' => $this->state['note'] ?? '',
+                        'verified_by_id' => auth()->id(),
+                        'attachment' => $this->state['attachment']
+                            ? $this->state['attachment']->storePublicly('attachments', 's3')
+                            : $this->payment->attachment,
+                    ]
+                );
 
-        Notification::make()
-            ->title('Berhasil disimpan')
-            ->success()
-            ->send();
-        $this->showDialog = false;
-        $this->emit('saved');
+                $this->order->update([
+                    'status' => Order::STATUS_LOCKED,
+                ]);
+            });
+
+            $this->showDialog = false;
+
+            $this->emit('saved');
+
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()

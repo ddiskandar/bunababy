@@ -119,20 +119,6 @@
                             <x-input-error for="state.value" class="mt-2" />
                         </div>
 
-                        @if (!$dialogEditMode)
-                            <div class="py-4">
-                                <label class="block space-y-1">
-                                    <x-label>Bukti Pembayaran</x-label>
-                                    <input wire:model.defer="state.attachment"
-                                        class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100"
-                                        type="file" accept="image/*" id="photo" name="photo">
-                                </label>
-                                <p class="mt-2 text-xs">File Photo Maksimal 700 Kb.</p>
-                                <x-input-error for="state.attachment" class="mt-2" />
-                                <p class="mt-2 text-xs" wire:loading wire:target="state.attachment">Uploading...</p>
-                            </div>
-                        @endif
-
                         @if ($dialogEditMode && isset($payment->attachment))
                             <div class="space-y-1">
                                 <x-label>Bukti</x-label>
@@ -160,7 +146,17 @@
                             <x-textarea wire:model.lazy="state.note" class="w-full" type="text" id="state.note" />
                             <x-input-error for="state.note" class="mt-2" />
                         </div>
-
+                        <div class="space-y-1">
+                            <label class="block space-y-1">
+                                <x-label>Perbaharui Bukti Pembayaran</x-label>
+                                <input wire:model.defer="state.attachment"
+                                    class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100"
+                                    type="file" accept="image/*" id="photo" name="photo">
+                            </label>
+                            <p class="mt-2 text-xs">File Photo Maksimal 700 Kb.</p>
+                            <x-input-error for="state.attachment" class="mt-2" />
+                            <p class="mt-2 text-xs" wire:loading wire:target="state.attachment">Uploading...</p>
+                        </div>
                     </div>
 
                     <div class="py-4">
