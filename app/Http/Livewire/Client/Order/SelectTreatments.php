@@ -2,11 +2,13 @@
 
 namespace App\Http\Livewire\Client\Order;
 
+use Filament\Notifications\Notification;
+use Livewire\Component;
+use App\Models\Treatment;
+use App\Models\Setting;
 use App\Models\Place;
 use App\Models\Room;
-use App\Models\Treatment;
 use App\Models\User;
-use Livewire\Component;
 
 class SelectTreatments extends Component
 {
@@ -69,45 +71,63 @@ class SelectTreatments extends Component
 
     public function addTreatment()
     {
+        try {
+            if (session()->missing('order.addMinutes')) {
+                session()->put('order.addMinutes', 0);
+            }
 
-        if (session()->missing('order.addMinutes')) {
-            session()->put('order.addMinutes', 0);
+            session()->increment('order.addMinutes', $this->currentTreatment['duration']);
+
+            $family = collect(session('order.families'))->where('id', $this->family_id)->first();
+
+            session()->push('order.treatments', [
+                'treatment_id' => $this->currentTreatment['id'],
+                'treatment_name' => $this->currentTreatment['name'],
+                'treatment_desc' => $this->currentTreatment['desc'],
+                'treatment_price' => $this->currentTreatment['prices'][0]['amount'],
+                'treatment_duration' => $this->currentTreatment['duration'],
+                'family_id' => $this->family_id,
+                'family_name' => $family['name'],
+            ]);
+
+            $this->emit('treatmentAdded');
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
         }
-
-        session()->increment('order.addMinutes', $this->currentTreatment['duration']);
-
-        $family = collect(session('order.families'))->where('id', $this->family_id)->first();
-
-        session()->push('order.treatments', [
-            'treatment_id' => $this->currentTreatment['id'],
-            'treatment_name' => $this->currentTreatment['name'],
-            'treatment_desc' => $this->currentTreatment['desc'],
-            'treatment_price' => $this->currentTreatment['prices'][0]['amount'],
-            'treatment_duration' => $this->currentTreatment['duration'],
-            'family_id' => $this->family_id,
-            'family_name' => $family['name'],
-        ]);
-
-        $this->emit('treatmentAdded');
     }
 
     public function deleteTreatment($index, $treatmentId)
     {
-        $treatment = Treatment::find($treatmentId);
+        try {
+            $treatment = Treatment::find($treatmentId);
 
-        session()->forget('order.treatments.' . $index);
-        session()->decrement('order.addMinutes', $treatment->duration);
+            session()->forget('order.treatments.' . $index);
+            session()->decrement('order.addMinutes', $treatment->duration);
 
-        $this->emit('treatmentDeleted');
+            $this->emit('treatmentDeleted');
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function addFamily()
     {
-        session()->push('order.families', [
-            'id' => $this->family_id,
-            'name' => 'pulan',
-            'type' => 'buna',
-        ]);
+        try {
+
+            session()->push('order.families', [
+                'id' => $this->family_id,
+                'name' => 'pulan',
+                'type' => 'buna',
+            ]);
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()

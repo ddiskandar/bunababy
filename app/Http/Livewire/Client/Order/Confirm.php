@@ -2,16 +2,14 @@
 
 namespace App\Http\Livewire\Client\Order;
 
+use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\DB;
+use Livewire\Component;
+use Carbon\Carbon;
+use App\Models\Setting;
 use App\Models\Family;
 use App\Models\Order;
 use App\Models\Place;
-use App\Models\User;
-use App\Notifications\NewOrderNotification;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Notification;
-use Filament\Notifications\Notification as FlashNotification;
-use Livewire\Component;
 
 class Confirm extends Component
 {
@@ -19,20 +17,24 @@ class Confirm extends Component
 
     public function confirm()
     {
-        if ($this->clashCheck()) {
-            Notification::make()
-                ->title('Jadwal Reservasi Bentrok!')
-                ->danger()->send();
+        try {
+            if ($this->clashCheck()) {
+                Notification::make()->title('Jadwal Reservasi Bentrok!')->danger()->send();
+                return back();
+            }
 
-            return back();
+            $this->orderNow();
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
         }
-
-        $this->orderNow();
     }
 
     private function clashCheck()
     {
-        $startDateTime = Carbon::parse(Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time'));
+        $startDateTime = Carbon::parse(
+            Carbon::parse(session('order.date'))->toDateString() . ' ' . session('order.start_time')
+        );
 
         $currentActiveOrders = Order::query()
             ->whereDate('date', session('order.date'))
@@ -54,7 +56,6 @@ class Confirm extends Component
     private function orderNow()
     {
         DB::transaction(function () {
-
             $order = new Order();
             $order->place_id = session('order.place_id');
             $order->client_user_id = auth()->id();
@@ -101,10 +102,7 @@ class Confirm extends Component
 
             event(new \App\Events\NewOrderCreated($order));
 
-            FlashNotification::make()
-                ->title('Order created!')
-                ->success()
-                ->send();
+            Notification::make()->title('Order created!')->success()->send();
 
             return redirect()->route('order.show', $order->id);
         });

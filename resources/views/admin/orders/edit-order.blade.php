@@ -118,7 +118,8 @@
             @if (isset($state['addressId']))
                 <div class="space-y-1">
                     <x-label for="state.date">Tanggal Treatment</x-label>
-                    <x-input wire:model="state.date" class="w-full" type="date" id="state.date" />
+                    <x-input wire:model="state.date" class="w-full" type="date" id="state.date"
+                        min="{{ today()->toDateString() }}" max="{{ today()->addMonths(6)->toDateString() }}" />
                     <x-input-error for="state.date" class="mt-2" />
                 </div>
             @endif

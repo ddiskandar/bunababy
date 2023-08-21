@@ -10,6 +10,7 @@ use Livewire\Component;
 use App\Models\Payment;
 use App\Models\Order;
 use App\Models\Setting;
+use Illuminate\Support\Facades\Storage;
 
 class ManagePayments extends Component
 {
@@ -86,7 +87,7 @@ class ManagePayments extends Component
                 return $this->setErrorBag(['state.value' => 'Besar pembayaran harus berupa nilai angka.']);
             }
 
-            Payment::updateOrCreate(
+            $payment = Payment::updateOrCreate(
                 [
                     'id' => $this->state['id'] ?? Payment::max('id') + 1,
                     'order_id' => $this->order->id,
@@ -97,11 +98,20 @@ class ManagePayments extends Component
                     'verified_by_id' => auth()->id(),
                     'verified_at' => now(),
                     'note' => $this->state['note'] ?? '',
-                    'attachment' => $this->attachment
-                            ? $this->attachment->storePublicly('attachments', 's3')
-                            : $this->state['attachment'],
                 ]
             );
+
+            if ($this->attachment) {
+
+                if(isset($this->state['attachment'])) {
+                    Storage::disk('s3')->delete($this->state['attachment']);
+                }
+
+                $payment->update([
+                    'attachment' => $this->attachment->storePublicly('attachments', 's3'),
+                ]);
+
+            }
 
             $this->order->update([
                 'status' => Order::STATUS_LOCKED,
