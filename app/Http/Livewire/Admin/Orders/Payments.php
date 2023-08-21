@@ -10,6 +10,7 @@ use Livewire\Component;
 use App\Models\Setting;
 use App\Models\Payment;
 use App\Models\Order;
+use Illuminate\Support\Facades\Storage;
 
 class Payments extends Component
 {
@@ -113,7 +114,7 @@ class Payments extends Component
             $this->authorize('manage-payments');
 
             DB::transaction(function () {
-                Payment::updateOrCreate(
+                $payment = Payment::updateOrCreate(
                     [
                         'id' => $this->state['id'] ?? Payment::max('id') + 1,
                         'order_id' => $this->order->id,
@@ -124,11 +125,20 @@ class Payments extends Component
                         'verified_at' => now(),
                         'note' => $this->state['note'] ?? '',
                         'verified_by_id' => auth()->id(),
-                        'attachment' => $this->state['attachment']
-                            ? $this->state['attachment']->storePublicly('attachments', 's3')
-                            : $this->payment->attachment,
                     ]
                 );
+
+                if ($this->state['attachment']) {
+
+                    if($this->payment->attachment) {
+                        Storage::disk('s3')->delete($this->payment->attachment);
+                    }
+
+                    $payment->update([
+                        'attachment' => $this->state['attachment']->storePublicly('attachments', 's3'),
+                    ]);
+
+                }
 
                 $this->order->update([
                     'status' => Order::STATUS_LOCKED,

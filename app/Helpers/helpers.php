@@ -24,7 +24,7 @@ if (!function_exists('rupiah')) {
 if (!function_exists('tanggal')) {
     function tanggal($value)
     {
-        return $value->isoFormat('dddd, D MMMM G');
+        return $value?->isoFormat('dddd, D MMMM G');
     }
 }
 
