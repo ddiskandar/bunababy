@@ -68,7 +68,7 @@ class SelectTime extends Component
                 }
             }
             $new->put('status', ($new->contains('booked')) ? 'booked' : 'empty');
-            $new->put('slot', Carbon::parse($slot->time)->gte(Carbon::parse('12:00:00')) ? 'siang' : 'pagi');
+            $new->put('slot', ($slot->time > '12:00:00') ? 'siang' : 'pagi');
 
             $data->push($new);
         }
