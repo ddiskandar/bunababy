@@ -65,17 +65,7 @@
 
                 @foreach ($schedules as $schedule)
                     <div wire:key="{{ $schedule['id'] }}"
-                        class="
-                    row-start-{{ $schedule['row-start'] }}
-                    col-start-{{ $schedule['col-start'] }}
-                    row-span-{{ $schedule['row-span'] }}
-                    text-slate-800 m-1 p-2 relative overflow-y-scroll
-                    @if ($schedule['status'] === 'Aktif') bg-green-400/20 border border-green-700/10
-                    @elseif ($schedule['status'] === 'Selesai')
-                        bg-blue-400/20 border border-blue-700/10
-                    @else
-                        bg-red-400/20 border border-red-700/10 @endif
-                ">
+                        class="text-slate-800 m-1 p-2 relative overflow-y-scroll {{ $schedule['classes'] }}">
                         <a href="{{ route('orders.show', $schedule['id']) }}" class="flex flex-col">
                             <span class="text-xs">{{ $schedule['time'] }}</span>
                             <span class="mt-4 text-xs">{{ $schedule['place'] }}</span>

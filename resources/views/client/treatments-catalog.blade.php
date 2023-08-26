@@ -26,7 +26,7 @@
         <div class=" snap-start">
         </div>
         @foreach ($treatments as $treatment)
-            <div wire:key="{{ $treatment->id }}"
+            <div
                 class="flex flex-col justify-between flex-none gap-1 p-6 rounded shadow-lg shadow-brand-50 snap-start w-72 border-brand-200 ">
                 <div class="space-y-1">
                     <p class="text-xs text-brand-100">{{ $treatment->category->name }}</p>
