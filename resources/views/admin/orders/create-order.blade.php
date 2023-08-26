@@ -118,7 +118,7 @@
                             <x-label for="time">Waktu Treatment</x-label>
                             <div class="-mt-4 divide-y divide-brand-50">
                                 @foreach ($data as $key => $value)
-                                    <div class="py-4">
+                                    <div wire:key="{{ $key }}" class="py-4">
                                         <h3 class="mb-2 text-sm font-semibold">{{ $key }}</h3>
                                         <div class="flex flex-wrap gap-2">
                                             @foreach ($value as $slot)

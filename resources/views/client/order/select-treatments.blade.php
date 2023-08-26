@@ -10,7 +10,7 @@
     <div class="w-full bg-white" x-data="{ selected: 1 }">
         <ul class="shadow-box">
             @foreach ($categories as $category)
-                <li class="relative border-b border-brand-50">
+                <li wire:key="{{ $category['name'] }}" class="relative border-b border-brand-50">
                     <button type="button" class="w-full px-6 py-4 text-left"
                         x-on:click="selected !== {{ $loop->iteration }} ? selected = {{ $loop->iteration }} : selected = null">
                         <div class="flex items-center justify-between">
@@ -35,7 +35,7 @@
                             <ul class="grid gap-4 xl:grid-cols-2">
 
                                 @foreach ($category['treatments'] as $treatment)
-                                    <li class="p-6 border rounded border-slate-200">
+                                    <li wire:key="{{ $treatment['id'] }}" class="p-6 border rounded border-slate-200">
                                         <div class="text-xl font-semibold leading-tight">{{ $treatment['name'] }}
                                         </div>
                                         <div class="text-sm text-slate-400">{{ $treatment['desc'] }}</div>

@@ -41,7 +41,7 @@
 
                         <div class="relative z-0 mt-1 border border-gray-200 rounded-lg cursor-pointer">
                             @foreach ($addresses as $index => $address)
-                                <button type="button"
+                                <button wire:key="{{ $address->id }}" type="button"
                                     class="relative px-4 py-3 inline-flex w-full rounded-lg {{ $index > 0 ? 'border-t border-gray-200 rounded-t-none' : '' }} {{ !$loop->last ? 'rounded-b-none' : '' }}"
                                     wire:click="setSelectedAddress('{{ $address->id }}')">
                                     <div @class([
@@ -144,7 +144,7 @@
                     <x-label for="time">Waktu Treatment</x-label>
                     <div class="-mt-4 divide-y divide-brand-50">
                         @foreach ($data as $key => $value)
-                            <div class="py-4">
+                            <div wire:key="{{ $key }}" class="py-4">
                                 <h3 class="mb-2 text-sm font-semibold">{{ $key }}</h3>
                                 <div class="flex flex-wrap gap-2">
                                     @foreach ($value as $slot)

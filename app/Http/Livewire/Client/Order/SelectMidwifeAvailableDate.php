@@ -81,10 +81,7 @@ class SelectMidwifeAvailableDate extends Component
                 Carbon::parse($this->selectedMonth)->startOfMonth()->startOfWeek(),
                 Carbon::parse($this->selectedMonth)->endOfMonth()->endOfWeek()
             ])
-            ->where(function($query) {
-                $query->where('status', Order::STATUS_LOCKED)
-                    ->orWhere('status', Order::STATUS_FINISHED);
-            })
+            ->where('status', Order::STATUS_LOCKED)
             ->select('id', 'place_id', 'midwife_user_id', 'status', 'date', 'start_time', 'end_time')
             ->get();
     }

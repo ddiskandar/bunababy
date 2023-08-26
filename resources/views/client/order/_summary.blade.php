@@ -35,7 +35,7 @@
         <x-title>Treatment dan Rincian Pembayaran</x-title>
         <ul class="divide-y divide-brand-50">
             @foreach ($order->treatments as $treatment)
-                <li class="flex items-center justify-between py-2 text-sm">
+                <li wire:key="{{ $treatment->id }}" class="flex items-center justify-between py-2 text-sm">
                     <div>
                         <div class="font-medium">{{ $treatment->name }}</div>
                         <div class="truncate text-slate-600 ">

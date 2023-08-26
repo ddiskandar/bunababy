@@ -38,13 +38,13 @@ class SelectClinicRoomAvailableDate extends Component
             ->format('Y-M');
     }
 
-    public function selectDate($d, $m, $y)
+    public function selectDate($date)
     {
         if (session()->missing('order.place_id')) {
             return back();
         }
 
-        $date = Carbon::create($y, $m, $d);
+        $date = Carbon::create($date);
 
         if ($date->lt(today())) {
             return back();
