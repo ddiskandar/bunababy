@@ -151,8 +151,13 @@ class SelectMidwifeAvailableDate extends Component
                 if ($order->startDateTime->isSameDay($date)) {
                     foreach ($this->slots as $slot) {
                         if (Carbon::parse($date->toDateString() . $slot->time)
-                            ->between($order->startDateTime, $order->endDateTime)) {
+                            ->between(
+                                $order->startDateTime,
+                                $order->endDateTime
+                            )) {
                             $slotBooked->put($slot->time, 'booked');
+                        } elseif ($slotBooked->has($slot->time)) {
+                            // skip
                         } else {
                             $slotBooked->put($slot->time, 'empty');
                         }
@@ -160,7 +165,6 @@ class SelectMidwifeAvailableDate extends Component
                 }
             }
 
-            // dump($date->day, $slotBooked);
 
             $status = $this->getStatus($slotBooked);
 

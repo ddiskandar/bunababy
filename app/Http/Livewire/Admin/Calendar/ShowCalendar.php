@@ -237,7 +237,10 @@ class ShowCalendar extends Component
                     ? $this->colStart['clinics'][$order->room_id]
                     : $this->colStart['midwives'][$order->midwife_user_id],
                 'row-start' => $this->rowStart[$order->startDateTime->isoFormat('HH:mm')],
-                'row-span' => (int) round($order->startDateTime->diffInMinutes($order->endDateTime) / 15),
+                'row-span' => (int) round($order->startDateTime
+                    ->diffInMinutes(
+                        $order->endDateTime->subMinutes(Order::calculateTransportDuration($order->place->type))
+                    ) / 15),
                 'id' => $order->id,
                 'client_name' => $order->client->name,
                 'time' => $order->getLongTime(),
