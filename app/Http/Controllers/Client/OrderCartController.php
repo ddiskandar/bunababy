@@ -21,10 +21,6 @@ class OrderCartController extends Controller
             session()->put('order.status', 'AuthUser');
         }
 
-        if (session()->missing('order')) {
-            return redirect()->route('order.create');
-        }
-
         if (!$this->hasSelectedLocation()){
             Notification::make()->title('Pilih lokasi dulu ya')->danger()->send();
 

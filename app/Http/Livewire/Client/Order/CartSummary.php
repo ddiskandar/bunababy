@@ -38,10 +38,7 @@ class CartSummary extends Component
     public function checkout(): Redirector|RedirectResponse
     {
         if ($this->clashCheck()) {
-            Notification::make()
-                ->title('Slot reservasi tidak cukup tersedia!')
-                ->danger()->send();
-
+            Notification::make()->title('Slot reservasi tidak cukup tersedia!')->danger()->send();
             return back();
         }
 
@@ -60,10 +57,10 @@ class CartSummary extends Component
                 fn ($query) => $query->where('room_id', session('order.room_id'))
             )
             ->activeBetween(
-                $startDateTime->toDateTimeString(),
+                $startDateTime->toTimeString(),
                 $startDateTime->addMinutes(
                     (int) session('order.addMinutes') + (int) session('order.place_transport_duration')
-                )->toDateTimeString()
+                )->toTimeString()
             );
 
         return $currentActiveOrders->exists();

@@ -24,6 +24,7 @@ class Confirm extends Component
             }
 
             $this->orderNow();
+
         } catch (\Throwable $th) {
             report($th->getMessage());
             Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
@@ -98,13 +99,14 @@ class Confirm extends Component
                 ]);
             }
 
-            session()->forget('order');
-
             event(new \App\Events\NewOrderCreated($order));
 
             Notification::make()->title('Order created!')->success()->send();
 
+            // session()->forget('order');
+
             return redirect()->route('order.show', $order->id);
+
         });
     }
 
