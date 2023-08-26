@@ -101,17 +101,8 @@ class Order extends Model
 
     public function getEndDateTimeAttribute()
     {
-        return Carbon::parse(
-            Carbon::parse($this->date)->toDateString() . ' ' . $this->end_time)
-                ->addMinutes($this->calculateTransportDuration($this->place->type)
-        );
-    }
-
-    public static function calculateTransportDuration($placeType = 0)
-    {
-        return $placeType === Place::TYPE_HOMECARE
-            ? 40 // TODO : make this one place reference
-            : 0;
+        return Carbon::parse(Carbon::parse($this->date)->toDateString() . ' ' . $this->end_time)
+            ->addMinutes($this->place->transport_duration);
     }
 
     public function getStatusString()

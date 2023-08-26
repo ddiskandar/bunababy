@@ -239,7 +239,7 @@ class ShowCalendar extends Component
                 'row-start' => $this->rowStart[$order->startDateTime->isoFormat('HH:mm')],
                 'row-span' => (int) round($order->startDateTime
                     ->diffInMinutes(
-                        $order->endDateTime->subMinutes(Order::calculateTransportDuration($order->place->type))
+                        $order->endDateTime->subMinutes($order->place->transport_duration)
                     ) / 15),
                 'id' => $order->id,
                 'client_name' => $order->client->name,
