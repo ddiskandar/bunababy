@@ -82,7 +82,7 @@ class EditOrder extends Component
             ->where('time', $order->startDateTime->toTimeString())
             ->first()->id;
 
-        $this->state['totalDuration'] = $order->total_duration;
+        $this->state['totalDuration'] = $order->total_duration + $order->place->transport_duration;
         $this->state['totalTransport'] = $order->total_transport;
     }
 

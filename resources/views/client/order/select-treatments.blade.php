@@ -88,8 +88,9 @@
                                                         </button>
                                                     </div>
                                                 @else
-                                                    <button wire:click="confirmAddTreatment({{ $treatment['id'] }})"
-                                                        class="px-4 py-1 text-xs text-white rounded-full bg-brand-200">Tambah
+                                                    <button wire:loading.attr="disabled"
+                                                        wire:click="confirmAddTreatment({{ $treatment['id'] }})"
+                                                        class="px-4 py-1 text-xs text-white transition rounded-full bg-brand-200 disabled:opacity-25">Tambah
                                                     </button>
                                                 @endif
 

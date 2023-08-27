@@ -18,6 +18,9 @@ class SelectTime extends Component
 
     public function mount()
     {
+        session()->forget('order.start_time');
+        session()->forget('order.start_time_id');
+
         if (auth()->check()) {
             session()->put('order.status', 'authUser');
         }
