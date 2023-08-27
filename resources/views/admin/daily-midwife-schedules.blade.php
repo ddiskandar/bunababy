@@ -3,7 +3,7 @@
         <div class="text-lg font-semibold">Schedules</div>
         <div class="flex items-center justify-between gap-4 text-sm">
             <div>
-                {{ $selectedDay->isoFormat('dddd, D MMMM YYYY') }}
+                {!! $selectedDay->isSameDay(today()) ? 'Hari Ini' : $selectedDay->isoFormat('dddd, D MMMM YYYY') !!}
             </div>
             <div class="inline-flex">
                 <button wire:click="prevDay" type="button"
