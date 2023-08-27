@@ -81,7 +81,7 @@ class SelectMidwifeAvailableDate extends Component
                 Carbon::parse($this->selectedMonth)->startOfMonth()->startOfWeek(),
                 Carbon::parse($this->selectedMonth)->endOfMonth()->endOfWeek()
             ])
-            ->locked()
+            ->where('status', Order::STATUS_LOCKED)
             ->select('id', 'place_id', 'midwife_user_id', 'status', 'date', 'start_time', 'end_time')
             ->get();
     }
@@ -94,7 +94,7 @@ class SelectMidwifeAvailableDate extends Component
                 Carbon::parse($this->selectedMonth)->startOfMonth()->startOfWeek(),
                 Carbon::parse($this->selectedMonth)->endOfMonth()->endOfWeek()
             ])
-            ->where(function ($query) {
+            ->where(function($query) {
                 $query->where('type', Timetable::TYPE_LEAVE)
                     ->orWhere('type', Timetable::TYPE_CLINIC);
             })
@@ -148,14 +148,20 @@ class SelectMidwifeAvailableDate extends Component
                 if ($order->startDateTime->isSameDay($date)) {
                     foreach ($this->slots as $slot) {
                         if (Carbon::parse($date->toDateString() . $slot->time)
-                            ->between($order->startDateTime, $order->endDateTime)) {
+                            ->between(
+                                $order->startDateTime,
+                                $order->endDateTime
+                            )) {
                             $slotBooked->put($slot->time, 'booked');
+                        } elseif ($slotBooked->has($slot->time)) {
+                            // skip
                         } else {
                             $slotBooked->put($slot->time, 'empty');
                         }
                     }
                 }
             }
+
 
             $status = $this->getStatus($slotBooked);
 
@@ -173,6 +179,7 @@ class SelectMidwifeAvailableDate extends Component
 
         if ($this->readyToLoad) {
             $data = $this->getData();
+            // dump($data);
         }
 
         return view('client.order.select-midwife-available-date', [

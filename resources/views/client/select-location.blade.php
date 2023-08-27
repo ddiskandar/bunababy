@@ -39,15 +39,15 @@
             <div class="flex flex-col overflow-hidden border divide-y border-slate-100">
                 <div class="relative w-full mx-auto -my-px overflow-auto bg-white h-80 ring-1 ring-slate-900/5">
                     @foreach ($kabupatens as $kabupaten)
-                        <div class="relative">
+                        <div wire:key="{{ $kabupaten->id }}" class="relative">
                             <div
                                 class="sticky top-0 flex items-center px-4 py-3 text-sm font-semibold text-slate-900 bg-slate-50/90 backdrop-blur-sm ring-1 ring-slate-900/10 ">
                                 {{ $kabupaten->name }}
                             </div>
                             <div class="divide-y ">
                                 @foreach ($kabupaten->kecamatans as $kecamatan)
-                                    <div wire:click="setLocation({{ $kecamatan->id }})" x-on:click="open = false"
-                                        class="flex items-center gap-4 p-4 cursor-pointer">
+                                    <div wire:key="{{ $kecamatan->id }}" wire:click="setLocation({{ $kecamatan->id }})"
+                                        x-on:click="open = false" class="flex items-center gap-4 p-4 cursor-pointer">
                                         <strong class="text-sm font-medium text-slate-900 ">
                                             {{ $kecamatan->name }}
                                         </strong>

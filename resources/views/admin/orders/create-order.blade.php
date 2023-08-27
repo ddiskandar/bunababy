@@ -118,7 +118,7 @@
                             <x-label for="time">Waktu Treatment</x-label>
                             <div class="-mt-4 divide-y divide-brand-50">
                                 @foreach ($data as $key => $value)
-                                    <div class="py-4">
+                                    <div wire:key="{{ $state['date'] . $key }}" class="py-4">
                                         <h3 class="mb-2 text-sm font-semibold">{{ $key }}</h3>
                                         <div class="flex flex-wrap gap-2">
                                             @foreach ($value as $slot)
@@ -134,7 +134,8 @@
                                                     @endphp
 
                                                     @if ($slot['status'] === 'empty')
-                                                        <button wire:click="selectTime({{ $slot['id'] }})"
+                                                        <button wire:key="{{ $state['date'] . $slot['id'] }}"
+                                                            wire:click="selectTime({{ $slot['id'] }})"
                                                             @class([
                                                                 'inline-flex items-center justify-center w-14 md:w-20  text-xs font-semibold leading-5 border rounded-full ',
                                                                 'border-slate-200 ' => !$isSelected,
@@ -149,17 +150,18 @@
                                                             <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>
                                                         </button>
                                                     @else
-                                                        <button @class([
-                                                            'inline-flex items-center justify-center text-xs font-semibold leading-5 text-red-200 border border-red-200 rounded-full cursor-not-allowed w-14 md:w-20 bg-red-50',
-                                                            'ring-2 ring-offset-1 ring-brand-100/50' => $inRange,
-                                                        ])>
+                                                        <button wire:key="{{ $state['date'] . $slot['id'] }}"
+                                                            @class([
+                                                                'inline-flex items-center justify-center text-xs font-semibold leading-5 text-red-200 border border-red-200 rounded-full cursor-not-allowed w-14 md:w-20 bg-red-50',
+                                                                'ring-2 ring-offset-1 ring-brand-100/50' => $inRange,
+                                                            ])>
                                                             <span class="w-2 h-2 mr-1 bg-red-300 rounded-full"></span>
                                                             <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>
                                                         </button>
                                                     @endif
                                                 @else
                                                     {{-- Slot tidak aktif --}}
-                                                    <button
+                                                    <button wire:key="{{ $state['date'] . $slot['id'] }}"
                                                         class="inline-flex items-center justify-center text-xs font-semibold leading-5 border rounded-full cursor-not-allowed w-14 md:w-20 text-slate-200 border-slate-200 bg-slate-50">
                                                         <span class="w-2 h-2 mr-1 rounded-full bg-slate-300"></span>
                                                         <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>

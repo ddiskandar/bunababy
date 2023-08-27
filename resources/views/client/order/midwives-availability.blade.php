@@ -14,7 +14,7 @@
             @endforeach
 
             @foreach ($midwives['notAvailable'] as $midwife)
-                <div class="px-4 py-2 border rounded border-slate-100">
+                <div wire:key="{{ $midwife->id }}" class="px-4 py-2 border rounded border-slate-100">
                     <div>
                         <div class="flex items-center">
                             <img src="{{ $midwife->profile_photo_url }}" alt="User Avatar"

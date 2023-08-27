@@ -55,14 +55,20 @@ class SelectTime extends Component
             $new = collect(['id' => $slot->id]);
             $new->put('time', $slot->time);
             foreach ($orders as $order) {
-                if (Carbon::parse(session('order.date')->toDateString() . $slot->time)->between($order->startDateTime, $order->endDateTime->addMinutes($order->place->transport_duration))) {
+                if (Carbon::parse(
+                    session('order.date')->toDateString() . $slot->time)
+                        ->between(
+                            $order->startDateTime,
+                            $order->endDateTime->addMinutes($order->place->transport_duration)
+                        )
+                    ) {
                     $new->put($order->id, 'booked');
                 } else {
                     $new->put($order->id, 'empty');
                 }
             }
             $new->put('status', ($new->contains('booked')) ? 'booked' : 'empty');
-            $new->put('slot', Carbon::parse($slot->time)->gte(Carbon::parse('12:00:00')) ? 'siang' : 'pagi');
+            $new->put('slot', ($slot->time > '12:00:00') ? 'siang' : 'pagi');
 
             $data->push($new);
         }

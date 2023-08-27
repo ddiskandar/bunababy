@@ -53,11 +53,13 @@
             <div class="text-sm font-semibold text-center text-gray-500">Min</div>
             @foreach ($data as $date)
                 @if ($date['available'])
-                    <div wire:click="selectDate('{{ $date['path'] }}')" @class([
-                        'flex flex-col items-center justify-center',
-                        'text-gray-700' => $date['withinMonth'],
-                        'text-gray-300' => !$date['withinMonth'],
-                    ])>
+                    <div wire:key="{{ $date['path'] }}"
+                        @if ($date['status'] !== 'penuh') wire:click="selectDate('{{ $date['path'] }}')" @endif
+                        @class([
+                            'flex flex-col items-center justify-center',
+                            'text-gray-700' => $date['withinMonth'],
+                            'text-gray-300' => !$date['withinMonth'],
+                        ])>
 
                         <div @class([
                             'flex flex-col items-center px-4 py-2',
@@ -74,7 +76,8 @@
                         </div>
                     </div>
                 @else
-                    <div class="flex flex-col items-center justify-center text-gray-300 cursor-not-allowed">
+                    <div wire:key="{{ $date['path'] }}"
+                        class="flex flex-col items-center justify-center text-gray-300 cursor-not-allowed">
                         <div class="px-4 py-2">
                             {{ $date['day'] }}
                         </div>

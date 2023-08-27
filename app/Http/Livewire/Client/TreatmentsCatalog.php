@@ -13,7 +13,9 @@ class TreatmentsCatalog extends Component
     public function render()
     {
         $treatments = Treatment::active()
-            ->where('category_id', 'LIKE', '%' . $this->filterCategory)
+            ->when($this->filterCategory !== '',
+                fn ($query) => $query->where('category_id',  $this->filterCategory),
+            )
             ->orderBy('order')
             ->select('id', 'name', 'desc', 'duration', 'category_id')
             ->with('category:id,name')

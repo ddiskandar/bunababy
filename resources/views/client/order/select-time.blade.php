@@ -12,7 +12,7 @@
         </div>
         <div class="ml-6 -mt-4 divide-y divide-brand-50">
             @foreach ($data as $key => $value)
-                <div class="py-4">
+                <div wire:key="{{ $value }}" class="py-4">
                     <h3 class="mb-2 text-sm font-semibold">{{ $key }}</h3>
                     <div class="flex flex-wrap gap-2">
                         @foreach ($value as $slot)
@@ -27,12 +27,13 @@
                                 @endphp
 
                                 @if ($slot['status'] === 'empty')
-                                    <button wire:click="selectTime({{ $slot['id'] }})" @class([
-                                        'inline-flex items-center justify-center w-14 md:w-20  text-xs font-semibold leading-5 border rounded-full ',
-                                        'border-slate-200 ' => !$isSelected,
-                                        'border-transparent bg-brand-50 text-brand-200' => $isSelected,
-                                        'ring-2 ring-offset-1 ring-brand-100/50' => $inRange,
-                                    ])>
+                                    <button wire:key="{{ $slot['id'] }}" wire:click="selectTime({{ $slot['id'] }})"
+                                        @class([
+                                            'inline-flex items-center justify-center w-14 md:w-20 text-xs font-semibold leading-5 border rounded-full',
+                                            'border-slate-200 ' => !$isSelected,
+                                            'border-transparent bg-brand-50 text-brand-200' => $isSelected,
+                                            'ring-2 ring-offset-1 ring-brand-100/50' => $inRange,
+                                        ])>
                                         <span @class([
                                             'w-2 h-2 mr-1 rounded-full ',
                                             'bg-green-600' => !$isSelected,
@@ -50,7 +51,7 @@
                                     </button>
                                 @endif
                             @else
-                                <button
+                                <button wire:key="{{ $slot['id'] }}"
                                     class="inline-flex items-center justify-center text-xs font-semibold leading-5 border rounded-full cursor-not-allowed w-14 md:w-20 text-slate-200 border-slate-200 bg-slate-50">
                                     <span class="w-2 h-2 mr-1 rounded-full bg-slate-300"></span>
                                     <span>{{ \Carbon\Carbon::parse($slot['time'])->format('H:i') }}</span>

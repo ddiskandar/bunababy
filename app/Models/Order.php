@@ -101,7 +101,8 @@ class Order extends Model
 
     public function getEndDateTimeAttribute()
     {
-        return Carbon::parse(Carbon::parse($this->date)->toDateString() . ' ' . $this->end_time);
+        return Carbon::parse(Carbon::parse($this->date)->toDateString() . ' ' . $this->end_time)
+            ->addMinutes($this->place->transport_duration);
     }
 
     public function getStatusString()

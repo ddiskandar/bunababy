@@ -48,7 +48,7 @@ class CreateOrder extends Component
     public function setSelectedPlace()
     {
         try {
-            if (! isset($this->state['placeId'])) {
+            if (!isset($this->state['placeId'])) {
                 $this->state['placeId'] = 1;
             }
 
@@ -62,19 +62,20 @@ class CreateOrder extends Component
         }
     }
 
-    private function setAddMinutes()
-    {
-        $this->state['addMinutes'] = $this->selectedPlace->transport_duration;
-    }
-
     private function resetOnPlaceChange()
     {
         session()->forget('order');
         $this->state['roomId'] = null;
         $this->state['startTime'] = null;
         $this->state['startTimeId'] = null;
+        $this->state['addMinutes'] = $this->selectedPlace->transport_duration;
         $this->selectedMidwife = null;
-        $this->setAddMinutes();
+    }
+
+    public function updatedStateDate()
+    {
+        $this->state['startTime'] = null;
+        $this->state['startTimeId'] = null;
     }
 
     public function clientSelected($id)
@@ -128,7 +129,7 @@ class CreateOrder extends Component
                 $order->client_user_id = $this->selectedClient->id;
                 $order->total_price = $order->getTotalPrice();
                 $order->total_duration = $order->getTotalDuration();
-                $order->date = Carbon::parse(session('order.date')->toDateString());
+                $order->date = session('order.date');
                 $order->start_time = session('order.start_time');
                 $order->end_time = session('order.start_time');
                 $order->status = Order::STATUS_LOCKED;
@@ -172,10 +173,10 @@ class CreateOrder extends Component
                 fn ($query) => $query->where('room_id', session('order.room_id'))
             )
             ->activeBetween(
-                $startDateTime->toDateTimeString(),
+                $startDateTime->toTimeString(),
                 $startDateTime->addMinutes(
                     (int) session('order.addMinutes')
-                )->toDateTimeString()
+                )->toTimeString()
             );
     }
 
@@ -212,7 +213,7 @@ class CreateOrder extends Component
                     }
                 }
                 $new->put('status', ($new->contains('booked')) ? 'booked' : 'empty');
-                $new->put('slot', Carbon::parse($slot->time)->gte(Carbon::parse('12:00:00')) ? 'siang' : 'pagi');
+                $new->put('slot', ($slot->time > '12:00:00') ? 'siang' : 'pagi');
 
                 $data->push($new);
             }

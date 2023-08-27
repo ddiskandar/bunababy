@@ -231,13 +231,26 @@ class ShowCalendar extends Component
             ])
             ->get();
 
+        $bg = [
+            Order::STATUS_UNPAID => 'bg-red-400/20 border border-red-700/10',
+            Order::STATUS_LOCKED => 'bg-green-400/20 border border-green-700/10',
+            Order::STATUS_FINISHED => 'bg-blue-400/20 border border-blue-700/10',
+        ];
+
         foreach ($orders as $order) {
-            $schedules->push([
-                'col-start' => ($order->place->type === Place::TYPE_CLINIC && $order->midwife_user_id === null)
+            $colStart = ($order->place->type === Place::TYPE_CLINIC && $order->midwife_user_id === null)
                     ? $this->colStart['clinics'][$order->room_id]
-                    : $this->colStart['midwives'][$order->midwife_user_id],
-                'row-start' => $this->rowStart[$order->startDateTime->isoFormat('HH:mm')],
-                'row-span' => (int) round($order->startDateTime->diffInMinutes($order->endDateTime) / 15),
+                    : $this->colStart['midwives'][$order->midwife_user_id];
+
+            $rowStart = $this->rowStart[$order->startDateTime->isoFormat('HH:mm')];
+
+            $rowSpan = (int) round($order->startDateTime
+                    ->diffInMinutes(
+                        $order->endDateTime->subMinutes($order->place->transport_duration)
+                    ) / 15);
+
+            $schedules->push([
+                'classes' => "{$bg[$order->status]} col-start-{$colStart} row-start-{$rowStart} row-span-{$rowSpan} ",
                 'id' => $order->id,
                 'client_name' => $order->client->name,
                 'time' => $order->getLongTime(),

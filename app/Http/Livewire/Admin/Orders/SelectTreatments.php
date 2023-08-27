@@ -105,10 +105,10 @@ class SelectTreatments extends Component
                 ->whereDate('date', $this->order->startDateTime)
                 ->where('midwife_user_id', $this->order->midwife_user_id)
                 ->activeBetween(
-                    $this->order->startDateTime->toDateTimeString(),
+                    $this->order->startDateTime->toTimeString(),
                     $this->order->endDateTime
                         ->addMinutes($this->order->place->transport_duration + $treatment->duration)
-                        ->toDateTimeString()
+                        ->toTimeString()
                 )
                 ->get()
                 ->except($this->order->id);
