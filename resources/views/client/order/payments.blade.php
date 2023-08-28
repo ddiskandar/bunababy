@@ -75,8 +75,8 @@
         @if ($isLocked)
             <div class="py-6 text-xs text-slate-600">
                 Bila dalam waktu maksimal 30 menit upload bukti transaksi anda belum dikonfirmasi, silahkan untuk segera
-                <a href="https://api.whatsapp.com/send?phone={{ toWaIndo($phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+{{ auth()->user()->name ?? '' }}.+Mohon+segera+konfirmasi+pembayaran+{{ $order->id }}."
-                    class="font-semibold text-brand-200">menghubungi Admin</a>
+                <a target="_blank" href="{{ $messages['waiting'] }}" class="font-semibold text-brand-200">menghubungi
+                    Admin</a>
             </div>
         @endif
 
@@ -89,8 +89,7 @@
 
                     <div class="py-6 text-xs text-center text-slate-600">
                         Bila kesulitan upload bukti transfer melalui aplikasi ini, silahkan dapat
-                        <a href="https://api.whatsapp.com/send?phone={{ toWaIndo($phone) }}&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+{{ auth()->user()->name ?? '' }}.+Mau+mengirim+bukti+transfer+dengan+ID+transaksi+%2A{{ $order->id }}%2A."
-                            class="font-semibold text-brand-200">
+                        <a target="_blank" href="{{ $messages['upload'] }}" class="font-semibold text-brand-200">
                             mengirimkan ke Admin lewat WA.
                         </a>
                     </div>

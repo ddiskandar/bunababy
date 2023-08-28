@@ -16,11 +16,7 @@ class OrderCheckoutController extends Controller
             return to_route('dashboard');
         }
 
-        if (session()->missing('order.place_id') || session()->missing('order.date') || session()->missing('order.start_time_id') || session()->missing('order.treatments') || session()->missing('order.kecamatan_id')) {
-            return to_route('order.cart');
-        }
-
-        if (session('order.place_type') === Place::TYPE_HOMECARE && session()->missing('order.midwife_user_id')) {
+        if ($this->hasMissingInSession()) {
             return to_route('order.cart');
         }
 
@@ -34,5 +30,15 @@ class OrderCheckoutController extends Controller
         }
 
         return view('client.order.checkout');
+    }
+
+    private function hasMissingInSession() {
+        return (session('order.place_type') === Place::TYPE_HOMECARE && session()->missing('order.midwife_user_id'))
+            || session()->missing('order.place_id')
+            || session()->missing('order.date')
+            || session()->missing('order.start_time_id')
+            || session()->missing('order.treatments')
+            || session()->missing('order.kecamatan_id')
+            ;
     }
 }

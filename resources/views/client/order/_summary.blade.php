@@ -3,9 +3,8 @@
         <div class="flex-1">
             <x-title>Tanggal dan Waktu</x-title>
             <div>
-                <div class="font-semibold">{{ $order->startDateTime->isoFormat('dddd, D MMMM G') }}</div>
-                <span>{{ $order->startDateTime->isoFormat('HH:mm') . ' - ' . $order->endDateTime->isoFormat('HH:mm') }}
-                    WIB</span>
+                <div class="font-semibold">{{ $order->getLongDate() }}</div>
+                <span>{{ $order->getLongTime() }}</span>
             </div>
         </div>
         @if ($order->place->type === \App\Models\Place::TYPE_HOMECARE)
