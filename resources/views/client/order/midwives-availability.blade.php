@@ -9,12 +9,13 @@
                         'midwifeUserId' => $midwife->id,
                         'slots' => $slots,
                     ],
-                    key($midwife->id)
+                    key($kecamatan->id . '-' . $midwife->id)
                 )
             @endforeach
 
             @foreach ($midwives['notAvailable'] as $midwife)
-                <div wire:key="{{ $midwife->id }}" class="px-4 py-2 border rounded border-slate-100">
+                <div wire:key="{{ $kecamatan->id . '-' . $midwife->id }}"
+                    class="px-4 py-2 border rounded border-slate-100">
                     <div>
                         <div class="flex items-center">
                             <img src="{{ $midwife->profile_photo_url }}" alt="User Avatar"
