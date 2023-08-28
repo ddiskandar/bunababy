@@ -78,6 +78,10 @@ class AuthServiceProvider extends ServiceProvider
             return $user->isOwner() || $user->isAdmin();
         });
 
+        Gate::define('manage-timetables', function (User $user) {
+            return $user->isOwner() || $user->isAdmin();
+        });
+
         Gate::define('set-order-status', function (User $user) {
             return $user->isOwner() || $user->isAdmin() || $user->isMidwife();
         });

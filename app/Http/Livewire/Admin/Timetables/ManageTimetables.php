@@ -2,16 +2,19 @@
 
 namespace App\Http\Livewire\Admin\Timetables;
 
-use App\Models\Place;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Filament\Notifications\Notification;
+use Livewire\WithPagination;
+use Livewire\Component;
 use App\Models\Timetable;
+use App\Models\Place;
+use App\Models\Setting;
 use App\Models\User;
 use Carbon\Carbon;
-use Filament\Notifications\Notification;
-use Livewire\Component;
-use Livewire\WithPagination;
 
 class ManageTimetables extends Component
 {
+    use AuthorizesRequests;
     use WithPagination;
 
     public $perPage = 8;
@@ -106,29 +109,45 @@ class ManageTimetables extends Component
     {
         $this->validate();
 
-        Timetable::updateOrCreate(
-            [
-                'id' => $this->state['id'] ?? Timetable::max('id') + 1,
-            ],
-            [
-                'midwife_user_id' => $this->state['midwife_user_id'],
-                'date' => $this->state['date'],
-                'type' => $this->state['type'],
-                'place_id' => $this->state['place_id'] ?? null,
-                'note' => $this->state['note'] ?? '',
-            ]
-        );
+        try {
+            $this->authorize('manage-timetables');
 
-        $this->showDialog = false;
-        Notification::make()
-            ->title('Berhasil disimpan')
-            ->success()
-            ->send();
+            Timetable::updateOrCreate(
+                [
+                    'id' => $this->state['id'] ?? Timetable::max('id') + 1,
+                ],
+                [
+                    'midwife_user_id' => $this->state['midwife_user_id'],
+                    'date' => $this->state['date'],
+                    'type' => $this->state['type'],
+                    'place_id' => $this->state['place_id'] ?? null,
+                    'note' => $this->state['note'] ?? '',
+                ]
+            );
+
+            $this->showDialog = false;
+
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function delete(Timetable $timetable)
     {
-        $timetable->delete();
+        try {
+            $this->authorize('manage-timetables');
+
+            $timetable->delete();
+
+            Notification::make()->title(Setting::DELETED_MESSAGE)->success()->send();
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()
