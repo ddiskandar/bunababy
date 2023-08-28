@@ -51,12 +51,7 @@
                 <div class="py-2">
                     <div class="text-lg font-semibold hover:underline">
                         <a href="{{ route('order.show', $reservation->id) }}">
-                            @foreach ($reservation->treatments as $treatment)
-                                <span>{{ $treatment->name }}</span>
-                                @if (!$loop->last)
-                                    <span>, </span>
-                                @endif
-                            @endforeach
+                            {{ $reservation->treatments->implode('name', ', ') }}
                         </a>
                     </div>
                     <div>

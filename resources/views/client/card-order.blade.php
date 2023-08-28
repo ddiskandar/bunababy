@@ -33,12 +33,7 @@
     </div>
     <div class="py-2">
         <div class="text-lg font-semibold">
-            @foreach ($reservation->treatments as $treatment)
-                <span>{{ $treatment->name }}</span>
-                @if (!$loop->last)
-                    <span>, </span>
-                @endif
-            @endforeach
+            {{ $reservation->treatments->implode('name', ', ') }}
         </div>
         <div>
             <span>{{ $reservation->place->name }}</span>

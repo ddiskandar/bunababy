@@ -36,12 +36,7 @@
                         <div class="flex items-start justify-between w-full md:items-center">
                             <div class="flex-1 space-y-2 md:flex md:justify-between md:items-center">
                                 <div class="text-lg font-semibold">
-                                    @foreach ($schedule->treatments as $treatment)
-                                        <span>{{ $treatment->name }}</span>
-                                        @if (!$loop->last)
-                                            <span>, </span>
-                                        @endif
-                                    @endforeach
+                                    {{ $schedule->treatments->implode('name', ', ') }}
                                 </div>
                                 <div>
                                     <div class="flex items-center gap-1">
@@ -62,10 +57,20 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div>
+                                    <div class="flex items-center gap-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-400"
+                                            width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                            stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+                                            <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+                                            <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855">
+                                            </path>
+                                        </svg>
                                         {{ $schedule->client->name }}
                                     </div>
-                                    <div>
+                                    <div class="ml-6">
                                         {{ $schedule->address->kecamatan->name }}
                                     </div>
                                 </div>
@@ -103,7 +108,7 @@
                 <p class="mt-4 text-sm font-medium">
                     Tidak ada jadwal
                 </p>
-</div>
-@endforelse
-</ul>
+            </li>
+        @endforelse
+    </ul>
 </div>
