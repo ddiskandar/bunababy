@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Client\Order;
 
 use App\Models\Order;
+use App\Models\Setting;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 
 class AddReview extends Component
@@ -29,17 +31,24 @@ class AddReview extends Component
             'description' => 'required|min:4|max:512',
         ]);
 
-        $this->order->testimonial()->updateOrCreate(
-            [
-                'order_id' => $this->order->id,
-            ],
-            [
-                'rate' => $this->rate,
-                'description' => $this->description,
-            ]
-        );
+        try {
+            $this->order->testimonial()->updateOrCreate(
+                [
+                    'order_id' => $this->order->id,
+                ],
+                [
+                    'rate' => $this->rate,
+                    'description' => $this->description,
+                ]
+            );
+            Notification::make()->title(Setting::SUCCESS_MESSAGE)->success()->send();
 
-        return to_route('client.testimonial', $this->order->id);
+            return to_route('client.testimonial', $this->order->id);
+
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            Notification::make()->title(Setting::ERROR_MESSAGE)->danger()->send();
+        }
     }
 
     public function render()
