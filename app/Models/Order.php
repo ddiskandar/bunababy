@@ -32,14 +32,9 @@ class Order extends Model
         'endDateTime' => 'datetime',
     ];
 
-    protected static function booted(): void
+    public function getInvoice()
     {
-        parent::boot();
-
-        static::created(function ($order) {
-            $order->invoice = 'INV/' . $order->startDateTime->isoFormat('YYMMDD') . '/' . $order->id;
-            $order->save();
-        });
+        return 'INV/' . $this->startDateTime->isoFormat('YYMMDD') . '/' . $this->id;
     }
 
     public function place(): BelongsTo

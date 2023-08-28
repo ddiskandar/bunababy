@@ -51,7 +51,7 @@
                     <div>
                         <div class="flex items-center py-1">
                             <h3 class="text-sm font-semibold">
-                                Invoice {{ $order->invoice }}
+                                Invoice {{ $order->getInvoice() }}
                             </h3>
                             <div
                                 class="inline-flex px-4 py-1 ml-2 font-semibold leading-4 text-orange-700 bg-orange-200 rounded-full print:hidden">
