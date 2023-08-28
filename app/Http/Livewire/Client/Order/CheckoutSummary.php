@@ -2,12 +2,12 @@
 
 namespace App\Http\Livewire\Client\Order;
 
+use Illuminate\Support\Facades\DB;
+use Livewire\Component;
 use App\Models\Order;
 use App\Models\Place;
 use App\Models\Room;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
-use Livewire\Component;
 
 class CheckoutSummary extends Component
 {

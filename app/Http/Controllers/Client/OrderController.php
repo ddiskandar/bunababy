@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\Client;
 
+use Filament\Notifications\Notification;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use App\Models\Order;
 use Error;
-use Filament\Notifications\Notification;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
+    const FORMAT_DATE = 'DD MMM YYYY HH:mm';
+
     public function create()
     {
         try {
@@ -40,7 +39,7 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        if (! auth()->check() || (int) $order->client_user_id !== auth()->id()) {
+        if (!auth()->check() || (int) $order->client_user_id !== auth()->id()) {
             return to_route('home');
         }
 
@@ -50,19 +49,19 @@ class OrderController extends Controller
             'hasPayments' => $order->payments()->exists(),
             'isDpPaid' => $order->dp(),
             'dpPaidAt' => $order->dp()
-                ? $order->payments()->verified()->first()->created_at->isoFormat('DD MMM YYYY HH:mm')
+                ? $order->payments()->verified()->first()->created_at->isoFormat(self::FORMAT_DATE)
                 : '-',
             'isFinished' => $order->status === Order::STATUS_FINISHED,
             'finishedAt' => $order->status === Order::STATUS_FINISHED
-                ? $order->finished_at->isoFormat('DD MMM YYYY HH:mm')
+                ? $order->finished_at->isoFormat(self::FORMAT_DATE)
                 : '-',
             'isPaid' => $order->isPaid(),
             'paidAt' => $order->isPaid()
-                ? $order->payments()->verified()->latest()->first()->created_at->isoFormat('DD MMM YYYY HH:mm')
+                ? $order->payments()->verified()->latest()->first()->created_at->isoFormat(self::FORMAT_DATE)
                 : '-',
             'isReviewed' => $order->testimonial()->exists(),
             'reviewedAt' => $order->testimonial()->exists()
-                ? $order->testimonial->created_at->isoFormat('DD MMM YYYY HH:mm')
+                ? $order->testimonial->created_at->isoFormat(self::FORMAT_DATE)
                 : '-',
         ]);
     }

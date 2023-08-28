@@ -2,16 +2,16 @@
 
 namespace App\Exports;
 
-use App\Models\Order;
-use App\Models\Timetable;
-use Carbon\Carbon;
-use Maatwebsite\Excel\Concerns\FromQuery;
-use Maatwebsite\Excel\Concerns\Exportable;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithStyles;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\FromQuery;
+use App\Models\Timetable;
+use App\Models\Order;
+use Carbon\Carbon;
 
 class OrdersExport implements fromQuery, WithHeadings, WithMapping, ShouldAutoSize, WithStyles
 {

@@ -54,8 +54,6 @@ class DailyMidwifeSchedules extends Component
                 ->orderBy('start_time', 'ASC')
                 ->get();
 
-        // dd($schedules);
-
         return view('admin.daily-midwife-schedules', [
             'schedules' => $schedules
         ]);

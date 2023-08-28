@@ -10,7 +10,7 @@
     <div class="w-full bg-white" x-data="{ selected: 1 }">
         <ul class="shadow-box">
             @foreach ($categories as $category)
-                <li wire:key="{{ $category['name'] }}" class="relative border-b border-brand-50">
+                <li wire:key="{{ Str::slug($category['name'], '-') }}" class="relative border-b border-brand-50">
                     <button type="button" class="w-full px-6 py-4 text-left"
                         x-on:click="selected !== {{ $loop->iteration }} ? selected = {{ $loop->iteration }} : selected = null">
                         <div class="flex items-center justify-between">
@@ -27,7 +27,7 @@
                         </div>
                     </button>
 
-                    <div class="relative overflow-hidden transition-all duration-700 max-h-0" style=""
+                    <div class="relative overflow-hidden transition-all duration-700 max-h-0"
                         x-ref="container{{ $loop->iteration }}"
                         x-bind:style="selected === {{ $loop->iteration }} ? 'max-height: ' + $refs.container{{ $loop->iteration }}
                             .scrollHeight + 'px' : ''">

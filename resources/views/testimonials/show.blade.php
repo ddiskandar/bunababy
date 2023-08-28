@@ -32,34 +32,30 @@
                         </svg>
 
                         <div class="text-sm font-medium">
-                            <span>{{ $reservation->startDateTime->isoFormat('dddd, DD MMMM Y') }}</span>
-                            <span>{{ $reservation->startDateTime->isoFormat('HH:mm') . ' - ' . $reservation->startDateTime->isoFormat('HH:mm') }}
+                            <span>{{ $reservation->getLongDate() }}</span>
+                            <span>{{ $reservation->getTime() }}
                                 WIB</span>
                         </div>
                     </div>
                     <div>
                         <div @class([
                             'inline-flex px-6 py-1 leading-4 font-semibold text-white text-xs rounded-full',
-                            'bg-orange-400' => $reservation->status == '1',
-                            'bg-brand-100' => $reservation->status == '2',
-                            'bg-blue-400' => $reservation->status == '3',
+                            'bg-brand-100' => $reservation->status === \App\Models\Order::STATUS_LOCKED,
+                            'bg-orange-400' =>
+                                $reservation->status === \App\Models\Order::STATUS_UNPAID,
+                            'bg-blue-400' =>
+                                $reservation->status === \App\Models\Order::STATUS_FINISHED,
                         ])>{{ $reservation->getStatusString() }}</div>
                     </div>
                 </div>
                 <div class="py-2">
                     <div class="text-lg font-semibold hover:underline">
                         <a href="{{ route('order.show', $reservation->id) }}">
-                            @foreach ($reservation->treatments as $treatment)
-                                <span>{{ $treatment->name }}</span>
-                                @if (!$loop->last)
-                                    <span>, </span>
-                                @endif
-                            @endforeach
+                            {{ $reservation->treatments->implode('name', ', ') }}
                         </a>
                     </div>
                     <div>
-                        <span>{{ $reservation->place() }}</span>
-                        <span>{{ $reservation->midwife->name }}</span>
+                        <span>{{ $reservation->place->name . ', ' . $reservation->midwife->name }}</span>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 pb-4 mt-4">

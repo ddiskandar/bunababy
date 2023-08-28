@@ -210,8 +210,7 @@ class Order extends Model
 
     public function getTotalDuration()
     {
-        return collect(session('order.treatments'))
-            ->sum('treatment_duration') + session('order.place_transport_duration');
+        return collect(session('order.treatments'))->sum('treatment_duration');
     }
 
     public function getStartTime()

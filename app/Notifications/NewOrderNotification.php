@@ -61,25 +61,13 @@ class NewOrderNotification extends Notification
         $timeout = DB::table('options')->first()->timeout;
         $this->order->load('treatments', 'client', 'midwife');
 
-        $order_treatments = '';
-        $treatments = $this->order->treatments->toArray();
-
-        foreach ($treatments as $key => $treatment) {
-
-            $order_treatments .= $treatment['name'];
-
-            if($key != array_key_last($treatments)) {
-                $order_treatments .= ', ';
-            }
-        }
-
         return [
             'type' => 'order',
             'order_id' => $this->order->id,
-            'order_datetime' => $this->order->startDateTime->isoFormat('dddd, DD MMMM gggg HH:mm - ') . $this->order->endDateTime->isoFormat('HH:mm') . ' WIB',
+            'order_datetime' => $this->order->getLongDateTime(),
             'order_grand_total' => rupiah($this->order->getGrandTotal()),
             'order_dp_amount' => rupiah($this->order->getDpAmount()),
-            'order_treatments' => $order_treatments,
+            'order_treatments' => $this->order->treatments->implode('name', ', '),
             'order_dp_timeout' => $this->order->created_at->addMinutes($timeout)->isoFormat('dddd, DD MMMM gggg HH:mm'),
             'order_client_name' => $this->order->client->name,
             'order_client_phone' => toWaIndo($this->order->client->profile->phone),

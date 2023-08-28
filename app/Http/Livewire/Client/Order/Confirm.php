@@ -103,7 +103,7 @@ class Confirm extends Component
 
             Notification::make()->title('Order created!')->success()->send();
 
-            // session()->forget('order');
+            session()->forget('order');
 
             return redirect()->route('order.show', $order->id);
 

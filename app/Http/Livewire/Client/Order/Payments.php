@@ -2,15 +2,15 @@
 
 namespace App\Http\Livewire\Client\Order;
 
+use App\Notifications\NewPaymentNotification;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use Livewire\WithFileUploads;
+use Livewire\Component;
 use App\Models\Payment;
 use App\Models\Order;
 use App\Models\User;
-use App\Notifications\NewPaymentNotification;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Notification;
-use Livewire\WithFileUploads;
-use Livewire\Component;
-use Illuminate\Support\Facades\Validator;
 
 class Payments extends Component
 {
@@ -18,10 +18,11 @@ class Payments extends Component
 
     public $showUploadDialog = false;
 
-    public $order;
     public $attachment;
-    public $value;
     public $isLocked;
+    public $order;
+    public $value;
+    public $waMessages;
 
     protected $rules = [
         'attachment' => 'required|image|max:750',
@@ -37,13 +38,16 @@ class Payments extends Component
     {
         $this->order = $order;
 
-        $isPaymentsExists = $this->order->payments()->exists();
+        $phone = DB::table('options')->select('phone')->first()->phone;
 
-        if (!$isPaymentsExists) {
-            $this->value = $order->getDpAmount();
-        }
+        $this->waMessages['waiting'] = 'https://api.whatsapp.com/send?phone='.toWaIndo($phone).'&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+'.auth()->user()->name.'.%0AMohon+segera+konfirmasi+pembayaran+%2A'.$this->order->id.'%2A.';
+        $this->waMessages['upload'] = 'https://api.whatsapp.com/send?phone='.toWaIndo($phone).'&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+'.auth()->user()->name.'.%0AMau+mengirim+bukti+transfer+dengan+ID+transaksi+%2A'.$order->id.'%2A.';
 
-        if ($isPaymentsExists) {
+        $this->value = $order->getDpAmount();
+
+        $hasPayments = $this->order->payments()->exists();
+
+        if ($hasPayments) {
             $this->value = $order->getRemainingPayment();
         }
 
@@ -102,7 +106,6 @@ class Payments extends Component
 
         return view('client.order.payments', [
             'payments' => $payments,
-            'phone' => DB::table('options')->select('phone')->first()->phone
         ]);
     }
 }

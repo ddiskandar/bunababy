@@ -17,9 +17,10 @@ class History extends Component
 
         $hasActiveReservation = Order::query()
             ->where('client_user_id', auth()->id())
-            ->where('status', Order::STATUS_LOCKED)
-            ->orWhere('status', Order::STATUS_UNPAID)
-            ->count() > 0;
+            ->where(fn ($query) => $query
+                ->where('status', Order::STATUS_LOCKED)
+                ->orWhere('status', Order::STATUS_UNPAID)
+            )->exists();
 
         return view('client.history.history', [
             'reservations' => $reservations,

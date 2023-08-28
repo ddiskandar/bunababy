@@ -116,7 +116,7 @@ Route::middleware(['auth'])->group(function () {
                 ->name('orders.show');
         Route::get('/orders', [App\Http\Controllers\OrdersController::class, 'index'])
                 ->name('orders');
-        Route::get('/timetables', [App\Http\Controllers\TimetableController::class, 'index'])
+        Route::get('/timetables', App\Http\Controllers\TimetableController::class)
                 ->name('timetables');
         Route::get('/user/profile', App\Http\Controllers\UserProfileController::class)
                 ->name('user.profile');

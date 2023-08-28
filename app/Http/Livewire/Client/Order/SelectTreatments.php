@@ -13,7 +13,7 @@ use App\Models\User;
 class SelectTreatments extends Component
 {
     public $showAddTreatmentModal = false;
-    public $family_id;
+    public $familyId;
     public $currentTreatment;
 
     public function mount()
@@ -21,7 +21,7 @@ class SelectTreatments extends Component
         session()->forget('order.treatments');
         session()->put('order.addMinutes', 0);
 
-        $this->family_id = time();
+        $this->familyId = time();
 
         if (auth()->check()) {
             if (auth()->user()->families()->exists()) {
@@ -52,7 +52,7 @@ class SelectTreatments extends Component
     public function familySelected($familyId)
     {
         $this->showAddTreatmentModal = false;
-        $this->family_id = $familyId;
+        $this->familyId = $familyId;
         $this->addTreatment();
     }
 
@@ -76,7 +76,7 @@ class SelectTreatments extends Component
 
             session()->increment('order.addMinutes', $this->currentTreatment['duration']);
 
-            $family = collect(session('order.families'))->where('id', $this->family_id)->first();
+            $family = collect(session('order.families'))->where('id', $this->familyId)->first();
 
             session()->push('order.treatments', [
                 'treatment_id' => $this->currentTreatment['id'],
@@ -84,7 +84,7 @@ class SelectTreatments extends Component
                 'treatment_desc' => $this->currentTreatment['desc'],
                 'treatment_price' => $this->currentTreatment['prices'][0]['amount'],
                 'treatment_duration' => $this->currentTreatment['duration'],
-                'family_id' => $this->family_id,
+                'family_id' => $this->familyId,
                 'family_name' => $family['name'],
             ]);
 
@@ -117,7 +117,7 @@ class SelectTreatments extends Component
         try {
 
             session()->push('order.families', [
-                'id' => $this->family_id,
+                'id' => $this->familyId,
                 'name' => 'pulan',
                 'type' => 'buna',
             ]);
