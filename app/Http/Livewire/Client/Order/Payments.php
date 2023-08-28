@@ -2,15 +2,15 @@
 
 namespace App\Http\Livewire\Client\Order;
 
+use App\Notifications\NewPaymentNotification;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use Livewire\WithFileUploads;
+use Livewire\Component;
 use App\Models\Payment;
 use App\Models\Order;
 use App\Models\User;
-use App\Notifications\NewPaymentNotification;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Notification;
-use Livewire\WithFileUploads;
-use Livewire\Component;
-use Illuminate\Support\Facades\Validator;
 
 class Payments extends Component
 {
@@ -22,7 +22,7 @@ class Payments extends Component
     public $isLocked;
     public $order;
     public $value;
-    public $messages;
+    public $waMessages;
 
     protected $rules = [
         'attachment' => 'required|image|max:750',
@@ -40,8 +40,8 @@ class Payments extends Component
 
         $phone = DB::table('options')->select('phone')->first()->phone;
 
-        $this->messages['waiting'] = 'https://api.whatsapp.com/send?phone='.toWaIndo($phone).'&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+'.auth()->user()->name.'.%0AMohon+segera+konfirmasi+pembayaran+%2A'.$this->order->id.'%2A.';
-        $this->messages['upload'] = 'https://api.whatsapp.com/send?phone='.toWaIndo($phone).'&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+'.auth()->user()->name.'.%0AMau+mengirim+bukti+transfer+dengan+ID+transaksi+%2A'.$order->id.'%2A.';
+        $this->waMessages['waiting'] = 'https://api.whatsapp.com/send?phone='.toWaIndo($phone).'&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+'.auth()->user()->name.'.%0AMohon+segera+konfirmasi+pembayaran+%2A'.$this->order->id.'%2A.';
+        $this->waMessages['upload'] = 'https://api.whatsapp.com/send?phone='.toWaIndo($phone).'&text=Halo+Bunababy_Care.+Perkenalkan+saya+dengan+'.auth()->user()->name.'.%0AMau+mengirim+bukti+transfer+dengan+ID+transaksi+%2A'.$order->id.'%2A.';
 
         $this->value = $order->getDpAmount();
 

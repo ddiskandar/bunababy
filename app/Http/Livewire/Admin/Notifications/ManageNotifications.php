@@ -2,13 +2,13 @@
 
 namespace App\Http\Livewire\Admin\Notifications;
 
-use App\Models\Setting;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Notifications\DatabaseNotification;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithPagination;
 use Livewire\Component;
+use App\Models\Setting;
 
 class ManageNotifications extends Component
 {
