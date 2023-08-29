@@ -133,10 +133,10 @@ class CreateOrder extends Component
                 $order->start_time = session('order.start_time');
                 $order->end_time = session('order.start_time');
                 $order->status = Order::STATUS_LOCKED;
+                $order->midwife_user_id = session('order.midwife_user_id');
 
                 if (session('order.place_type') === Place::TYPE_HOMECARE) {
                     $order->total_transport = $order->getTotalTransport();
-                    $order->midwife_user_id = session('order.midwife_user_id');
                     $order->address_id = session('order.address_id');
                 }
 
