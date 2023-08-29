@@ -40,7 +40,7 @@ class General extends Component
         $this->validate();
 
         try {
-            $this->authorize('edit-settings');
+            $this->authorize('manage-settings');
 
             Option::where('id', 1)->update([
                 'site_name' => $this->state['site_name'],
