@@ -71,7 +71,7 @@
                                         {{ $schedule->client->name }}
                                     </div>
                                     <div class="ml-6">
-                                        {{ $schedule->address->kecamatan->name }}
+                                        {{ $schedule->address->kecamatan->name ?? '' }}
                                     </div>
                                 </div>
                             </div>
