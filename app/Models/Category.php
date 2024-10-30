@@ -2,23 +2,23 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
+    /** @use HasFactory<\Database\Factories\CategoryFactory> */
     use HasFactory;
-
-    protected $guarded = [];
 
     public function treatments(): HasMany
     {
         return $this->hasMany(Treatment::class);
     }
 
-    public function scopeActive($query)
+    protected static function booted(): void
     {
-        return $query->where('active', true);
+        static::addGlobalScope(new ActiveScope);
     }
 }

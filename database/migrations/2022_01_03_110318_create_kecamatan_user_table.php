@@ -13,10 +13,10 @@ class CreateKecamatanUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('kecamatan_user', function (Blueprint $table) {
+        Schema::create('kecamatan_midwife', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kecamatan_id')->constrained()->onDelete('cascade');
-            $table->foreignId('midwife_user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('kecamatan_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('midwife_midwife_id')->constrained('midwives')->cascadeOnDelete();
             $table->timestamps();
         });
     }

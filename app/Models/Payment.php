@@ -2,23 +2,19 @@
 
 namespace App\Models;
 
+use App\Enums\PaymentStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Payment extends Model
 {
+    /** @use HasFactory<\Database\Factories\PaymentFactory> */
     use HasFactory;
-
-    protected $guarded = [];
-
-    const STATUS_UNVERIFIED = 1;
-    const STATUS_VERIFIED = 2;
-    const STATUS_REJECTED = 3;
 
     protected $casts = [
         'value' => 'integer',
-        'status' => 'integer',
+        'status' => PaymentStatus::class,
         'verified_at' => 'datetime',
     ];
 
@@ -34,28 +30,16 @@ class Payment extends Model
 
     public function scopeVerified($query)
     {
-        $query->where('status', self::STATUS_VERIFIED);
+        $query->where('status', PaymentStatus::VERIFIED);
     }
 
     public function scopeUnVerified($query)
     {
-        $query->where('status', self::STATUS_UNVERIFIED);
+        $query->where('status', PaymentStatus::UNVERIFIED);
     }
 
     public function scopeRejected($query)
     {
-        $query->where('status', self::STATUS_REJECTED);
+        $query->where('status', PaymentStatus::REJECTED);
     }
-
-    public function status()
-    {
-        if ($this->status === self::STATUS_VERIFIED) {
-            return 'Verified';
-        }
-
-        return $this->status === self::STATUS_UNVERIFIED
-            ? 'Waiting'
-            : 'Rejected';
-    }
-
 }

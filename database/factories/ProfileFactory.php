@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,13 +14,10 @@ class ProfileFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
-            'phone' => '088296447264',
-            'ig' => $this->faker->userName(),
-            'dob' => $this->faker->date(),
+            //
         ];
     }
 }

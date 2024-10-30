@@ -15,12 +15,12 @@ class CreateTreatmentsTable extends Migration
     {
         Schema::create('treatments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('image')->nullable();
-            $table->integer('duration'); // unchecked
+            $table->unsignedInteger('duration'); // unchecked
             $table->text('desc')->nullable();
-            $table->integer('order');
+            $table->integer('sort')->nullable();;
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

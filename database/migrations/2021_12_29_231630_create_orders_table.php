@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\OrderStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,10 +16,10 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id()->startingValue(1002347811);
-            $table->foreignId('place_id')->constrained('places')->onDelete('cascade');
+            $table->foreignId('place_id')->constrained('places')->cascadeOnDelete();
             $table->foreignId('room_id')->nullable();
-            $table->foreignId('client_user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('midwife_user_id')->nullable();
+            $table->foreignId('client_id')->constrained('clients')->cascadeOnDelete();
+            $table->foreignId('midwife_id')->constrained('midwives')->cascadeOnDelete();
             $table->foreignId('address_id')->nullable();
             $table->unsignedInteger('total_price');
             $table->unsignedInteger('total_duration')->default(0);
@@ -29,7 +30,7 @@ class CreateOrdersTable extends Migration
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->string('screening')->nullable();
-            $table->tinyInteger('status')->default(2);
+            $table->tinyInteger('status')->default(OrderStatus::LOCKED);
             $table->timestamp('finished_at')->nullable();
             $table->timestamps();
         });

@@ -2,21 +2,22 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Family>
+ */
 class FamilyFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
-            'client_user_id' => User::factory(),
-            'name' => $this->faker->name(),
+            //
         ];
     }
 }

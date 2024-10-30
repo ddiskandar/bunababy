@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Price extends Model
 {
+    /** @use HasFactory<\Database\Factories\PriceFactory> */
     use HasFactory;
-
-    protected $guarded = [];
 
     public function treatment(): BelongsTo
     {

@@ -2,23 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enums\UserType;
+use App\Models\Scopes\ActiveScope;
+use App\Support\DateTime;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
-    use HasApiTokens, HasFactory, Notifiable;
-
-    const CLIENT    = 1;
-    const MIDWIFE   = 2;
-    const ADMIN     = 3;
-    const OWNER     = 4;
+    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -26,19 +27,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'id',
         'name',
         'email',
         'password',
-        'role',
-        'phone',
-        'photo',
-        'ig',
-        'type',
-        'active',
-        'google_id',
-        'google_token',
-        'google_refresh_token'
     ];
 
     /**
@@ -52,39 +43,47 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
      *
-     * @var array<string, string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'active' => 'boolean',
-        'type' => 'integer'
-    ];
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+            'type' => UserType::class,
+        ];
+    }
 
-    protected $appends = [
-        'profile_photo_url',
-        'age'
-    ];
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new ActiveScope);
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return true;
+    }
 
     public function isMidwife()
     {
-        return $this->type === self::MIDWIFE;
+        return $this->type === UserType::MIDWIFE;
     }
 
     public function isAdmin()
     {
-        return $this->type === self::ADMIN || $this->type === self::OWNER;
+        return $this->type === UserType::ADMIN || $this->type === UserType::OWNER;
     }
 
     public function isClient()
     {
-        return $this->type === self::CLIENT;
+        return $this->type === UserType::CLIENT;
     }
 
     public function isOwner()
     {
-        return $this->type === self::OWNER;
+        return $this->type === UserType::OWNER;
     }
 
     public function profile(): HasOne
@@ -100,7 +99,7 @@ class User extends Authenticatable
 
     public function getAgeAttribute()
     {
-        return calculateAge($this->profile->dob);
+        return DateTime::calculateAge($this->profile->dob);
     }
 
     // order untuk Bidan
@@ -148,62 +147,13 @@ class User extends Authenticatable
         return $this->belongsToMany(Tag::class, 'tag_user', 'client_user_id', 'tag_id');
     }
 
-    public function getProfilePhotoUrlAttribute()
-    {
-        if ($this->google_id && $this->profile->photo) {
-            return $this->profile->photo;
-        }
-
-        return isset($this->profile->photo)
-            ? objectStorageAsset($this->profile->photo)
-            : $this->defaultProfilePhotoUrl();
-    }
-
-    protected function defaultProfilePhotoUrl()
-    {
-        $name = trim(collect(explode(' ', $this->name))->map(function ($segment) {
-            return mb_substr($segment, 0, 1);
-        })->join(' '));
-
-        return 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&color=FE0E9C&background=FCE7F3';
-    }
-
-    public function scopeActive($query)
-    {
-        return $query->where('active', true);
-    }
-
     public function scopeMidwives($query)
     {
-        return $query->where('type', self::MIDWIFE);
+        return $query->where('type', UserType::MIDWIFE);
     }
 
     public function scopeClients($query)
     {
-        return $query->where('type', self::CLIENT);
-    }
-
-    public function testimonials()
-    {
-        return $this->hasManyThrough(
-            Testimonial::class,
-            Order::class,
-            'client_user_id',
-            'order_id',
-            'id',
-            'id'
-        );
-    }
-
-    public function reviews()
-    {
-        return $this->hasManyThrough(
-            Testimonial::class,
-            Order::class,
-            'midwife_user_id',
-            'order_id',
-            'id',
-            'id'
-        );
+        return $query->where('type', UserType::CLIENT);
     }
 }

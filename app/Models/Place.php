@@ -2,41 +2,29 @@
 
 namespace App\Models;
 
+use App\Enums\PlaceType;
+use App\Models\Scopes\ActiveScope;
+use App\Models\Scopes\SortScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Place extends Model
 {
-    const TYPE_HOMECARE = 1;
-    const TYPE_CLINIC = 2;
-
+    /** @use HasFactory<\Database\Factories\PlaceFactory> */
     use HasFactory;
 
     protected $casts = [
         'active' => 'boolean',
-        'type' => 'integer',
+        'type' => PlaceType::class,
     ];
 
-    protected $fillable = [
-        'name',
-        'desc',
-        'type',
-        'address',
-        'order',
-        'active',
-    ];
-
-    public function getTypeString()
+    protected static function booted(): void
     {
-        switch ($this->type) {
-            case self::TYPE_HOMECARE:
-                return 'Homecare';
-            case self::TYPE_CLINIC:
-                return 'Klinik';
-            default:
-                return 'Tidak diketahui';
-        }
+        static::addGlobalScopes([
+            ActiveScope::class,
+            SortScope::class
+        ]);
     }
 
     public function orders(): HasMany
@@ -59,18 +47,8 @@ class Place extends Model
         return $this->hasMany(Slot::class);
     }
 
-    public function scopeActive($query)
-    {
-        return $query->where('active', true);
-    }
-
     public function scopeClinics($query)
     {
-        return $query->where('type', self::TYPE_CLINIC);
-    }
-
-    public function scopeOrderAsc($query)
-    {
-        return $query->orderBy('order', 'asc');
+        return $query->where('type', PlaceType::CLINIC);
     }
 }

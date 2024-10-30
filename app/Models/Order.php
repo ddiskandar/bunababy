@@ -2,24 +2,21 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatus;
+use App\Enums\PaymentStatus;
+use App\Enums\PlaceType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class Order extends Model
 {
+    /** @use HasFactory<\Database\Factories\OrderFactory> */
     use HasFactory;
-
-    protected $guarded = [];
-
-    const STATUS_UNPAID = 1;
-    const STATUS_LOCKED = 2;
-    const STATUS_FINISHED = 3;
 
     protected $casts = [
         'total_price' => 'integer',
@@ -69,24 +66,19 @@ class Order extends Model
             ->withTimestamps();
     }
 
-    public function testimonial(): HasOne
-    {
-        return $this->hasOne(Testimonial::class);
-    }
-
     public function scopeUnpaid($query)
     {
-        $query->where('status', self::STATUS_UNPAID);
+        $query->where('status', OrderStatus::UNPAID);
     }
 
     public function scopeLocked($query)
     {
-        $query->where('status', self::STATUS_LOCKED);
+        $query->where('status', OrderStatus::LOCKED);
     }
 
     public function scopefinished($query)
     {
-        $query->where('status', self::STATUS_FINISHED);
+        $query->where('status', OrderStatus::FINISHED);
     }
 
     public function getStartDateTimeAttribute()
@@ -100,20 +92,9 @@ class Order extends Model
             ->addMinutes($this->place->transport_duration);
     }
 
-    public function getStatusString()
-    {
-        $ref = [
-            self::STATUS_FINISHED => 'Selesai',
-            self::STATUS_LOCKED => 'Aktif',
-            self::STATUS_UNPAID => 'Pending',
-        ];
-
-        return $ref[$this->status];
-    }
-
     public function scopeActiveBetween($query, $from, $to)
     {
-        $query->whereStatus(Order::STATUS_LOCKED)
+        $query->whereStatus(OrderStatus::LOCKED)
             ->betweenTimes($from, $to);
     }
 
@@ -138,12 +119,12 @@ class Order extends Model
 
     public function pendingPayments(): HasMany
     {
-        return $this->hasMany(Payment::class)->where('status', Payment::STATUS_UNVERIFIED);
+        return $this->hasMany(Payment::class)->where('status', PaymentStatus::UNVERIFIED);
     }
 
     public function verifiedPayments(): HasMany
     {
-        return $this->hasMany(Payment::class)->where('status', Payment::STATUS_VERIFIED);
+        return $this->hasMany(Payment::class)->where('status', PaymentStatus::VERIFIED);
     }
 
     public function getVerifiedPayments()
@@ -191,8 +172,8 @@ class Order extends Model
         $place = Place::find(session('order.place_id'));
         throw_if(!$place, \Exception::class, 'Place not found');
 
-        if ($place->type === Place::TYPE_HOMECARE) {
-            return calculateTransport(session('order.kecamatan_distance'));
+        if ($place->type === PlaceType::HOMECARE) {
+            // return calculateTransport(session('order.kecamatan_distance'));
         }
 
         return 0;
@@ -243,5 +224,4 @@ class Order extends Model
     {
         return $this->getLongDate() . ' ' . $this->getLongTime();
     }
-
 }

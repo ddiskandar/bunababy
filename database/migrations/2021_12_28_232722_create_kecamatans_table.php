@@ -15,7 +15,7 @@ class CreateKecamatansTable extends Migration
     {
         Schema::create('kecamatans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kabupaten_id')->constrained()->onDelete('cascade');
+            $table->foreignId('kabupaten_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->integer('distance')->default(0)->nullable();
             $table->boolean('active')->default(true);

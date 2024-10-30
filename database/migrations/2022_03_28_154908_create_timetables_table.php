@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('timetables', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('midwife_user_id')->constrained('users')->onDelete('cascade');
+            $table->unsignedBigInteger('midwife_user_id')->constrained('users')->cascadeOnDelete();
             $table->date('date');
             $table->tinyInteger('type');
             $table->foreignId('place_id')->nullable();

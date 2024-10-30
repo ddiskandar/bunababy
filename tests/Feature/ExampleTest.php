@@ -1,14 +1,19 @@
 <?php
 
-it('returns a successful response', function () {
-    $response = $this->get('/');
+namespace Tests\Feature;
 
-    $response->assertStatus(200);
-});
+// use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-test('stability', function ($url) {
-    $this->get($url)->assertOk();
-})->with([
-    '/login',
-    '/register',
-]);
+class ExampleTest extends TestCase
+{
+    /**
+     * A basic test example.
+     */
+    public function test_the_application_returns_a_successful_response(): void
+    {
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
+    }
+}

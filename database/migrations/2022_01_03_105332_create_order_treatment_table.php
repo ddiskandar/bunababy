@@ -15,8 +15,8 @@ class CreateOrderTreatmentTable extends Migration
     {
         Schema::create('order_treatment', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained()->onDelete('cascade');
-            $table->foreignId('treatment_id')->constrained()->onDelete('cascade');
+            $table->foreignId('order_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('treatment_id')->constrained()->cascadeOnDelete();
             $table->string('family_name')->nullable();
             $table->string('family_age')->nullable();
             $table->integer('treatment_price')->nullable();

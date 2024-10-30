@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Address extends Model
 {
+    /** @use HasFactory<\Database\Factories\AddressFactory> */
     use HasFactory;
 
     const MAIN_ADDRESS = 1;
@@ -15,8 +16,6 @@ class Address extends Model
     protected $casts = [
         'is_main' => 'boolean',
     ];
-
-    protected $guarded = [];
 
     public function client(): BelongsTo
     {

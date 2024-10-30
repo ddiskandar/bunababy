@@ -15,7 +15,7 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained()->onDelete('cascade');
+            $table->foreignId('order_id')->constrained()->cascadeOnDelete();
             $table->integer('value');
             $table->string('attachment')->nullable();
             $table->tinyInteger('status')->default(1);

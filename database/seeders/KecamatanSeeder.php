@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -9,10 +10,8 @@ class KecamatanSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         DB::table('kecamatans')->insert([
             ['kabupaten_id' => 1, 'name' => 'Cimahi Selatan', 'distance' => rand(1, 20)],

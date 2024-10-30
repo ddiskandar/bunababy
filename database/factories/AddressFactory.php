@@ -2,25 +2,22 @@
 
 namespace Database\Factories;
 
-use App\Models\Kecamatan;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Address>
+ */
 class AddressFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
-            'client_user_id' => User::factory(),
-            'label' => 'rumah',
-            'address' => $this->faker->streetAddress(),
-            'desa' => $this->faker->city(),
-            'kecamatan_id' => rand(1, 79),
+            //
         ];
     }
 }

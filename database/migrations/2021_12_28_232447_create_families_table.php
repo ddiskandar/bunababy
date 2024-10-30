@@ -16,7 +16,7 @@ class CreateFamiliesTable extends Migration
     {
         Schema::create('families', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('client_user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('client_id')->constrained('clients')->cascadeOnDelete();
             $table->string('name');
             $table->date('dob')->nullable();
             $table->string('type');

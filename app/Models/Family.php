@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use App\Support\DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Family extends Model
 {
+    /** @use HasFactory<\Database\Factories\FamilyFactory> */
     use HasFactory;
-
-    protected $guarded = [];
 
     protected $casts = [
         'dob' => 'date'
@@ -24,6 +24,6 @@ class Family extends Model
 
     public function getAgeAttribute()
     {
-        return calculateAge($this->dob);
+        return DateTime::calculateAge($this->dob);
     }
 }

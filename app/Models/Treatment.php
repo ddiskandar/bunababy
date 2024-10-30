@@ -2,24 +2,28 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Treatment extends Model
 {
+    /** @use HasFactory<\Database\Factories\TreatmentFactory> */
     use HasFactory;
-
-    protected $guarded = [];
 
     protected $casts = [
         'price' => 'integer',
         'duration' => 'integer',
         'active' => 'boolean',
     ];
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new ActiveScope);
+    }
 
     public function midwives(): BelongsToMany
     {
@@ -39,10 +43,5 @@ class Treatment extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
-    }
-
-    public function scopeActive($query)
-    {
-        return $query->where('active', true);
     }
 }

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('prices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('treatment_id')->constrained()->onDelete('cascade');
-            $table->foreignId('place_id')->constrained()->onDelete('cascade');
-            $table->integer('amount');
+            $table->foreignId('treatment_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('place_id')->constrained()->cascadeOnDelete();
+            $table->unsignedInteger('amount');
             $table->timestamps();
         });
     }
