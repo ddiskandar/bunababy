@@ -17,7 +17,13 @@ class PlaceResource extends Resource
 {
     protected static ?string $model = Place::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-map-pin';
+
+    protected static ?string $navigationGroup = 'Sistem';
+
+    protected static ?string $modelLabel = 'Tempat';
+
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {

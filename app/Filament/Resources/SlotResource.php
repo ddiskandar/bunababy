@@ -19,6 +19,10 @@ class SlotResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Sistem';
+
+    protected static ?string $navigationParentItem = 'Tempat';
+
     public static function form(Form $form): Form
     {
         return $form

@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             PriceSeeder::class,
             RoomSeeder::class,
+            MidwifeSeeder::class,
         ]);
 
         User::factory()

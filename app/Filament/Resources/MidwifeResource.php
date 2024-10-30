@@ -17,7 +17,13 @@ class MidwifeResource extends Resource
 {
     protected static ?string $model = Midwife::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
+
+    protected static ?string $navigationGroup = 'Sistem';
+
+    protected static ?string $modelLabel = 'Bidan';
+
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
