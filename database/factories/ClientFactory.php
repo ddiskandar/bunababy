@@ -21,7 +21,7 @@ class ClientFactory extends Factory
             'email' => $this->faker->email(),
             'dob' => $this->faker->datetime(),
             'ig' => $this->faker->username(),
-            'phone' => $this->faker->phoneNumber(),
+            'phone' => '085624028940',
         ];
     }
 }

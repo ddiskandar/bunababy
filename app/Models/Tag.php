@@ -22,6 +22,6 @@ class Tag extends Model
 
     public function clients()
     {
-        return $this->belongsToMany(User::class, 'tag_user', 'tag_id', 'client_user_id');
+        return $this->belongsToMany(Client::class);
     }
 }

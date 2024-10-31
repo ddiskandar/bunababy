@@ -38,10 +38,13 @@ class ClientResource extends Resource
                 Forms\Components\TextInput::make('phone')
                     ->tel()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('photo')
-                    ->columnSpanFull(),
+                Forms\Components\FileUpload::make('photo'),
                 Forms\Components\TextInput::make('ig')
                     ->maxLength(255),
+                Forms\Components\Select::make('tags')
+                    ->relationship('tags', 'name')
+                    ->preload()
+                    ->multiple(),
             ]);
     }
 
@@ -51,23 +54,14 @@ class ClientResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('dob')
-                    ->date()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('phone')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('ig')
+                    ->label('IG')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('tags.name')
+                    ->label('Tags')
+                    ,
             ])
             ->filters([
                 //
@@ -76,9 +70,7 @@ class ClientResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                //
             ]);
     }
 
