@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TreatmentResource\Pages;
 use App\Filament\Resources\TreatmentResource\RelationManagers;
+use App\Models\Scopes\ActiveScope;
 use App\Models\Treatment;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -23,25 +24,30 @@ class TreatmentResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScope(ActiveScope::class);
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255)
+                    ->columnSpanFull(),
+                Forms\Components\Textarea::make('desc')
+                    ->columnSpanFull(),
                 Forms\Components\Select::make('category_id')
                     ->relationship('category', 'name')
                     ->required(),
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('image')
-                    ->image(),
                 Forms\Components\TextInput::make('duration')
                     ->required()
-                    ->numeric(),
-                Forms\Components\Textarea::make('desc')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('sort')
-                    ->numeric(),
+                    ->numeric()
+                    ->suffix(' menit'),
                 Forms\Components\Toggle::make('active')
                     ->required(),
             ]);
@@ -53,9 +59,12 @@ class TreatmentResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('desc')
+                    ->wrap(),
                 Tables\Columns\TextColumn::make('duration')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->suffix(' menit'),
                 Tables\Columns\TextColumn::make('category.name')
                     ->numeric()
                     ->sortable(),
@@ -64,14 +73,6 @@ class TreatmentResource extends Resource
                     ->sortable(),
                 Tables\Columns\IconColumn::make('active')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -80,9 +81,9 @@ class TreatmentResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 

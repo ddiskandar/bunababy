@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('midwives', function (Blueprint $table) {
+        Schema::create('midwife_treatment', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('phone')->nullable();
-            $table->text('photo')->nullable();
-            $table->string('ig')->nullable();
-            $table->boolean('active')->default(true);
+            $table->foreignId('midwife_id')->constrained('midwives')->cascadeOnDelete();
+            $table->foreignId('treatment_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('midwives');
+        Schema::dropIfExists('midwife_treatment');
     }
 };

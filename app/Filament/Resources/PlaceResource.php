@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\PlaceType;
 use App\Filament\Resources\PlaceResource\Pages;
 use App\Filament\Resources\PlaceResource\RelationManagers;
 use App\Models\Place;
+use App\Models\Scopes\ActiveScope;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -25,6 +27,12 @@ class PlaceResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScope(ActiveScope::class);
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -35,15 +43,14 @@ class PlaceResource extends Resource
                 Forms\Components\TextInput::make('desc')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('type')
-                    ->required()
-                    ->numeric(),
                 Forms\Components\TextInput::make('transport_duration')
                     ->required()
                     ->numeric()
-                    ->default(0),
-                Forms\Components\TextInput::make('sort')
-                    ->numeric(),
+                    ->default(0)
+                    ->suffix(' menit'),
+                Forms\Components\ToggleButtons::make('type')
+                    ->options(PlaceType::class)
+                    ->inline(),
                 Forms\Components\Toggle::make('active')
                     ->required(),
             ]);
@@ -62,10 +69,8 @@ class PlaceResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('transport_duration')
                     ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('sort')
-                    ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->suffix(' menit'),
                 Tables\Columns\IconColumn::make('active')
                     ->boolean(),
             ])
@@ -76,16 +81,19 @@ class PlaceResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
+            ])
+            ->defaultSort('sort')
+            ->reorderable('sort')
+            ->paginated(false);
     }
 
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\SlotsRelationManager::class,
         ];
     }
 

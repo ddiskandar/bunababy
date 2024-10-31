@@ -2,8 +2,27 @@
 
 namespace App\Enums;
 
-enum PlaceType: int
+use Filament\Support\Contracts\HasColor;
+use Filament\Support\Contracts\HasLabel;
+
+enum PlaceType: int implements HasLabel, HasColor
 {
     case HOMECARE = 1;
     case CLINIC = 2;
+
+    public function getLabel(): string
+    {
+        return match ($this) {
+            self::HOMECARE => 'Homecare',
+            self::CLINIC => 'Klinik',
+        };
+    }
+
+    public function getColor(): string|array|null
+    {
+        return match ($this) {
+            self::HOMECARE => 'success',
+            self::CLINIC => 'warning',
+        };
+    }
 }

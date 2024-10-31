@@ -8,22 +8,26 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('treatment_midwife', function (Blueprint $table) {
+        Schema::create('kecamatan_midwife', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('kecamatan_id')->constrained()->cascadeOnDelete();
             $table->foreignId('midwife_id')->constrained('midwives')->cascadeOnDelete();
-            $table->foreignId('treatment_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('treatment_midwife');
+        Schema::dropIfExists('kecamatan_midwife');
     }
 };

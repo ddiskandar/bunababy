@@ -27,7 +27,7 @@ class Treatment extends Model
 
     public function midwives(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'treatment_user', 'treatment_id', 'midwife_user_id');
+        return $this->belongsToMany(Midwife::class);
     }
 
     public function prices(): HasMany

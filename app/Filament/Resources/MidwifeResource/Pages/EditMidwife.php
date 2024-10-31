@@ -10,10 +10,14 @@ class EditMidwife extends EditRecord
 {
     protected static string $resource = MidwifeResource::class;
 
+    protected static ?string $title = 'Biodata';
+
+    protected static ?string $navigationIcon = 'heroicon-o-pencil-square';
+
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            // Actions\DeleteAction::make(),
         ];
     }
 }

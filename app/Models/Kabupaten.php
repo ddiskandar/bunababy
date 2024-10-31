@@ -21,7 +21,7 @@ class Kabupaten extends Model
         static::addGlobalScope(new ActiveScope);
     }
 
-    public function kecamatans(): HasMany
+    public function kecamatan(): HasMany
     {
         return $this->hasMany(Kecamatan::class);
     }

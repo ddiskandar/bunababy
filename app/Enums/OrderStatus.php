@@ -2,7 +2,10 @@
 
 namespace App\Enums;
 
-enum OrderStatus: int
+use Filament\Support\Contracts\HasColor;
+use Filament\Support\Contracts\HasLabel;
+
+enum OrderStatus: int implements HasLabel, HasColor
 {
     case UNPAID = 1;
     case LOCKED = 2;
@@ -15,6 +18,15 @@ enum OrderStatus: int
             self::UNPAID => 'Unpaid',
             self::LOCKED => 'Locked',
             self::FINISHED => 'Finished',
+        };
+    }
+
+    public function getColor(): string|array|null
+    {
+        return match ($this) {
+            self::UNPAID => 'warning',
+            self::LOCKED => 'danger',
+            self::FINISHED => 'success',
         };
     }
 

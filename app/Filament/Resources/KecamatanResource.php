@@ -37,7 +37,8 @@ class KecamatanResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('distance')
                     ->numeric()
-                    ->default(0),
+                    ->default(0)
+                    ->suffix(' km'),
                 Forms\Components\Toggle::make('active')
                     ->required(),
             ]);
@@ -47,24 +48,16 @@ class KecamatanResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('kabupaten.name')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('distance')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->suffix(' km'),
+                Tables\Columns\TextColumn::make('kabupaten.name')
+                    ->numeric(),
                 Tables\Columns\IconColumn::make('active')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -73,9 +66,9 @@ class KecamatanResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 

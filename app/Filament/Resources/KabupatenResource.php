@@ -42,6 +42,9 @@ class KabupatenResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('kecamatan_count')
+                    ->counts('kecamatan')
+                    ->label('Jumlah Kecamatan'),
                 Tables\Columns\IconColumn::make('active')
                     ->boolean(),
             ])
@@ -52,9 +55,9 @@ class KabupatenResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 

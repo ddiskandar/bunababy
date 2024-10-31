@@ -7,6 +7,7 @@ use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -23,6 +24,8 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationParentItem = 'Treatment';
 
+    protected static ?string $modelLabel = 'Kategory';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -30,12 +33,8 @@ class CategoryResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\FileUpload::make('image')
-                    ->image(),
                 Forms\Components\TextInput::make('description')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('sort')
-                    ->numeric(),
                 Forms\Components\Toggle::make('active')
                     ->required(),
             ]);
@@ -47,9 +46,9 @@ class CategoryResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('sort')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('treatments_count')
+                    ->counts('treatments')
+                    ->label('Jumlah Treatment'),
                 Tables\Columns\IconColumn::make('active')
                     ->boolean(),
             ])
@@ -60,16 +59,18 @@ class CategoryResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
+            ])
+            ->defaultSort('sort')
+            ->reorderable('sort');
     }
 
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\TreatmentsRelationManager::class,
         ];
     }
 
