@@ -17,7 +17,9 @@ class AddressFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'label' => $this->faker->word(),
+            'address' => $this->faker->address(),
+            'desa' => $this->faker->word(),
         ];
     }
 }

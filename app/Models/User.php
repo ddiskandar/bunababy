@@ -86,14 +86,9 @@ class User extends Authenticatable implements FilamentUser
         return $this->type === UserType::OWNER;
     }
 
-    public function profile(): HasOne
-    {
-        return $this->hasOne(Profile::class);
-    }
-
     public function kecamatans(): BelongsToMany
     {
-        return $this->belongsToMany(Kecamatan::class, 'kecamatan_user', 'midwife_user_id', 'kecamatan_id')
+        return $this->belongsToMany(Kecamatan::class, 'kecamatan_user', 'midwife_id', 'kecamatan_id')
             ->orderBy('name');
     }
 
@@ -106,29 +101,29 @@ class User extends Authenticatable implements FilamentUser
     // schedules
     public function schedules(): HasMany
     {
-        return $this->hasMany(Order::class, 'midwife_user_id');
+        return $this->hasMany(Order::class, 'midwife_id');
     }
 
     // order untuk Client
     // reservations
     public function reservations(): HasMany
     {
-        return $this->hasMany(Order::class, 'client_user_id');
+        return $this->hasMany(Order::class, 'client_id');
     }
 
     public function treatments(): BelongsToMany
     {
-        return $this->belongsToMany(Treatment::class, 'treatment_user', 'midwife_user_id', 'treatment_id');
+        return $this->belongsToMany(Treatment::class, 'treatment_user', 'midwife_id', 'treatment_id');
     }
 
     public function latestReservation(): HasOne
     {
-        return $this->hasOne(Order::class, 'client_user_id')->latestOfMany();
+        return $this->hasOne(Order::class, 'client_id')->latestOfMany();
     }
 
     public function addresses(): HasMany
     {
-        return $this->hasMany(Address::class, 'client_user_id');
+        return $this->hasMany(Address::class, 'client_id');
     }
 
     public function getAddressAttribute()
@@ -139,12 +134,12 @@ class User extends Authenticatable implements FilamentUser
 
     public function families(): HasMany
     {
-        return $this->hasMany(Family::class, 'client_user_id');
+        return $this->hasMany(Family::class, 'client_id');
     }
 
     public function tags(): BelongsToMany
     {
-        return $this->belongsToMany(Tag::class, 'tag_user', 'client_user_id', 'tag_id');
+        return $this->belongsToMany(Tag::class, 'tag_user', 'client_id', 'tag_id');
     }
 
     public function scopeMidwives($query)

@@ -19,7 +19,7 @@ class Timetable extends Model
 
     public function midwife(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'midwife_user_id');
+        return $this->belongsTo(User::class, 'midwife_id');
     }
 
     public function place(): BelongsTo

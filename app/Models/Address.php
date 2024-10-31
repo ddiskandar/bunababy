@@ -19,7 +19,7 @@ class Address extends Model
 
     public function client(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'client_user_id');
+        return $this->belongsTo(Client::class);
     }
 
     public function kecamatan(): BelongsTo

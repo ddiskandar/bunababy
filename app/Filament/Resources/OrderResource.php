@@ -17,6 +17,7 @@ use Filament\Forms;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -37,64 +38,64 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Section::make()
+                            ->schema(static::getDetailsFormSchema()),
+                        Forms\Components\Section::make('Place')
+                            ->schema(static::getPlaceFormSchema()),
+                        Forms\Components\Section::make('Treatments')
+                            ->schema([
+                                static::getItemsRepeater()
+                            ]),
+                        ])
+                        ->columnSpan(['lg' => fn (?Order $record) => $record === null ? 3 : 2]),
 
-            ]);
+                Forms\Components\Section::make()
+                    ->schema([
+                        Forms\Components\Placeholder::make('created_at')
+                            ->label('Created at')
+                            ->content(fn (Order $record): ?string => $record->created_at?->diffForHumans()),
+
+                        Forms\Components\Placeholder::make('updated_at')
+                            ->label('Last modified at')
+                            ->content(fn (Order $record): ?string => $record->updated_at?->diffForHumans()),
+                    ])
+                    ->columnSpan(['lg' => 1])
+                    ->hidden(fn (?Order $record) => $record === null),
+                    ])
+                    ->columns(3);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('place.name')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('room.name')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('client.name')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('midwife.name')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('address.id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('total_price')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('total_duration')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('total_transport')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('adjustment_amount')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('adjustment_name')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('date')
-                    ->date()
+                    ->date('D, d M Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('start_time'),
                 Tables\Columns\TextColumn::make('end_time'),
-                Tables\Columns\TextColumn::make('screening')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('status')
+                Tables\Columns\TextColumn::make('place.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('finished_at')
-                    ->dateTime()
+                Tables\Columns\TextColumn::make('client.name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('midwife.name')
+                    ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('total_price')
+                    ->money('IDR')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('total_transport')
+                    ->money('IDR')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('adjustment_amount')
+                    ->money('IDR')
+                    ->sortable(),
             ])
             ->filters([
                 //
@@ -103,16 +104,14 @@ class OrderResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                //
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\PaymentsRelationManager::class,
         ];
     }
 

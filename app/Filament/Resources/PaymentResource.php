@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\PaymentStatus;
 use App\Filament\Resources\PaymentResource\Pages;
 use App\Filament\Resources\PaymentResource\RelationManagers;
 use App\Models\Payment;
@@ -31,21 +32,20 @@ class PaymentResource extends Resource
             ->schema([
                 Forms\Components\Select::make('order_id')
                     ->relationship('order', 'id')
+                    ->searchable()
+                    ->preload()
                     ->required(),
                 Forms\Components\TextInput::make('value')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('attachment')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('status')
+                Forms\Components\FileUpload::make('attachment'),
+                Forms\Components\ToggleButtons::make('status')
                     ->required()
-                    ->numeric()
-                    ->default(1),
-                Forms\Components\DateTimePicker::make('verified_at'),
-                Forms\Components\TextInput::make('note')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('verified_by_id')
-                    ->numeric(),
+                    ->options(PaymentStatus::class)
+                    ->inline(),
+                Forms\Components\Textarea::make('note')
+                    ->maxLength(255)
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -54,15 +54,12 @@ class PaymentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('order.id')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('value')
-                    ->numeric()
+                    ->money('IDR')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('attachment')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('status')
-                    ->numeric()
+                    ->badge()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('verified_at')
                     ->dateTime()
@@ -72,14 +69,6 @@ class PaymentResource extends Resource
                 Tables\Columns\TextColumn::make('verified_by_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -88,9 +77,7 @@ class PaymentResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                //
             ]);
     }
 

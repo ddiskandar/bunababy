@@ -23,7 +23,7 @@ class Order extends Model
         'total_duration' => 'integer',
         'total_transport' => 'integer',
         'adjustment_amount' => 'integer',
-        'status' => 'integer',
+        'status' => OrderStatus::class,
         'finished_at' => 'datetime',
         'startDateTime' => 'datetime',
         'endDateTime' => 'datetime',
@@ -160,7 +160,7 @@ class Order extends Model
     public function numberStartTime()
     {
         return session('order.place_id')
-            . sprintf('%02d', session('order.midwife_user_id'))
+            . sprintf('%02d', session('order.midwife_id'))
             . session('order.start_time')[0]
             . session('order.start_time')[1]
             . session('order.start_time')[3]
