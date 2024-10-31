@@ -26,6 +26,8 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogo(asset('images/logo.svg'))
             ->brandLogoHeight(80)
             ->sidebarCollapsibleOnDesktop()
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('60s')
             ->default()
             ->id('admin')
             ->path('admin')
