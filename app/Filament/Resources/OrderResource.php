@@ -15,6 +15,7 @@ use App\Models\Slot;
 use App\Models\Treatment;
 use Filament\Forms;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Tabs;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -40,13 +41,16 @@ class OrderResource extends Resource
             ->schema([
                 Forms\Components\Group::make()
                     ->schema([
-                        Forms\Components\Section::make()
-                            ->schema(static::getDetailsFormSchema()),
-                        Forms\Components\Section::make('Place')
-                            ->schema(static::getPlaceFormSchema()),
-                        Forms\Components\Section::make('Treatments')
-                            ->schema([
-                                static::getItemsRepeater()
+                        Forms\Components\Tabs::make()
+                            ->tabs([
+                                Tabs\Tab::make('Details')
+                                    ->schema(static::getDetailsFormSchema()),
+                                Tabs\Tab::make('Waktu dan Tempat')
+                                    ->schema(static::getPlaceFormSchema()),
+                                Tabs\Tab::make('Treatments')
+                                    ->schema([
+                                        static::getItemsRepeater()
+                                    ]),
                             ]),
                         ])
                         ->columnSpan(['lg' => fn (?Order $record) => $record === null ? 3 : 2]),

@@ -23,13 +23,16 @@ class AdminPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->brandLogo(asset('images/logo.svg'))
+            ->brandLogoHeight(80)
+            ->sidebarCollapsibleOnDesktop()
             ->default()
             ->id('admin')
             ->path('admin')
             ->login()
             ->profile()
             ->colors([
-                'primary' => Color::Rose,
+                // 'primary' => Color::Rose,
             ])
             ->spa()
             ->navigationGroups([
