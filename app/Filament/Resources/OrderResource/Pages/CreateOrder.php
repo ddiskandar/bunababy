@@ -26,7 +26,9 @@ class CreateOrder extends CreateRecord
                     ->cancelAction($this->getCancelFormAction())
                     ->submitAction($this->getSubmitFormAction())
                     ->skippable($this->hasSkippableSteps())
-                    ->contained(false),
+                    ->contained(false)
+                    ->skippable()
+                    ,
             ])
             ->columns(null);
     }
@@ -51,8 +53,19 @@ class CreateOrder extends CreateRecord
                 ->schema([
                     Section::make()->schema([
                         OrderResource::getItemsRepeater(),
+                    ])->columns(1)
+                ]),
+            Step::make('Waktu')
+                ->schema([
+                    Section::make()->schema(OrderResource::getDatetimeFormSchema())->columns()
+                ]),
+            Step::make('Ringkasan')
+                ->schema([
+                    Section::make()->schema([
+                        // OrderResource::getItemsRepeater(),
                     ])->columns()
                 ]),
             ];
+
     }
 }
