@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\UserType;
+use App\Models\Client;
 use App\Models\Profile;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -34,5 +35,7 @@ class DatabaseSeeder extends Seeder
                 'email' => 'hr@bunababycare.com',
                 'type' => UserType::OWNER,
             ]);
+
+        Client::factory(30)->create();
     }
 }

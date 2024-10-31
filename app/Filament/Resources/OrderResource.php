@@ -2,11 +2,16 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\PlaceType;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Models\Order;
+use App\Models\Place;
+use App\Models\Room;
 use Filament\Forms;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -27,46 +32,7 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('place_id')
-                    ->relationship('place', 'name')
-                    ->required(),
-                Forms\Components\Select::make('room_id')
-                    ->relationship('room', 'name'),
-                Forms\Components\Select::make('client_id')
-                    ->relationship('client', 'name')
-                    ->required(),
-                Forms\Components\Select::make('midwife_id')
-                    ->relationship('midwife', 'name')
-                    ->required(),
-                Forms\Components\Select::make('address_id')
-                    ->relationship('address', 'id'),
-                Forms\Components\TextInput::make('total_price')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('total_duration')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
-                Forms\Components\TextInput::make('total_transport')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
-                Forms\Components\TextInput::make('adjustment_amount')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
-                Forms\Components\TextInput::make('adjustment_name')
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('date'),
-                Forms\Components\TextInput::make('start_time'),
-                Forms\Components\TextInput::make('end_time'),
-                Forms\Components\TextInput::make('screening')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('status')
-                    ->required()
-                    ->numeric()
-                    ->default(2),
-                Forms\Components\DateTimePicker::make('finished_at'),
+
             ]);
     }
 
@@ -152,5 +118,55 @@ class OrderResource extends Resource
             'create' => Pages\CreateOrder::route('/create'),
             'edit' => Pages\EditOrder::route('/{record}/edit'),
         ];
+    }
+
+    public static function getDetailsFormSchema(): array
+    {
+        return [
+            Forms\Components\Select::make('client_id')
+                ->relationship('client', 'name')
+                ->searchable()
+                // ->required()
+                ,
+            Forms\Components\Select::make('address_id')
+                ->label('Alamat')
+                ->options([]),
+            Forms\Components\Textarea::make('screening')
+                ->columnSpanFull(),
+        ];
+    }
+
+    public static function getPlaceFormSchema(): array
+    {
+        return [
+            Forms\Components\Select::make('place_id')
+                ->options(Place::pluck('name', 'id')->toArray())
+                ->preload()
+                ->required()
+                ->live(),
+            Forms\Components\Select::make('room_id')
+                ->options(fn (Get $get) => Room::where('place_id', $get('place_id'))->pluck('name', 'id')->toArray())
+                ->preload()
+                ->required()
+                ->reactive()
+                ->hidden(function (Get $get){
+                    if (!$get('place_id')) {
+                        return true;
+                    }
+                    $place = Place::find($get('place_id'));
+                    return $place?->type === PlaceType::HOMECARE;
+                }),
+        ];
+    }
+
+    public static function getItemsRepeater(): Repeater
+    {
+        return Repeater::make('treatments')
+            ->relationship()
+            ->schema([
+                //
+            ])
+            ->defaultItems(1)
+            ->required();
     }
 }

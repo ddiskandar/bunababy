@@ -46,12 +46,12 @@ class Order extends Model
 
     public function client(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'client_user_id', 'id');
+        return $this->belongsTo(Client::class);
     }
 
     public function midwife(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'midwife_user_id', 'id');
+        return $this->belongsTo(Midwife::class);
     }
 
     public function address(): BelongsTo

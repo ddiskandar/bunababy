@@ -25,6 +25,6 @@ class Room extends Model
 
     public function treatments(): BelongsToMany
     {
-        return $this->belongsToMany(Treatment::class, 'room_treatment', 'room_id', 'treatment_id');
+        return $this->belongsToMany(Treatment::class);
     }
 }

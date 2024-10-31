@@ -61,7 +61,7 @@ class ClientResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tags.name')
                     ->label('Tags')
-                    ,
+                    ->badge(),
             ])
             ->filters([
                 //

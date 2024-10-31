@@ -44,4 +44,9 @@ class Treatment extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function rooms(): BelongsToMany
+    {
+        return $this->belongsToMany(Room::class);
+    }
 }
