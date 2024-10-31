@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\OrderResource\RelationManagers;
 
+use App\Enums\PaymentStatus;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -21,7 +22,11 @@ class PaymentsRelationManager extends RelationManager
                 Forms\Components\TextInput::make('value')
                     ->required()
                     ->maxLength(255),
-            ]);
+                Forms\Components\ToggleButtons::make('status')
+                    ->options(PaymentStatus::class)
+                    ->inline()
+                    ->required(),
+            ])->columns(1);
     }
 
     public function table(Table $table): Table

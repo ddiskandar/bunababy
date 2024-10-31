@@ -55,10 +55,6 @@ class CreateOrder extends CreateRecord
                         OrderResource::getItemsRepeater(),
                     ])->columns(1)
                 ]),
-            Step::make('Waktu')
-                ->schema([
-                    Section::make()->schema(OrderResource::getDatetimeFormSchema())->columns()
-                ]),
             Step::make('Ringkasan')
                 ->schema([
                     Section::make()->schema([

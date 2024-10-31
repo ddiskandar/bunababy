@@ -20,8 +20,12 @@ class EditOrder extends EditRecord
     {
         return [
             Actions\Action::make('invoice')
-                ->label('Invoice'),
-            Actions\DeleteAction::make(),
+                ->label('Cetak Invoice')
+                ->url(route('order.invoice.print', $this->getRecord()))
+                ->openUrlInNewTab(),
+            Actions\ActionGroup::make([
+                Actions\DeleteAction::make(),
+            ]),
         ];
     }
 }

@@ -157,6 +157,35 @@ class Order extends Model
         return $this->total_price + $this->total_transport + $this->adjustment_amount;
     }
 
+    public function getTime()
+    {
+        return Carbon::parse($this->start_time)->isoFormat('HH:mm') . ' - ' . Carbon::parse($this->end_time)
+            ->isoFormat('HH:mm');
+    }
+
+    public function getLongTime()
+    {
+        return $this->getTime(). ' WIB';
+    }
+
+    public function getLongDate()
+    {
+        return Carbon::parse($this->date)->isoFormat('dddd, DD MMMM YYYY');
+    }
+
+    public function getShortDate()
+    {
+        return Carbon::parse($this->date)->isoFormat('ddd, DD MMM');
+    }
+
+    public function getLongDateTime()
+    {
+        return $this->getLongDate() . ' ' . $this->getLongTime();
+    }
+
+
+    // Creating Record
+
     public function numberStartTime()
     {
         return session('order.place_id')
@@ -197,31 +226,5 @@ class Order extends Model
     public function getEndTime()
     {
         return Carbon::parse($this->getStartTime())->addMinutes(session('order.addMinutes'))->toTimeString();
-    }
-
-    public function getTime()
-    {
-        return Carbon::parse($this->start_time)->isoFormat('HH:mm') . ' - ' . Carbon::parse($this->end_time)
-            ->isoFormat('HH:mm');
-    }
-
-    public function getLongTime()
-    {
-        return $this->getTime(). ' WIB';
-    }
-
-    public function getLongDate()
-    {
-        return Carbon::parse($this->date)->isoFormat('dddd, DD MMMM YYYY');
-    }
-
-    public function getShortDate()
-    {
-        return Carbon::parse($this->date)->isoFormat('ddd, DD MMM');
-    }
-
-    public function getLongDateTime()
-    {
-        return $this->getLongDate() . ' ' . $this->getLongTime();
     }
 }
