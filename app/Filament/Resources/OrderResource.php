@@ -16,6 +16,7 @@ use App\Models\Price;
 use App\Models\Room;
 use App\Models\Slot;
 use App\Models\Treatment;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Tabs;
@@ -28,6 +29,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Log;
 
 class OrderResource extends Resource
 {
@@ -287,11 +289,27 @@ class OrderResource extends Resource
                 ->minDate(now())
                 ->native(false)
                 ->disabledDates([today()->addDays(5)])
-                // ->required()
+                ->required()
                 ->columnSpanFull(),
             Forms\Components\TimePicker::make('start_time')
+                ->label('Waktu Mulai')
                 ->datalist(fn (Get $get) => Slot::where('place_id', $get('place_id'))->pluck('time')->toArray())
+                ->afterStateUpdated(function ($state, Set $set, Get $get) {
+                    $date = $get('date');
+                    $startTime = Carbon::parse($date)->setTimeFrom(Carbon::parse($state));
+                    $totalDuration = collect($get('treatments'))->sum('treatment_duration');
+                    $endTime = $startTime->addMinutes($totalDuration);
+                    $set('end_time', $endTime->format('H:i'));
+                })
+                ->live()
+                ->required()
                 ->columnSpanFull(),
+            Forms\Components\TimePicker::make('end_time')
+                ->label('Waktu Sampai')
+                ->disabled()
+                ->reactive()
+                ->required()
+                ,
         ];
     }
 
@@ -334,7 +352,13 @@ class OrderResource extends Resource
                         $set('treatment_name', $treatment?->name);
                         $set('treatment_duration', $treatment?->duration);
                         $set('treatment_price', $price);
-                        $set('display_treatment_price', $price);
+                        // $set('display_treatment_duration', $treatment?->duration);
+                        // $set('display_treatment_price', $price);
+                        $date = $get('../../date');
+                        $startTime = Carbon::parse($date)->setTimeFrom(Carbon::parse($get('../../start_time')));
+                        $totalDuration = collect($get('../../treatments'))->sum('treatment_duration');
+                        $endTime = $startTime->addMinutes($totalDuration);
+                        $set('../../end_time', $endTime->format('H:i'));
                     }),
                 Forms\Components\Select::make('family_id')
                     ->label('Pasien')
@@ -351,8 +375,18 @@ class OrderResource extends Resource
                     ->preload()
                     ->required()
                     ->searchable(),
-                Forms\Components\TextInput::make('display_treatment_price')
+                Forms\Components\TextInput::make('treatment_price')
                     ->label('Harga')
+                    ->prefix('Rp')
+                    ->disabled()
+                    ->numeric()
+                    ->dehydrated()
+                    ->reactive()
+                    ->required()
+                    ,
+                Forms\Components\TextInput::make('treatment_duration')
+                    ->label('Durasi')
+                    ->suffix(' menit')
                     ->disabled()
                     ->numeric()
                     ->dehydrated()
@@ -360,7 +394,14 @@ class OrderResource extends Resource
                     ->required()
                     ,
             ])
-            ->columns(3)
+            ->afterStateUpdated(function (Set $set, Get $get) {
+                $date = $get('date');
+                $startTime = Carbon::parse($date)->setTimeFrom(Carbon::parse($get('start_time')));
+                $totalDuration = collect($get('treatments'))->sum('treatment_duration');
+                $endTime = $startTime->addMinutes($totalDuration);
+                $set('end_time', $endTime->format('H:i'));
+            })
+            ->columns(2)
             ->defaultItems(1)
             ->required();
     }

@@ -210,7 +210,6 @@ class ShowCalendarComponent extends Component
             ->whereDate('date', $this->selectedDay)
             ->with(
                 'customer:id,name',
-                'treatments:id,name',
                 'address.kecamatan:id,name',
                 'place:id,name,type',
                 'room:id,name',
@@ -253,7 +252,7 @@ class ShowCalendarComponent extends Component
                 'id' => $order->id,
                 'customer_name' => $order->customer->name,
                 'time' => $order->getLongTime(),
-                'treatments' => $order->treatments->implode('name', ', '),
+                'treatments' => $order->listTreatments,
                 'status' => $order->status->getLabel(),
                 'finished_at' => $order->finished_at,
                 'address' => $order->address->kecamatan->name ?? '-',
