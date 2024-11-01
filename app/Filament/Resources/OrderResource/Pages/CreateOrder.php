@@ -45,7 +45,7 @@ class CreateOrder extends CreateRecord
                 ->schema([
                     Section::make()->schema(OrderResource::getDetailsFormSchema())->columns()
                 ]),
-            Step::make('Place')
+            Step::make('Bidan')
                 ->schema([
                     Section::make()->schema(OrderResource::getPlaceFormSchema())->columns()
                 ]),

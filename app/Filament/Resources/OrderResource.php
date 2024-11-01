@@ -77,6 +77,9 @@ class OrderResource extends Resource
                                 Forms\Components\Placeholder::make('address.full')
                                     ->label('Alamat')
                                     ->content(fn (Order $record): ?string => $record->address->fullAddress),
+                                Forms\Components\Placeholder::make('client.treatments')
+                                    ->label('Treatment')
+                                    ->content(fn (Order $record): ?string => $record->treatments->pluck('name')->join(', ')),
                                 Forms\Components\Placeholder::make('client.phone')
                                     ->label('Phone')
                                     ->content(fn (Order $record): ?string => $record->client->phone),
@@ -171,7 +174,8 @@ class OrderResource extends Resource
                 ->required()
                 ->options(OrderStatus::class)
                 ->inline()
-                ->columnSpanFull(),
+                ->columnSpanFull()
+                ->hiddenOn('create'),
             Forms\Components\Select::make('client_id')
                 ->relationship('client', 'name')
                 ->live()

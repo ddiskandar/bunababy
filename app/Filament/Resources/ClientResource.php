@@ -7,6 +7,8 @@ use App\Filament\Resources\ClientResource\RelationManagers;
 use App\Models\Client;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Pages\SubNavigationPosition;
+use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -22,6 +24,8 @@ class ClientResource extends Resource
     protected static ?string $navigationGroup = 'Admin';
 
     protected static ?int $navigationSort = 9;
+
+    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function form(Form $form): Form
     {
@@ -81,12 +85,25 @@ class ClientResource extends Resource
         ];
     }
 
+    public static function getRecordSubNavigation(Page $page): array
+    {
+        return $page->generateNavigationItems([
+            Pages\EditClient::class,
+            Pages\ManageClientFamilies::class,
+            Pages\ManageClientAddresses::class,
+            Pages\ManageClientOrders::class,
+        ]);
+    }
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListClients::route('/'),
             'create' => Pages\CreateClient::route('/create'),
             'edit' => Pages\EditClient::route('/{record}/edit'),
+            'families' => Pages\ManageClientFamilies::route('/{record}/families'),
+            'addresses' => Pages\ManageClientAddresses::route('/{record}/addresses'),
+            'orders' => Pages\ManageClientOrders::route('/{record}/orders'),
         ];
     }
 }

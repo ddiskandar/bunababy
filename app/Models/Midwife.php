@@ -6,6 +6,7 @@ use App\Models\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Midwife extends Model
 {
@@ -25,5 +26,15 @@ class Midwife extends Model
     public function kecamatan(): BelongsToMany
     {
         return $this->belongsToMany(Kecamatan::class);
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function timetables(): HasMany
+    {
+        return $this->hasMany(Timetable::class);
     }
 }

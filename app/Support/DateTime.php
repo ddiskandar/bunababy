@@ -15,10 +15,10 @@ class DateTime
     }
 
     public static function calculateAge($dob) {
-        $age = Carbon::parse($dob)->diffInYears();
-        $string = $age . ' tahun';
+        $age = $dob->diffInYears();
+        $string = round($age) . ' tahun';
         if ($age <= 2) {
-            $string = Carbon::parse($dob)->diffInMonths() . ' bulan';
+            $string = round($dob->diffInMonths()) . ' bulan';
         }
         return $string;
     }
