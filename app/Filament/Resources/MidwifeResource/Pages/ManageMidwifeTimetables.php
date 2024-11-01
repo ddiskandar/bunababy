@@ -1,43 +1,37 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\MidwifeResource\Pages;
 
 use App\Enums\PlaceType;
 use App\Enums\TimetableType;
-use App\Filament\Resources\TimetableResource\Pages;
-use App\Filament\Resources\TimetableResource\RelationManagers;
+use App\Filament\Resources\MidwifeResource;
 use App\Models\Place;
-use App\Models\Timetable;
+use Filament\Actions;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Resources\Resource;
+use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class TimetableResource extends Resource
+class ManageMidwifeTimetables extends ManageRelatedRecords
 {
-    protected static ?string $model = Timetable::class;
+    protected static string $resource = MidwifeResource::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clock';
+    protected static string $relationship = 'timetables';
 
-    protected static ?string $modelLabel = 'Penjadwalan';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Admin';
+    public static function getNavigationLabel(): string
+    {
+        return 'Timetables';
+    }
 
-    protected static ?int $navigationSort = 2;
-
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('midwife_id')
-                    ->relationship('midwife', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
                 Forms\Components\DatePicker::make('date')
                     ->minDate(now())
                     ->required(),
@@ -57,13 +51,11 @@ class TimetableResource extends Resource
             ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('date')
             ->columns([
-                Tables\Columns\TextColumn::make('midwife.name')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('date')
                     ->date()
                     ->sortable(),
@@ -79,30 +71,15 @@ class TimetableResource extends Resource
             ->filters([
                 //
             ])
+            ->headerActions([
+                Tables\Actions\CreateAction::make(),
+            ])
             ->actions([
-                Tables\Actions\Action::make('Lihat Bidan')
-                    ->icon('heroicon-o-user')
-                    ->url(fn (Timetable $timetable) => route('filament.admin.resources.midwives.timetables', $timetable->midwife_id)),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 //
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListTimetables::route('/'),
-            'create' => Pages\CreateTimetable::route('/create'),
-            'edit' => Pages\EditTimetable::route('/{record}/edit'),
-        ];
     }
 }

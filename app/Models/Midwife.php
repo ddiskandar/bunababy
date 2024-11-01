@@ -23,7 +23,7 @@ class Midwife extends Model
         return $this->belongsToMany(Treatment::class);
     }
 
-    public function kecamatan(): BelongsToMany
+    public function kecamatans(): BelongsToMany
     {
         return $this->belongsToMany(Kecamatan::class);
     }

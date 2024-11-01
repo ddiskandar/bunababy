@@ -7,6 +7,7 @@ use App\Filament\Resources\TagResource\RelationManagers;
 use App\Models\Tag;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -67,7 +68,7 @@ class TagResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ClientRelationManager::class,
         ];
     }
 

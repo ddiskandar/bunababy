@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\MidwifeResource\Pages;
 
+use App\Enums\UserType;
 use App\Filament\Resources\MidwifeResource;
 use Filament\Actions;
 use Filament\Forms;
@@ -64,12 +65,16 @@ class ManageMidwifeTreatments extends ManageRelatedRecords
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make()
-                    ->preloadRecordSelect(),
+                    ->preloadRecordSelect()
+                    ->visible(fn() => auth()->user()->type === UserType::OWNER),
             ])
             ->actions([
-                // Tables\Actions\ViewAction::make(),
-                // Tables\Actions\EditAction::make(),
-                Tables\Actions\DetachAction::make(),
+                Tables\Actions\Action::make('Lihat Treatment')
+                    ->visible(fn() => auth()->user()->type === UserType::OWNER)
+                    ->icon('heroicon-o-document-text')
+                    ->url(fn($record) => route('filament.admin.resources.treatments.edit', $record)),
+                Tables\Actions\DetachAction::make()
+                    ->visible(fn() => auth()->user()->type === UserType::OWNER),
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([

@@ -40,7 +40,7 @@ class Client extends Model
 
     public function getAddressAttribute()
     {
-        return $this->addresses()->mainAddress()->select('id', 'kecamatan_id')->with('kecamatan:id,name')->first()
-            ->kecamatan->name ?? NULL;
+        return $this->addresses()->mainAddress()->select('id', 'kecamatan_id')->with('kecamatans:id,name')->first()
+            ->kecamatans->name ?? NULL;
     }
 }

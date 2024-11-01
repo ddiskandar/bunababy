@@ -50,7 +50,6 @@ class ManageClientAddresses extends ManageRelatedRecords
                     ->maxLength(255),
                 Forms\Components\Textarea::make('share_location')
                     ->maxLength(255),
-                Forms\Components\Toggle::make('is_main'),
             ]);
     }
 
@@ -67,11 +66,16 @@ class ManageClientAddresses extends ManageRelatedRecords
                     ->label('Desa/Kelurahan'),
                 Tables\Columns\TextColumn::make('kecamatan.name')
                     ->label('Kecamatan'),
-                Tables\Columns\IconColumn::make('is_main')
-                    ->label('Utama'),
                 Tables\Columns\TextColumn::make('note')
                     ->label('Catatan')
                     ->wrap(),
+                Tables\Columns\ToggleColumn::make('is_main')
+                    ->label('Utama')
+                    ->afterStateUpdated(function ($record, $state) {
+                        if ($state) {
+                            $record->client->addresses()->whereKeyNot($record->getKey())->update(['is_main' => false]);
+                        }
+                    }),
             ])
             ->filters([
                 //

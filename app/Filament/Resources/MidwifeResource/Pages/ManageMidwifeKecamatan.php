@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources\MidwifeResource\Pages;
 
+use App\Enums\UserType;
 use App\Filament\Resources\MidwifeResource;
+use App\Models\Kecamatan;
 use Filament\Actions;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -16,7 +18,7 @@ class ManageMidwifeKecamatan extends ManageRelatedRecords
 {
     protected static string $resource = MidwifeResource::class;
 
-    protected static string $relationship = 'kecamatan';
+    protected static string $relationship = 'kecamatans';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -29,9 +31,7 @@ class ManageMidwifeKecamatan extends ManageRelatedRecords
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
+                //
             ]);
     }
 
@@ -54,10 +54,16 @@ class ManageMidwifeKecamatan extends ManageRelatedRecords
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make()
-                    ->preloadRecordSelect(),
+                    ->preloadRecordSelect()
+                    ->visible(fn() => auth()->user()->type === UserType::OWNER),
             ])
             ->actions([
-                Tables\Actions\DetachAction::make(),
+                Tables\Actions\Action::make('Lihat Kecamatan')
+                    ->icon('heroicon-o-eye')
+                    ->url(fn(Kecamatan $record) => route('filament.admin.resources.kecamatans.edit', $record))
+                    ->visible(fn() => auth()->user()->type === UserType::OWNER),
+                Tables\Actions\DetachAction::make()
+                    ->visible(fn() => auth()->user()->type === UserType::OWNER),
             ])
             ->bulkActions([
                 //

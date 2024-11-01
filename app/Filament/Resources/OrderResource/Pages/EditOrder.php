@@ -30,9 +30,10 @@ class EditOrder extends EditRecord
                 ->icon('heroicon-o-printer')
                 ->url(route('order.invoice.print', $this->getRecord()))
                 ->openUrlInNewTab(),
+            Actions\Action::make('client')
+                ->url(route('filament.admin.resources.clients.edit', $this->getRecord()->client))
+                ->icon('heroicon-o-user'),
             Actions\ActionGroup::make([
-                Actions\Action::make('client')
-                    ->url(route('filament.admin.resources.clients.edit', $this->getRecord()->client)),
                 Actions\DeleteAction::make(),
             ]),
         ];

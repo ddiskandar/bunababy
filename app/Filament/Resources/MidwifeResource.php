@@ -22,11 +22,11 @@ class MidwifeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
-    protected static ?string $navigationGroup = 'Sistem';
+    protected static ?string $navigationGroup = 'Admin';
 
     protected static ?string $modelLabel = 'Bidan';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 11;
 
     protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
@@ -70,10 +70,10 @@ class MidwifeResource extends Resource
                     ->counts('treatments')
                     ->label('Z'),
                 Tables\Columns\TextColumn::make('treatments.name'),
-                Tables\Columns\TextColumn::make('kecamatan_count')
-                    ->counts('kecamatan')
+                Tables\Columns\TextColumn::make('kecamatans_count')
+                    ->counts('kecamatans')
                     ->label('Z'),
-                Tables\Columns\TextColumn::make('kecamatan.name'),
+                Tables\Columns\TextColumn::make('kecamatans.name'),
                 Tables\Columns\IconColumn::make('active')
                     ->boolean()
             ])
@@ -101,6 +101,7 @@ class MidwifeResource extends Resource
     {
         return $page->generateNavigationItems([
             Pages\EditMidwife::class,
+            Pages\ManageMidwifeTimetables::class,
             Pages\ManageMidwifeTreatments::class,
             Pages\ManageMidwifeKecamatan::class,
         ]);
@@ -112,8 +113,9 @@ class MidwifeResource extends Resource
             'index' => Pages\ListMidwives::route('/'),
             'create' => Pages\CreateMidwife::route('/create'),
             'edit' => Pages\EditMidwife::route('/{record}/edit'),
+            'timetables' => Pages\ManageMidwifeTimetables::route('/{record}/timetables'),
             'treatments' => Pages\ManageMidwifeTreatments::route('/{record}/treatments'),
-            'kecamatan' => Pages\ManageMidwifeKecamatan::route('/{record}/kecamatan'),
+            'kecamatans' => Pages\ManageMidwifeKecamatan::route('/{record}/kecamatans'),
         ];
     }
 }

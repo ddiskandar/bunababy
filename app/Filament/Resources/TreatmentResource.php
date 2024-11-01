@@ -89,7 +89,7 @@ class TreatmentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\MidwivesRelationManager::class,
         ];
     }
 

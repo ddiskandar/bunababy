@@ -42,8 +42,8 @@ class KabupatenResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('kecamatan_count')
-                    ->counts('kecamatan')
+                Tables\Columns\TextColumn::make('kecamatans_count')
+                    ->counts('kecamatans')
                     ->label('Jumlah Kecamatan'),
                 Tables\Columns\IconColumn::make('active')
                     ->boolean(),

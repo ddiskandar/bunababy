@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ClientResource\Pages;
 
 use App\Filament\Resources\ClientResource;
+use App\Models\Order;
 use Filament\Actions;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -71,7 +72,7 @@ class ManageClientOrders extends ManageRelatedRecords
                 // Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\Action::make('Lihat Order')
+                Tables\Actions\Action::make('Lihat')
                     ->url(fn (Order $record) => route('filament.admin.resources.orders.edit', $record)),
             ])
             ->bulkActions([
