@@ -106,16 +106,16 @@
                                 <tr class="border-b border-gray-100">
                                     <td class="py-1">
                                         <div class="font-semibold">
-                                            <div>{{ $treatment->name }}</div>
+                                            <div>{{ $treatment['treatment_name'] }}</div>
                                         </div>
                                     </td>
                                     <td class="py-1">
                                         <div>
-                                            {{ ($treatment->pivot->family_name ?? '#') . ', ' . ($treatment->pivot->family_age ?? '#') }}
+                                            {{ ($treatment['family_name'] ?? '#') . ', ' . ($treatment['family_dob'] ?? '#') }}
                                         </div>
                                     </td>
                                     <td class="py-1 text-right">
-                                        {{ \App\Support\FormatCurrency::rupiah($treatment->pivot->treatment_price) }}
+                                        {{ \App\Support\FormatCurrency::rupiah($treatment['treatment_price']) }}
                                     </td>
                                 </tr>
                             @endforeach
@@ -125,7 +125,7 @@
                                     Subtotal
                                 </td>
                                 <td class="py-2 text-right">
-                                    {{ \App\Support\FormatCurrency::rupiah($order->treatments->sum('pivot.treatment_price')) }}
+                                    {{ \App\Support\FormatCurrency::rupiah($order->total_price) }}
                                 </td>
                             </tr>
                             <tr>
@@ -133,7 +133,7 @@
                                     Transport
                                 </td>
                                 <td class="py-2 text-right">
-                                    {{ \App\Support\FormatCurrency::rupiah($order->total_transport) }}
+                                    {{ \App\Support\FormatCurrency::rupiah($order->transport) }}
                                 </td>
                             </tr>
                             @if ($order->adjustment_amount !== 0)

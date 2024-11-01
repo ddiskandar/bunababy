@@ -13,8 +13,6 @@ class OrderInvoiceController extends Controller
      */
     public function __invoke(GeneralSettings $settings, Order $order)
     {
-        $order->load('treatments');
-
         return view('print.order.invoice', [
             'order' => $order,
             'settings' => $settings,
