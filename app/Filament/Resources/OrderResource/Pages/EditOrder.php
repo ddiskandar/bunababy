@@ -3,10 +3,12 @@
 namespace App\Filament\Resources\OrderResource\Pages;
 
 use App\Filament\Resources\OrderResource;
+use App\Models\Place;
 use App\Support\FormatNumber;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Model;
 
 class EditOrder extends EditRecord
 {
@@ -38,4 +40,12 @@ class EditOrder extends EditRecord
             ]),
         ];
     }
+
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $data['place_type'] = Place::find($data['place_id'])->type;
+
+        return $data;
+    }
+
 }

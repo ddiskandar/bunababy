@@ -55,7 +55,8 @@ class OrderResource extends Resource
                         Forms\Components\Section::make('Waktu dan Tempat')
                             ->collapsed()
                             ->schema(static::getPlaceFormSchema()),
-                        Forms\Components\Section::make('Treatments')
+                        Forms\Components\Section::make('Items')
+                            ->heading('Treatment')
                             ->collapsed()
                             ->schema([
                                 static::getItemsRepeater()
@@ -76,19 +77,19 @@ class OrderResource extends Resource
                     ->schema([
                         Forms\Components\Section::make()
                             ->schema([
-                                Forms\Components\Placeholder::make('midwife.name')
+                                Forms\Components\Placeholder::make('placeholder.midwife.name')
                                     ->label('Bidan')
                                     ->content(fn (Order $record): ?string => $record->midwife->name),
-                                Forms\Components\Placeholder::make('time')
+                                Forms\Components\Placeholder::make('placeholder.time')
                                     ->label('Waktu')
                                     ->content(fn (Order $record): ?string => $record->getLongDateTime()),
-                                Forms\Components\Placeholder::make('address.full')
+                                Forms\Components\Placeholder::make('placeholder.address.full')
                                     ->label('Alamat')
                                     ->content(fn (Order $record): ?string => $record->address->fullAddress),
-                                Forms\Components\Placeholder::make('treatments')
+                                Forms\Components\Placeholder::make('placeholder.treatments')
                                     ->label('Treatment')
                                     ->content(fn (Order $record): ?string => $record->listTreatments),
-                                Forms\Components\Placeholder::make('customer.phone')
+                                Forms\Components\Placeholder::make('placeholder.customer.phone')
                                     ->label('Phone')
                                     ->content(fn (Order $record): ?string => $record->customer->phone),
                             ]),
@@ -96,19 +97,19 @@ class OrderResource extends Resource
 
                         Forms\Components\Section::make()
                             ->schema([
-                                Forms\Components\Placeholder::make('payment.treatment')
+                                Forms\Components\Placeholder::make('placeholder.payment.treatment')
                                     ->label('Total Treatment')
                                     ->content(fn (Order $record): ?string => \App\Support\FormatCurrency::rupiah($record->total_price)),
-                                Forms\Components\Placeholder::make('payment.transport')
+                                Forms\Components\Placeholder::make('placeholder.payment.transport')
                                     ->label('Transport')
                                     ->content(fn (Order $record): ?string => \App\Support\FormatCurrency::rupiah($record->transport)),
-                                Forms\Components\Placeholder::make('payment.grand_total')
+                                Forms\Components\Placeholder::make('placeholder.payment.grand_total')
                                     ->label('Total Tagihan')
                                     ->content(fn (Order $record): ?string => \App\Support\FormatCurrency::rupiah($record->getGrandTotal())),
-                                Forms\Components\Placeholder::make('payment.verified')
+                                Forms\Components\Placeholder::make('placeholder.payment.verified')
                                     ->label('Total Pembayaran')
                                     ->content(fn (Order $record): ?string => \App\Support\FormatCurrency::rupiah($record->getVerifiedPayments())),
-                                Forms\Components\Placeholder::make('payment.remaining')
+                                Forms\Components\Placeholder::make('placeholder.payment.remaining')
                                     ->label('Sisa Pembayaran')
                                     ->content(fn (Order $record): ?string => \App\Support\FormatCurrency::rupiah($record->getRemainingPayment())),
                             ]),
@@ -333,9 +334,8 @@ class OrderResource extends Resource
                         $set('treatment_name', $treatment?->name);
                         $set('treatment_duration', $treatment?->duration);
                         $set('treatment_price', $price);
-                    })
-                    // ->visible(fn (Get $get) => $get('../../place_id') && $get('../../midwife_id'))
-                    ,
+                        $set('display_treatment_price', $price);
+                    }),
                 Forms\Components\Select::make('family_id')
                     ->label('Pasien')
                     ->options(function (Get $get) {
@@ -351,13 +351,14 @@ class OrderResource extends Resource
                     ->preload()
                     ->required()
                     ->searchable(),
-                // Forms\Components\TextInput::make('treatment_price')
-                //     ->label('Harga')
-                //     ->disabled()
-                //     ->numeric()
-                //     ->reactive()
-                    // ->required()
-                    // ,
+                Forms\Components\TextInput::make('display_treatment_price')
+                    ->label('Harga')
+                    ->disabled()
+                    ->numeric()
+                    ->dehydrated()
+                    ->reactive()
+                    ->required()
+                    ,
             ])
             ->columns(3)
             ->defaultItems(1)
