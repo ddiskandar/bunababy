@@ -33,7 +33,7 @@ enum PaymentStatus: int implements HasLabel, HasColor, HasIcon
     public function getIcon(): ?string
     {
         return match ($this) {
-            self::UNVERIFIED => 'heroicon-m-exclamation-circle',
+            self::UNVERIFIED => 'heroicon-m-sparkles',
             self::VERIFIED => 'heroicon-m-check-circle',
             self::REJECTED => 'heroicon-m-x-circle',
         };

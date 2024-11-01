@@ -7,6 +7,7 @@ use App\Filament\Resources\KabupatenResource\RelationManagers;
 use App\Models\Kabupaten;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -64,7 +65,7 @@ class KabupatenResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\KecamatansRelationManager::class,
         ];
     }
 

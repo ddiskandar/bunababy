@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\CategoryResource\RelationManagers;
 
+use App\Models\Treatment;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -54,11 +55,13 @@ class TreatmentsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                // Tables\Actions\AttachAction::make()
+                //     ->preloadRecordSelect(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                // Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('Lihat Treatment')
+                    ->icon('heroicon-o-eye')
+                    ->url(fn (Treatment $record) => route('filament.admin.resources.treatments.edit', $record)),
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([
