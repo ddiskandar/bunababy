@@ -12,6 +12,7 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Pages\CreateRecord\Concerns\HasWizard;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\HtmlString;
@@ -27,12 +28,12 @@ class CreateOrder extends CreateRecord
         return parent::form($form)
             ->schema([
                 Wizard::make($this->getSteps())
-                    ->startOnStep($this->getStartStep())
-                    ->cancelAction($this->getCancelFormAction())
+                    // ->startOnStep($this->getStartStep())
+                    // ->cancelAction($this->getCancelFormAction())
                     // ->submitAction($this->getSubmitFormAction())
-                    ->skippable($this->hasSkippableSteps())
-                    ->contained(false)
-                    ->skippable()
+                    // ->skippable($this->hasSkippableSteps())
+                    // ->contained(false)
+                    // ->skippable(false)
                     ->submitAction(new HtmlString(Blade::render(<<<BLADE
                         <x-filament::button
                             wire:click="handleSubmit"
@@ -54,6 +55,11 @@ class CreateOrder extends CreateRecord
 
         try {
             $data = $this->form->getState();
+            $date = $data['date'];
+            $startTime = Carbon::parse($date)->setTimeFrom(Carbon::parse($data['start_time']));
+            $totalDuration = collect($data['treatments'])->sum('treatment_duration');
+            $endTime = $startTime->addMinutes($totalDuration);
+            $data['end_time'] = $endTime->format('H:i');
             Order::create($data);
             DB::commit();
             return Notification::make()
@@ -61,6 +67,7 @@ class CreateOrder extends CreateRecord
                 ->success()
                 ->send();
         } catch (\Throwable $th) {
+            $th->getMessage();
             DB::rollBack();
             return Notification::make()
                 ->title('Whoops!')

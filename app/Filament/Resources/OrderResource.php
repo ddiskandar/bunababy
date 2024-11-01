@@ -309,6 +309,7 @@ class OrderResource extends Resource
                 ->disabled()
                 ->reactive()
                 ->required()
+                ->hiddenOn('create')
                 ,
         ];
     }
