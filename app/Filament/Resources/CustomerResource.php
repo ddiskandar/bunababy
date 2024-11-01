@@ -38,12 +38,15 @@ class CustomerResource extends Resource
                     ->email()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DatePicker::make('dob'),
+                Forms\Components\DatePicker::make('dob')
+                    ->label('Tanggal Lahir'),
                 Forms\Components\TextInput::make('phone')
                     ->tel()
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('photo'),
                 Forms\Components\TextInput::make('ig')
+                    ->label('ID Instagram')
+                    ->prefix('https://instagram.com/')
                     ->maxLength(255),
                 Forms\Components\Select::make('tags')
                     ->relationship('tags', 'name')
