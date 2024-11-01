@@ -21,9 +21,8 @@ return new class extends Migration
             $table->foreignId('customer_id')->constrained('customers')->cascadeOnDelete();
             $table->foreignId('midwife_id')->constrained('midwives')->cascadeOnDelete();
             $table->foreignId('address_id')->nullable();
-            $table->unsignedInteger('total_price');
-            $table->unsignedInteger('total_duration')->default(0);
-            $table->unsignedInteger('total_transport')->default(0);
+            $table->json('treatments')->nullable();
+            $table->unsignedInteger('transport')->default(0);
             $table->integer('adjustment_amount')->default(0);
             $table->string('adjustment_name')->nullable();
             $table->date('date')->nullable();

@@ -6,6 +6,7 @@ use Filament\Support\Contracts\HasLabel;
 
 enum FamilyType: string implements HasLabel
 {
+    case DIRI_SENDIRI = 'diri_sendiri';
     case ANAK = 'anak';
     case PASANGAN = 'pasangan';
     case ORANG_TUA = 'orang_tua';
@@ -17,6 +18,7 @@ enum FamilyType: string implements HasLabel
     public function getLabel(): ?string
     {
         return match ($this) {
+            self::DIRI_SENDIRI => 'Diri Sendiri',
             self::ANAK => 'Anak',
             self::PASANGAN => 'Pasangan',
             self::ORANG_TUA => 'Orang Tua',

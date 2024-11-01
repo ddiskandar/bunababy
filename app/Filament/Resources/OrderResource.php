@@ -7,10 +7,12 @@ use App\Enums\PlaceType;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Models\Address;
+use App\Models\Family;
 use App\Models\Kecamatan;
 use App\Models\Midwife;
 use App\Models\Order;
 use App\Models\Place;
+use App\Models\Price;
 use App\Models\Room;
 use App\Models\Slot;
 use App\Models\Treatment;
@@ -19,6 +21,7 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -35,6 +38,11 @@ class OrderResource extends Resource
     protected static ?string $navigationGroup = 'Admin';
 
     protected static ?int $navigationSort = 2;
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery();
+    }
 
     public static function form(Form $form): Form
     {
@@ -58,7 +66,7 @@ class OrderResource extends Resource
                                 Forms\Components\TextInput::make('adjustment_amount')
                                     ->numeric(),
                                 Forms\Components\Textarea::make('adjustment_name'),
-                                Forms\Components\TextInput::make('total_transport')
+                                Forms\Components\TextInput::make('transport')
                                     ->numeric(),
                             ]),
                         ])
@@ -77,9 +85,9 @@ class OrderResource extends Resource
                                 Forms\Components\Placeholder::make('address.full')
                                     ->label('Alamat')
                                     ->content(fn (Order $record): ?string => $record->address->fullAddress),
-                                Forms\Components\Placeholder::make('customer.treatments')
+                                Forms\Components\Placeholder::make('treatments')
                                     ->label('Treatment')
-                                    ->content(fn (Order $record): ?string => $record->treatments->pluck('name')->join(', ')),
+                                    ->content(fn (Order $record): ?string => $record->listTreatments),
                                 Forms\Components\Placeholder::make('customer.phone')
                                     ->label('Phone')
                                     ->content(fn (Order $record): ?string => $record->customer->phone),
@@ -93,7 +101,7 @@ class OrderResource extends Resource
                                     ->content(fn (Order $record): ?string => \App\Support\FormatCurrency::rupiah($record->total_price)),
                                 Forms\Components\Placeholder::make('payment.transport')
                                     ->label('Transport')
-                                    ->content(fn (Order $record): ?string => \App\Support\FormatCurrency::rupiah($record->total_transport)),
+                                    ->content(fn (Order $record): ?string => \App\Support\FormatCurrency::rupiah($record->transport)),
                                 Forms\Components\Placeholder::make('payment.grand_total')
                                     ->label('Total Tagihan')
                                     ->content(fn (Order $record): ?string => \App\Support\FormatCurrency::rupiah($record->getGrandTotal())),
@@ -133,7 +141,7 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('total_price')
                     ->money('IDR')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('total_transport')
+                Tables\Columns\TextColumn::make('transport')
                     ->money('IDR')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('adjustment_amount')
@@ -148,7 +156,8 @@ class OrderResource extends Resource
             ])
             ->bulkActions([
                 //
-            ]);
+            ])
+            ->defaultSort('updated_at', 'desc');
     }
 
     public static function getRelations(): array
@@ -179,6 +188,7 @@ class OrderResource extends Resource
             Forms\Components\Select::make('customer_id')
                 ->relationship('customer', 'name')
                 ->live()
+                ->preload()
                 ->searchable()
                 // ->required()
                 ->columnSpanFull()
@@ -253,6 +263,10 @@ class OrderResource extends Resource
                 ->preload()
                 ->required()
                 ->live()
+                ->afterStateUpdated(function ($state, Set $set) {
+                    $place = Place::find($state);
+                    $set('place_type', $place?->type);
+                })
                 ->columnSpanFull(),
             Forms\Components\Select::make('room_id')
                 ->label('Ruangan')
@@ -283,41 +297,69 @@ class OrderResource extends Resource
     public static function getItemsRepeater(): Repeater
     {
         return Repeater::make('treatments')
-            ->relationship()
             ->schema([
                 Forms\Components\Select::make('treatment_id')
-                    ->options(Treatment::pluck('name', 'id')->toArray())
-                    // ->options(function (Get $get) {
-                    //     $data = [];
-                    //     $place = Place::find($get('place_id'));
-                    //     if (!$place) {
-                    //         $data = [];
-                    //     }
+                    ->label('Treatment')
+                    // ->disableOptionsWhenSelectedInSiblingRepeaterItems()
+                    // ->options(Treatment::pluck('name', 'id')->toArray())
+                    ->options(function (Get $get) {
+                        if ($get('../../place_type') === PlaceType::HOMECARE) {
+                            $midwife = Midwife::find($get('../../midwife_id'));
+                            if (!$midwife) {
+                                return [];
+                            }
+                            return  $midwife->treatments->pluck('name', 'id')->toArray();
+                        }
 
-                    //     if ($place?->type === PlaceType::HOMECARE) {
-                    //         $midwife = Midwife::find($get('midwife_id'));
-                    //         if (!$midwife) {
-                    //             $data = [];
-                    //         }
-                    //         $data =  $midwife->treatments()->pluck('name', 'id')->toArray();
-                    //     }
-                    //     $room = Room::find($get('room_id'));
-                    //     if (!$room) {
-                    //         $data = [];
-                    //     }
-                    //     $data =  $room?->treatments()->pluck('name', 'id')->toArray();
+                        $room = Room::find($get('../../room_id'));
 
-                    //     dd($data);
-
-                    //     return $data;
-                    // })
+                        if (!$room) {
+                            return [];
+                        }
+                        return $room?->treatments->pluck('name', 'id')->toArray();
+                    })
                     ->preload()
                     ->reactive()
                     ->searchable()
                     ->required()
-                    // ->visible(fn (Get $get) => $get('place_id') && $get('midwife_id'))
-                    ->columnSpanFull(),
+                    ->afterStateUpdated(function ($state, Set $set, Get $get) {
+                        $treatment = Treatment::find($state);
+
+                        $price = Price::where('treatment_id', $state)
+                            ->where('place_id', $get('../../place_id'))
+                            ->first()?->amount ?? 0;
+
+                        $set('treatment_id', $treatment?->id);
+                        $set('treatment_name', $treatment?->name);
+                        $set('treatment_duration', $treatment?->duration);
+                        $set('treatment_price', $price);
+                    })
+                    // ->visible(fn (Get $get) => $get('../../place_id') && $get('../../midwife_id'))
+                    ,
+                Forms\Components\Select::make('family_id')
+                    ->label('Pasien')
+                    ->options(function (Get $get) {
+                        return $get('../../customer_id') ? Family::where('customer_id', $get('../../customer_id'))->pluck('name', 'id')->toArray() : [];
+                    })
+                    ->afterStateUpdated(function ($state, Set $set) {
+                        $family = Family::find($state);
+                        $set('family_id', $family?->id);
+                        $set('family_name', $family?->name);
+                        $set('family_dob', $family?->dob);
+                    })
+                    ->reactive()
+                    ->preload()
+                    ->required()
+                    ->searchable(),
+                // Forms\Components\TextInput::make('treatment_price')
+                //     ->label('Harga')
+                //     ->disabled()
+                //     ->numeric()
+                //     ->reactive()
+                    // ->required()
+                    // ,
             ])
+            ->columns(3)
             ->defaultItems(1)
             ->required();
     }

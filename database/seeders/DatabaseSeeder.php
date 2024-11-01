@@ -75,33 +75,31 @@ class DatabaseSeeder extends Seeder
                 ->create([
                     'place_id' => PlaceType::HOMECARE,
                     'address_id' => $address->id,
-                    'total_price' => 0,
-                    'total_duration' => 0,
-                    'total_transport' => 0,
+                    'transport' => 0,
                     'midwife_id' => $midwifeId,
                     'customer_id' => $customer->id,
                     'date' => Carbon::parse($date->toDateString()),
                     'start_time' => Carbon::createFromTime(8, 0, 0)->toTimeString(),
                 ]);
 
-            foreach (range(1, 2) as $index ) {
-                $id = rand(1, 21);
-                $order->treatments()->attach($id, [
-                    'family_name' => $order->customer->name,
-                    'family_age' => DateTime::calculateAge($order->customer->dob),
-                    'treatment_duration' => Treatment::find($id)->duration,
-                    'treatment_price' => Price::where('treatment_id', $id)
-                        ->where('place_id', $order->place_id)->value('amount'),
-                ]);
-            }
+            // foreach (range(1, 2) as $index ) {
+            //     $id = rand(1, 21);
+            //     $order->treatments()->attach($id, [
+            //         'family_name' => $order->customer->name,
+            //         'family_age' => DateTime::calculateAge($order->customer->dob),
+            //         'treatment_duration' => Treatment::find($id)->duration,
+            //         'treatment_price' => Price::where('treatment_id', $id)
+            //             ->where('place_id', $order->place_id)->value('amount'),
+            //     ]);
+            // }
 
-            $totalDuration = $order->total_duration + $order->treatments->sum('duration');
+            // $totalDuration = $order->total_duration + $order->treatments->sum('duration');
 
-            $order->update([
-                'total_price' => $order->treatments->sum('pivot.treatment_price'),
-                'total_duration' =>  $totalDuration,
-                'end_time' => $order->startDateTime->addMinutes($totalDuration)->toTimeString(),
-            ]);
+            // $order->update([
+            //     'total_price' => $order->treatments->sum('pivot.treatment_price'),
+            //     'total_duration' =>  $totalDuration,
+            //     'end_time' => $order->startDateTime->addMinutes($totalDuration)->toTimeString(),
+            // ]);
 
             $payment = Payment::factory()
                 ->create([

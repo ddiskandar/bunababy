@@ -19,7 +19,6 @@ class CustomerFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->email(),
-            'dob' => $this->faker->datetime(),
             'ig' => $this->faker->username(),
             'phone' => '085624028940',
         ];

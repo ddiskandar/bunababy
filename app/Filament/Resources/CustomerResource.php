@@ -38,8 +38,6 @@ class CustomerResource extends Resource
                     ->email()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DatePicker::make('dob')
-                    ->label('Tanggal Lahir'),
                 Forms\Components\TextInput::make('phone')
                     ->tel()
                     ->maxLength(255),

@@ -19,9 +19,8 @@ class Order extends Model
     use HasFactory;
 
     protected $casts = [
-        'total_price' => 'integer',
-        'total_duration' => 'integer',
-        'total_transport' => 'integer',
+        'treatments' => 'array',
+        'transport' => 'integer',
         'adjustment_amount' => 'integer',
         'status' => OrderStatus::class,
         'finished_at' => 'datetime',
@@ -59,12 +58,12 @@ class Order extends Model
         return $this->belongsTo(Address::class, 'address_id');
     }
 
-    public function treatments(): BelongsToMany
-    {
-        return $this->belongsToMany(Treatment::class)
-            ->withPivot('family_name', 'family_age', 'treatment_price', 'treatment_duration')
-            ->withTimestamps();
-    }
+    // public function treatments(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Treatment::class)
+    //         ->withPivot('family_name', 'family_age', 'treatment_price', 'treatment_duration')
+    //         ->withTimestamps();
+    // }
 
     public function scopeUnpaid($query)
     {
@@ -152,9 +151,24 @@ class Order extends Model
         return $this->getGrandTotal() - $this->verifiedPayments->pluck('value')->sum();
     }
 
+    public function getListTreatmentsAttribute()
+    {
+        return collect($this->treatments)->pluck('treatment_name')->implode(', ');
+    }
+
+    public function getTotalPriceAttribute()
+    {
+        return collect($this->treatments)->sum('treatment_price');
+    }
+
+    public function getTotalDurationAttribute()
+    {
+        return collect($this->treatments)->sum('treatment_duration');
+    }
+
     public function getGrandTotal()
     {
-        return $this->total_price + $this->total_transport + $this->adjustment_amount;
+        return $this->total_price + $this->transport + $this->adjustment_amount;
     }
 
     public function getTime()

@@ -15,11 +15,11 @@ class DateTime
     }
 
     public static function calculateAge($dob) {
-        $age = $dob->diffInYears();
-        $string = round($age) . ' tahun';
-        if ($age <= 2) {
-            $string = round($dob->diffInMonths()) . ' bulan';
-        }
-        return $string;
+        // $age = $dob->diffInYears();
+        // $string = round($age) . ' tahun';
+        // if ($age <= 2) {
+        //     $string = round($dob->diffInMonths()) . ' bulan';
+        // }
+        // return $string;
     }
 }
