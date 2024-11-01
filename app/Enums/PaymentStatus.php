@@ -3,9 +3,10 @@
 namespace App\Enums;
 
 use Filament\Support\Contracts\HasColor;
+use Filament\Support\Contracts\HasIcon;
 use Filament\Support\Contracts\HasLabel;
 
-enum PaymentStatus: int implements HasLabel, HasColor
+enum PaymentStatus: int implements HasLabel, HasColor, HasIcon
 {
     case UNVERIFIED = 1;
     case VERIFIED = 2;
@@ -26,6 +27,15 @@ enum PaymentStatus: int implements HasLabel, HasColor
             self::UNVERIFIED => 'warning',
             self::VERIFIED => 'success',
             self::REJECTED => 'danger',
+        };
+    }
+
+    public function getIcon(): ?string
+    {
+        return match ($this) {
+            self::UNVERIFIED => 'heroicon-m-exclamation-circle',
+            self::VERIFIED => 'heroicon-m-check-circle',
+            self::REJECTED => 'heroicon-m-x-circle',
         };
     }
 }

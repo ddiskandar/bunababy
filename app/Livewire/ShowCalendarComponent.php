@@ -231,9 +231,9 @@ class ShowCalendarComponent extends Component
             ->get();
 
         $bg = [
-            OrderStatus::UNPAID->value => 'bg-red-400/20 border border-red-700/10',
-            OrderStatus::LOCKED->value => 'bg-green-400/20 border border-green-700/10',
-            OrderStatus::FINISHED->value => 'bg-blue-400/20 border border-blue-700/10',
+            OrderStatus::PENDING->value => 'bg-red-400/20 border border-red-700/10',
+            OrderStatus::BOOKED->value => 'bg-green-400/20 border border-green-700/10',
+            OrderStatus::COMPLETED->value => 'bg-blue-400/20 border border-blue-700/10',
         ];
 
         foreach ($orders as $order) {

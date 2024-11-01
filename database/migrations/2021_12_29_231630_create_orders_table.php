@@ -29,8 +29,9 @@ return new class extends Migration
             $table->date('date')->nullable();
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
-            $table->string('screening')->nullable();
-            $table->tinyInteger('status')->default(OrderStatus::LOCKED);
+            $table->text('screening')->nullable();
+            $table->text('report')->nullable();
+            $table->tinyInteger('status')->default(OrderStatus::BOOKED);
             $table->timestamp('finished_at')->nullable();
             $table->timestamps();
         });

@@ -68,17 +68,17 @@ class Order extends Model
 
     public function scopeUnpaid($query)
     {
-        $query->where('status', OrderStatus::UNPAID);
+        $query->where('status', OrderStatus::PENDING);
     }
 
     public function scopeLocked($query)
     {
-        $query->where('status', OrderStatus::LOCKED);
+        $query->where('status', OrderStatus::BOOKED);
     }
 
     public function scopefinished($query)
     {
-        $query->where('status', OrderStatus::FINISHED);
+        $query->where('status', OrderStatus::COMPLETED);
     }
 
     public function getStartDateTimeAttribute()
@@ -94,7 +94,7 @@ class Order extends Model
 
     public function scopeActiveBetween($query, $from, $to)
     {
-        $query->whereStatus(OrderStatus::LOCKED)
+        $query->whereStatus(OrderStatus::BOOKED)
             ->betweenTimes($from, $to);
     }
 

@@ -3,30 +3,52 @@
 namespace App\Enums;
 
 use Filament\Support\Contracts\HasColor;
+use Filament\Support\Contracts\HasIcon;
 use Filament\Support\Contracts\HasLabel;
 
-enum OrderStatus: int implements HasLabel, HasColor
+enum OrderStatus: int implements HasLabel, HasColor, HasIcon
 {
-    case UNPAID = 1;
-    case LOCKED = 2;
-    case FINISHED = 3;
+    case CANCELLED = 0;
+    case PENDING = 1;
+    case BOOKED = 2;
+    case ON_HOLD = 4;
+    case FINISHED = 6;
+    case COMPLETED = 9;
 
     public function getLabel(): ?string
     {
 
         return match ($this) {
-            self::UNPAID => 'Unpaid',
-            self::LOCKED => 'Locked',
-            self::FINISHED => 'Finished',
+            self::CANCELLED => 'Dibatalkan',
+            self::PENDING => 'Pending',
+            self::BOOKED => 'Dijadwalkan',
+            self::ON_HOLD => 'Ditunda',
+            self::FINISHED => 'Dilayani',
+            self::COMPLETED => 'Selesai',
         };
     }
 
     public function getColor(): string|array|null
     {
         return match ($this) {
-            self::UNPAID => 'warning',
-            self::LOCKED => 'danger',
-            self::FINISHED => 'success',
+            self::CANCELLED => 'danger',
+            self::PENDING => 'danger',
+            self::BOOKED => 'success',
+            self::ON_HOLD => 'warning',
+            self::FINISHED => 'primary',
+            self::COMPLETED => 'info',
+        };
+    }
+
+    public function getIcon(): ?string
+    {
+        return match ($this) {
+            self::CANCELLED => 'heroicon-m-x-circle',
+            self::PENDING => 'heroicon-m-exclamation-circle',
+            self::BOOKED => 'heroicon-m-bookmark',
+            self::ON_HOLD => 'heroicon-m-pause-circle',
+            self::FINISHED => 'heroicon-m-check-circle',
+            self::COMPLETED => 'heroicon-m-check-badge',
         };
     }
 
