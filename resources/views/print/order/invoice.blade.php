@@ -9,13 +9,13 @@
                     class="flex flex-col py-3 border-b border-gray-100 md:flex-row md:justify-between md:items-center print:pt-0 print:pb-1">
                     <!-- Company Info -->
                     <div>
-                        <img class="mb-2" src="/images/logo.svg" alt="Logo Bunababy">
-                        {{-- <div class="text-base font-semibold">{{ $options->site_name }}</div>
-                        <div>{{ $options->site_desc }}</div>
+                        <img class="mb-2" src="{{ asset('/images/logo.svg') }}" alt="Logo Bunababy">
+                        <div class="text-base font-semibold">{{ $settings->name }}</div>
+                        <div>{{ $settings->desc }}</div>
                         <div class="text-gray-500 ">
-                            <div>{{ $options->site_location }}</div>
-                            <div>IG : {{ $options->ig }} WA : {{ $options->phone }}</div>
-                        </div> --}}
+                            <div>{{ $settings->address }}</div>
+                            <div>IG : {{ $settings->ig }} WA : {{ $settings->phone }}</div>
+                        </div>
                     </div>
                     <!-- END Company Info -->
 
