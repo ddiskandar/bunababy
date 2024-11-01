@@ -95,7 +95,7 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
 
-            $totalDuration = $order->total_duration + $order->treatments()->sum('duration');
+            $totalDuration = $order->total_duration + $order->treatments->sum('duration');
 
             $order->update([
                 'total_price' => $order->treatments->sum('pivot.treatment_price'),
