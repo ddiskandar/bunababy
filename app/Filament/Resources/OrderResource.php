@@ -77,12 +77,12 @@ class OrderResource extends Resource
                                 Forms\Components\Placeholder::make('address.full')
                                     ->label('Alamat')
                                     ->content(fn (Order $record): ?string => $record->address->fullAddress),
-                                Forms\Components\Placeholder::make('client.treatments')
+                                Forms\Components\Placeholder::make('customer.treatments')
                                     ->label('Treatment')
                                     ->content(fn (Order $record): ?string => $record->treatments->pluck('name')->join(', ')),
-                                Forms\Components\Placeholder::make('client.phone')
+                                Forms\Components\Placeholder::make('customer.phone')
                                     ->label('Phone')
-                                    ->content(fn (Order $record): ?string => $record->client->phone),
+                                    ->content(fn (Order $record): ?string => $record->customer->phone),
                             ]),
 
 
@@ -125,7 +125,7 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('place.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('client.name')
+                Tables\Columns\TextColumn::make('customer.name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('midwife.name')
                     ->numeric()
@@ -176,8 +176,8 @@ class OrderResource extends Resource
                 ->inline()
                 ->columnSpanFull()
                 ->hiddenOn('create'),
-            Forms\Components\Select::make('client_id')
-                ->relationship('client', 'name')
+            Forms\Components\Select::make('customer_id')
+                ->relationship('customer', 'name')
                 ->live()
                 ->searchable()
                 // ->required()
@@ -199,8 +199,8 @@ class OrderResource extends Resource
                 ,
             Forms\Components\Select::make('address_id')
                 ->label('Alamat')
-                ->options(fn (Get $get) => Address::where('client_id', $get('client_id'))->pluck('label', 'id')->toArray())
-                ->hidden(fn (Get $get) => !$get('client_id'))
+                ->options(fn (Get $get) => Address::where('customer_id', $get('customer_id'))->pluck('label', 'id')->toArray())
+                ->hidden(fn (Get $get) => !$get('customer_id'))
                 ->columnSpanFull()
                 ->reactive()
                 ->searchable()
@@ -226,7 +226,7 @@ class OrderResource extends Resource
                 ])
                 ->createOptionUsing(function (array $data, Get $get) {
                     Address::create([
-                        'client_id' => $get('client_id'),
+                        'customer_id' => $get('customer_id'),
                         'label' => $data['label'],
                         'address' => $data['address'],
                         'desa' => $data['desa'],

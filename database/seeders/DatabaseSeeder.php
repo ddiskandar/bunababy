@@ -6,7 +6,7 @@ use App\Enums\PaymentStatus;
 use App\Enums\PlaceType;
 use App\Enums\UserType;
 use App\Models\Address;
-use App\Models\Client;
+use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Price;
@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
                 'type' => UserType::OWNER,
             ]);
 
-        Client::factory(30)->create();
+        Customer::factory(30)->create();
 
         $this->command->info("Creating orders ...\n");
 
@@ -55,14 +55,14 @@ class DatabaseSeeder extends Seeder
 
         foreach (range(1, 100) as $i) {
 
-            $client = Client::factory()->create();
+            $customer = Customer::factory()->create();
 
             $tag = rand(1, 3);
-            $client->tags()->attach($tag);
+            $customer->tags()->attach($tag);
 
             $address = Address::factory()
                 ->create([
-                    'client_id' => $client->id,
+                    'customer_id' => $customer->id,
                     'label' => 'rumah',
                     'is_main' => true,
                     'kecamatan_id' => rand(1, 70),
@@ -79,7 +79,7 @@ class DatabaseSeeder extends Seeder
                     'total_duration' => 0,
                     'total_transport' => 0,
                     'midwife_id' => $midwifeId,
-                    'client_id' => $client->id,
+                    'customer_id' => $customer->id,
                     'date' => Carbon::parse($date->toDateString()),
                     'start_time' => Carbon::createFromTime(8, 0, 0)->toTimeString(),
                 ]);
@@ -87,8 +87,8 @@ class DatabaseSeeder extends Seeder
             foreach (range(1, 2) as $index ) {
                 $id = rand(1, 21);
                 $order->treatments()->attach($id, [
-                    'family_name' => $order->client->name,
-                    'family_age' => DateTime::calculateAge($order->client->dob),
+                    'family_name' => $order->customer->name,
+                    'family_age' => DateTime::calculateAge($order->customer->dob),
                     'treatment_duration' => Treatment::find($id)->duration,
                     'treatment_price' => Price::where('treatment_id', $id)
                         ->where('place_id', $order->place_id)->value('amount'),

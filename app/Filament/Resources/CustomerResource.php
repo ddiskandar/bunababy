@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ClientResource\Pages;
-use App\Filament\Resources\ClientResource\RelationManagers;
-use App\Models\Client;
+use App\Filament\Resources\CustomerResource\Pages;
+use App\Filament\Resources\CustomerResource\RelationManagers;
+use App\Models\Customer;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Pages\SubNavigationPosition;
@@ -15,9 +15,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ClientResource extends Resource
+class CustomerResource extends Resource
 {
-    protected static ?string $model = Client::class;
+    protected static ?string $model = Customer::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
@@ -88,22 +88,22 @@ class ClientResource extends Resource
     public static function getRecordSubNavigation(Page $page): array
     {
         return $page->generateNavigationItems([
-            Pages\EditClient::class,
-            Pages\ManageClientFamilies::class,
-            Pages\ManageClientAddresses::class,
-            Pages\ManageClientOrders::class,
+            Pages\EditCustomer::class,
+            Pages\ManageCustomerFamilies::class,
+            Pages\ManageCustomerAddresses::class,
+            Pages\ManageCustomerOrders::class,
         ]);
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListClients::route('/'),
-            'create' => Pages\CreateClient::route('/create'),
-            'edit' => Pages\EditClient::route('/{record}/edit'),
-            'families' => Pages\ManageClientFamilies::route('/{record}/families'),
-            'addresses' => Pages\ManageClientAddresses::route('/{record}/addresses'),
-            'orders' => Pages\ManageClientOrders::route('/{record}/orders'),
+            'index' => Pages\ListCustomers::route('/'),
+            'create' => Pages\CreateCustomer::route('/create'),
+            'edit' => Pages\EditCustomer::route('/{record}/edit'),
+            'families' => Pages\ManageCustomerFamilies::route('/{record}/families'),
+            'addresses' => Pages\ManageCustomerAddresses::route('/{record}/addresses'),
+            'orders' => Pages\ManageCustomerOrders::route('/{record}/orders'),
         ];
     }
 }

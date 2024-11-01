@@ -20,7 +20,7 @@ class TagResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationParentItem = 'Client';
+    protected static ?string $navigationParentItem = 'Customer';
 
     protected static ?string $navigationGroup = 'Admin';
 
@@ -46,9 +46,9 @@ class TagResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('clients_count')
-                    ->label('Jumlah Client Ditandai')
-                    ->counts('clients'),
+                Tables\Columns\TextColumn::make('customers_count')
+                    ->label('Jumlah Ditandai')
+                    ->counts('customers'),
                 Tables\Columns\IconColumn::make('active')
                     ->boolean(),
             ])
@@ -68,7 +68,7 @@ class TagResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\ClientRelationManager::class,
+            RelationManagers\CustomerRelationManager::class,
         ];
     }
 

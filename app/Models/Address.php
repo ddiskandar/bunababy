@@ -17,9 +17,9 @@ class Address extends Model
         'is_main' => 'boolean',
     ];
 
-    public function client(): BelongsTo
+    public function customer(): BelongsTo
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Customer::class);
     }
 
     public function kecamatan(): BelongsTo

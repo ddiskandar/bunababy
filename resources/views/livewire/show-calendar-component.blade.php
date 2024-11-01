@@ -70,7 +70,7 @@
                             <span class="text-xs">{{ $schedule['time'] }}</span>
                             <span class="mt-4 text-xs">{{ $schedule['place'] }}</span>
                             <span class="text-xs ">{{ $schedule['address'] }}</span>
-                            <span class="text-xs font-medium">{{ $schedule['client_name'] }}</span>
+                            <span class="text-xs font-medium">{{ $schedule['customer_name'] }}</span>
                             <span class="mt-2 text-xs">{{ $schedule['treatments'] }}</span>
 
                             <div class="absolute flex items-center top-1 right-2">

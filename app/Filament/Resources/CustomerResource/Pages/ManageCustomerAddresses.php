@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\ClientResource\Pages;
+namespace App\Filament\Resources\CustomerResource\Pages;
 
-use App\Filament\Resources\ClientResource;
+use App\Filament\Resources\CustomerResource;
 use Filament\Actions;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -12,9 +12,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ManageClientAddresses extends ManageRelatedRecords
+class ManageCustomerAddresses extends ManageRelatedRecords
 {
-    protected static string $resource = ClientResource::class;
+    protected static string $resource = CustomerResource::class;
 
     protected static string $relationship = 'addresses';
 
@@ -73,7 +73,7 @@ class ManageClientAddresses extends ManageRelatedRecords
                     ->label('Utama')
                     ->afterStateUpdated(function ($record, $state) {
                         if ($state) {
-                            $record->client->addresses()->whereKeyNot($record->getKey())->update(['is_main' => false]);
+                            $record->customer->addresses()->whereKeyNot($record->getKey())->update(['is_main' => false]);
                         }
                     }),
             ])

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\TagResource\RelationManagers;
 
-use App\Models\Client;
+use App\Models\Customer;
 use Filament\Forms;
 use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Form;
@@ -12,9 +12,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ClientRelationManager extends RelationManager
+class CustomerRelationManager extends RelationManager
 {
-    protected static string $relationship = 'clients';
+    protected static string $relationship = 'customers';
 
     public function form(Form $form): Form
     {
@@ -45,9 +45,9 @@ class ClientRelationManager extends RelationManager
             ])
             ->actions([
                 Tables\Actions\DetachAction::make(),
-                Tables\Actions\Action::make('Lihat Client')
+                Tables\Actions\Action::make('Lihat Customer')
                     ->icon('heroicon-o-user')
-                    ->url(fn (Client $record) => route('filament.admin.resources.clients.edit', $record)),
+                    ->url(fn (Customer $record) => route('filament.admin.resources.customers.edit', $record)),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

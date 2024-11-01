@@ -8,10 +8,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Client extends Model
+class Customer extends Model
 {
-    /** @use HasFactory<\Database\Factories\ClientFactory> */
+    /** @use HasFactory<\Database\Factories\CustomerFactory> */
     use HasFactory;
+
+    protected $casts = [
+        'dob' => 'date',
+    ];
 
     public function tags(): BelongsToMany
     {

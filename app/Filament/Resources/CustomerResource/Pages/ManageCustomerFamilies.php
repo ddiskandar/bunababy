@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\ClientResource\Pages;
+namespace App\Filament\Resources\CustomerResource\Pages;
 
 use App\Enums\FamilyType;
-use App\Filament\Resources\ClientResource;
+use App\Filament\Resources\CustomerResource;
 use Filament\Actions;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ManageClientFamilies extends ManageRelatedRecords
+class ManageCustomerFamilies extends ManageRelatedRecords
 {
-    protected static string $resource = ClientResource::class;
+    protected static string $resource = CustomerResource::class;
 
     protected static string $relationship = 'families';
 

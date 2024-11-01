@@ -41,7 +41,7 @@ class CreateOrder extends CreateRecord
     protected function getSteps(): array
     {
         return [
-            Step::make('Client')
+            Step::make('Basic Information')
                 ->schema([
                     Section::make()->schema(OrderResource::getDetailsFormSchema())->columns()
                 ]),

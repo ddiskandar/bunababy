@@ -18,7 +18,7 @@ class OrderExporter extends Exporter
                 ->label('ID'),
             ExportColumn::make('place.name'),
             ExportColumn::make('room.name'),
-            ExportColumn::make('client.name'),
+            ExportColumn::make('customer.name'),
             ExportColumn::make('midwife.name'),
             ExportColumn::make('total_price'),
             ExportColumn::make('total_duration'),

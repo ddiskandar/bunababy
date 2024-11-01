@@ -6,6 +6,7 @@ use App\Enums\FamilyType;
 use App\Support\DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Family extends Model
 {
@@ -19,9 +20,9 @@ class Family extends Model
 
     protected $appends = ['age'];
 
-    public function client()
+    public function customer(): BelongsTo
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Customer::class);
     }
 
     public function getAgeAttribute()

@@ -14,7 +14,7 @@ class EditOrder extends EditRecord
 
     public function getHeading(): string|Htmlable
     {
-        return $this->getRecord()->id . ' - ' . $this->getRecord()->client->name;
+        return $this->getRecord()->id . ' - ' . $this->getRecord()->customer->name;
     }
 
     protected function getHeaderActions(): array
@@ -23,15 +23,15 @@ class EditOrder extends EditRecord
             Actions\Action::make('chat')
                 ->label('Chat WA')
                 ->icon('heroicon-o-chat-bubble-bottom-center-text')
-                ->url('https://wa.me/' . FormatNumber::toWaIndo($this->getRecord()->client->phone) . '?text=Halo+' . urlencode($this->getRecord()->client->name))
+                ->url('https://wa.me/' . FormatNumber::toWaIndo($this->getRecord()->customer->phone) . '?text=Halo+' . urlencode($this->getRecord()->customer->name))
                 ->openUrlInNewTab(),
             Actions\Action::make('invoice')
                 ->label('Cetak Invoice')
                 ->icon('heroicon-o-printer')
                 ->url(route('order.invoice.print', $this->getRecord()))
                 ->openUrlInNewTab(),
-            Actions\Action::make('client')
-                ->url(route('filament.admin.resources.clients.edit', $this->getRecord()->client))
+            Actions\Action::make('customer')
+                ->url(route('filament.admin.resources.customers.edit', $this->getRecord()->customer))
                 ->icon('heroicon-o-user'),
             Actions\ActionGroup::make([
                 Actions\DeleteAction::make(),

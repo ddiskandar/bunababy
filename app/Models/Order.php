@@ -44,9 +44,9 @@ class Order extends Model
         return $this->belongsTo(Room::class, 'room_id', 'id');
     }
 
-    public function client(): BelongsTo
+    public function customer(): BelongsTo
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Customer::class);
     }
 
     public function midwife(): BelongsTo

@@ -52,16 +52,16 @@
                         </div>
                     </div>
 
-                    <!-- Client Info -->
+                    <!-- Customer Info -->
                     <div class="md:text-right print:text-right">
                         <div class="mb-1 font-semibold">Invoiced To :</div>
-                        <div class="text-base font-semibold">{{ $order->client->name }}</div>
+                        <div class="text-base font-semibold">{{ $order->customer->name }}</div>
                         <div class="text-slate-600">
-                            <div>{{ $order->client->email }}</div>
-                            <div>{{ $order->client->phone }}</div>
+                            <div>{{ $order->customer->email }}</div>
+                            <div>{{ $order->customer->phone }}</div>
                         </div>
                     </div>
-                    <!-- END Client Info -->
+                    <!-- END Customer Info -->
                 </div>
                 <!-- END Invoice Info -->
 
@@ -91,7 +91,7 @@
                                     Treatment
                                 </th>
                                 <th class="py-1 font-semibold tracking-wider text-left uppercase text-slate-400">
-                                    Client / Usia
+                                    Customer / Usia
                                 </th>
                                 <th class="py-1 font-semibold tracking-wider text-right uppercase text-slate-400">
                                     Harga

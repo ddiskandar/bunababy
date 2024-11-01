@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->tinyInteger('type')->default('1');
             $table->boolean('active')->default(true);
-            $table->foreignId('client_id')->nullable()->constrained('clients')->cascadeOnDelete();
+            $table->foreignId('customer_id')->nullable()->constrained('customers')->cascadeOnDelete();
             $table->foreignId('midwife_id')->nullable()->constrained('midwives')->cascadeOnDelete();
             $table->rememberToken();
             $table->timestamps();

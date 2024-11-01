@@ -72,9 +72,9 @@ class User extends Authenticatable implements FilamentUser
     //     return $this->type === UserType::ADMIN || $this->type === UserType::OWNER;
     // }
 
-    // public function isClientAttribute(): bool
+    // public function isCustomerAttribute(): bool
     // {
-    //     return $this->type === UserType::CLIENT;
+    //     return $this->type === UserType::CUSTOMER;
     // }
 
     // public function isOwnerAttribute(): bool
@@ -92,8 +92,8 @@ class User extends Authenticatable implements FilamentUser
         return $query->where('type', UserType::MIDWIFE);
     }
 
-    public function scopeClients($query)
+    public function scopeCustomers($query)
     {
-        return $query->where('type', UserType::CLIENT);
+        return $query->where('type', UserType::CUSTOMER);
     }
 }

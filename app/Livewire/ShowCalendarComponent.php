@@ -209,7 +209,7 @@ class ShowCalendarComponent extends Component
         $orders = Order::query()
             ->whereDate('date', $this->selectedDay)
             ->with(
-                'client:id,name',
+                'customer:id,name',
                 'treatments:id,name',
                 'address.kecamatan:id,name',
                 'place:id,name,type',
@@ -217,7 +217,7 @@ class ShowCalendarComponent extends Component
             )
             ->select([
                 'id',
-                'client_id',
+                'customer_id',
                 'midwife_id',
                 'date',
                 'start_time',
@@ -251,7 +251,7 @@ class ShowCalendarComponent extends Component
             $schedules->push([
                 'classes' => "{$bg[$order->status->value]} col-start-{$colStart} row-start-{$rowStart} row-span-{$rowSpan} ",
                 'id' => $order->id,
-                'client_name' => $order->client->name,
+                'customer_name' => $order->customer->name,
                 'time' => $order->getLongTime(),
                 'treatments' => $order->treatments->implode('name', ', '),
                 'status' => $order->status->getLabel(),

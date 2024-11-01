@@ -29,7 +29,7 @@ class Kecamatan extends Model
         return $this->belongsTo(Kabupaten::class);
     }
 
-    public function address(): HasMany
+    public function addresses(): HasMany
     {
         return $this->hasMany(Address::class);
     }

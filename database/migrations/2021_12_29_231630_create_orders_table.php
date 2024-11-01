@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id()->startingValue(1002347811);
             $table->foreignId('place_id')->constrained('places')->cascadeOnDelete();
             $table->foreignId('room_id')->nullable();
-            $table->foreignId('client_id')->constrained('clients')->cascadeOnDelete();
+            $table->foreignId('customer_id')->constrained('customers')->cascadeOnDelete();
             $table->foreignId('midwife_id')->constrained('midwives')->cascadeOnDelete();
             $table->foreignId('address_id')->nullable();
             $table->unsignedInteger('total_price');
