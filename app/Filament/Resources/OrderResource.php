@@ -82,10 +82,21 @@ class OrderResource extends Resource
                                 Forms\Components\Placeholder::make('placeholder.midwife.name')
                                     ->label('Bidan')
                                     ->content(fn (Order $record): ?string => $record->midwife->name),
+                                Forms\Components\Placeholder::make('placeholder.place.name')
+                                    ->label('Tempat')
+                                    ->content(fn (Order $record): ?string => $record->place->name),
+                                Forms\Components\Placeholder::make('placeholder.place.room.name')
+                                    ->hidden(fn (Order $record) => $record->place->type === PlaceType::HOMECARE)
+                                    ->label('Ruangan')
+                                    ->content(fn (Order $record): ?string => $record->room->name ?? ''),
                                 Forms\Components\Placeholder::make('placeholder.time')
                                     ->label('Waktu')
                                     ->content(fn (Order $record): ?string => $record->getLongDateTime()),
+                                Forms\Components\Placeholder::make('placeholder.customer.name')
+                                    ->label('Customer')
+                                    ->content(fn (Order $record): ?string => $record->customer->name),
                                 Forms\Components\Placeholder::make('placeholder.address.full')
+                                    ->hidden(fn (Order $record) => $record->place->type === PlaceType::CLINIC)
                                     ->label('Alamat')
                                     ->content(fn (Order $record): ?string => $record->address->fullAddress  . ' (' . $record->address->kecamatan->distance . ' km)'),
                                 Forms\Components\Placeholder::make('placeholder.treatments')
