@@ -111,7 +111,7 @@
                                     </td>
                                     <td class="py-1">
                                         <div>
-                                            {{ ($treatment['family_name'] ?? '#') . ', ' . ($treatment['family_dob'] ?? '#') }}
+                                            {{ ($treatment['family_name'] ?? '#') . ', ' . (\App\Support\DateTime::calculateAge($treatment['family_dob']) ?? '') }}
                                         </div>
                                     </td>
                                     <td class="py-1 text-right">

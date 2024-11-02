@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
 use App\Enums\PlaceType;
+use App\Support\DateTime;
+use App\Support\FormatNumber;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -155,7 +157,9 @@ class Order extends Model
 
     public function getListTreatmentsAttribute()
     {
-        return collect($this->treatments)->pluck('treatment_name')->implode(', ');
+        return collect($this->treatments)->map(function ($treatment) {
+            return $treatment['treatment_name'] . ' (' . $treatment['family_name'] . ' ' . DateTime::calculateAge($treatment['family_dob']) . ')';
+        })->implode(', ');
     }
 
     public function getTotalPriceAttribute()

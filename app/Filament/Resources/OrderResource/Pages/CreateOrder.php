@@ -28,6 +28,11 @@ class CreateOrder extends CreateRecord
 
     protected static string $resource = OrderResource::class;
 
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
     public function form(Form $form): Form
     {
         return parent::form($form)
