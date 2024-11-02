@@ -26,6 +26,7 @@ class Order extends Model
         'treatments' => 'array',
         'transport' => 'integer',
         'adjustment_amount' => 'integer',
+        'date' => 'date',
         'status' => OrderStatus::class,
         'finished_at' => 'datetime',
         'startDateTime' => 'datetime',
@@ -34,7 +35,7 @@ class Order extends Model
 
     public function getInvoice()
     {
-        return 'INV/' . $this->startDateTime->isoFormat('YYMMDD') . '/' . $this->id;
+        return 'INV/' . $this->date->isoFormat('YYMMDD') . '/' . $this->id;
     }
 
     public function place(): BelongsTo
@@ -61,13 +62,6 @@ class Order extends Model
     {
         return $this->belongsTo(Address::class);
     }
-
-    // public function treatments(): BelongsToMany
-    // {
-    //     return $this->belongsToMany(Treatment::class)
-    //         ->withPivot('family_name', 'family_age', 'treatment_price', 'treatment_duration')
-    //         ->withTimestamps();
-    // }
 
     public function scopeUnpaid($query)
     {
@@ -264,48 +258,4 @@ class Order extends Model
         return $order < 1;
     }
 
-
-    // Creating Record
-
-    public function numberStartTime()
-    {
-        return session('order.place_id')
-            . sprintf('%02d', session('order.midwife_id'))
-            . session('order.start_time')[0]
-            . session('order.start_time')[1]
-            . session('order.start_time')[3]
-            . session('order.start_time')[4];
-    }
-
-    public function getTotalTransport()
-    {
-        $place = Place::find(session('order.place_id'));
-        throw_if(!$place, \Exception::class, 'Place not found');
-
-        if ($place->type === PlaceType::HOMECARE) {
-            // return calculateTransport(session('order.kecamatan_distance'));
-        }
-
-        return 0;
-    }
-
-    public function getTotalPrice()
-    {
-        return collect(session('order.treatments'))->sum('treatment_price') ?? 0;
-    }
-
-    public function getTotalDuration()
-    {
-        return collect(session('order.treatments'))->sum('treatment_duration');
-    }
-
-    public function getStartTime()
-    {
-        return DB::table('slots')->where('id', session('order.start_time_id'))->value('time');
-    }
-
-    public function getEndTime()
-    {
-        return Carbon::parse($this->getStartTime())->addMinutes(session('order.addMinutes'))->toTimeString();
-    }
 }
