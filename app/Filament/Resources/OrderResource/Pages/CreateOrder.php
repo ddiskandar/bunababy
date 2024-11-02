@@ -2,8 +2,12 @@
 
 namespace App\Filament\Resources\OrderResource\Pages;
 
+use App\Enums\PlaceType;
+use App\Exceptions\NoSlotException;
 use App\Filament\Resources\OrderResource;
+use App\Models\Address;
 use App\Models\Order;
+use App\Models\Place;
 use Filament\Actions;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Wizard;
@@ -55,25 +59,34 @@ class CreateOrder extends CreateRecord
 
         try {
             $data = $this->form->getState();
-            $date = $data['date'];
-            $startTime = Carbon::parse($date)->setTimeFrom(Carbon::parse($data['start_time']));
-            $totalDuration = collect($data['treatments'])->sum('treatment_duration');
-            $endTime = $startTime->addMinutes($totalDuration);
-            $data['end_time'] = $endTime->format('H:i');
+
+            $address = Address::find($data['address_id']);
+
+            $place = Place::find($data['place_id']);
+
+            if ($place->type === PlaceType::HOMECARE) {
+                $data['transport'] = Order::getCalculatedTransport($address->kecamatan->distance);
+            }
+
+            $data['end_time'] = Order::getCalculatedEndTime($data['date'], $data['start_time'], $data['treatments'], $place->type);
+
+            $isAvailable = Order::isAvailable($data, $place->type);
+
+            if (!$isAvailable) {
+                throw new \Exception('Slot reservasi tersedia tidak cukup!');
+            }
+
             Order::create($data);
+
             DB::commit();
-            return Notification::make()
-                ->body('Berhasil disimpan.')
-                ->success()
-                ->send();
-        } catch (\Throwable $th) {
-            $th->getMessage();
+            return Notification::make()->body('Berhasil disimpan.')->success()->send();
+        } catch (NoSlotException $e) {
             DB::rollBack();
-            return Notification::make()
-                ->title('Whoops!')
-                ->body('Ada yang salah')
-                ->danger()
-                ->send();
+            return Notification::make()->title('Whoops!')->body($e->getMessage())->danger()->send();
+        } catch (\Throwable $th) {
+            report($th->getMessage());
+            DB::rollBack();
+            return Notification::make()->title('Whoops!')->body('Ada yang salah')->danger()->send();
         }
     }
 

@@ -18,6 +18,8 @@ class Order extends Model
     /** @use HasFactory<\Database\Factories\OrderFactory> */
     use HasFactory;
 
+    const TRAVEL_TIME = 20;
+
     protected $casts = [
         'treatments' => 'array',
         'transport' => 'integer',
@@ -195,6 +197,67 @@ class Order extends Model
     public function getLongDateTime()
     {
         return $this->getLongDate() . ' ' . $this->getLongTime();
+    }
+
+    public static function getCalculatedEndTime($date, $startTime, $treatments, $placeType)
+    {
+        $startTime = Carbon::parse($date)->setTimeFrom(Carbon::parse($startTime));
+        $totalDuration = collect($treatments)->sum('treatment_duration');
+        $travelTime = $placeType === PlaceType::HOMECARE ? self::TRAVEL_TIME : 0;
+        $endTime = $startTime->addMinutes($totalDuration + $travelTime);
+
+        return $endTime->format('H:i');
+    }
+
+    public static function getCalculatedTransport($distance)
+    {
+        $transportCost = null;
+
+        switch (true) {
+            case $distance <= 2:
+                $transportCost = 15000;
+                break;
+            case $distance <= 3:
+                $transportCost = 18000;
+                break;
+            case $distance <= 5:
+                $transportCost = 25000;
+                break;
+            case $distance <= 7:
+                $transportCost = 30000;
+                break;
+            case $distance <= 9:
+                $transportCost = 33000;
+                break;
+            case $distance <= 20:
+                $transportCost = 38000;
+                break;
+            default:
+                $transportCost = 40000;
+                break;
+        }
+
+        return $transportCost;
+    }
+
+    public static function isAvailable($data, $placeType, $orderId = null)
+    {
+        $startDateTime = Carbon::parse($data['date'] . ' ' . $data['start_time']);
+        $endDateTime = Carbon::parse($data['date'] . ' ' . $data['start_time']);
+
+        $order = Order::where('date', $data['date'])
+            ->where('place_id', $data['place_id'])
+            ->where('midwife_id', $data['midwife_id'])
+            ->when($placeType === PlaceType::CLINIC,
+                fn ($query) => $query->where('room_id', $data['room_id']),
+            )
+            ->when($orderId,
+                fn ($query) => $query->where('id', '!=', $orderId),
+            )
+            ->activeBetween($startDateTime->toTimeString(), $endDateTime->toTimeString())
+            ->count();
+
+        return $order < 1;
     }
 
 

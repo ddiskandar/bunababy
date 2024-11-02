@@ -87,7 +87,7 @@ class OrderResource extends Resource
                                     ->content(fn (Order $record): ?string => $record->getLongDateTime()),
                                 Forms\Components\Placeholder::make('placeholder.address.full')
                                     ->label('Alamat')
-                                    ->content(fn (Order $record): ?string => $record->address->fullAddress),
+                                    ->content(fn (Order $record): ?string => $record->address->fullAddress  . ' (' . $record->address->kecamatan->distance . ' km)'),
                                 Forms\Components\Placeholder::make('placeholder.treatments')
                                     ->label('Treatment')
                                     ->content(fn (Order $record): ?string => $record->listTreatments),
@@ -266,9 +266,13 @@ class OrderResource extends Resource
                 ->preload()
                 ->required()
                 ->live()
-                ->afterStateUpdated(function ($state, Set $set) {
+                ->afterStateUpdated(function ($state, Set $set, Get $get) {
                     $place = Place::find($state);
                     $set('place_type', $place?->type);
+                    $set(
+                        'end_time',
+                        Order::getCalculatedEndTime($get('date'), $get('start_time'), $get('treatments'), $place?->type)
+                    );
                 })
                 ->columnSpanFull(),
             Forms\Components\Select::make('room_id')
@@ -295,17 +299,17 @@ class OrderResource extends Resource
                 ->label('Waktu Mulai')
                 ->datalist(fn (Get $get) => Slot::where('place_id', $get('place_id'))->pluck('time')->toArray())
                 ->afterStateUpdated(function ($state, Set $set, Get $get) {
-                    $date = $get('date');
-                    $startTime = Carbon::parse($date)->setTimeFrom(Carbon::parse($state));
-                    $totalDuration = collect($get('treatments'))->sum('treatment_duration');
-                    $endTime = $startTime->addMinutes($totalDuration);
-                    $set('end_time', $endTime->format('H:i'));
+                    Log::info($get('place_type')->value);
+                    $set(
+                        'end_time',
+                        Order::getCalculatedEndTime($get('date'), $state, $get('treatments'), $get('place_type'))
+                    );
                 })
                 ->live()
                 ->required()
                 ->columnSpanFull(),
             Forms\Components\TimePicker::make('end_time')
-                ->label('Waktu Sampai')
+                ->label('Waktu Akhir')
                 ->disabled()
                 ->reactive()
                 ->required()
@@ -355,11 +359,15 @@ class OrderResource extends Resource
                         $set('treatment_price', $price);
                         // $set('display_treatment_duration', $treatment?->duration);
                         // $set('display_treatment_price', $price);
-                        $date = $get('../../date');
-                        $startTime = Carbon::parse($date)->setTimeFrom(Carbon::parse($get('../../start_time')));
-                        $totalDuration = collect($get('../../treatments'))->sum('treatment_duration');
-                        $endTime = $startTime->addMinutes($totalDuration);
-                        $set('../../end_time', $endTime->format('H:i'));
+                        $set(
+                            '../../end_time',
+                            Order::getCalculatedEndTime(
+                                $get('../../date'),
+                                $get('../../start_time'),
+                                $get('../../treatments'),
+                                $get('../../place_type')
+                            )
+                        );
                     }),
                 Forms\Components\Select::make('family_id')
                     ->label('Pasien')
@@ -396,11 +404,10 @@ class OrderResource extends Resource
                     ,
             ])
             ->afterStateUpdated(function (Set $set, Get $get) {
-                $date = $get('date');
-                $startTime = Carbon::parse($date)->setTimeFrom(Carbon::parse($get('start_time')));
-                $totalDuration = collect($get('treatments'))->sum('treatment_duration');
-                $endTime = $startTime->addMinutes($totalDuration);
-                $set('end_time', $endTime->format('H:i'));
+                $set(
+                    'end_time',
+                    Order::getCalculatedEndTime($get('date'), $get('start_time'), $get('treatments'), $get('place_type'))
+                );
             })
             ->columns(2)
             ->defaultItems(1)

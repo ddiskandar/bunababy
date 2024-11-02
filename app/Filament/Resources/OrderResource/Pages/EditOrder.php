@@ -2,10 +2,14 @@
 
 namespace App\Filament\Resources\OrderResource\Pages;
 
+use App\Enums\PlaceType;
 use App\Filament\Resources\OrderResource;
+use App\Models\Address;
+use App\Models\Order;
 use App\Models\Place;
 use App\Support\FormatNumber;
 use Filament\Actions;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
@@ -48,10 +52,34 @@ class EditOrder extends EditRecord
         return $data;
     }
 
-    protected function mutateFormDataBeforeSave(array $data): array
+    protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        dd($data);
-        return $data;
+        $address = Address::find($data['address_id']);
+
+        $place = Place::find($data['place_id']);
+
+        if ($place->type === PlaceType::HOMECARE) {
+            $data['transport'] = Order::getCalculatedTransport($address->kecamatan->distance);
+        }
+
+        $data['end_time'] = Order::getCalculatedEndTime($data['date'], $data['start_time'], $data['treatments'], $place->type);
+
+        $isAvailable = Order::isAvailable($data, $place->type, $record->id);
+
+        if (!$isAvailable) {
+            Notification::make()
+                ->warning()
+                ->title('Jadwal sudah terisi!')
+                ->body('Pilih jadwal lain.')
+                ->send();
+
+            $this->halt();
+
+        }
+
+        $record->update($data);
+
+        return $record;
     }
 
 }
