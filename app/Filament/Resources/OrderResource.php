@@ -130,7 +130,6 @@ class OrderResource extends Resource
                                     ->content(fn (Order $record): ?string => $record->finished_at?->format('d M Y H:i') ?? '-'),
                             ]),
 
-
                         Forms\Components\Section::make('Pembayaran')
                             ->collapsed()
                             ->schema([
@@ -149,6 +148,19 @@ class OrderResource extends Resource
                                 Forms\Components\Placeholder::make('placeholder.payment.remaining')
                                     ->label('Sisa Pembayaran')
                                     ->content(fn (Order $record): ?string => \App\Support\FormatCurrency::rupiah($record->getRemainingPayment())),
+                            ]),
+
+                        Forms\Components\Section::make('Admin')
+                            ->collapsed()
+                            ->schema([
+                                Forms\Components\Placeholder::make('placeholder.admin.created_by')
+                                    ->label('Admin Input')
+                                    // ->hidden(fn (Order $record) => $record->status->value <= OrderStatus::FINISHED->value)
+                                    ->content(fn (Order $record): ?string => $record->createdBy?->name ?? '-'),
+                                Forms\Components\Placeholder::make('placeholder.admin.last_created_by')
+                                    ->label('Update terakhir oleh')
+                                    // ->hidden(fn (Order $record) => $record->status->value <= OrderStatus::FINISHED->value)
+                                    ->content(fn (Order $record): ?string => $record->updatedBy?->name ?? '-'),
                             ]),
                     ])
                     ->columnSpan(['lg' => 1])
@@ -341,7 +353,7 @@ class OrderResource extends Resource
                     ->inline()
                     ->live()
                     ->afterStateUpdated(function ($state, Set $set) {
-                        $set('repeat_count', 0);
+                        $set('repeat_count', null);
                         $set('repeat_date_1', null);
                         $set('repeat_date_2', null);
                         $set('repeat_date_3', null);
@@ -349,39 +361,41 @@ class OrderResource extends Resource
                         $set('repeat_date_5', null);
                     })
                     ->required(),
-                Forms\Components\TextInput::make('repeat_count')
+                Forms\Components\ToggleButtons::make('repeat_count')
                     ->label('Jumlah Repeat')
-                    ->numeric()
-                    ->minValue(1)
-                    ->default(1)
+                    ->inline()
+                    ->options([
+                        1 => '1x',
+                        2 => '2x',
+                    ])
                     ->reactive()
                     ->hidden(fn (Get $get) => !$get('repeat'))
                     ->required(),
                 Forms\Components\DatePicker::make('repeat_date_1')
-                    ->label('Tanggal Repeat 1')
+                    ->label('Tanggal Repeat #1')
                     ->required()
                     ->reactive()
-                    ->visible(fn (Get $get) => $get('repeat_count') >= 1),
+                    ->visible(fn (Get $get) => (int) $get('repeat_count') >= 1),
                 Forms\Components\DatePicker::make('repeat_date_2')
-                    ->label('Tanggal Repeat 2')
+                    ->label('Tanggal Repeat #2')
                     ->required()
                     ->reactive()
-                    ->visible(fn (Get $get) => $get('repeat_count') >= 2),
+                    ->visible(fn (Get $get) => (int) $get('repeat_count') >= 2),
                 Forms\Components\DatePicker::make('repeat_date_3')
-                    ->label('Tanggal Repeat 3')
+                    ->label('Tanggal Repeat #3')
                     ->required()
                     ->reactive()
-                    ->visible(fn (Get $get) => $get('repeat_count') >= 3),
+                    ->visible(fn (Get $get) => (int) $get('repeat_count') >= 3),
                 Forms\Components\DatePicker::make('repeat_date_4')
-                    ->label('Tanggal Repeat 4')
+                    ->label('Tanggal Repeat #4')
                     ->required()
                     ->reactive()
-                    ->visible(fn (Get $get) => $get('repeat_count') >= 4),
+                    ->visible(fn (Get $get) => (int) $get('repeat_count') >= 4),
                 Forms\Components\DatePicker::make('repeat_date_5')
-                    ->label('Tanggal Repeat 5')
+                    ->label('Tanggal Repeat $5')
                     ->required()
                     ->reactive()
-                    ->visible(fn (Get $get) => $get('repeat_count') >= 5),
+                    ->visible(fn (Get $get) => (int) $get('repeat_count') >= 5),
 
                 Forms\Components\ToggleButtons::make('up_selling')
                     ->label('Up Selling')

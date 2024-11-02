@@ -40,6 +40,16 @@ class Order extends Model
         return 'INV/' . $this->date->isoFormat('YYMMDD') . '/' . $this->id;
     }
 
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'last_updated_by');
+    }
+
     public function place(): BelongsTo
     {
         return $this->belongsTo(Place::class, 'place_id', 'id');

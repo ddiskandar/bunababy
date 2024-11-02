@@ -74,6 +74,7 @@ class CreateOrder extends CreateRecord
                 $data['transport'] = Order::getCalculatedTransport($address->kecamatan->distance);
             }
 
+            $data['created_by'] = auth()->id();
             $data['end_time'] = Order::getCalculatedEndTime($data['date'], $data['start_time'], $data['treatments'], $place->type);
 
             $isAvailable = Order::isAvailable($data, $place->type);

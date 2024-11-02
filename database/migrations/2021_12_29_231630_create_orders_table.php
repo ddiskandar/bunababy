@@ -33,6 +33,8 @@ return new class extends Migration
             $table->json('screening')->nullable();
             $table->json('report')->nullable();
             $table->tinyInteger('status')->default(OrderStatus::BOOKED);
+            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('last_updated_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
     }
