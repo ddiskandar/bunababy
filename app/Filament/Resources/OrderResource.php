@@ -53,6 +53,7 @@ class OrderResource extends Resource
                 Forms\Components\Group::make()
                     ->schema([
                         Forms\Components\Section::make('Details')
+                            ->collapsible()
                             ->schema(static::getDetailsFormSchema()),
                         Forms\Components\Section::make('Waktu dan Tempat')
                             ->collapsed()
@@ -77,7 +78,8 @@ class OrderResource extends Resource
 
                 Forms\Components\Group::make()
                     ->schema([
-                        Forms\Components\Section::make()
+                        Forms\Components\Section::make('Summary')
+                            ->collapsible()
                             ->schema([
                                 Forms\Components\Placeholder::make('placeholder.midwife.name')
                                     ->label('Bidan')
@@ -107,8 +109,25 @@ class OrderResource extends Resource
                                     ->content(fn (Order $record): ?string => $record->customer->phone),
                             ]),
 
+                        Forms\Components\Section::make('Layanan')
+                            ->collapsed()
+                            ->schema([
+                                Forms\Components\Placeholder::make('placeholder.service.screening')
+                                    ->label('Screening')
+                                    ->content(fn (Order $record): ?string => $record->screening),
+                                Forms\Components\Placeholder::make('placeholder.service.finished_at')
+                                    ->label('Selesai Treatment')
+                                    // ->hidden(fn (Order $record) => $record->status->value <= OrderStatus::FINISHED->value)
+                                    ->content(fn (Order $record): ?string => $record->finished_at?->format('d M Y H:i') ?? '-'),
+                                Forms\Components\Placeholder::make('placeholder.service.report')
+                                    ->label('Report Bidan')
+                                    // ->hidden(fn (Order $record) => $record->status->value <= OrderStatus::FINISHED->value)
+                                    ->content(fn (Order $record): ?string => $record->report ?? '-'),
+                            ]),
 
-                        Forms\Components\Section::make()
+
+                        Forms\Components\Section::make('Pembayaran')
+                            ->collapsed()
                             ->schema([
                                 Forms\Components\Placeholder::make('placeholder.payment.treatment')
                                     ->label('Total Treatment')
