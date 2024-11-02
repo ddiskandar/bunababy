@@ -30,8 +30,8 @@ return new class extends Migration
             $table->time('end_time')->nullable();
             $table->timestamp('started_at')->nullable();
             $table->timestamp('finished_at')->nullable();
-            $table->text('screening')->nullable();
-            $table->text('report')->nullable();
+            $table->json('screening')->nullable();
+            $table->json('report')->nullable();
             $table->tinyInteger('status')->default(OrderStatus::BOOKED);
             $table->timestamps();
         });

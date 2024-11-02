@@ -24,6 +24,8 @@ class Order extends Model
 
     protected $casts = [
         'treatments' => 'array',
+        'screening' => 'array',
+        'report' => 'array',
         'transport' => 'integer',
         'adjustment_amount' => 'integer',
         'date' => 'date',

@@ -104,9 +104,18 @@ class CreateOrder extends CreateRecord
     protected function getSteps(): array
     {
         return [
-            Step::make('Basic Information')
+            Step::make('Customer')
                 ->schema([
                     Section::make()->schema(OrderResource::getDetailsFormSchema())->columns()
+                ])
+                ->afterValidation(function () {
+                    //
+                }),
+            Step::make('Skrining')
+                ->schema([
+                    Section::make()->schema([
+                        OrderResource::getScreeningRepeater()
+                    ])->columns(1)
                 ])
                 ->afterValidation(function () {
                     //

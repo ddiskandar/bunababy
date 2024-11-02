@@ -52,9 +52,15 @@ class OrderResource extends Resource
             ->schema([
                 Forms\Components\Group::make()
                     ->schema([
-                        Forms\Components\Section::make('Details')
+                        Forms\Components\Section::make('Customer')
                             ->collapsible()
                             ->schema(static::getDetailsFormSchema()),
+                        Forms\Components\Section::make('Skrininig')
+                            ->heading('Skrininig')
+                            ->collapsed()
+                            ->schema([
+                                static::getScreeningRepeater()
+                            ]),
                         Forms\Components\Section::make('Waktu dan Tempat')
                             ->collapsed()
                             ->schema(static::getPlaceFormSchema()),
@@ -63,6 +69,12 @@ class OrderResource extends Resource
                             ->collapsed()
                             ->schema([
                                 static::getItemsRepeater()
+                            ]),
+                        Forms\Components\Section::make('Report')
+                            ->heading('Report Bidan')
+                            ->collapsed()
+                            ->schema([
+                                static::getReportRepeater()
                             ]),
                         Forms\Components\Section::make('Adjustment')
                             ->collapsed()
@@ -112,17 +124,10 @@ class OrderResource extends Resource
                         Forms\Components\Section::make('Layanan')
                             ->collapsed()
                             ->schema([
-                                Forms\Components\Placeholder::make('placeholder.service.screening')
-                                    ->label('Screening')
-                                    ->content(fn (Order $record): ?string => $record->screening),
                                 Forms\Components\Placeholder::make('placeholder.service.finished_at')
                                     ->label('Selesai Treatment')
                                     // ->hidden(fn (Order $record) => $record->status->value <= OrderStatus::FINISHED->value)
                                     ->content(fn (Order $record): ?string => $record->finished_at?->format('d M Y H:i') ?? '-'),
-                                Forms\Components\Placeholder::make('placeholder.service.report')
-                                    ->label('Report Bidan')
-                                    // ->hidden(fn (Order $record) => $record->status->value <= OrderStatus::FINISHED->value)
-                                    ->content(fn (Order $record): ?string => $record->report ?? '-'),
                             ]),
 
 
@@ -283,9 +288,124 @@ class OrderResource extends Resource
                         'kecamatan_id' => $data['kecamatan_id'],
                     ]);
                 }),
-            Forms\Components\Textarea::make('screening')
-                ->columnSpanFull(),
         ];
+    }
+
+    public static function getScreeningRepeater(): Repeater
+    {
+        return Repeater::make('screening')
+            ->schema([
+                Forms\Components\Textarea::make('keluhan')
+                    ->label('Keluhan')
+                    ->required(),
+                Forms\Components\ToggleButtons::make('penyakit_menular')
+                    ->label('Penyakit Menular')
+                    ->boolean()
+                    ->inline()
+                    ->required(),
+                Forms\Components\ToggleButtons::make('riwayat_imunisasi')
+                    ->label('Riwayat Imunisasi')
+                    ->boolean()
+                    ->inline()
+                    ->required(),
+            ])
+            ->addable(false)
+            ->deletable(false)
+            ->reorderable(false);
+    }
+
+    public static function getReportRepeater(): Repeater
+    {
+        return Repeater::make('report')
+            ->schema([
+                Forms\Components\ToggleButtons::make('payment')
+                    ->label('Payment')
+                    ->options(['Transfer', 'Cash'])
+                    ->inline()
+                    ->required(),
+                Forms\Components\ToggleButtons::make('treatments_match')
+                    ->label('Treatments')
+                    ->boolean('Sesuai', 'Ada Perubahan')
+                    ->inline()
+                    ->live()
+                    ->required(),
+                Forms\Components\Textarea::make('treatments_changed')
+                    ->label('Perubahan Treatments')
+                    ->required()
+                    ->reactive()
+                    ->hidden(fn (Get $get) => $get('treatments_match')),
+
+                Forms\Components\ToggleButtons::make('repeat')
+                    ->boolean()
+                    ->label('Repeat')
+                    ->inline()
+                    ->live()
+                    ->afterStateUpdated(function ($state, Set $set) {
+                        $set('repeat_count', 0);
+                        $set('repeat_date_1', null);
+                        $set('repeat_date_2', null);
+                        $set('repeat_date_3', null);
+                        $set('repeat_date_4', null);
+                        $set('repeat_date_5', null);
+                    })
+                    ->required(),
+                Forms\Components\TextInput::make('repeat_count')
+                    ->label('Jumlah Repeat')
+                    ->numeric()
+                    ->minValue(1)
+                    ->default(1)
+                    ->reactive()
+                    ->hidden(fn (Get $get) => !$get('repeat'))
+                    ->required(),
+                Forms\Components\DatePicker::make('repeat_date_1')
+                    ->label('Tanggal Repeat 1')
+                    ->required()
+                    ->reactive()
+                    ->visible(fn (Get $get) => $get('repeat_count') >= 1),
+                Forms\Components\DatePicker::make('repeat_date_2')
+                    ->label('Tanggal Repeat 2')
+                    ->required()
+                    ->reactive()
+                    ->visible(fn (Get $get) => $get('repeat_count') >= 2),
+                Forms\Components\DatePicker::make('repeat_date_3')
+                    ->label('Tanggal Repeat 3')
+                    ->required()
+                    ->reactive()
+                    ->visible(fn (Get $get) => $get('repeat_count') >= 3),
+                Forms\Components\DatePicker::make('repeat_date_4')
+                    ->label('Tanggal Repeat 4')
+                    ->required()
+                    ->reactive()
+                    ->visible(fn (Get $get) => $get('repeat_count') >= 4),
+                Forms\Components\DatePicker::make('repeat_date_5')
+                    ->label('Tanggal Repeat 5')
+                    ->required()
+                    ->reactive()
+                    ->visible(fn (Get $get) => $get('repeat_count') >= 5),
+
+                Forms\Components\ToggleButtons::make('up_selling')
+                    ->label('Up Selling')
+                    ->boolean()
+                    ->inline()
+                    ->required(),
+                Forms\Components\ToggleButtons::make('cross_selling')
+                    ->label('Cross Selling')
+                    ->boolean()
+                    ->inline()
+                    ->live()
+                    ->required(),
+                Forms\Components\TextInput::make('cross_selling_amount')
+                    ->label('Jumlah Jual')
+                    ->numeric()
+                    ->minValue(0)
+                    ->hidden(fn (Get $get) => !$get('cross_selling'))
+                    ->required(),
+            ])
+            ->maxItems(1)
+            ->defaultItems(1)
+            ->deletable(false)
+            // ->disabledOn('edit')
+            ->reorderable(false);
     }
 
     public static function getPlaceFormSchema(): array
