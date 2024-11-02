@@ -12,7 +12,8 @@ enum OrderStatus: int implements HasLabel, HasColor, HasIcon
     case PENDING = 1;
     case BOOKED = 2;
     case ON_HOLD = 4;
-    case FINISHED = 6;
+    case IN_SERVICE = 6;
+    case FINISHED = 7;
     case COMPLETED = 9;
 
     public function getLabel(): ?string
@@ -23,7 +24,8 @@ enum OrderStatus: int implements HasLabel, HasColor, HasIcon
             self::PENDING => 'Pending',
             self::BOOKED => 'Dijadwalkan',
             self::ON_HOLD => 'Ditunda',
-            self::FINISHED => 'Dilayani',
+            self::IN_SERVICE => 'Mulai Treatment',
+            self::FINISHED => 'Selesai Treatment',
             self::COMPLETED => 'Selesai',
         };
     }
@@ -35,6 +37,7 @@ enum OrderStatus: int implements HasLabel, HasColor, HasIcon
             self::PENDING => 'danger',
             self::BOOKED => 'success',
             self::ON_HOLD => 'warning',
+            self::IN_SERVICE => 'info',
             self::FINISHED => 'primary',
             self::COMPLETED => 'info',
         };
@@ -47,6 +50,7 @@ enum OrderStatus: int implements HasLabel, HasColor, HasIcon
             self::PENDING => 'heroicon-m-exclamation-circle',
             self::BOOKED => 'heroicon-m-bookmark',
             self::ON_HOLD => 'heroicon-m-pause-circle',
+            self::IN_SERVICE => 'heroicon-m-play-circle',
             self::FINISHED => 'heroicon-m-check-circle',
             self::COMPLETED => 'heroicon-m-check-badge',
         };

@@ -193,8 +193,9 @@ class OrderResource extends Resource
                 ->live()
                 ->preload()
                 ->searchable()
-                // ->required()
+                ->required()
                 ->columnSpanFull()
+                ->afterStateUpdated(fn (Set $set) => $set('address_id', null))
                 ->createOptionForm([
                     Forms\Components\TextInput::make('name')
                         ->required()
@@ -212,11 +213,17 @@ class OrderResource extends Resource
                 ,
             Forms\Components\Select::make('address_id')
                 ->label('Alamat')
-                ->options(fn (Get $get) => Address::where('customer_id', $get('customer_id'))->pluck('label', 'id')->toArray())
+                ->relationship(
+                    'address',
+                    'label',
+                    fn (Builder $query, Get $get) => $query->where('customer_id', $get('customer_id'))
+                )
+                ->getOptionLabelFromRecordUsing(fn (Address $record) => "{$record->label} {$record->fullAddress}")
                 ->hidden(fn (Get $get) => !$get('customer_id'))
                 ->columnSpanFull()
                 ->reactive()
                 ->searchable()
+                ->required()
                 ->preload()
                 ->createOptionForm([
                     Forms\Components\TextInput::make('label')
@@ -254,16 +261,10 @@ class OrderResource extends Resource
     public static function getPlaceFormSchema(): array
     {
         return [
-            Forms\Components\Select::make('midwife_id')
-                ->label('Bidan')
-                ->options(Midwife::pluck('name', 'id')->toArray())
-                ->preload()
-                ->required()
-                ->columnSpanFull(),
-            Forms\Components\Select::make('place_id')
+            Forms\Components\ToggleButtons::make('place_id')
                 ->label('Tempat')
                 ->options(Place::pluck('name', 'id')->toArray())
-                ->preload()
+                ->inline()
                 ->required()
                 ->live()
                 ->afterStateUpdated(function ($state, Set $set, Get $get) {
@@ -273,12 +274,14 @@ class OrderResource extends Resource
                         'end_time',
                         Order::getCalculatedEndTime($get('date'), $get('start_time'), $get('treatments'), $place?->type)
                     );
+                    $set('room_id', null);
+                    $set('midwife_id', null);
                 })
                 ->columnSpanFull(),
-            Forms\Components\Select::make('room_id')
+            Forms\Components\ToggleButtons::make('room_id')
                 ->label('Ruangan')
                 ->options(fn (Get $get) => Room::where('place_id', $get('place_id'))->pluck('name', 'id')->toArray())
-                ->preload()
+                ->inline()
                 ->required()
                 ->reactive()
                 ->hidden(function (Get $get){
@@ -288,6 +291,30 @@ class OrderResource extends Resource
                     $place = Place::find($get('place_id'));
                     return $place?->type === PlaceType::HOMECARE;
                 })
+                ->afterStateUpdated(function ($state, Set $set, Get $get) {
+                    $set('midwife_id', null);
+                })
+                ->columnSpanFull(),
+            Forms\Components\ToggleButtons::make('midwife_id')
+                ->label('Bidan')
+                ->options(function (Get $get) {
+                    $address = Address::find($get('address_id'));
+                    return Midwife::query()
+                        ->when($get('place_type') === PlaceType::HOMECARE,
+                            fn ($query) => $query->whereHas(
+                                'kecamatans',
+                                fn ($query) => $query
+                                    // ->select('kecamatans.*')
+                                    ->where('kecamatans.id', $address->kecamatan_id)
+                            )
+                        )
+                        // ->select('midwives.id', 'midwives.name')
+                        ->pluck('name', 'id')
+                        ->toArray();
+                })
+                ->inline()
+                ->required()
+                ->live()
                 ->columnSpanFull(),
             Forms\Components\DatePicker::make('date')
                 ->minDate(now())

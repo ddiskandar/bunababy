@@ -17,6 +17,8 @@ class Address extends Model
         'is_main' => 'boolean',
     ];
 
+    protected $appends = ['full_address'];
+
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);

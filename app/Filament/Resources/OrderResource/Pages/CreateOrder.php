@@ -16,6 +16,7 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Pages\CreateRecord\Concerns\HasWizard;
+use Filament\Support\Exceptions\Halt;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
@@ -101,17 +102,26 @@ class CreateOrder extends CreateRecord
             Step::make('Basic Information')
                 ->schema([
                     Section::make()->schema(OrderResource::getDetailsFormSchema())->columns()
-                ]),
+                ])
+                ->afterValidation(function () {
+                    //
+                }),
             Step::make('Bidan')
                 ->schema([
                     Section::make()->schema(OrderResource::getPlaceFormSchema())->columns()
-                ]),
+                ])
+                ->afterValidation(function () {
+                    //
+                }),
             Step::make('Treatment')
                 ->schema([
                     Section::make()->schema([
                         OrderResource::getItemsRepeater(),
                     ])->columns(1)
-                ]),
+                ])
+                ->afterValidation(function () {
+                    //
+                }),
             Step::make('Ringkasan')
                 ->schema([
                     Section::make()->schema([

@@ -20,6 +20,9 @@ class AddressFactory extends Factory
             'label' => $this->faker->word(),
             'address' => $this->faker->address(),
             'desa' => $this->faker->word(),
+            'label' => 'Rumah',
+            'is_main' => true,
+            'kecamatan_id' => rand(1, 70),
         ];
     }
 }

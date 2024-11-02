@@ -69,11 +69,13 @@ class MidwifeResource extends Resource
                 Tables\Columns\TextColumn::make('treatments_count')
                     ->counts('treatments')
                     ->label('Z'),
-                Tables\Columns\TextColumn::make('treatments.name'),
+                Tables\Columns\TextColumn::make('treatments.name')
+                    ->wrap(),
                 Tables\Columns\TextColumn::make('kecamatans_count')
                     ->counts('kecamatans')
                     ->label('Z'),
-                Tables\Columns\TextColumn::make('kecamatans.name'),
+                Tables\Columns\TextColumn::make('kecamatans.name')
+                    ->wrap(),
                 Tables\Columns\IconColumn::make('active')
                     ->boolean()
             ])

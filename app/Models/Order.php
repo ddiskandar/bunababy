@@ -57,7 +57,7 @@ class Order extends Model
 
     public function address(): BelongsTo
     {
-        return $this->belongsTo(Address::class, 'address_id');
+        return $this->belongsTo(Address::class);
     }
 
     // public function treatments(): BelongsToMany
