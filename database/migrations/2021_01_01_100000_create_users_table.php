@@ -23,6 +23,7 @@ return new class extends Migration
             $table->boolean('active')->default(true);
             $table->foreignId('customer_id')->nullable()->constrained('customers')->cascadeOnDelete();
             $table->foreignId('midwife_id')->nullable()->constrained('midwives')->cascadeOnDelete();
+            $table->timestamp('last_login')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

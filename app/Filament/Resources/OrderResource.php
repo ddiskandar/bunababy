@@ -55,8 +55,8 @@ class OrderResource extends Resource
                         Forms\Components\Section::make('Customer')
                             ->collapsible()
                             ->schema(static::getDetailsFormSchema()),
-                        Forms\Components\Section::make('Skrininig')
-                            ->heading('Skrininig')
+                        Forms\Components\Section::make('Skrining')
+                            ->heading('Skrining')
                             ->collapsed()
                             ->schema([
                                 static::getScreeningRepeater()
@@ -115,7 +115,7 @@ class OrderResource extends Resource
                                     ->content(fn (Order $record): ?string => $record->address->fullAddress  . ' (' . $record->address->kecamatan->distance . ' km)'),
                                 Forms\Components\Placeholder::make('placeholder.treatments')
                                     ->label('Treatment')
-                                    ->content(fn (Order $record): ?string => $record->listTreatments),
+                                    ->content(fn (Order $record): ?string => $record->listTreatmentsWithFamily),
                                 Forms\Components\Placeholder::make('placeholder.customer.phone')
                                     ->label('Phone')
                                     ->content(fn (Order $record): ?string => $record->customer->phone),
@@ -188,6 +188,7 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('midwife.name')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('listTreatments'),
                 Tables\Columns\TextColumn::make('total_price')
                     ->money('IDR')
                     ->sortable(),

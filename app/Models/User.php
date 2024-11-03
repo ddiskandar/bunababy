@@ -82,6 +82,11 @@ class User extends Authenticatable implements FilamentUser
     //     return $this->type === UserType::OWNER;
     // }
 
+    public function canImpersonate()
+    {
+        return true;
+    }
+
     public function scopeOwners($query)
     {
         return $query->where('type', UserType::OWNER);

@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\UserType;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
+use App\Models\Scopes\ActiveScope;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -12,6 +14,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 
 class UserResource extends Resource
 {
@@ -29,21 +32,20 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
+                    ->unique(
+                        table: 'users',
+                        column: 'email',
+                        ignoreRecord: true,
+                    )
                     ->maxLength(255),
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('type')
+                Forms\Components\TextInput::make('name')
                     ->required()
-                    ->numeric()
-                    ->default(1),
-                Forms\Components\Toggle::make('active')
+                    ->maxLength(255),
+                Forms\Components\Select::make('type')
+                    ->options(UserType::class)
                     ->required(),
             ]);
     }
@@ -52,26 +54,48 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('type')
-                    ->badge()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('active')
-                    ->boolean(),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\SelectColumn::make('type')
+                    ->options(UserType::class),
+                Tables\Columns\ToggleColumn::make('active'),
+                Tables\Columns\TextColumn::make('last_login')
+                    ->label('Login Terakhir')
+                    ->toggleable()
+                    ->sortable()
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('type')
+                    ->label('Type')
+                    ->options(UserType::class)
+                    ->multiple(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Impersonate::make(),
+                Tables\Actions\Action::make('reset')
+                    ->icon('heroicon-m-lock-open')
+                    ->color('danger')
+                    ->iconButton()
+                    ->requiresConfirmation()
+                    ->action(fn (User $record) => $record->update(['password' => bcrypt('12345678')])),
+                Tables\Actions\DeleteAction::make()
+                        ->iconButton()
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([
                 //     Tables\Actions\DeleteBulkAction::make(),
                 // ]),
+            ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                ActiveScope::class,
             ]);
     }
 

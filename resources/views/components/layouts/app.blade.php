@@ -15,6 +15,7 @@
             }
         </style>
 
+        @livewireStyles
         @filamentStyles
         @vite('resources/css/app.css')
     </head>
@@ -22,6 +23,9 @@
     <body class="antialiased">
         {{ $slot }}
 
+        <x-impersonate::banner/>
+
+        @livewireScripts
         @filamentScripts
         @vite('resources/js/app.js')
     </body>

@@ -20,7 +20,7 @@ class Order extends Model
     /** @use HasFactory<\Database\Factories\OrderFactory> */
     use HasFactory;
 
-    const TRAVEL_TIME = 20;
+    const TRAVEL_TIME = 40;
 
     protected $casts = [
         'treatments' => 'array',
@@ -162,6 +162,11 @@ class Order extends Model
     }
 
     public function getListTreatmentsAttribute()
+    {
+        return collect($this->treatments)->pluck('treatment_name')->implode(', ');
+    }
+
+    public function getListTreatmentsWithFamilyAttribute()
     {
         return collect($this->treatments)->map(function ($treatment) {
             return $treatment['treatment_name'] . ' (' . $treatment['family_name'] . ' ' . DateTime::calculateAge($treatment['family_dob']) . ')';

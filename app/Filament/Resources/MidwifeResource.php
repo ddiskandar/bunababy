@@ -106,6 +106,7 @@ class MidwifeResource extends Resource
             Pages\ManageMidwifeTimetables::class,
             Pages\ManageMidwifeTreatments::class,
             Pages\ManageMidwifeKecamatan::class,
+            Pages\ManageMidwifeUser::class,
         ]);
     }
 
@@ -118,6 +119,7 @@ class MidwifeResource extends Resource
             'timetables' => Pages\ManageMidwifeTimetables::route('/{record}/timetables'),
             'treatments' => Pages\ManageMidwifeTreatments::route('/{record}/treatments'),
             'kecamatans' => Pages\ManageMidwifeKecamatan::route('/{record}/kecamatans'),
+            'user' => Pages\ManageMidwifeUser::route('/{record}/user'),
         ];
     }
 }
