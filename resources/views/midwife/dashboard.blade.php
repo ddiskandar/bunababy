@@ -39,12 +39,20 @@
         <div class="mx-6 py-6">
             <div class="text-pink-600 font-semibold text-lg">Jadwal</div>
             <ul class="gap-3 flex flex-col mt-2">
-                <li class="bg-pink-50 rounded-lg  p-6">
-                    <a wire:navigate href="{{ route('midwife.order.show', 1002347811) }}">Jadwal 1</a>
+                @foreach ($schedules as $schedule)
+                <li>
+                    <a wire:navigate href="{{ route('midwife.order.show', $schedule->id) }}">
+                        <div class="bg-pink-50 rounded-lg  p-6">
+                            <div>{{ $schedule->status->getLabel() }}</div>
+                            <div>{{ $schedule->getLongDateTime() }}</div>
+                            <div>{{ $schedule->customer->name }}</div>
+                            <div>{{ $schedule->place->name }}</div>
+                            <div>{{ $schedule->address->full_address }}</div>
+                            <div>{{ $schedule->listTreatments }}</div>
+                        </div>
+                    </a>
                 </li>
-                <li class="bg-pink-50 rounded-lg  p-6">
-                    <a wire:navigate href="{{ route('midwife.order.show', 1002347811) }}">Jadwal 2</a>
-                </li>
+                @endforeach
             </ul>
         </div>
     </div>

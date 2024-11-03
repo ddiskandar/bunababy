@@ -9,6 +9,7 @@ use App\Models\Scopes\ActiveScope;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -85,6 +86,11 @@ class User extends Authenticatable implements FilamentUser
     public function canImpersonate()
     {
         return true;
+    }
+
+    public function midwife(): BelongsTo
+    {
+        return $this->belongsTo(Midwife::class);
     }
 
     public function scopeOwners($query)

@@ -15,7 +15,7 @@
             }
         </style>
 
-        @livewireStyles
+        {{-- @livewireStyles --}}
         @filamentStyles
         @vite('resources/css/app.css')
     </head>
@@ -25,7 +25,7 @@
 
         <x-impersonate::banner/>
 
-        @livewireScripts
+        {{-- @livewireScripts --}}
         @filamentScripts
         @vite('resources/js/app.js')
     </body>

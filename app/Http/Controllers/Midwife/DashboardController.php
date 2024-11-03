@@ -12,6 +12,9 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return view('midwife.dashboard');
+        $schedules = auth()->user()->midwife->orders;
+        return view('midwife.dashboard', [
+            'schedules' => $schedules,
+        ]);
     }
 }
