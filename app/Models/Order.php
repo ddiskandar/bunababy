@@ -37,7 +37,7 @@ class Order extends Model
 
     public function getInvoice()
     {
-        return 'INV/' . $this->date->isoFormat('YYMMDD') . '/' . $this->id;
+        return 'INV/' . $this->date->format('Ymd') . '/' . $this->id;
     }
 
     public function createdBy()
@@ -190,8 +190,8 @@ class Order extends Model
 
     public function getTime()
     {
-        return Carbon::parse($this->start_time)->isoFormat('HH:mm') . ' - ' . Carbon::parse($this->end_time)
-            ->isoFormat('HH:mm');
+        return Carbon::parse($this->start_time)->format('H:i') . ' - ' . Carbon::parse($this->end_time)
+            ->format('H:i');
     }
 
     public function getLongTime()
@@ -201,12 +201,12 @@ class Order extends Model
 
     public function getLongDate()
     {
-        return Carbon::parse($this->date)->isoFormat('dddd, DD MMMM YYYY');
+        return Carbon::parse($this->date)->format('d/m/Y');
     }
 
     public function getShortDate()
     {
-        return Carbon::parse($this->date)->isoFormat('ddd, DD MMM');
+        return Carbon::parse($this->date)->format('d/m/Y');
     }
 
     public function getLongDateTime()

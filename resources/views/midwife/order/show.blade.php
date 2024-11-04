@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <div class="flex flex-col gap-6">
+        <div class="flex flex-col gap-6 text-sm">
             <div class="px-6 pt-6 bg-white rounded-t-3xl -mt-6">
                 <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">{{ $order->customer->name }}</div>
                 <div>{{ $order->getLongDate() }}</div>
@@ -33,8 +33,16 @@
                 <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Tempat</div>
                 <div class="mt-2 fi-in-repeatable-item block rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-950/5 dark:bg-white/5 dark:ring-white/10">
                     @if ($order->place->type === \App\Enums\PlaceType::HOMECARE)
-                        <div>{{ $order->place->name }}</div>
-                        <div>{{ $order->address->full_address }}</div>
+                        <div>
+                            <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">{{ $order->place->name }}</div>
+                            <div>{{ $order->address->full_address }}</div>
+                            @isset($order->address->share_location)
+                            <div class="mt-2">
+                                <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Sharloc</div>
+                                    <div><a target="_blank" href="{{ $order->address->share_location }}">{{ $order->address->share_location }}</a></div>
+                                </div>
+                            </div>
+                            @endisset
                     @endif
 
                     @if ($order->place->type === \App\Enums\PlaceType::CLINIC)
@@ -50,12 +58,20 @@
                         <li class="fi-in-repeatable-item block rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-950/5 dark:bg-white/5 dark:ring-white/10">
                             <div class="flex flex-col gap-y-3">
                                 <div class="gap-y-2 flex flex-col">
-                                    <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Nama Treatment</div>
+                                    <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Treatment</div>
                                     <div>{{ $treatment['treatment_name'] }}</div>
                                 </div>
                                 <div class="gap-y-2 flex flex-col">
-                                    <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Pasien</div>
+                                    <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Nama</div>
                                     <div>{{ $treatment['family_name'] }}</div>
+                                </div>
+                                <div class="gap-y-2 flex flex-col">
+                                    <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Usia</div>
+                                    <div>{{ \App\Support\DateTime::calculateAge($treatment['family_dob']) }}</div>
+                                </div>
+                                <div class="gap-y-2 flex flex-col">
+                                    <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Tanggal Lahir</div>
+                                    <div>{{ $treatment['family_dob'] ? \Carbon\Carbon::Parse($treatment['family_dob'])?->format('d/m/Y') : '-' }}</div>
                                 </div>
                             </div>
                         </li>

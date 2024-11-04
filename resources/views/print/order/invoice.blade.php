@@ -1,7 +1,7 @@
 <x-layouts.print>
 
     <!-- Invoice -->
-    <div class="relative flex flex-col mx-auto overflow-hidden text-xs bg-white rounded xl:max-w-4xl ">
+    <div class="relative flex flex-col mx-auto overflow-hidden text-sm bg-white rounded xl:max-w-4xl ">
         <div class="w-full p-5 lg:p-6 grow print:p-0">
             <div class="mx-auto lg:w-10/12 print:w-full">
                 <!-- Invoice Header -->
@@ -23,7 +23,8 @@
                         <div class="absolute hidden print:block top-6 -right-16 rotate-[35deg]">
                             <div
                                 class="inline-flex py-6 text-xl font-semibold leading-4 text-orange-700 uppercase bg-orange-200 opacity-50 px-28">
-                                {{ $order->status->getLabel() }}</div>
+                                {{ $order->status->getLabel() }}
+                            </div>
                         </div>
 
                         <div class="print:hidden">
@@ -36,8 +37,8 @@
                 <!-- END Invoice Header -->
 
                 <!-- Invoice Info -->
-                <div class="grid grid-cols-1 gap-4 py-3 md:grid-cols-2 lg:gap-8 print:grid-cols-2">
-                    <div>
+                <div class="grid grid-cols-1 gap-4 py-3 md:grid-cols-3 lg:gap-8 print:grid-cols-2">
+                    <div class=" md:col-span-2">
                         <div class="flex items-center py-1">
                             <h3 class="text-sm font-semibold">
                                 Invoice {{ $order->getInvoice() }}
@@ -48,7 +49,7 @@
                             </div>
                         </div>
                         <div class="text-slate-600">
-                            Terbit : {{ $order->created_at->isoFormat('DD MMMM Y HH:mm') }} WIB
+                            Terbit : {{ $order->created_at->format('d/m/Y H:i') }} WIB
                         </div>
                     </div>
 

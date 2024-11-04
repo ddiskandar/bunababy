@@ -240,7 +240,7 @@ class ShowCalendarComponent extends Component
                     ? $this->colStart['clinics'][$order->room_id]
                     : $this->colStart['midwives'][$order->midwife_id];
 
-            $rowStart = $this->rowStart[$order->startDateTime->isoFormat('HH:mm')];
+            $rowStart = $this->rowStart[$order->startDateTime->format('H:i')];
 
             $rowSpan = (int) round($order->startDateTime
                     ->diffInMinutes(

@@ -13,7 +13,7 @@
                 Hai, Bidan {{ auth()->user()->name }}
             </div>
             <div>
-                {{ today()->isoFormat('dddd, D MMMM YYYY') }}
+                {{ today()->format('d m Y') }}
             </div>
         </div>
 
