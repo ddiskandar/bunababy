@@ -59,7 +59,10 @@ class EditOrder extends EditRecord
         $place = Place::find($data['place_id']);
 
         if ($place->type === PlaceType::HOMECARE) {
-            $data['transport'] = Order::getCalculatedTransport($address->kecamatan->distance);
+            if ($record->place_id !== $data['place_id']) {
+                $data['transport'] = Order::getCalculatedTransport($address->kecamatan->distance);
+            }
+            $data['room_id'] = null;
         }
 
         $data['last_updated_by'] = auth()->id();
@@ -70,13 +73,15 @@ class EditOrder extends EditRecord
         if (!$isAvailable) {
             Notification::make()
                 ->warning()
-                ->title('Jadwal sudah terisi!')
-                ->body('Pilih jadwal lain.')
+                ->title('Jadwal tidak tersedia!')
+                ->body('Silahkan pilih jadwal lain')
                 ->send();
 
             $this->halt();
 
         }
+
+        // dd($data);
 
         $record->update($data);
 

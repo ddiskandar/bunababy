@@ -24,9 +24,21 @@
 
         <div class="flex flex-col gap-6 text-sm">
             <div class="px-6 pt-6 bg-white rounded-t-3xl -mt-6">
-                <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">{{ $order->customer->name }}</div>
-                <div>{{ $order->getLongDate() }}</div>
-                <div>{{ $order->getLongTime() }}</div>
+            </div>
+
+            <div class="px-6 -mt-6">
+                <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Buna</div>
+                <div class="mt-2 fi-in-repeatable-item block rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-950/5 dark:bg-white/5 dark:ring-white/10">
+                    <div>{{ $order->customer->name }}</div>
+                </div>
+            </div>
+
+            <div class="px-6">
+                <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Tanggal dan Waktu</div>
+                <div class="mt-2 fi-in-repeatable-item block rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-950/5 dark:bg-white/5 dark:ring-white/10">
+                    <div>{{ $order->getLongDateTime() }}</div>
+                    <div>{{ $order->getLongTime() }}</div>
+                </div>
             </div>
 
             <div class="px-6">
@@ -53,25 +65,17 @@
 
             <div class="px-6">
                 <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Daftar Treatment</div>
-                <ul class="mt-2">
+                <ul class="mt-2 gap-y-3 flex flex-col">
                     @foreach ($order->treatments as $treatment)
                         <li class="fi-in-repeatable-item block rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-950/5 dark:bg-white/5 dark:ring-white/10">
                             <div class="flex flex-col gap-y-3">
                                 <div class="gap-y-2 flex flex-col">
-                                    <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Treatment</div>
+                                    <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Treatment #{{ $loop->iteration }}</div>
                                     <div>{{ $treatment['treatment_name'] }}</div>
                                 </div>
                                 <div class="gap-y-2 flex flex-col">
-                                    <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Nama</div>
-                                    <div>{{ $treatment['family_name'] }}</div>
-                                </div>
-                                <div class="gap-y-2 flex flex-col">
-                                    <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Usia</div>
-                                    <div>{{ \App\Support\DateTime::calculateAge($treatment['family_dob']) }}</div>
-                                </div>
-                                <div class="gap-y-2 flex flex-col">
-                                    <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Tanggal Lahir</div>
-                                    <div>{{ $treatment['family_dob'] ? \Carbon\Carbon::Parse($treatment['family_dob'])?->format('d/m/Y') : '-' }}</div>
+                                    <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Nama/Tanggal Lahir/Usia</div>
+                                    <div>{{ $treatment['family_name'] }}{{ $treatment['family_dob'] ? ', ' . \Carbon\Carbon::Parse($treatment['family_dob'])?->format('d/m/Y') . ', ' . \App\Support\DateTime::calculateAge($treatment['family_dob']) : '-' }}</div>
                                 </div>
                             </div>
                         </li>
@@ -81,6 +85,24 @@
 
             <div class="px-6">
                 @livewire('midwife.screening-order-component', ['order' => $order])
+            </div>
+
+            <div class="px-6">
+                <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Pembayaran</div>
+                <div class="mt-2 fi-in-repeatable-item block rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-950/5 dark:bg-white/5 dark:ring-white/10">
+                    <div class="flex flex-col gap-y-3">
+                        <div class="gap-y-2 flex flex-col">
+                            <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">DP</div>
+                            <div>{{ \App\Support\FormatCurrency::rupiah($order->getVerifiedPayments()) }}</div>
+                        </div>
+                        <div class="gap-y-2 flex flex-col">
+                            <div class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Kekurangan sementara</div>
+                            <div class="text-red-600">{{ \App\Support\FormatCurrency::rupiah($order->getRemainingPayment()) }}</div>
+                        </div>
+                    </div>
+
+                    <div></div>
+                </div>
             </div>
 
             <div class="px-6">

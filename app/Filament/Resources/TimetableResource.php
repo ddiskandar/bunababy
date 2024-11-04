@@ -43,6 +43,7 @@ class TimetableResource extends Resource
                     ->required(),
                 Forms\Components\DatePicker::make('date')
                     ->minDate(now())
+                    ->native(false)
                     ->required(),
                 Forms\Components\ToggleButtons::make('type')
                     ->required()

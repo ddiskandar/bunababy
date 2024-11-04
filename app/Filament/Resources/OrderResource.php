@@ -15,6 +15,7 @@ use App\Models\Place;
 use App\Models\Price;
 use App\Models\Room;
 use App\Models\Slot;
+use App\Models\Timetable;
 use App\Models\Treatment;
 use App\Traits\EnsureOnlyAdminCanAccess;
 use Carbon\Carbon;
@@ -30,12 +31,14 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\Computed;
 
 class OrderResource extends Resource
 {
     use EnsureOnlyAdminCanAccess;
-    
+
     protected static ?string $model = Order::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
@@ -43,6 +46,12 @@ class OrderResource extends Resource
     protected static ?string $navigationGroup = 'Admin';
 
     protected static ?int $navigationSort = 2;
+
+    #[Computed()]
+    public function kecamatan()
+    {
+        return Kecamatan::pluck('name', 'id')->toArray();
+    }
 
     public static function getEloquentQuery(): Builder
     {
@@ -290,7 +299,7 @@ class OrderResource extends Resource
                         ->maxLength(255),
                     Forms\Components\Select::make('kecamatan_id')
                         ->label('Kecamatan')
-                        ->options(Kecamatan::pluck('name', 'id')->toArray())
+                        ->options(fn () => $this->kecamatan())
                         ->required()
                         ->searchable()
                         ->preload(),
@@ -485,10 +494,41 @@ class OrderResource extends Resource
                 ->live()
                 ->columnSpanFull(),
             Forms\Components\DatePicker::make('date')
-                ->minDate(now())
+                ->minDate(today())
                 ->native(false)
-                ->disabledDates([today()->addDays(5)])
+                ->disabledDates(function (Get $get) {
+                    if (!$get('midwife_id')) {
+                        return [];
+                    }
+
+                    $order = Order::query()
+                        ->whereBetween('date', [today(), today()->addMonth(3)])
+                        ->pluck('date')
+                        ->toArray();
+
+                    $timetables = Timetable::query()
+                        ->where('midwife_id', $get('midwife_id'))
+                        ->pluck('date')
+                        ->toArray();
+
+                    return [
+                        // ...$order,
+                        ...$timetables
+                    ];
+                })
+                ->reactive()
                 ->required()
+                ->hidden(function (Get $get) {
+                    if (!$get('midwife_id')) {
+                        return true;
+                    }
+
+                    if ($get('place_type') === PlaceType::CLINIC && !$get('room_id')) {
+                        return true;
+                    }
+
+                    return false;
+                })
                 ->columnSpanFull(),
             Forms\Components\TimePicker::make('start_time')
                 ->label('Waktu Mulai')
@@ -502,6 +542,7 @@ class OrderResource extends Resource
                 })
                 ->live()
                 ->required()
+                ->hidden(fn (Get $get) => !$get('date'))
                 ->columnSpanFull(),
             Forms\Components\TimePicker::make('end_time')
                 ->label('Waktu Akhir')
@@ -607,20 +648,5 @@ class OrderResource extends Resource
             ->columns(2)
             ->defaultItems(1)
             ->required();
-    }
-
-    public static function getDatetimeFormSchema(): array
-    {
-        return [
-            Forms\Components\DatePicker::make('date')
-                ->minDate(now())
-                ->native(false)
-                ->disabledDates([today()->addDays(5)])
-                // ->required()
-                ->columnSpanFull(),
-            Forms\Components\TimePicker::make('start_time')
-                ->datalist(fn (Get $get) => Slot::where('place_id', $get('place_id'))->pluck('time')->toArray())
-                ->columnSpanFull(),
-        ];
     }
 }

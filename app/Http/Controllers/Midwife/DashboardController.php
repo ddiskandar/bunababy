@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Midwife;
 
+use App\Models\Order;
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -17,9 +18,14 @@ class DashboardController extends Controller
             return redirect()->route('filament.admin.pages.dashboard');
         }
 
-        $schedules = auth()->user()->midwife?->orders;
+        $orders = Order::query()
+            ->where('date', today())
+            ->where('midwife_id', auth()->user()->midwife_id)
+            ->orderBy('start_time', 'ASC')
+            ->get();
+        
         return view('midwife.dashboard', [
-            'schedules' => $schedules,
+            'orders' => $orders,
         ]);
     }
 }

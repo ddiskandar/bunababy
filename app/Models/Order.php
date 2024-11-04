@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
 use App\Enums\PlaceType;
+use App\Enums\TimetableType;
 use App\Support\DateTime;
 use App\Support\FormatNumber;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -255,24 +256,35 @@ class Order extends Model
         return $transportCost;
     }
 
-    public static function isAvailable($data, $placeType, $orderId = null)
+    public static function isAvailable($data, $placeType, $currentOrderId = null)
     {
         $startDateTime = Carbon::parse($data['date'] . ' ' . $data['start_time']);
         $endDateTime = Carbon::parse($data['date'] . ' ' . $data['start_time']);
 
+        $isMidwifeOnLeave = Timetable::query()
+            ->where('midwife_id', $data['midwife_id'])
+            ->where('date', $data['date'])
+            ->whereIn('type', [TimetableType::LEAVE])
+            ->exists();
+
+        if ($isMidwifeOnLeave) {
+            return false;
+        }
+
         $order = Order::where('date', $data['date'])
-            ->where('place_id', $data['place_id'])
+            // ->where('place_id', $data['place_id'])
             ->where('midwife_id', $data['midwife_id'])
             ->when($placeType === PlaceType::CLINIC,
-                fn ($query) => $query->where('room_id', $data['room_id']),
-            )
-            ->when($orderId,
-                fn ($query) => $query->where('id', '!=', $orderId),
+                fn ($query) => $query->orWhere('room_id', $data['room_id']),
             )
             ->activeBetween($startDateTime->toTimeString(), $endDateTime->toTimeString())
-            ->count();
+            ->get()
+            ->except($currentOrderId)
+            ;
 
-        return $order < 1;
+        // dd($order);
+
+        return $order->count() < 1;
     }
 
 }

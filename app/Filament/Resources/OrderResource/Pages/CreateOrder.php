@@ -6,13 +6,18 @@ use App\Enums\PlaceType;
 use App\Exceptions\NoSlotException;
 use App\Filament\Resources\OrderResource;
 use App\Models\Address;
+use App\Models\Customer;
+use App\Models\Midwife;
 use App\Models\Order;
 use App\Models\Place;
 use Filament\Actions;
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Pages\CreateRecord\Concerns\HasWizard;
@@ -83,10 +88,10 @@ class CreateOrder extends CreateRecord
                 throw new \Exception('Slot reservasi tersedia tidak cukup!');
             }
 
-            Order::create($data);
-
+            $order = Order::create($data);
             DB::commit();
-            return Notification::make()->body('Berhasil disimpan.')->success()->send();
+            Notification::make()->body('Berhasil disimpan.')->success()->send();
+            return redirect()->route('filament.admin.resources.orders.edit', $order);
         } catch (NoSlotException $e) {
             DB::rollBack();
             return Notification::make()->title('Whoops!')->body($e->getMessage())->danger()->send();
@@ -140,7 +145,50 @@ class CreateOrder extends CreateRecord
             Step::make('Ringkasan')
                 ->schema([
                     Section::make()->schema([
-                        // OrderResource::getItemsRepeater(),
+                        Fieldset::make('ringkasan.customer')
+                            ->label('Customer')
+                            ->schema([
+                                Placeholder::make('ringkasan.customer.name')
+                                    ->label('Nama')
+                                    ->content(fn (Get $get) => Customer::find($get('customer_id'))->name),
+                                Placeholder::make('ringkasan.customer.alamat')
+                                    ->label('Alamat')
+                                    ->content(fn (Get $get) => Address::find($get('address_id'))->full_address),
+                            ])
+                            ->reactive(),
+                        Fieldset::make('ringkasan.screening')
+                            ->label('Skrining')
+                            ->schema([
+                                Placeholder::make('ringkasan.screening.keluhan')
+                                    ->label('Keluhan')
+                                    ->content(fn (Get $get) => collect($get('screening'))->map(fn ($screening) => $screening['keluhan'])->implode(', ')),
+                                Placeholder::make('ringkasan.screening.penyakit_menular')
+                                    ->label('Penyakit Menular')
+                                    ->content(fn (Get $get) => collect($get('screening'))->map(fn ($screening) => $screening['penyakit_menular'])->implode(', ')),
+                                Placeholder::make('ringkasan.screening.riwayat_imunisasi')
+                                    ->label('Penyakit Imunisasi')
+                                    ->content(fn (Get $get) => collect($get('screening'))->map(fn ($screening) => $screening['riwayat_imunisasi'])->implode(', ')),
+                            ]),
+                        Fieldset::make('ringkasan.bidan')
+                            ->label('Bidan')
+                            ->schema([
+                                Placeholder::make('ringkasan.bidan.nama')
+                                    ->label('Nama')
+                                    ->content(fn (Get $get) => Midwife::find($get('midwife_id'))->name),
+                                Placeholder::make('ringkasan.bidan.tempat')
+                                    ->label('Tempat')
+                                    ->content(fn (Get $get) => Place::find($get('place_id'))->name),
+                            ])
+                            ->reactive(),
+
+                        Fieldset::make('ringkasan.treatments')
+                            ->label('Treatment')
+                            ->schema([
+                                Placeholder::make('ringkasan.treatment.nama')
+                                    ->label('Nama')
+                                    ->content(fn (Get $get) => collect($get('treatments'))->map(fn ($treatment) => $treatment['treatment_name'])->implode(', ')),
+                            ])
+                            ->reactive(),
                     ])->columns()
                 ]),
             ];

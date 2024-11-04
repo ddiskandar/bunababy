@@ -13,6 +13,10 @@ class ShowOrderController extends Controller
      */
     public function __invoke(Order $order)
     {
+        if ($order->midwife_id !== auth()->user()->midwife_id) {
+            abort(403);
+        }
+
         return view('midwife.order.show', compact('order'));
     }
 }
