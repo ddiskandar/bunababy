@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\KecamatanResource\Pages;
 use App\Filament\Resources\KecamatanResource\RelationManagers;
 use App\Models\Kecamatan;
+use App\Traits\EnsureOnlyAdminCanAccess;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -16,6 +17,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class KecamatanResource extends Resource
 {
+    use EnsureOnlyAdminCanAccess;
+
     protected static ?string $model = Kecamatan::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-map';

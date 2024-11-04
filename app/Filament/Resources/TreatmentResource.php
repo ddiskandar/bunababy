@@ -6,6 +6,7 @@ use App\Filament\Resources\TreatmentResource\Pages;
 use App\Filament\Resources\TreatmentResource\RelationManagers;
 use App\Models\Scopes\ActiveScope;
 use App\Models\Treatment;
+use App\Traits\EnsureOnlyAdminCanAccess;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -16,6 +17,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TreatmentResource extends Resource
 {
+    use EnsureOnlyAdminCanAccess;
+
     protected static ?string $model = Treatment::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';

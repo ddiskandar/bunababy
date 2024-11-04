@@ -3,12 +3,15 @@
 namespace App\Filament\Pages;
 
 use App\Settings\GeneralSettings;
+use App\Traits\EnsureOnlyOwnerCanAccess;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Pages\SettingsPage;
 
 class ManageGeneralSettings extends SettingsPage
 {
+    use EnsureOnlyOwnerCanAccess;
+
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
 
     protected static string $settings = GeneralSettings::class;

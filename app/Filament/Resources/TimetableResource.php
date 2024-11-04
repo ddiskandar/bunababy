@@ -8,6 +8,7 @@ use App\Filament\Resources\TimetableResource\Pages;
 use App\Filament\Resources\TimetableResource\RelationManagers;
 use App\Models\Place;
 use App\Models\Timetable;
+use App\Traits\EnsureOnlyAdminCanAccess;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -19,6 +20,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TimetableResource extends Resource
 {
+    use EnsureOnlyAdminCanAccess;
+
     protected static ?string $model = Timetable::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-clock';

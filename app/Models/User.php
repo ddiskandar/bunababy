@@ -63,25 +63,25 @@ class User extends Authenticatable implements FilamentUser
         return true;
     }
 
-    // public function isMidwife()
-    // {
-    //     return $this->type === UserType::MIDWIFE;
-    // }
+    public function getIsMidwifeAttribute(): bool
+    {
+        return $this->type === UserType::MIDWIFE;
+    }
 
-    // public function isAdminAttribute(): bool
-    // {
-    //     return $this->type === UserType::ADMIN || $this->type === UserType::OWNER;
-    // }
+    public function getIsAdminAttribute(): bool
+    {
+        return $this->type === UserType::ADMIN || $this->type === UserType::OWNER;
+    }
 
-    // public function isCustomerAttribute(): bool
-    // {
-    //     return $this->type === UserType::CUSTOMER;
-    // }
+    public function getIsCustomerAttribute(): bool
+    {
+        return $this->type === UserType::CUSTOMER;
+    }
 
-    // public function isOwnerAttribute(): bool
-    // {
-    //     return $this->type === UserType::OWNER;
-    // }
+    public function getIsOwnerAttribute(): bool
+    {
+        return $this->type === UserType::OWNER;
+    }
 
     public function canImpersonate()
     {

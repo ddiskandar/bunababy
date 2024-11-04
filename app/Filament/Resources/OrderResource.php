@@ -16,6 +16,7 @@ use App\Models\Price;
 use App\Models\Room;
 use App\Models\Slot;
 use App\Models\Treatment;
+use App\Traits\EnsureOnlyAdminCanAccess;
 use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Components\Repeater;
@@ -33,6 +34,8 @@ use Illuminate\Support\Facades\Log;
 
 class OrderResource extends Resource
 {
+    use EnsureOnlyAdminCanAccess;
+    
     protected static ?string $model = Order::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-ticket';

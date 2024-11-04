@@ -6,6 +6,7 @@ use App\Filament\Resources\MidwifeResource\Pages;
 use App\Filament\Resources\MidwifeResource\RelationManagers;
 use App\Models\Midwife;
 use App\Models\Scopes\ActiveScope;
+use App\Traits\EnsureOnlyAdminCanAccess;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Pages\SubNavigationPosition;
@@ -18,6 +19,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class MidwifeResource extends Resource
 {
+    use EnsureOnlyAdminCanAccess;
+
     protected static ?string $model = Midwife::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';

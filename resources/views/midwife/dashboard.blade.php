@@ -5,12 +5,15 @@
                 <img src="{{ asset('images/logo.svg') }}" />
             </div>
             <div>
-                Keluar
+                <form method="POST" action="{{ route('filament.admin.auth.logout') }}">
+                    @csrf
+                    <button type="submit">Logout</button>
+                  </form>
             </div>
         </div>
         <div class="bg-pink-100 px-6 pb-16 flex flex-row justify-between">
             <div>
-                Hai, Bidan {{ auth()->user()->name }}
+                Hai, {{ auth()->user()->name }}
             </div>
             <div>
                 {{ today()->format('d m Y') }}

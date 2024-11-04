@@ -7,6 +7,7 @@ use App\Filament\Resources\PlaceResource\Pages;
 use App\Filament\Resources\PlaceResource\RelationManagers;
 use App\Models\Place;
 use App\Models\Scopes\ActiveScope;
+use App\Traits\EnsureOnlyAdminCanAccess;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -17,6 +18,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PlaceResource extends Resource
 {
+    use EnsureOnlyAdminCanAccess;
+
     protected static ?string $model = Place::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-map-pin';
