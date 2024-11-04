@@ -7,6 +7,7 @@ use App\Enums\PlaceType;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Models\Address;
+use App\Models\Customer;
 use App\Models\Family;
 use App\Models\Kecamatan;
 use App\Models\Midwife;
@@ -255,7 +256,10 @@ class OrderResource extends Resource
                 ->searchable()
                 ->required()
                 ->columnSpanFull()
-                ->afterStateUpdated(fn (Set $set) => $set('address_id', null))
+                ->afterStateUpdated(function ($state, Set $set) {
+                    $set('address_id', null);
+                    $set('customer_name', Customer::find($state)?->name);
+                })
                 ->createOptionForm([
                     Forms\Components\TextInput::make('name')
                         ->required()
@@ -312,6 +316,10 @@ class OrderResource extends Resource
                         'desa' => $data['desa'],
                         'kecamatan_id' => $data['kecamatan_id'],
                     ]);
+                })
+                ->afterStateUpdated(function ($state, Set $set) {
+                    $address = Address::find($state);
+                    $set('full_address', $address->fullAddress);
                 }),
         ];
     }
@@ -446,13 +454,19 @@ class OrderResource extends Resource
                 ->live()
                 ->afterStateUpdated(function ($state, Set $set, Get $get) {
                     $place = Place::find($state);
-                    $set('place_type', $place?->type);
+                    $set('place_name', $place->name);
+                    $set('place_type', $place->type);
+                    $set('place_transport_duration', $place->transport_duration);
                     $set(
                         'end_time',
-                        Order::getCalculatedEndTime($get('date'), $get('start_time'), $get('treatments'), $place?->type)
+                        Order::getCalculatedEndTime($get('date'), $get('start_time'), $get('treatments'), $get('place_transport_duration'))
                     );
+                    $set('date', null);
+                    $set('start_time', null);
                     $set('room_id', null);
+                    $set('room_name', null);
                     $set('midwife_id', null);
+                    $set('midwife_name', null);
                 })
                 ->columnSpanFull(),
             Forms\Components\ToggleButtons::make('room_id')
@@ -465,10 +479,11 @@ class OrderResource extends Resource
                     if (!$get('place_id')) {
                         return true;
                     }
-                    $place = Place::find($get('place_id'));
-                    return $place?->type === PlaceType::HOMECARE;
+                    return $get('place_type') === PlaceType::HOMECARE;
                 })
                 ->afterStateUpdated(function ($state, Set $set, Get $get) {
+                    $room = Room::find($state);
+                    $set('room_name', $room->name);
                     $set('midwife_id', null);
                 })
                 ->columnSpanFull(),
@@ -482,7 +497,7 @@ class OrderResource extends Resource
                                 'kecamatans',
                                 fn ($query) => $query
                                     // ->select('kecamatans.*')
-                                    ->where('kecamatans.id', $address->kecamatan_id)
+                                    ->where('kecamatans.id', $address?->kecamatan_id)
                             )
                         )
                         // ->select('midwives.id', 'midwives.name')
@@ -492,7 +507,10 @@ class OrderResource extends Resource
                 ->inline()
                 ->required()
                 ->live()
-                ->columnSpanFull(),
+                ->columnSpanFull()
+                ->afterStateUpdated(function ($state, Set $set, Get $get) {
+                    $set('midwife_name', Midwife::find($state)->name);
+                }),
             Forms\Components\DatePicker::make('date')
                 ->minDate(today())
                 ->native(false)
@@ -534,10 +552,9 @@ class OrderResource extends Resource
                 ->label('Waktu Mulai')
                 ->datalist(fn (Get $get) => Slot::where('place_id', $get('place_id'))->pluck('time')->toArray())
                 ->afterStateUpdated(function ($state, Set $set, Get $get) {
-                    Log::info($get('place_type')->value);
                     $set(
                         'end_time',
-                        Order::getCalculatedEndTime($get('date'), $state, $get('treatments'), $get('place_type'))
+                        Order::getCalculatedEndTime($get('date'), $state, $get('treatments'), $get('place_transport_duration'))
                     );
                 })
                 ->live()
@@ -601,7 +618,7 @@ class OrderResource extends Resource
                                 $get('../../date'),
                                 $get('../../start_time'),
                                 $get('../../treatments'),
-                                $get('../../place_type')
+                                $get('../../place_transport_duration'),
                             )
                         );
                     }),
@@ -642,7 +659,7 @@ class OrderResource extends Resource
             ->afterStateUpdated(function (Set $set, Get $get) {
                 $set(
                     'end_time',
-                    Order::getCalculatedEndTime($get('date'), $get('start_time'), $get('treatments'), $get('place_type'))
+                    Order::getCalculatedEndTime($get('date'), $get('start_time'), $get('treatments'), $get('place_transport_duration'))
                 );
             })
             ->columns(2)

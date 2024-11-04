@@ -215,12 +215,11 @@ class Order extends Model
         return $this->getLongDate() . ' ' . $this->getLongTime();
     }
 
-    public static function getCalculatedEndTime($date, $startTime, $treatments, $placeType)
+    public static function getCalculatedEndTime($date, $startTime, $treatments, $transportDuration = 0)
     {
         $startTime = Carbon::parse($date)->setTimeFrom(Carbon::parse($startTime));
         $totalDuration = collect($treatments)->sum('treatment_duration');
-        $travelTime = $placeType === PlaceType::HOMECARE ? self::TRAVEL_TIME : 0;
-        $endTime = $startTime->addMinutes($totalDuration + $travelTime);
+        $endTime = $startTime->addMinutes($totalDuration + $transportDuration);
 
         return $endTime->format('H:i');
     }

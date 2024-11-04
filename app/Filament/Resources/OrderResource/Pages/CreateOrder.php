@@ -10,6 +10,7 @@ use App\Models\Customer;
 use App\Models\Midwife;
 use App\Models\Order;
 use App\Models\Place;
+use App\Support\DateTime;
 use Filament\Actions;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Placeholder;
@@ -80,7 +81,7 @@ class CreateOrder extends CreateRecord
             }
 
             $data['created_by'] = auth()->id();
-            $data['end_time'] = Order::getCalculatedEndTime($data['date'], $data['start_time'], $data['treatments'], $place->type);
+            $data['end_time'] = Order::getCalculatedEndTime($data['date'], $data['start_time'], $data['treatments'], $place->transport_duration);
 
             $isAvailable = Order::isAvailable($data, $place->type);
 
@@ -150,10 +151,10 @@ class CreateOrder extends CreateRecord
                             ->schema([
                                 Placeholder::make('ringkasan.customer.name')
                                     ->label('Nama')
-                                    ->content(fn (Get $get) => Customer::find($get('customer_id'))->name),
+                                    ->content(fn (Get $get) => $get('customer_name')),
                                 Placeholder::make('ringkasan.customer.alamat')
                                     ->label('Alamat')
-                                    ->content(fn (Get $get) => Address::find($get('address_id'))->full_address),
+                                    ->content(fn (Get $get) => $get('full_address')),
                             ])
                             ->reactive(),
                         Fieldset::make('ringkasan.screening')
@@ -164,20 +165,23 @@ class CreateOrder extends CreateRecord
                                     ->content(fn (Get $get) => collect($get('screening'))->map(fn ($screening) => $screening['keluhan'])->implode(', ')),
                                 Placeholder::make('ringkasan.screening.penyakit_menular')
                                     ->label('Penyakit Menular')
-                                    ->content(fn (Get $get) => collect($get('screening'))->map(fn ($screening) => $screening['penyakit_menular'])->implode(', ')),
+                                    ->content(fn (Get $get) => collect($get('screening'))->map(fn ($screening) => (bool) $screening['penyakit_menular'] ? 'Ya' : 'Tidak')->implode(', ')),
                                 Placeholder::make('ringkasan.screening.riwayat_imunisasi')
-                                    ->label('Penyakit Imunisasi')
-                                    ->content(fn (Get $get) => collect($get('screening'))->map(fn ($screening) => $screening['riwayat_imunisasi'])->implode(', ')),
+                                    ->label('Riwayat Imunisasi')
+                                    ->content(fn (Get $get) => collect($get('screening'))->map(fn ($screening) => (bool) $screening['riwayat_imunisasi'] ? 'Ya' : 'Tidak')->implode(', ')),
                             ]),
                         Fieldset::make('ringkasan.bidan')
                             ->label('Bidan')
                             ->schema([
                                 Placeholder::make('ringkasan.bidan.nama')
                                     ->label('Nama')
-                                    ->content(fn (Get $get) => Midwife::find($get('midwife_id'))->name),
+                                    ->content(fn (Get $get) => $get('midwife_name')),
+                                Placeholder::make('ringkasan.bidan.date')
+                                    ->label('Tanggal dan Waktu')
+                                    ->content(fn (Get $get) => Carbon::parse($get('date'))->format('d/m/Y') . ', ' . $get('start_time') . ' - ' . $get('end_time') . ' WIB'),
                                 Placeholder::make('ringkasan.bidan.tempat')
                                     ->label('Tempat')
-                                    ->content(fn (Get $get) => Place::find($get('place_id'))->name),
+                                    ->content(fn (Get $get) => $get('place_name') . ($get('place_type') === PlaceType::HOMECARE ? ', ' . $get('full_address') : ', ' . $get('room_name'))),
                             ])
                             ->reactive(),
 
@@ -186,7 +190,9 @@ class CreateOrder extends CreateRecord
                             ->schema([
                                 Placeholder::make('ringkasan.treatment.nama')
                                     ->label('Nama')
-                                    ->content(fn (Get $get) => collect($get('treatments'))->map(fn ($treatment) => $treatment['treatment_name'])->implode(', ')),
+                                    ->content(fn (Get $get) => collect($get('treatments'))?->map(fn ($treatment) => isset($treatment['treatment_name']) ? $treatment['treatment_name'] . ' (' . (isset($treatment['family_name']) ? $treatment['family_name'] : '' ) . ( isset($treatment['family_dob']) ? ', ' . Carbon::parse($treatment['family_dob'])->format('d/m/Y') . ', ' . DateTime::calculateAge($treatment['family_dob']) : '' ) . ')' : '' )?->implode(', '))
+                                    ->hidden(fn (Get $get) => !($get('treatments')))
+                                    ,
                             ])
                             ->reactive(),
                     ])->columns()

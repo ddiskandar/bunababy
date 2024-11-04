@@ -47,7 +47,9 @@ class EditOrder extends EditRecord
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        $data['place_type'] = Place::find($data['place_id'])->type;
+        $place =  Place::find($data['place_id']);
+        $data['place_type'] = $place->type;
+        $data['place_transport_duration'] = $place->transport_duration;
 
         return $data;
     }
@@ -66,7 +68,7 @@ class EditOrder extends EditRecord
         }
 
         $data['last_updated_by'] = auth()->id();
-        $data['end_time'] = Order::getCalculatedEndTime($data['date'], $data['start_time'], $data['treatments'], $place->type);
+        $data['end_time'] = Order::getCalculatedEndTime($data['date'], $data['start_time'], $data['treatments'], $place->transport_duration);
 
         $isAvailable = Order::isAvailable($data, $place->type, $record->id);
 
@@ -80,6 +82,7 @@ class EditOrder extends EditRecord
             $this->halt();
 
         }
+
 
         // dd($data);
 
