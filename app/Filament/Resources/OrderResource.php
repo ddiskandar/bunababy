@@ -461,8 +461,6 @@ class OrderResource extends Resource
                         'end_time',
                         Order::getCalculatedEndTime($get('date'), $get('start_time'), $get('treatments'), $get('place_transport_duration'))
                     );
-                    $set('date', null);
-                    $set('start_time', null);
                     $set('room_id', null);
                     $set('room_name', null);
                     $set('midwife_id', null);
@@ -536,17 +534,17 @@ class OrderResource extends Resource
                 })
                 ->reactive()
                 ->required()
-                ->hidden(function (Get $get) {
-                    if (!$get('midwife_id')) {
-                        return true;
-                    }
+                // ->hidden(function (Get $get) {
+                //     if (!$get('midwife_id')) {
+                //         return true;
+                //     }
 
-                    if ($get('place_type') === PlaceType::CLINIC && !$get('room_id')) {
-                        return true;
-                    }
+                //     if ($get('place_type') === PlaceType::CLINIC && !$get('room_id')) {
+                //         return true;
+                //     }
 
-                    return false;
-                })
+                //     return false;
+                // })
                 ->columnSpanFull(),
             Forms\Components\TimePicker::make('start_time')
                 ->label('Waktu Mulai')
