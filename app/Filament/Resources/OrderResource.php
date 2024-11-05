@@ -29,6 +29,7 @@ use Filament\Forms\Set;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -190,9 +191,11 @@ class OrderResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('date')
                     ->date('D, d M Y')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('start_time'),
-                Tables\Columns\TextColumn::make('end_time'),
+                    ->sortable()
+                    ->description(fn (Order $record) => $record->getLongTime())
+                    ,
+                // Tables\Columns\TextColumn::make('start_time'),
+                // Tables\Columns\TextColumn::make('end_time'),
                 Tables\Columns\TextColumn::make('place.name')
                     ->numeric()
                     ->sortable(),
@@ -213,13 +216,49 @@ class OrderResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                //
-            ])
+                Tables\Filters\Filter::make('date')
+                    ->form([
+                        Forms\Components\DatePicker::make('date_from')
+                            ->label('Dari Tanggal'),
+                        Forms\Components\DatePicker::make('date_until')
+                            ->label('Sampai Tanggal'),
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        return $query
+                            ->when(
+                                $data['date_from'] ?? null,
+                                fn (Builder $query, $date): Builder => $query->whereDate('date', '>=', $date),
+                            )
+                            ->when(
+                                $data['date_until'] ?? null,
+                                fn (Builder $query, $date): Builder => $query->whereDate('date', '<=', $date),
+                            );
+                    })->columnSpan(2)->columns(2),
+                Tables\Filters\SelectFilter::make('midwife_id')
+                    ->relationship('midwife', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->label('Bidan')
+                    ->columnSpan(1),
+                Tables\Filters\SelectFilter::make('place_id')
+                    ->relationship('place', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->label('Tempat')
+                    ->columnSpan(1),
+            ], layout: FiltersLayout::AboveContent)
+            ->filtersFormColumns(4)
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 //
+            ])
+            ->groups([
+                Tables\Grouping\Group::make('date')
+                    ->label('Tanggal')
+                    ->date()
+                    ->collapsible(),
             ])
             ->defaultSort('updated_at', 'desc');
     }
