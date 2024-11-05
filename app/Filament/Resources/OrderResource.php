@@ -201,11 +201,12 @@ class OrderResource extends Resource
                     ,
                 // Tables\Columns\TextColumn::make('start_time'),
                 // Tables\Columns\TextColumn::make('end_time'),
-                Tables\Columns\TextColumn::make('place.name')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('customer.name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('place.name')
+                    ->description(fn (Order $record) => $record->place->type === PlaceType::CLINIC ? $record->room->name : $record->address->kecamatan->name)
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('midwife.name')
                     ->description(fn (Order $record) => $record->listTreatments)
                     ->sortable(),
