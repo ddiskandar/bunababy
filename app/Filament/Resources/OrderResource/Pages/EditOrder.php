@@ -74,6 +74,8 @@ class EditOrder extends EditRecord
             $data['room_id'] = null;
         }
 
+        $data['price'] = collect($data['treatments'])->sum('treatment_price');
+
         $data['last_updated_by'] = auth()->id();
         $data['end_time'] = Order::getCalculatedEndTime($data['date'], $data['start_time'], $data['treatments'], $place->transport_duration);
 

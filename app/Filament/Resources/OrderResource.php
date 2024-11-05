@@ -6,6 +6,7 @@ use App\Enums\OrderStatus;
 use App\Enums\PlaceType;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
+use App\Filament\Resources\OrderResource\Widgets\OrderOverview;
 use App\Models\Address;
 use App\Models\Customer;
 use App\Models\Family;
@@ -29,6 +30,7 @@ use Filament\Forms\Set;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -149,10 +151,13 @@ class OrderResource extends Resource
                             ->schema([
                                 Forms\Components\Placeholder::make('placeholder.payment.treatment')
                                     ->label('Total Treatment')
-                                    ->content(fn (Order $record): ?string => \App\Support\FormatCurrency::rupiah($record->total_price)),
+                                    ->content(fn (Order $record): ?string => \App\Support\FormatCurrency::rupiah($record->price)),
                                 Forms\Components\Placeholder::make('placeholder.payment.transport')
                                     ->label('Transport')
                                     ->content(fn (Order $record): ?string => \App\Support\FormatCurrency::rupiah($record->transport)),
+                                Forms\Components\Placeholder::make('placeholder.payment.adjustment')
+                                    ->label('Transport')
+                                    ->content(fn (Order $record): ?string => \App\Support\FormatCurrency::rupiah($record->adjustment_amount)),
                                 Forms\Components\Placeholder::make('placeholder.payment.grand_total')
                                     ->label('Total Tagihan')
                                     ->content(fn (Order $record): ?string => \App\Support\FormatCurrency::rupiah($record->getGrandTotal())),
@@ -202,18 +207,29 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('customer.name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('midwife.name')
-                    ->numeric()
+                    ->description(fn (Order $record) => $record->listTreatments)
                     ->sortable(),
-                Tables\Columns\TextColumn::make('listTreatments'),
-                Tables\Columns\TextColumn::make('total_price')
+                Tables\Columns\TextColumn::make('price')
                     ->money('IDR')
-                    ->sortable(),
+                    ->sortable()
+                    ->summarize(Sum::make()),
                 Tables\Columns\TextColumn::make('transport')
                     ->money('IDR')
-                    ->sortable(),
+                    ->sortable()
+                    ->summarize(Sum::make()),
+                Tables\Columns\TextColumn::make('verified_payments')
+                    ->label('Sudah Bayar')
+                    ->money('idr')
+                    ->getStateUsing(fn (Order $record) => $record->getVerifiedPayments()),
+                Tables\Columns\TextColumn::make('remaining_payments')
+                    ->label('Belum Bayar')
+                    ->money('idr')
+                    ->getStateUsing(fn (Order $record) => $record->getRemainingPayment()),
                 Tables\Columns\TextColumn::make('adjustment_amount')
                     ->money('IDR')
-                    ->sortable(),
+                    ->sortable()
+                    // ->summarize(Sum::make())
+                    ,
             ])
             ->filters([
                 Tables\Filters\Filter::make('date')
@@ -267,6 +283,13 @@ class OrderResource extends Resource
     {
         return [
             RelationManagers\PaymentsRelationManager::class,
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            // OrderOverview::class,
         ];
     }
 

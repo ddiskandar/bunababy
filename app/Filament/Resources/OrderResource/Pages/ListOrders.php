@@ -28,6 +28,11 @@ class ListOrders extends ListRecords
         ];
     }
 
+    protected function getHeaderWidgets(): array
+    {
+        return OrderResource::getWidgets();
+    }
+
     public function getTabs(): array
     {
         return [
