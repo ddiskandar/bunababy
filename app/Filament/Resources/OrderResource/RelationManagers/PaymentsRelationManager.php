@@ -10,6 +10,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Livewire\Component;
 
 class PaymentsRelationManager extends RelationManager
 {
@@ -21,6 +22,8 @@ class PaymentsRelationManager extends RelationManager
             ->schema([
                 Forms\Components\TextInput::make('value')
                     ->required()
+                    ->numeric()
+                    ->prefix('Rp')
                     ->maxLength(255),
                 Forms\Components\ToggleButtons::make('status')
                     ->options(PaymentStatus::class)
@@ -43,11 +46,14 @@ class PaymentsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                    ->after(fn (Component $livewire) => $livewire->dispatch('payment-updated')),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->after(fn (Component $livewire) => $livewire->dispatch('payment-updated')),
+                Tables\Actions\DeleteAction::make()
+                    ->after(fn (Component $livewire) => $livewire->dispatch('payment-updated')),
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([

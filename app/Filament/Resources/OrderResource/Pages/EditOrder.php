@@ -13,6 +13,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
+use Livewire\Attributes\On;
 
 class EditOrder extends EditRecord
 {
@@ -21,6 +22,12 @@ class EditOrder extends EditRecord
     public function getHeading(): string|Htmlable
     {
         return $this->getRecord()->id . ' - ' . $this->getRecord()->customer->name;
+    }
+
+    #[On('payment-updated')]
+    public function justRefreshThePage()
+    {
+        //
     }
 
     protected function getHeaderActions(): array
