@@ -49,4 +49,9 @@ class Treatment extends Model
     {
         return $this->belongsToMany(Room::class);
     }
+
+    public function places(): BelongsToMany
+    {
+        return $this->belongsToMany(Place::class, 'prices');
+    }
 }

@@ -97,6 +97,7 @@ class PlaceResource extends Resource
     {
         return [
             RelationManagers\SlotsRelationManager::class,
+            RelationManagers\TreatmentsRelationManager::class,
         ];
     }
 

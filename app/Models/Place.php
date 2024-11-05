@@ -7,6 +7,7 @@ use App\Models\Scopes\ActiveScope;
 use App\Models\Scopes\SortScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Place extends Model
@@ -35,6 +36,11 @@ class Place extends Model
     public function rooms(): HasMany
     {
         return $this->hasMany(Room::class);
+    }
+
+    public function treatments(): BelongsToMany
+    {
+        return $this->belongsToMany(Treatment::class, 'prices');
     }
 
     public function prices(): HasMany

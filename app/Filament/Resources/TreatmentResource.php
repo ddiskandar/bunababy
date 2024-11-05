@@ -93,6 +93,7 @@ class TreatmentResource extends Resource
     {
         return [
             RelationManagers\MidwivesRelationManager::class,
+            RelationManagers\PlacesRelationManager::class,
         ];
     }
 
