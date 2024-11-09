@@ -191,10 +191,15 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')
+                    ->label('ID')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('date')
+                    ->label('Tanggal & Waktu')
                     ->date('D, d M Y')
                     ->sortable()
                     ->description(fn (Order $record) => $record->getLongTime())
@@ -204,15 +209,19 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('customer.name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('place.name')
+                    ->label('Tempat')
                     ->description(fn (Order $record) => $record->place->type === PlaceType::CLINIC ? $record->room->name : $record->address->kecamatan->name)
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('midwife.name')
+                    ->label('Bidan')
                     ->description(fn (Order $record) => $record->listTreatments)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('price')
+                    ->label('Harga')
                     ->money('IDR')
                     ->sortable()
+                    ->searchable()
                     ->summarize(Sum::make()),
                 Tables\Columns\TextColumn::make('transport')
                     ->money('IDR')
@@ -229,10 +238,35 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('adjustment_amount')
                     ->money('IDR')
                     ->sortable()
+                    ->searchable()
                     // ->summarize(Sum::make())
                     ,
+                Tables\Columns\TextColumn::make('createdBy.name')
+                    ->label('Admin')
+                    ->sortable(),
             ])
             ->filters([
+                Tables\Filters\SelectFilter::make('place_id')
+                    ->relationship('place', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->label('Tempat')
+                    ->multiple()
+                    ->columnSpan(1),
+                Tables\Filters\SelectFilter::make('midwife_id')
+                    ->relationship('midwife', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->multiple()
+                    ->label('Bidan')
+                    ->columnSpan(1),
+                Tables\Filters\SelectFilter::make('created_by')
+                    ->relationship('createdBy', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->multiple()
+                    ->label('Admin')
+                    ->columnSpan(1),
                 Tables\Filters\Filter::make('date')
                     ->form([
                         Forms\Components\DatePicker::make('date_from')
@@ -250,21 +284,9 @@ class OrderResource extends Resource
                                 $data['date_until'] ?? null,
                                 fn (Builder $query, $date): Builder => $query->whereDate('date', '<=', $date),
                             );
-                    })->columnSpan(2)->columns(2),
-                Tables\Filters\SelectFilter::make('midwife_id')
-                    ->relationship('midwife', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->label('Bidan')
-                    ->columnSpan(1),
-                Tables\Filters\SelectFilter::make('place_id')
-                    ->relationship('place', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->label('Tempat')
-                    ->columnSpan(1),
-            ], layout: FiltersLayout::AboveContent)
-            ->filtersFormColumns(4)
+                    })->columnSpan(3)->columns(2),
+            ], layout: FiltersLayout::AboveContentCollapsible)
+            ->filtersFormColumns(3)
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

@@ -41,7 +41,7 @@ class OrderExporter extends Exporter
                     return Timetable::query()
                         ->where('midwife_id', $record->midwife_id)
                         ->where('date', $record->date)
-                        ->first()?->status ?? '-';
+                        ->first()?->status ?? '-'; // TODO : avoid N+1 query
                 }),
         ];
     }
