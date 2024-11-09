@@ -37,7 +37,7 @@
                 class="
                 overflow-scroll
                 grid grid-cols-[70px,repeat({{ $titles->count() }},170px)]
-                grid-rows-[auto,repeat(61,40px)]
+                grid-rows-[auto,repeat(61,25px)]
                 max-h-[520px]
             ">
                 <!-- Calendar frame -->
@@ -68,10 +68,10 @@
                         class="text-slate-800 m-1 p-2 relative overflow-y-scroll {{ $schedule['classes'] }}">
                         <div class="flex flex-col">
                             <span class="text-xs">{{ $schedule['time'] }}</span>
-                            <span class="mt-1 text-xs font-medium">{{ $schedule['customer_name'] }}</span>
-                            <span class="mt-1 text-xs">{{ $schedule['treatments'] }}</span>
-                            <span class="mt-2 text-xs font-medium">{{ $schedule['midwife_name'] }}</span>
-                            <span class="mt-1 text-xs">{{ $schedule['place'] }}</span>
+                            <span class="text-xs font-medium">{{ $schedule['customer_name'] }}</span>
+                            <span class="text-xs">{{ $schedule['treatments'] }}</span>
+                            <span class="mt-1 text-xs font-medium">{{ $schedule['midwife_name'] }}</span>
+                            <span class="text-xs">{{ $schedule['place'] }}</span>
                         </div>
                     </a>
                 @endforeach
