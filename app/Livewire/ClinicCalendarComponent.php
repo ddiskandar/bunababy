@@ -6,12 +6,13 @@ use App\Enums\OrderStatus;
 use App\Enums\PlaceType;
 use App\Models\Midwife;
 use App\Models\Order;
+use App\Models\Place;
 use App\Models\Room;
 use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Component;
 
-class ShowCalendarComponent extends Component
+class ClinicCalendarComponent extends Component
 {
     public $date;
     public $titles;
@@ -19,6 +20,7 @@ class ShowCalendarComponent extends Component
     public $rowStart;
     public $times;
     public $selectedDay;
+    public $places;
 
     public function mount()
     {
@@ -26,34 +28,28 @@ class ShowCalendarComponent extends Component
 
         $this->times = $this->getTimes();
 
-        $midwives = Midwife::select(['id', 'name'])
-            ->orderBy('id', 'ASC')
+        $clinics = Place::select(['id', 'name'])
+            ->where('type', PlaceType::CLINIC)
             ->get();
 
-        $rooms = Room::with('place:id,name')->get();
+        $this->places = $clinics;
 
         $this->titles = collect();
 
         $this->colStart = collect([
-            'midwives' => collect([]),
             'clinics' => collect([]),
         ]);
 
         $i = 2 ;
-        foreach ($midwives as $midwife) {
-            $this->colStart['midwives']->put($midwife->id, $i);
-            $this->titles->push(['col-start' => $i, 'name' => $midwife->name]);
-            $i++;
-        }
-
-        $i = 2 + $midwives->count();
-        foreach ($rooms as $room) {
-            $this->colStart['clinics']->put($room->id, $i);
-            $this->titles->push(['col-start' => $i, 'name' => $room->name . ' - ' . $room->place->name]);
+        foreach ($clinics as $clinic) {
+            $this->colStart['clinics']->put($clinic->id, $i);
+            $this->titles->push(['col-start' => $i, 'name' => $clinic->name]);
             $i++;
         }
 
         $this->colStart->toArray();
+
+        // dd($this->colStart);
 
         $this->rowStart = $this->getRowStart();
     }
@@ -204,10 +200,12 @@ class ShowCalendarComponent extends Component
 
     public function render()
     {
+        // dd($this->colStart);
         $schedules = collect();
 
         $orders = Order::query()
             ->whereDate('date', $this->selectedDay)
+            ->whereIn('place_id', $this->places->pluck('id'))
             ->with(
                 'customer:id,name',
                 'address.kecamatan:id,name',
@@ -226,8 +224,11 @@ class ShowCalendarComponent extends Component
                 'address_id',
                 'place_id',
                 'room_id',
+                'treatments',
             ])
             ->get();
+
+        // dd($orders);
 
         $bg = [
             OrderStatus::PENDING->value => 'bg-red-400/20 border border-red-700/10',
@@ -235,11 +236,12 @@ class ShowCalendarComponent extends Component
             OrderStatus::COMPLETED->value => 'bg-blue-400/20 border border-blue-700/10',
         ];
 
-        foreach ($orders as $order) {
-            $colStart = ($order->place->type === PlaceType::CLINIC && $order->midwife_id === null)
-                    ? $this->colStart['clinics'][$order->room_id]
-                    : $this->colStart['midwives'][$order->midwife_id];
+        // dd($this->rowStart);
 
+        foreach ($orders as $order) {
+            $colStart = $this->colStart['clinics'][$order->place_id];
+
+            // dd($order->startDateTime->format('H:i'));
             $rowStart = $this->rowStart[$order->startDateTime->format('H:i')];
 
             $rowSpan = (int) round($order->startDateTime
@@ -251,17 +253,18 @@ class ShowCalendarComponent extends Component
                 'classes' => "{$bg[$order->status->value]} col-start-{$colStart} row-start-{$rowStart} row-span-{$rowSpan} ",
                 'id' => $order->id,
                 'customer_name' => $order->customer->name,
+                'midwife_name' => $order->midwife->name,
                 'time' => $order->getLongTime(),
                 'treatments' => $order->listTreatments,
                 'status' => $order->status->getLabel(),
                 'finished_at' => $order->finished_at,
-                'address' => $order->address->kecamatan->name ?? '-',
-                'place' => $order->place->name,
-                'room' => $order->room->name ?? '',
+                'place' => $order->place->type === PlaceType::HOMECARE ? ($order->place->name . ', ' . $order->address->kecamatan->name ?? '-') : ($order->place->name . ', ' . $order->room->name ?? '-'),
             ]);
         }
 
-        return view('livewire.show-calendar-component', [
+        // dd($schedules);
+
+        return view('livewire.clinic-calendar-component', [
             'schedules' => $schedules,
         ]);
     }

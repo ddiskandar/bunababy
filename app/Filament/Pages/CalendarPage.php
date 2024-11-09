@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Traits\EnsureOnlyAdminCanAccess;
+use Filament\Actions\Action;
 use Filament\Pages\Page;
 
 class CalendarPage extends Page
@@ -20,4 +21,15 @@ class CalendarPage extends Page
     protected static ?string $title = 'Kalender';
 
     protected static ?int $navigationSort = 1;
+
+    public $calendarType = 'midwife';
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('switch.type')
+                ->label(fn () => $this->calendarType === 'midwife' ? 'Kalender Klinik' : 'Kalender Bidan')
+                ->action(fn () => $this->calendarType === 'midwife' ? $this->calendarType = 'clinic' : $this->calendarType = 'midwife'),
+        ];
+    }
 }

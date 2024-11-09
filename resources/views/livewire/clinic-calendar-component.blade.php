@@ -3,7 +3,7 @@
         <div class="w-full py-3 pl-6 pr-3 bg-gray-50 sm:flex sm:justify-between sm:items-center">
             <div class="flex items-center">
                 <h3 class="font-semibold">
-                    Kalender Treatment
+                    Kalender Klinik
                 </h3>
             </div>
             <div class="flex items-center gap-4 mt-3 text-sm text-center sm:mt-0 sm:text-right">
@@ -36,7 +36,7 @@
             <div
                 class="
                 overflow-scroll
-                grid grid-cols-[70px,repeat({{ $titles->count() }},200px)]
+                grid grid-cols-[70px,repeat({{ $titles->count() }},170px)]
                 grid-rows-[auto,repeat(61,40px)]
                 max-h-[520px]
             ">
@@ -64,50 +64,16 @@
                 @endforeach
 
                 @foreach ($schedules as $schedule)
-                    <div wire:key="{{ $schedule['id'] }}"
+                    <a target="_blank" href="{{ route('filament.admin.resources.orders.edit', $schedule['id']) }}" wire:key="{{ $schedule['id'] }}"
                         class="text-slate-800 m-1 p-2 relative overflow-y-scroll {{ $schedule['classes'] }}">
-                        <a href="{{ route('filament.admin.resources.orders.edit', $schedule['id']) }}" class="flex flex-col">
+                        <div class="flex flex-col">
                             <span class="text-xs">{{ $schedule['time'] }}</span>
-                            <span class="mt-4 text-xs">{{ $schedule['place'] }}</span>
-                            <span class="text-xs ">{{ $schedule['address'] }}</span>
-                            <span class="text-xs font-medium">{{ $schedule['customer_name'] }}</span>
-                            <span class="mt-2 text-xs">{{ $schedule['treatments'] }}</span>
-
-                            <div class="absolute flex items-center top-1 right-2">
-                                @if ($schedule['status'] === 'Selesai')
-                                    <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="1.5"
-                                            d="M4.75 12C4.75 7.99594 7.99594 4.75 12 4.75V4.75C16.0041 4.75 19.25 7.99594 19.25 12V12C19.25 16.0041 16.0041 19.25 12 19.25V19.25C7.99594 19.25 4.75 16.0041 4.75 12V12Z">
-                                        </path>
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="1.5"
-                                            d="M9.75 12.75L10.1837 13.6744C10.5275 14.407 11.5536 14.4492 11.9564 13.7473L14.25 9.75">
-                                        </path>
-                                    </svg>
-                                @elseif ($schedule['status'] === 'Pending')
-                                    <svg class="text-red-600" width="24" height="24" fill="none"
-                                        viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="1.5"
-                                            d="M4.75 12C4.75 7.99594 7.99594 4.75 12 4.75V4.75C16.0041 4.75 19.25 7.99594 19.25 12V12C19.25 16.0041 16.0041 19.25 12 19.25V19.25C7.99594 19.25 4.75 16.0041 4.75 12V12Z">
-                                        </path>
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="1.5" d="M9.75 9.75L14.25 14.25"></path>
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="1.5" d="M14.25 9.75L9.75 14.25"></path>
-                                    </svg>
-                                @else
-                                    <svg class="text-green-600" width="24" height="24" fill="none"
-                                        viewBox="0 0 24 24">
-                                        <circle cx="12" cy="12" r="7.25" stroke="currentColor"
-                                            stroke-width="1.5"></circle>
-                                        <path stroke="currentColor" stroke-width="1.5" d="M12 8V12L14 14"></path>
-                                    </svg>
-                                @endif
-                            </div>
-                        </a>
-                    </div>
+                            <span class="mt-1 text-xs font-medium">{{ $schedule['customer_name'] }}</span>
+                            <span class="mt-1 text-xs">{{ $schedule['treatments'] }}</span>
+                            <span class="mt-2 text-xs font-medium">{{ $schedule['midwife_name'] }}</span>
+                            <span class="mt-1 text-xs">{{ $schedule['place'] }}</span>
+                        </div>
+                    </a>
                 @endforeach
 
             </div>
