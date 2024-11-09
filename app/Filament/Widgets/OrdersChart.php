@@ -9,7 +9,7 @@ use Filament\Widgets\ChartWidget;
 
 class OrdersChart extends ChartWidget
 {
-    protected static ?string $heading = 'Today Reservations';
+    protected static ?string $heading = 'Reservations Today ';
 
     protected static ?int $sort = 2;
 
