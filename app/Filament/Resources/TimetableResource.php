@@ -17,6 +17,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Log;
 
 class TimetableResource extends Resource
 {
@@ -47,15 +48,15 @@ class TimetableResource extends Resource
                     ->required(),
                 Forms\Components\ToggleButtons::make('type')
                     ->required()
-                    ->live()
+                    ->reactive()
                     ->options(TimetableType::class)
                     ->inline(),
                 Forms\Components\Select::make('place_id')
                     ->label('Tempat')
                     ->options(fn () => Place::where('type', PlaceType::CLINIC)->pluck('name', 'id'))
-                    ->reactive()
-                    // ->hidden(fn (Get $get) => $get('type') !== PlaceType::CLINIC->value)
-                    ,
+                    ->visible(fn (Get $get): bool => TimetableType::tryFrom($get('type')) === TimetableType::CLINIC)
+                    ->required()
+                    ->reactive(),
                 Forms\Components\Textarea::make('note')
                     ->maxLength(255),
             ]);
