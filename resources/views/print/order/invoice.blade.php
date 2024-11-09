@@ -1,5 +1,9 @@
 <x-layouts.print>
 
+    <x-slot:title>
+        {{ $order->id . ' - ' . $order->customer->name }}
+    </x-slot>
+
     <!-- Invoice -->
     <div class="relative flex flex-col mx-auto overflow-hidden text-sm bg-white rounded xl:max-w-4xl ">
         <div class="w-full p-5 lg:p-6 grow print:p-0">
