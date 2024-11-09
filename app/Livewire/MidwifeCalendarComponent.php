@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\Room;
 use App\Models\User;
 use Carbon\Carbon;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 
 class MidwifeCalendarComponent extends Component
@@ -18,11 +19,15 @@ class MidwifeCalendarComponent extends Component
     public $colStart;
     public $rowStart;
     public $times;
+
+    #[Url()]
     public $selectedDay;
 
     public function mount()
     {
-        $this->selectedDay = today()->toDateString();
+        if (! $this->selectedDay) {
+            $this->selectedDay = today()->toDateString();
+        }
 
         $this->times = $this->getTimes();
 

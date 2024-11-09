@@ -10,6 +10,7 @@ use App\Models\Place;
 use App\Models\Room;
 use App\Models\User;
 use Carbon\Carbon;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 
 class ClinicCalendarComponent extends Component
@@ -19,31 +20,39 @@ class ClinicCalendarComponent extends Component
     public $colStart;
     public $rowStart;
     public $times;
+
+    #[Url]
     public $selectedDay;
+
     public $places;
 
     public function mount()
     {
-        $this->selectedDay = today()->toDateString();
+        if (! $this->selectedDay) {
+            $this->selectedDay = today()->toDateString();
+        }
 
         $this->times = $this->getTimes();
 
-        $clinics = Place::select(['id', 'name'])
-            ->where('type', PlaceType::CLINIC)
+        $rooms = Room::select(['id', 'name', 'place_id'])
+            ->with('place:id,name')
             ->get();
 
-        $this->places = $clinics;
+        $this->places = $rooms;
 
         $this->titles = collect();
 
         $this->colStart = collect([
-            'clinics' => collect([]),
+            'rooms' => collect([]),
         ]);
 
         $i = 2 ;
-        foreach ($clinics as $clinic) {
-            $this->colStart['clinics']->put($clinic->id, $i);
-            $this->titles->push(['col-start' => $i, 'name' => $clinic->name]);
+        foreach ($rooms as $room) {
+            $this->colStart['rooms']->put($room->id, $i);
+            $this->titles->push([
+                'col-start' => $i,
+                'name' => $room->name . ' (' . $room->place?->name . ')',
+            ]);
             $i++;
         }
 
@@ -239,7 +248,7 @@ class ClinicCalendarComponent extends Component
         // dd($this->rowStart);
 
         foreach ($orders as $order) {
-            $colStart = $this->colStart['clinics'][$order->place_id];
+            $colStart = $this->colStart['rooms'][$order->place_id];
 
             // dd($order->startDateTime->format('H:i'));
             $rowStart = $this->rowStart[$order->startDateTime->format('H:i')];

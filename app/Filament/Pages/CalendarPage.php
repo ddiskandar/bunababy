@@ -28,7 +28,7 @@ class CalendarPage extends Page
     {
         return [
             Action::make('switch.type')
-                ->label(fn () => $this->calendarType === 'midwife' ? 'Kalender Klinik' : 'Kalender Bidan')
+                ->label(fn () => $this->calendarType === 'midwife' ? 'Lihat Kalender Klinik' : 'Lihat Kalender Bidan')
                 ->action(fn () => $this->calendarType === 'midwife' ? $this->calendarType = 'clinic' : $this->calendarType = 'midwife'),
         ];
     }
