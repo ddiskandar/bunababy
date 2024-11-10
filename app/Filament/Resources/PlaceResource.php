@@ -56,7 +56,8 @@ class PlaceResource extends Resource
                     ->inline(),
                 Forms\Components\Toggle::make('active')
                     ->required(),
-            ]);
+            ])
+            ->disabled(fn () => !auth()->user()->isOwner);
     }
 
     public static function table(Table $table): Table
@@ -81,7 +82,8 @@ class PlaceResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->visible(fn () => auth()->user()->isOwner),
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([

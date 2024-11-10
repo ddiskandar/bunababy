@@ -69,7 +69,8 @@ class ManageMidwifeUser extends ManageRelatedRecords implements HasForms
 
                     return to_route('filament.admin.resources.midwives.user', $record);
                 })
-                ->hidden(fn () => $this->getRecord()->user),
+                ->hidden(fn () => $this->getRecord()->user)
+                ->visible(fn () => auth()->user()->isOwner),
         ];
     }
 

@@ -35,13 +35,15 @@ class MidwivesRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make()
-                    ->preloadRecordSelect(),
+                    ->preloadRecordSelect()
+                    ->visible(fn () => auth()->user()->isOwner),
             ])
             ->actions([
                 Tables\Actions\Action::make('Lihat Bidan')
                     ->icon('heroicon-o-user')
                     ->url(fn (Midwife $record) => route('filament.admin.resources.midwives.treatments', $record)),
-                Tables\Actions\DetachAction::make(),
+                Tables\Actions\DetachAction::make()
+                    ->visible(fn () => auth()->user()->isOwner),
             ])
             ->bulkActions([
                 //

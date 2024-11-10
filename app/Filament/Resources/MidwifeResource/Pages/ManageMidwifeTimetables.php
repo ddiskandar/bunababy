@@ -72,11 +72,14 @@ class ManageMidwifeTimetables extends ManageRelatedRecords
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                    ->visible(fn () => auth()->user()->isOwner),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->visible(fn () => auth()->user()->isOwner),
+                Tables\Actions\DeleteAction::make()
+                    ->visible(fn () => auth()->user()->isOwner),
             ])
             ->bulkActions([
                 //

@@ -65,7 +65,8 @@ class PlacesRelationManager extends RelationManager
                         ]);
 
                         return $record;
-                    }),
+                    })
+                ->visible(fn () => auth()->user()->isOwner),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
@@ -81,7 +82,8 @@ class PlacesRelationManager extends RelationManager
                             ]);
 
                         return $record;
-                    }),
+                    })
+                    ->visible(fn () => auth()->user()->isOwner),
                 Tables\Actions\DeleteAction::make()
                     ->using(function (Model $record) {
                         // dd($record);
@@ -91,7 +93,8 @@ class PlacesRelationManager extends RelationManager
                             ->delete();
 
                         return $record;
-                    }),
+                    })
+                    ->visible(fn () => auth()->user()->isOwner),
             ])
             ->bulkActions([
                 //

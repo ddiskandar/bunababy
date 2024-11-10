@@ -33,7 +33,8 @@ class MidwivesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('treatments_count')
                     ->counts('treatments')
                     ->label('Z'),
-                Tables\Columns\TextColumn::make('treatments.name'),
+                Tables\Columns\TextColumn::make('treatments.name')
+                    ->wrap(),
                 Tables\Columns\IconColumn::make('active')
                     ->boolean()
             ])
@@ -42,13 +43,15 @@ class MidwivesRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make()
-                    ->preloadRecordSelect(),
+                    ->preloadRecordSelect()
+                    ->visible(fn () => auth()->user()->isOwner),
             ])
             ->actions([
                 Tables\Actions\Action::make('Lihat Bidan')
                     ->icon('heroicon-o-user')
                     ->url(fn (Midwife $record) => route('filament.admin.resources.midwives.kecamatans', $record)),
-                Tables\Actions\DetachAction::make(),
+                Tables\Actions\DetachAction::make()
+                    ->visible(fn () => auth()->user()->isOwner),
             ])
             ->bulkActions([
                 //
