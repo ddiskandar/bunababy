@@ -156,7 +156,7 @@ class OrderResource extends Resource
                                     ->label('Transport')
                                     ->content(fn (Order $record): ?string => \App\Support\FormatCurrency::rupiah($record->transport)),
                                 Forms\Components\Placeholder::make('placeholder.payment.adjustment')
-                                    ->label('Transport')
+                                    ->label(fn (Order $record): ?string => $record->adjustment_name ?? 'Adjustment')
                                     ->content(fn (Order $record): ?string => \App\Support\FormatCurrency::rupiah($record->adjustment_amount)),
                                 Forms\Components\Placeholder::make('placeholder.payment.grand_total')
                                     ->label('Total Tagihan')
