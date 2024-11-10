@@ -30,6 +30,7 @@ class PaymentsRelationManager extends RelationManager
                     ->default(PaymentStatus::VERIFIED)
                     ->inline()
                     ->required(),
+                Forms\Components\Textarea::make('note')
             ])->columns(1);
     }
 
@@ -42,6 +43,8 @@ class PaymentsRelationManager extends RelationManager
                     ->money('IDR'),
                 Tables\Columns\TextColumn::make('status')
                     ->badge(),
+                Tables\Columns\TextColumn::make('note')
+                    ->wrap(),
                 Tables\Columns\TextColumn::make('verificator.name'),
                 Tables\Columns\TextColumn::make('verified_at')
                     ->dateTime(),
