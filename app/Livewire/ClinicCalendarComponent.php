@@ -240,8 +240,12 @@ class ClinicCalendarComponent extends Component
         // dd($orders);
 
         $bg = [
+            OrderStatus::CANCELLED->value => 'bg-red-400/20 border border-red-700/10',
             OrderStatus::PENDING->value => 'bg-red-400/20 border border-red-700/10',
             OrderStatus::BOOKED->value => 'bg-green-400/20 border border-green-700/10',
+            OrderStatus::ON_HOLD->value => 'bg-yellow-400/20 border border-yellown-700/10',
+            OrderStatus::IN_SERVICE->value => 'bg-blue-400/20 border border-blue-700/10',
+            OrderStatus::FINISHED->value => 'bg-pink-400/20 border border-pink-700/10',
             OrderStatus::COMPLETED->value => 'bg-blue-400/20 border border-blue-700/10',
         ];
 
