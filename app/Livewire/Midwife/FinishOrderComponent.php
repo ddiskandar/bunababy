@@ -2,14 +2,17 @@
 
 namespace App\Livewire\Midwife;
 
+use App\Enums\MidwifeOrderStatus;
 use App\Enums\OrderStatus;
 use App\Filament\Resources\OrderResource;
 use App\Models\Order;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
+use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Get;
 use Filament\Support\Enums\MaxWidth;
 use Livewire\Component;
 
@@ -29,19 +32,38 @@ class FinishOrderComponent extends Component implements HasForms, HasActions
     {
         return Action::make('complete')
             ->fillForm(fn (): array => [
+                'status' => $this->order->status,
                 'report' => $this->order->report,
             ])
             ->form([
-                OrderResource::getReportRepeater(),
+                Forms\Components\ToggleButtons::make('status')
+                    ->options(MidwifeOrderStatus::class)
+                    ->inline()
+                    ->required()
+                    ->live(),
+                OrderResource::getReportRepeater()
+                    ->visible(fn (Get $get): bool => $get('status') === OrderStatus::FINISHED)
+                    ->reactive()
+                    ->required(),
             ])
             ->requiresConfirmation()
             ->action(function (array $data) {
-                $this->order->update([
-                    'report' => $data['report'],
-                    'status' => OrderStatus::FINISHED,
-                    'finished_at' => now(),
-                ]);
+                $attributes = [
+                    'status' => $data['status'],
+                ];
+
+                if ($data['status'] === OrderStatus::FINISHED) {
+                    $attributes = array_merge($attributes, [
+                        'report' => $data['report'],
+                        'finished_at' => $this->order->finished_at ?? now(),
+                    ]);
+                }
+
+                $this->order->update($attributes);
             })
+            ->after(
+                fn (Component $livewire) => $livewire->dispatch('order-updated')
+            )
             // ->slideOver()
             ->closeModalByClickingAway(false)
             ->modalWidth(MaxWidth::Medium);

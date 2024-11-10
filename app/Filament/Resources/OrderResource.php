@@ -451,7 +451,7 @@ class OrderResource extends Resource
                     ->label('Perubahan Treatments')
                     ->required()
                     ->reactive()
-                    ->hidden(fn (Get $get) => $get('treatments_match')),
+                    ->hidden(fn (Get $get) => $get('treatments_match') ?? true),
 
                 Forms\Components\ToggleButtons::make('repeat')
                     ->boolean()
