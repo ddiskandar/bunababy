@@ -27,6 +27,7 @@ class PaymentsRelationManager extends RelationManager
                     ->maxLength(255),
                 Forms\Components\ToggleButtons::make('status')
                     ->options(PaymentStatus::class)
+                    ->default(PaymentStatus::VERIFIED)
                     ->inline()
                     ->required(),
             ])->columns(1);
@@ -41,16 +42,31 @@ class PaymentsRelationManager extends RelationManager
                     ->money('IDR'),
                 Tables\Columns\TextColumn::make('status')
                     ->badge(),
+                Tables\Columns\TextColumn::make('verificator.name'),
+                Tables\Columns\TextColumn::make('verified_at')
+                    ->dateTime(),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()
+                    ->mutateFormDataUsing(function (array $data): array {
+                        $data['verified_at'] = now();
+                        $data['verified_by_id'] = auth()->id();
+
+                        return $data;
+                    })
                     ->after(fn (Component $livewire) => $livewire->dispatch('payment-updated')),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
+                    ->mutateFormDataUsing(function (array $data): array {
+                        $data['verified_at'] = now();
+                        $data['verified_by_id'] = auth()->id();
+
+                        return $data;
+                    })
                     ->after(fn (Component $livewire) => $livewire->dispatch('payment-updated')),
                 Tables\Actions\DeleteAction::make()
                     ->after(fn (Component $livewire) => $livewire->dispatch('payment-updated')),
