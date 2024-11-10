@@ -71,7 +71,7 @@
                             <span class="text-xs font-medium">{{ $schedule['customer_name'] }}</span>
                             <span class="text-xs">{{ $schedule['treatments'] }}</span>
                             <span class="mt-1 text-xs font-medium">{{ $schedule['midwife_name'] }}</span>
-                            <span class="text-xs">{{ $schedule['place'] }}</span>
+                            {{-- <span class="text-xs">{{ $schedule['place'] }}</span> --}}
                         </div>
                     </a>
                 @endforeach

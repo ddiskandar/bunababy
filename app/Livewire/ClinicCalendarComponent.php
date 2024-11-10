@@ -24,7 +24,7 @@ class ClinicCalendarComponent extends Component
     #[Url]
     public $selectedDay;
 
-    public $places;
+    public $rooms;
 
     public function mount()
     {
@@ -38,7 +38,7 @@ class ClinicCalendarComponent extends Component
             ->with('place:id,name')
             ->get();
 
-        $this->places = $rooms;
+        $this->rooms = $rooms;
 
         $this->titles = collect();
 
@@ -214,7 +214,7 @@ class ClinicCalendarComponent extends Component
 
         $orders = Order::query()
             ->whereDate('date', $this->selectedDay)
-            ->whereIn('place_id', $this->places->pluck('id'))
+            ->whereIn('room_id', $this->rooms->pluck('id'))
             ->with(
                 'customer:id,name',
                 'address.kecamatan:id,name',
@@ -252,7 +252,7 @@ class ClinicCalendarComponent extends Component
         // dd($this->rowStart);
 
         foreach ($orders as $order) {
-            $colStart = $this->colStart['rooms'][$order->place_id];
+            $colStart = $this->colStart['rooms'][$order->room_id];
 
             // dd($order->startDateTime->format('H:i'));
             $rowStart = $this->rowStart[$order->startDateTime->format('H:i')];
@@ -271,7 +271,9 @@ class ClinicCalendarComponent extends Component
                 'treatments' => $order->listTreatments,
                 'status' => $order->status->getLabel(),
                 'finished_at' => $order->finished_at,
-                'place' => $order->place->type === PlaceType::HOMECARE ? ($order->place->name . ', ' . $order->address->kecamatan->name ?? '-') : ($order->place->name . ', ' . $order->room->name ?? '-'),
+                'place' => $order->place->type === PlaceType::HOMECARE
+                    ? ($order->place->name . ', ' . $order->address->kecamatan->name ?? '-')
+                    : ($order->place->name . ', ' . $order->room->name ?? '-'),
             ]);
         }
 
